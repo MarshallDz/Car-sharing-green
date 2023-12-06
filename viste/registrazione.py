@@ -2,23 +2,26 @@ import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-
+from Attivita.cliente import Cliente
 class VistaRegistrazione(QMainWindow):
    def __init__(self):
       super().__init__()
+      #dizionario in cui salvi i campi del form
+      self.campi = {}
+
       self.setWindowTitle("Pagina di registrazione")
       self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
       self.setStyleSheet("background-color: #121212;")
 
-      central_widget = QWidget()
-      self.setCentralWidget(central_widget)
+      self.central_widget = QWidget()
+      self.setCentralWidget(self.central_widget)
 
       central_layout = QVBoxLayout()
 
       title_layout = QVBoxLayout()
       title_layout.setAlignment(Qt.AlignTop | Qt.AlignCenter)
 
-      central_widget.setLayout(central_layout)
+      self.central_widget.setLayout(central_layout)
 
       self.title_label = QLabel("Crea il tuo account")
       self.title_label.setStyleSheet("color: white;")
@@ -31,19 +34,66 @@ class VistaRegistrazione(QMainWindow):
 
       #layout di tutto il form
       self.form_layout = QVBoxLayout()
-      self.form_layout.setAlignment(Qt.AlignCenter | Qt.AlignTop)
+      self.form_layout.setAlignment(Qt.AlignTop | Qt.AlignHCenter)
 
-      #layout di un campo di inserimento con label
-      self.campo_layout = QHBoxLayout()
-
+      self.crea_campo("codice fiscale")
       self.crea_campo("nome")
-      #self.crea_campo("cognome")
+      self.crea_campo("cognome")
+      self.crea_campo("data di nascita")
+      self.crea_campo("e-mail")
+      self.crea_campo("password")
+      self.crea_campo("cellulare")
 
-      self.form_layout.setLayout(self.campo_layout)
+      #creo i bottoni invia e indietro
+      invia_button = QPushButton("Invia")
+      invia_button.setStyleSheet("max-width: 200px; background-color: #D9D9D9; border-radius: 15px; color: black; padding: 10px;"
+                                 "margin-left: 35px; margin-top: 100px;")
+      back_button = QPushButton("Indietro")
+      back_button.setStyleSheet("max-width: 150px; background-color: #F85959; border-radius: 15px; color: black; padding: 10px;"
+                                 "margin-left: 60px;")
+      invia_button.clicked.connect(self.invio_dati)
+      back_button.clicked.connect(self.close)
+      self.form_layout.addWidget(invia_button)
+      self.form_layout.addWidget(back_button)
+
       central_layout.addLayout(self.form_layout)
    def crea_campo(self, nome):
-      label = QLabel(nome)
-      campo = QLineEdit()
-      campo.setStyleSheet("max-width: 100px; background-color: #403F3F;")
-      self.campo_layout.addWidget(label)
-      self.campo_layout.addWidget(campo)
+      if(nome == "data di nascita"):
+         campo = QDateEdit()
+         campo.setCalendarPopup(True)
+         campo.setDate(QDate.currentDate())
+      else:
+         campo = QLineEdit()
+         campo.setPlaceholderText(nome)
+         campo.setStyleSheet("max-width: 300px; min-height: 40px; background-color: #403F3F;")
+      self.campi[nome] = campo
+      self.form_layout.addWidget(campo)
+
+   def invio_dati(self):
+      data_to_save = {}
+
+      # Extracting data from fields and formatting for JSON
+      for value in self.campi.values():
+         if isinstance(value, QLineEdit):
+            data_to_save[value] = value.text()
+            print(value.text())
+         elif isinstance(value, QDateEdit):
+            data_to_save[value] = value.date().toString(Qt.ISODate)
+      cliente = Cliente
+      print(data_to_save)
+      #cliente.get_prenotazione(self, data_to_save["codice fiscale"])
+      self.close()
+
+
+
+
+      """
+       # Saving data to JSON file
+      file_path = "/Users/michelemarzioni/Documents/Python/dati/clienti.txt"
+      with open(file_path, "a") as f:
+         json.dump(data_to_save, f, indent=4)  # Indentation set to 4 spaces
+
+      #notify the user that the data has been saved
+      QMessageBox.information(self, "Salvataggio completato", "I dati sono stati salvati correttamente.")
+      self.close()
+      """

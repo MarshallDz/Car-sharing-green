@@ -51,4 +51,3 @@ class WelcomeWindow(QMainWindow):
     def go_registrazione(self):
         self.vista_registrazione = VistaRegistrazione()
         self.vista_registrazione.show()
-        self.hide()
