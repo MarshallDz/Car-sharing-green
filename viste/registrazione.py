@@ -1,4 +1,3 @@
-import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
@@ -73,27 +72,14 @@ class VistaRegistrazione(QMainWindow):
       data_to_save = {}
 
       # Extracting data from fields and formatting for JSON
-      for value in self.campi.values():
-         if isinstance(value, QLineEdit):
-            data_to_save[value] = value.text()
-            print(value.text())
-         elif isinstance(value, QDateEdit):
-            data_to_save[value] = value.date().toString(Qt.ISODate)
-      cliente = Cliente
+      for campo_nome, campo_widget in self.campi.items():
+         if isinstance(campo_widget, QLineEdit):
+            data_to_save[campo_nome] = campo_widget.text()
+         elif isinstance(campo_widget, QDateEdit):
+            data_to_save[campo_nome] = campo_widget.date().toString(Qt.ISODate)
+      cliente = Cliente()
       print(data_to_save)
-      #cliente.get_prenotazione(self, data_to_save["codice fiscale"])
+      cliente.aggiungiCliente(data_to_save["codice fiscale"], data_to_save["nome"], data_to_save["cognome"],
+                              data_to_save["data di nascita"], data_to_save["e-mail"], data_to_save["password"], data_to_save["cellulare"])
       self.close()
 
-
-
-
-      """
-       # Saving data to JSON file
-      file_path = "/Users/michelemarzioni/Documents/Python/dati/clienti.txt"
-      with open(file_path, "a") as f:
-         json.dump(data_to_save, f, indent=4)  # Indentation set to 4 spaces
-
-      #notify the user that the data has been saved
-      QMessageBox.information(self, "Salvataggio completato", "I dati sono stati salvati correttamente.")
-      self.close()
-      """

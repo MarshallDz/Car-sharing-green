@@ -4,21 +4,22 @@ from abc import abstractmethod
 class Utilizzatore:
 
     def __init__(self):
-        self.codice = -1
         self.codiceFiscale = ""
         self.cognome = ""
-        self.dataNascita = datetime.datetime(year=1970, month=1, day=1)
+        self.dataNascita = ""
         self.email = ""
+        self.password = ""
         self.nome = ""
-        self.telefono = 0
+        self.cellulare = ""
 
-    def aggiungiUtilizzatore(self, telefono, nome, email, dataNascita, cognome, codiceFiscale):
+    def aggiungiUtilizzatore(self, codiceFiscale, nome, cognome, dataNascita, email, password, cellulare):
         self.codiceFiscale = codiceFiscale
         self.cognome = cognome
         self.dataNascita = dataNascita
+        self.password = password
         self.email = email
         self.nome = nome
-        self.telefono = telefono
+        self.cellulare = cellulare
 
     def getInfoUtilizzatore(self):
         return {

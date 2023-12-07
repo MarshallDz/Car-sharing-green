@@ -11,7 +11,7 @@
 },
 {
   "id": 2,
-  "cliente": "ABC123",
+  "cliente": "ABC1234",
   "data_prenotazione": "2023-11-29",
   "data_inizio_noleggio": "2023-12-01",
   "data_fine_noleggio": "2023-12-10",

@@ -1,0 +1,26 @@
+{
+    "clienti": [
+        {
+            "codiceFiscale": "a",
+            "cognome": "a",
+            "dataNascita": "2023-12-07",
+            "email": "a",
+            "password": "a",
+            "nome": "a",
+            "cellulare": "a",
+            "prenotazioni": [],
+            "dataRegistrazione": "07122023"
+        },
+        {
+            "codiceFiscale": "",
+            "cognome": "",
+            "dataNascita": "2023-12-07",
+            "email": "",
+            "password": "",
+            "nome": "",
+            "cellulare": "",
+            "prenotazioni": [],
+            "dataRegistrazione": "07122023"
+        }
+    ]
+}
