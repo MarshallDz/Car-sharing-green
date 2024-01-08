@@ -21,6 +21,17 @@
             "cellulare": "",
             "prenotazioni": [],
             "dataRegistrazione": "07122023"
+        },
+        {
+            "codiceFiscale": "abcd",
+            "cognome": "b",
+            "dataNascita": "2024-01-08",
+            "email": "a@b",
+            "password": "pw",
+            "nome": "a",
+            "cellulare": "39",
+            "prenotazioni": [],
+            "dataRegistrazione": "08012024"
         }
     ]
 }

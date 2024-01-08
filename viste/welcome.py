@@ -50,9 +50,11 @@ class WelcomeWindow(QMainWindow):
         self.registrati_button.adjustSize()
         buttons_layout.addWidget(self.registrati_button)
         central_layout.addLayout(buttons_layout)
+
     def go_registrazione(self):
         self.vista_registrazione = VistaRegistrazione()
         self.vista_registrazione.show()
+
     def go_login(self):
         self.vista_login = VistaLogin()
         self.vista_login.show()

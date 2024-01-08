@@ -48,7 +48,7 @@ class VistaRegistrazione(QMainWindow):
         # creo i bottoni invia e indietro
         invia_button = QPushButton("Invia")
         invia_button.setStyleSheet(
-            "max-width: 200px; background-color: #D9D9D9; border-radius: 15px; color: black; padding: 10px;"
+            "max-width: 200px; background-color: #403F3F; border-radius: 15px; color: black; padding: 10px;"
             "margin-left: 35px; margin-top: 100px;")
         back_button = QPushButton("Indietro")
         back_button.setStyleSheet(
@@ -62,14 +62,15 @@ class VistaRegistrazione(QMainWindow):
         central_layout.addLayout(self.form_layout)
 
     def crea_campo(self, nome):
-        if (nome == "data di nascita"):
+        if nome == "data di nascita":
             campo = QDateEdit()
             campo.setCalendarPopup(True)
+            campo.setStyleSheet("background-color: white;")
             campo.setDate(QDate.currentDate())
         else:
             campo = QLineEdit()
             campo.setPlaceholderText(nome)
-            campo.setStyleSheet("max-width: 300px; min-height: 40px; background-color: #403F3F;")
+            campo.setStyleSheet("max-width: 300px; min-height: 40px; background-color: white;")
         self.campi[nome] = campo
         self.form_layout.addWidget(campo)
 
