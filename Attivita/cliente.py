@@ -29,9 +29,9 @@ class Cliente(Utilizzatore):
             data = json.load(f)
             clienti = data.get("clienti", [])  # Ottieni la lista dei clienti
         for cliente_esistente in clienti:
-                if cliente_esistente["codiceFiscale"] == self.codiceFiscale:
-                    QMessageBox.warning(None, "Cliente esistente", "Il cliente esiste già.")
-                    return
+            if cliente_esistente["codiceFiscale"] == self.codiceFiscale:
+                QMessageBox.warning(None, "Cliente esistente", "Il cliente esiste già.")
+                return
         clienti.append(self.__dict__)
         # voglio salvarlo nel file
         with open("Attivita/dati/clienti.json", "w") as f:
@@ -50,5 +50,18 @@ class Cliente(Utilizzatore):
                     lista_prenotazioni.append(prenotazione["id"])
 
         return lista_prenotazioni
+
+    def get_login(self):
+        email = []
+        psw = []
+        file_path = "Attivita/dati/clienti.json"
+        with open(file_path, "r") as file:
+            data = json.load(file)
+
+            for e in data["clienti"]:
+                email.append(e["email"])
+            for p in data["clienti"]:
+                psw.append(p["password"])
+        return email, psw
 
 
