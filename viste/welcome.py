@@ -36,18 +36,19 @@ class WelcomeWindow(QMainWindow):
         buttons_layout = QVBoxLayout()
         buttons_layout.setAlignment(Qt.AlignCenter | Qt.AlignTop)
 
-        self.accedi_button = QPushButton("Accedi", self)
+        self.accedi_button = QPushButton("Accedi")
         self.accedi_button.setStyleSheet("color: black; background-color: #6AFE67; border-radius: 15px; padding: "
-                                         "20px; width: 500px;")
+                                         "20px; width: 500px; border-style: inset")
         self.accedi_button.setFont(QFont("Arial", 16))
+        self.accedi_button.setCheckable(True)
         self.accedi_button.clicked.connect(self.go_login)
         self.accedi_button.adjustSize()
         buttons_layout.addWidget(self.accedi_button)
-
-        self.registrati_button = QPushButton("Registrati", self)
+        self.registrati_button = QPushButton("Registrati")
         self.registrati_button.setStyleSheet("color: black; background-color: #d9d9d9; border-radius: 15px; padding: "
                                              "20px;")
         self.registrati_button.setFont(QFont("Arial", 16))
+        self.registrati_button.setCheckable(True)
         self.registrati_button.clicked.connect(self.go_registrazione)
         self.registrati_button.adjustSize()
         buttons_layout.addWidget(self.registrati_button)

@@ -88,4 +88,3 @@ class VistaRegistrazione(QMainWindow):
         cliente.aggiungiCliente(data_to_save["codice fiscale"], data_to_save["nome"], data_to_save["cognome"],
                                 data_to_save["data di nascita"], data_to_save["e-mail"], data_to_save["password"],
                                 data_to_save["cellulare"])
-        self.close()

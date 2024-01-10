@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from Attivita.cliente import Cliente
+from viste.home import VistaHome
 
 
 class VistaLogin(QMainWindow):
@@ -79,6 +80,8 @@ class VistaLogin(QMainWindow):
                 if password[i] == data_to_match["password"]:
                     print("ok")
                     trovato = True
+                    self.vista_home = VistaHome()
+                    self.vista_home.show()
                     break
 
         if not trovato:
