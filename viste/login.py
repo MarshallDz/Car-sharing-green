@@ -70,6 +70,7 @@ class VistaLogin(QMainWindow):
                 QMessageBox.critical(None, "Campi mancanti", "Tutti i campi devono essere compilati.")
                 return
 
+        # da risolvere la doppia chiamata alla funzione
         email = Cliente.get_login(self)[0]
         password = Cliente.get_login(self)[1]
 
@@ -78,12 +79,14 @@ class VistaLogin(QMainWindow):
             if e == data_to_match["email"]:
                 i = email.index(e)
                 if password[i] == data_to_match["password"]:
-                    print("ok")
                     trovato = True
-                    self.vista_home = VistaHome()
+                    self.vista_home = VistaHome(e, password)
                     self.vista_home.show()
                     break
 
         if not trovato:
             QMessageBox.warning(None, "Errore", "L'utente o la password sono errati! \nRiprova")
+            self.campi["email"].clear()
+            self.campi["password"].clear()
+            return
 

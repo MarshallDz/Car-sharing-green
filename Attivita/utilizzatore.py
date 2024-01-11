@@ -5,20 +5,20 @@ class Utilizzatore:
 
     def __init__(self):
         self.codiceFiscale = ""
+        self.nome = ""
         self.cognome = ""
         self.dataNascita = ""
         self.email = ""
         self.password = ""
-        self.nome = ""
         self.cellulare = ""
 
     def aggiungiUtilizzatore(self, codiceFiscale, nome, cognome, dataNascita, email, password, cellulare):
         self.codiceFiscale = codiceFiscale
+        self.nome = nome
         self.cognome = cognome
         self.dataNascita = dataNascita
         self.password = password
         self.email = email
-        self.nome = nome
         self.cellulare = cellulare
 
     def getInfoUtilizzatore(self):

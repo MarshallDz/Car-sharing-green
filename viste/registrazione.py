@@ -81,10 +81,18 @@ class VistaRegistrazione(QMainWindow):
         for campo_nome, campo_widget in self.campi.items():
             if isinstance(campo_widget, QLineEdit):
                 data_to_save[campo_nome] = campo_widget.text()
+                if data_to_save[campo_nome] == "":
+                    QMessageBox.critical(None, "Campi mancanti", "Tutti i campi devono essere compilati.")
+                    return
             elif isinstance(campo_widget, QDateEdit):
                 data_to_save[campo_nome] = campo_widget.date().toString(Qt.ISODate)
+        if data_to_save["codice fiscale"].__len__() != 16:
+            QMessageBox.warning(None, "CF non valido", "Il codice fiscale inserito non è valido.")
+            return
+        if not data_to_save["cellulare"].isdigit() or data_to_save["cellulare"].__len__() != 10:
+            QMessageBox.warning(None, "Cellulare non valido", "Il numero di cellulare deve essere un numero di 10 "
+                                                              "cifre.")
+            return
         cliente = Cliente()
-        print(data_to_save)
-        cliente.aggiungiCliente(data_to_save["codice fiscale"], data_to_save["nome"], data_to_save["cognome"],
-                                data_to_save["data di nascita"], data_to_save["e-mail"], data_to_save["password"],
-                                data_to_save["cellulare"])
+        if cliente.aggiungiCliente(data_to_save["codice fiscale"], data_to_save["nome"], data_to_save["cognome"], data_to_save["data di nascita"], data_to_save["e-mail"], data_to_save["password"], data_to_save["cellulare"]):
+            self.close()

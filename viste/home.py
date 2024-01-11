@@ -6,7 +6,7 @@ from PyQt5.QtCore import *
 
 
 class VistaHome(QMainWindow):
-    def __init__(self):
+    def __init__(self, user, psw):
         super().__init__()
 
         self.setWindowTitle("Home")
@@ -72,6 +72,15 @@ class VistaHome(QMainWindow):
         back_button.clicked.connect(self.close)
         right_layout.addWidget(back_button)
         form_layout.addLayout(right_layout)
+
+        # self.animation1 = QPropertyAnimation(button1, b"pos")
+        # self.animation1.setDuration(150)
+        # self.animation1.setEndValue()
+        # self.animation1.setEasingCurve(QEasingCurve.InOutCubic)
+        # button1.clicked.connect(self.clickAnimation)
+
+    def clickAnimation(self):
+        self.animation1.start()
 
     def area_clienti(self):
         print("ok")
