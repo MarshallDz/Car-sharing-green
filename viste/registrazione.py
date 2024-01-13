@@ -65,12 +65,12 @@ class VistaRegistrazione(QMainWindow):
         if nome == "data di nascita":
             campo = QDateEdit()
             campo.setCalendarPopup(True)
-            campo.setStyleSheet("background-color: white;")
+            campo.setStyleSheet("color: grey; background-color: white;")
             campo.setDate(QDate.currentDate())
         else:
             campo = QLineEdit()
             campo.setPlaceholderText(nome)
-            campo.setStyleSheet("max-width: 300px; min-height: 40px; background-color: white;")
+            campo.setStyleSheet("color: grey;  max-width: 300px; min-height: 40px; background-color: white;")
         self.campi[nome] = campo
         self.form_layout.addWidget(campo)
 

@@ -56,8 +56,11 @@ class VistaLogin(QMainWindow):
 
     def crea_campo(self, nome):
         campo = QLineEdit()
+        if nome == "password":
+            campo.setEchoMode(2)
         campo.setPlaceholderText(nome)
-        campo.setStyleSheet("max-width: 500px; min-height: 60px; background-color: #403F3F; border-radius: 15px;")
+        campo.setStyleSheet("max-width: 500px; min-height: 60px; background-color: #403F3F; border-radius: 15px; "
+                            "color: white")
         self.campi[nome] = campo
         self.form_layout.addWidget(campo)
 
@@ -80,7 +83,7 @@ class VistaLogin(QMainWindow):
                 i = email.index(e)
                 if password[i] == data_to_match["password"]:
                     trovato = True
-                    self.vista_home = VistaHome(e, password)
+                    self.vista_home = VistaHome(e, password[i])
                     self.vista_home.show()
                     break
 

@@ -3,6 +3,8 @@ import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
+from viste.areacliente import VistaCliente
+from Attivita.cliente import Cliente
 
 
 class VistaHome(QMainWindow):
@@ -22,10 +24,11 @@ class VistaHome(QMainWindow):
         left_layout = QVBoxLayout()
         left_layout.setAlignment(Qt.AlignTop | Qt.AlignLeft)
         cliente_button = QPushButton("Area clienti")
-        cliente_button.setStyleSheet("color: white;")
-        # per i file esterni bisogna mettere il percorso completo rispetto al programma che avvia l'app (main)
+        cliente_button.setStyleSheet("max-width: 200px; color: white;")
         cliente_button.setIcon(QIcon("viste/Icone/boy.png"))
         cliente_button.setIconSize(QSize(50, 50))
+        self.user = user
+        self.psw = psw
         cliente_button.clicked.connect(self.area_clienti)
         left_layout.addWidget(cliente_button)
         form_layout.addLayout(left_layout)
@@ -66,7 +69,7 @@ class VistaHome(QMainWindow):
         right_layout = QVBoxLayout()
         right_layout.setAlignment(Qt.AlignTop | Qt.AlignRight)
         back_button = QPushButton("Esci")
-        back_button.setStyleSheet("color: white;")
+        back_button.setStyleSheet("max-width: 200px; color: white;")
         back_button.setIcon(QIcon("viste/Icone/logout.png"))
         back_button.setIconSize(QSize(50, 50))
         back_button.clicked.connect(self.close)
@@ -83,4 +86,6 @@ class VistaHome(QMainWindow):
         self.animation1.start()
 
     def area_clienti(self):
-        print("ok")
+        cliente = Cliente.get_dati(self, self.user, self.psw)
+        self.area = VistaCliente(cliente)
+        self.area.show()

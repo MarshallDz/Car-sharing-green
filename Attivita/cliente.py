@@ -16,9 +16,7 @@ class Cliente(Utilizzatore):
         self.dataRegistrazione = datetime.datetime.now().strftime("%d%m%Y")
 
         # controllo se il cliente esiste gia
-        with open("Attivita/dati/clienti.json", "r") as f:
-            data = json.load(f)
-            clienti = data.get("clienti", []) # Ottieni la lista dei clienti
+        clienti = self.get_dati()  # Ottieni la lista dei clienti
         for cliente_esistente in clienti:
             if cliente_esistente["codiceFiscale"] == self.codiceFiscale:
                 QMessageBox.warning(None, "Cliente esistente", "Il cliente esiste già.")
@@ -51,18 +49,21 @@ class Cliente(Utilizzatore):
         file_path = "Attivita/dati/clienti.json"
         with open(file_path, "r") as file:
             data = json.load(file)
-
             for e in data["clienti"]:
                 email.append(e["email"])
             for p in data["clienti"]:
                 psw.append(p["password"])
         return email, psw
 
-    def get_dati(self):
+    def get_dati(self, email=None, password=None):
         file_path = "Attivita/dati/clienti.json"
         with open(file_path, "r") as file:
             data = json.load(file)
-            clienti = data.get("clienti", [])
-        print(clienti)
-
-
+            if not email and not password:
+                clienti = data.get("clienti", [])
+                return clienti
+            else:
+                for u in data["clienti"]:
+                    if u["email"] == email and u["password"] == password:
+                        cliente = u
+                        return cliente
