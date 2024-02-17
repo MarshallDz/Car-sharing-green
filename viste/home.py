@@ -5,6 +5,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from viste.areacliente import VistaCliente
 from Attivita.cliente import Cliente
+from viste.prenotazione import VistaPrenotazione
 
 
 class VistaHome(QMainWindow):
@@ -48,6 +49,7 @@ class VistaHome(QMainWindow):
         button1.setStyleSheet(
             "max-width: 150px; background-color: #74b1fc; border-radius: 55px; color: black; padding: 100px; "
             "margin-top: 100px;")
+        button1.clicked.connect(self.go_registrazione)
         button2 = QPushButton("Storico \nnoleggi")
         button2.setStyleSheet(
             "max-width: 150px; background-color: #74b1fc; border-radius: 55px; color: black; padding: 100px; "
@@ -89,3 +91,8 @@ class VistaHome(QMainWindow):
         cliente = Cliente.get_dati(self, self.user, self.psw)
         self.area = VistaCliente(cliente)
         self.area.show()
+
+    def go_registrazione(self):
+        self.area = VistaPrenotazione()
+        self.area.show()
+

@@ -1,0 +1,37 @@
+{
+    "clienti": [
+        {
+            "codiceFiscale": "abcdefghlmnopqrs",
+            "nome": "edo",
+            "cognome": "seve",
+            "dataNascita": "2003-01-26",
+            "email": "user",
+            "password": "admin",
+            "cellulare": "0123456789",
+            "prenotazioni": [],
+            "dataRegistrazione": "11012024"
+        },
+        {
+            "codiceFiscale": "dfsfsfgaesgfsagf",
+            "nome": "adsfdsaf",
+            "cognome": "adsfdasf",
+            "dataNascita": "2024-01-22",
+            "email": "aergag",
+            "password": "gsfdgs",
+            "cellulare": "0123456789",
+            "prenotazioni": [],
+            "dataRegistrazione": "22012024"
+        },
+        {
+            "codiceFiscale": "mrzmhl02h20g157g",
+            "nome": "michelon",
+            "cognome": "micheloni",
+            "dataNascita": "2024-01-22",
+            "email": "si",
+            "password": "f",
+            "cellulare": "3333333333",
+            "prenotazioni": [],
+            "dataRegistrazione": "22012024"
+        }
+    ]
+}

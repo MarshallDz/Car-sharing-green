@@ -42,7 +42,7 @@ class VistaLogin(QMainWindow):
 
         invia_button = QPushButton("Invia")
         invia_button.setStyleSheet(
-            "max-width: 200px; background-color: #403F3F; border-radius: 15px; color: black; padding: 10px;"
+            "max-width: 200px; background-color: #6AFE67; border-radius: 15px; color: black; padding: 10px;"
             "margin-left: 150px; margin-top: 10px;")
         back_button = QPushButton("Annulla")
         back_button.setStyleSheet(

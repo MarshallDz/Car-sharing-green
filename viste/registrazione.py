@@ -48,7 +48,7 @@ class VistaRegistrazione(QMainWindow):
         # creo i bottoni invia e indietro
         invia_button = QPushButton("Invia")
         invia_button.setStyleSheet(
-            "max-width: 200px; background-color: #403F3F; border-radius: 15px; color: black; padding: 10px;"
+            "max-width: 200px; background-color: #6AFE67; border-radius: 15px; color: black; padding: 10px;"
             "margin-left: 35px; margin-top: 100px;")
         back_button = QPushButton("Indietro")
         back_button.setStyleSheet(

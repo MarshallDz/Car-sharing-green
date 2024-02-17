@@ -1,7 +1,6 @@
 from PyQt5.QtWidgets import *
 import sys
 from viste.welcome import WelcomeWindow
-import json
 
 
 def main():

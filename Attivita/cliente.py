@@ -24,7 +24,7 @@ class Cliente(Utilizzatore):
         clienti.append(self.__dict__)
 
         # salvo nel file
-        with open("Attivita/dati/clienti.json", "w") as f:
+        with open("dati/clienti.json", "w") as f:
             json.dump({"clienti": clienti}, f, indent=4)
         QMessageBox.information(None, "Success", "Account registrato correttamente!")
         return 1
@@ -46,7 +46,7 @@ class Cliente(Utilizzatore):
     def get_login(self):
         email = []
         psw = []
-        file_path = "Attivita/dati/clienti.json"
+        file_path = "dati/clienti.json"
         with open(file_path, "r") as file:
             data = json.load(file)
             for e in data["clienti"]:
