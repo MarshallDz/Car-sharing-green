@@ -2,6 +2,9 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from viste.prenotazione_auto import VistaPrenotazioneAuto
+from viste.prenotazione_moto import  VistaPrenotazioneMoto
+from viste.prenotazione_van import VistaPrenotazioneVan
+from viste.prenotazione_furgoni import VistaPrenotazioneFurgone
 
 class VistaPrenotazione(QMainWindow):
     def __init__(self):
@@ -41,14 +44,18 @@ class VistaPrenotazione(QMainWindow):
         self.scooter_button = QPushButton("Prenota scooter")
         self.scooter_button.setStyleSheet(
             "color: black; width: 700px; background-color: #d9d9d9; border-radius: 15px; padding: 20px;")
+        self.scooter_button.clicked.connect(self.go_moto)
 
         self.van_button = QPushButton("Prenota van")
         self.van_button.setStyleSheet(
             "color: black; width: 700px; background-color: #d9d9d9; border-radius: 15px; padding: 20px;")
+        self.van_button.clicked.connect(self.go_van)
 
         self.furgone_button = QPushButton("Prenota furgone")
         self.furgone_button.setStyleSheet(
             "color: black; width: 700px; background-color: #d9d9d9; border-radius: 15px; padding: 20px;")
+        self.furgone_button.clicked.connect(self.go_furgone)
+
 
         self.buttons_layout.addWidget(self.auto_button)
         self.buttons_layout.addWidget(self.scooter_button)
@@ -60,7 +67,7 @@ class VistaPrenotazione(QMainWindow):
         self.back_button = QPushButton("Indietro")
         self.back_button.setStyleSheet(
             "width: 150px; background-color: #F85959; border-radius: 15px; color: black; padding: 10px;"
-            "margin-right: 60px; margin-bottom: 120px;")
+            "margin-right: 60px; margin-bottom: 60px;")
         self.back_button.clicked.connect(self.close_window)
         self.back_layout.addWidget(self.back_button)
         central_layout.addLayout(self.buttons_layout)
@@ -72,3 +79,15 @@ class VistaPrenotazione(QMainWindow):
     def go_auto(self):
         self.vista_auto = VistaPrenotazioneAuto()
         self.vista_auto.show()
+
+    def go_moto(self):
+        self.vista_moto = VistaPrenotazioneMoto()
+        self.vista_moto.show()
+
+    def go_van(self):
+        self.vista_van = VistaPrenotazioneVan()
+        self.vista_van.show()
+
+    def go_furgone(self):
+        self.vista_furgone = VistaPrenotazioneFurgone()
+        self.vista_furgone.show()

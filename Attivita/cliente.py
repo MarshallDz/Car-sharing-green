@@ -32,7 +32,7 @@ class Cliente(Utilizzatore):
     # per ora non serve a nulla
     def get_prenotazione(self, cf):
         lista_prenotazioni = []
-        file_path = "Attvita/dati/prenotazioni.json"
+        file_path = "dati/prenotazioni.json"
         with open(file_path) as file:
             data = json.load(file)
 
@@ -56,7 +56,7 @@ class Cliente(Utilizzatore):
         return email, psw
 
     def get_dati(self, email=None, password=None):
-        file_path = "Attivita/dati/clienti.json"
+        file_path = "dati/clienti.json"
         with open(file_path, "r") as file:
             data = json.load(file)
             if not email and not password:

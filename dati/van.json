@@ -1,0 +1,47 @@
+[
+  {
+    "URL_immagine": "viste/Icone/van/ford_transit.png",
+    "telaio": "abc123",
+    "produttore": "Ford",
+    "modello": "Transit",
+    "cavalli": "120",
+    "cilindrata": "2000",
+    "anno": "2020",
+    "alimentazione": "diesel",
+    "cambio": "manuale",
+    "nPosti": "3",
+    "stato": "disponibile",
+    "tariffa_oraria": "50",
+    "tariffa_giornaliera": "120"
+  },
+  {
+    "URL_immagine": "viste/Icone/van/mercedes_sprinter.png",
+    "telaio": "def456",
+    "produttore": "Mercedes",
+    "modello": "Sprinter",
+    "cavalli": "150",
+    "cilindrata": "2500",
+    "anno": "2020",
+    "alimentazione": "diesel",
+    "cambio": "manuale",
+    "nPosti": "3",
+    "stato": "disponibile",
+    "tariffa_oraria": "60",
+    "tariffa_giornaliera": "150"
+  },
+  {
+    "URL_immagine": "viste/Icone/van/vw_crafter.png",
+    "telaio": "ghi789",
+    "produttore": "Volkswagen",
+    "modello": "Crafter",
+    "cavalli": "140",
+    "cilindrata": "2200",
+    "anno": "2020",
+    "alimentazione": "diesel",
+    "cambio": "manuale",
+    "nPosti": "3",
+    "stato": "disponibile",
+    "tariffa_oraria": "55",
+    "tariffa_giornaliera": "130"
+  }
+]

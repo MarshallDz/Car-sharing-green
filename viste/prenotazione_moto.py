@@ -5,11 +5,11 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import Qt
 from viste.effettua_prenotazione import VistaEffettuaPrenotazione
 
-class VistaPrenotazioneAuto(QMainWindow):
+class VistaPrenotazioneMoto(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.setWindowTitle("Pagina di prenotazione auto")
+        self.setWindowTitle("Pagina di prenotazione moto")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
         self.setStyleSheet("background-color: #121212;")
         self.setMinimumWidth(1000)
@@ -24,7 +24,7 @@ class VistaPrenotazioneAuto(QMainWindow):
 
         self.central_widget.setLayout(self.central_layout)
 
-        self.title_label = QLabel("Prenota la tua auto: ")
+        self.title_label = QLabel("Prenota il tuo scooter: ")
         self.title_label.setStyleSheet("color: white;")
         self.title_font = self.title_label.font()
         self.title_font.setPointSize(42)
@@ -35,7 +35,7 @@ class VistaPrenotazioneAuto(QMainWindow):
         title_layout.addWidget(self.title_label)
         self.central_layout.addLayout(title_layout)
 
-        file_path = "dati/auto.json"
+        file_path = "dati/moto.json"
         url_array = []
         prod_array = []
         mod_array = []
@@ -84,10 +84,8 @@ class VistaPrenotazioneAuto(QMainWindow):
 
         self.central_layout.addWidget(scroll_area)
 
-        for url, prod, mod, cv, cc, np, anno, al, cambio in zip(url_array, prod_array, mod_array, cavalli_array,
-                                                                cc_array, nPosti_array, anno_array, alimentazione_array,
-                                                                cambio_array):
-            self.aggiungi_box_auto(url, prod, mod, cv, cc, np, anno, al, cambio)
+        for url, prod, mod, cv, cc, np, anno, al, cambio in zip(url_array, prod_array, mod_array, cavalli_array, cc_array, nPosti_array, anno_array, alimentazione_array, cambio_array):
+            self.aggiungi_box_moto(url, prod, mod, cv, cc, np, anno, al, cambio)
 
         # Aggiungiamo il pulsante "Indietro"
         button_layout = QVBoxLayout()
@@ -101,7 +99,7 @@ class VistaPrenotazioneAuto(QMainWindow):
         button_layout.addWidget(self.back_button)
         self.central_layout.addLayout(button_layout)
 
-    def aggiungi_box_auto(self, url, prod, mod, cv, cc, n, anno, alim, cambio):
+    def aggiungi_box_moto(self, url, prod, mod, cv, cc, n, anno, alim, cambio):
         car_info_frame = QFrame()
         car_info_frame.setStyleSheet("border: 2px solid white; border-radius: 5px; margin-right: 5px;")
         car_info_frame.setMinimumWidth(600)
@@ -150,8 +148,8 @@ class VistaPrenotazioneAuto(QMainWindow):
             car_layout.addWidget(label)
         else:
             error_label = QLabel("Immagine non disponibile")
-            error_label.setMaximumWidth(200)
             error_label.setAlignment(Qt.AlignCenter)
+            error_label.setMaximumWidth(200)
             car_layout.addWidget(error_label)
 
         car_layout.addWidget(car_info_frame)
