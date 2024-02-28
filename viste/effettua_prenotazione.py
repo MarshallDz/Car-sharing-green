@@ -1,7 +1,7 @@
 import json
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QDate
 
 
 class VistaEffettuaPrenotazione(QMainWindow):
@@ -41,19 +41,51 @@ class VistaEffettuaPrenotazione(QMainWindow):
         inizio_noleggio.setStyleSheet("color: white; font-size: 18px")
         form_layout.addWidget(inizio_noleggio, 0, 0)
 
+        campo1 = QDateEdit()
+        campo1.setCalendarPopup(True)
+        campo1.setMinimumDate(QDate.currentDate())
+        campo1.setStyleSheet("color: black; background-color: white; max-width: 1000px; margin-right: 15px")
+        campo1.setDate(QDate.currentDate())
+        form_layout.addWidget(campo1, 0, 1)
+
         fine_noleggio = QLabel("Data fine noleggio:")
         fine_noleggio.setStyleSheet("color: white; font-size: 18px")
         form_layout.addWidget(fine_noleggio, 2, 0)
+
+        campo2 = QDateEdit()
+        campo2.setCalendarPopup(True)
+        campo2.setMinimumDate(QDate.currentDate())
+        campo2.setStyleSheet("color: black; background-color: white; max-width: 1000px; margin-right: 15px")
+        campo2.setDate(QDate.currentDate())
+        form_layout.addWidget(campo2, 2, 1)
 
         filiale = QLabel("Filiale ritiro mezzo:")
         filiale.setStyleSheet("color: white; font-size: 18px")
         form_layout.addWidget(filiale, 3, 0)
 
+        filiale = QComboBox(self)
+        filiale.setStyleSheet("background-color: white; margon-right: 15px")
+        filiale.setPlaceholderText(" ")
+        filiale.addItems(["Milano, via padova", "Milano, via roma"])
+        form_layout.addWidget(filiale, 3, 1)
+
         assicurazione = QLabel("Polizza assicurativa:")
         assicurazione.setStyleSheet("color: white; font-size: 18px")
         form_layout.addWidget(assicurazione, 4, 0)
 
+        polizza = QComboBox(self)
+        polizza.setStyleSheet("background-color: white; margon-right: 15px; color: black")
+        polizza.setPlaceholderText(" ")
+        polizza.addItems(["rca", "kasko"])
+        form_layout.addWidget(polizza, 4, 1)
+
         tariffa = QLabel("Tariffa:")
-        tariffa.setStyleSheet("color: white; font-size: 18px; margin-bottom: 150px")
+        tariffa.setStyleSheet(f"color: white; font-size: 18px; margin-bottom: {self.width()*0.2}")
         form_layout.addWidget(tariffa, 5, 0)
         self.central_layout.addLayout(form_layout)
+
+        tariffa = QComboBox(self)
+        tariffa.setStyleSheet(f"background-color: white; margon-right: 15px;  margin-bottom: {self.width()*0.2}")
+        tariffa.setPlaceholderText(" ")
+        tariffa.addItems(["oraria", "giornaliera"])
+        form_layout.addWidget(tariffa, 5, 1)
