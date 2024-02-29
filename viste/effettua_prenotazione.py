@@ -6,6 +6,7 @@ from PyQt5.QtCore import Qt, QDate
 
 class VistaEffettuaPrenotazione(QMainWindow):
     def __init__(self):
+
         super().__init__()
 
         self.setWindowTitle("Schermata di prenotazione")
