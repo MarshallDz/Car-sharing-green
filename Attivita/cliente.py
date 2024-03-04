@@ -67,3 +67,12 @@ class Cliente(Utilizzatore):
                     if u["email"] == email and u["password"] == password:
                         cliente = u
                         return cliente
+
+    def get_cliente(self, email, password):
+        file_path = "dati/clienti.json"
+        with open(file_path, "r") as file:
+            data = json.load(file)
+            for u in data["clienti"]:
+                if u["email"] == email and u["password"] == password:
+                    cliente = u
+                    return cliente

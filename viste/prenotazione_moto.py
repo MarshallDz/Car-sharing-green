@@ -6,8 +6,10 @@ from PyQt5.QtCore import Qt
 from viste.effettua_prenotazione import VistaEffettuaPrenotazione
 
 class VistaPrenotazioneMoto(QMainWindow):
-    def __init__(self):
+    def __init__(self, user, psw):
         super().__init__()
+        self.user = user
+        self.psw = psw
 
         self.setWindowTitle("Pagina di prenotazione moto")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
@@ -160,5 +162,5 @@ class VistaPrenotazioneMoto(QMainWindow):
         self.close()
 
     def go_prenota(self):
-        self.vista_prenotazione = VistaEffettuaPrenotazione()
+        self.vista_prenotazione = VistaEffettuaPrenotazione(self.user, self.psw)
         self.vista_prenotazione.show()

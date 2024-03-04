@@ -14,7 +14,7 @@ class Auto(Mezzo):
             # Apre il file JSON in modalità append
             with open("dati/auto.json", 'a') as file:
                 # Scrive il dizionario dell'auto nel file JSON
-                json.dump(self, file)
+                json.dump(self, file, indent=4)
                 # Aggiunge un nuovo line feed dopo ogni auto per mantenere ogni auto su una riga separata
                 file.write('\n')
             print("Auto aggiunta correttamente.")

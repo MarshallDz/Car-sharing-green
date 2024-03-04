@@ -1,22 +1,38 @@
-[
-  {
-    "id": 1,
-    "cliente": "ABC123",
-    "data_prenotazione": "2023-11-29",
-    "data_inizio_noleggio": "2023-12-01",
-    "data_fine_noleggio": "2023-12-10",
-    "mezzo_prenotato": "Auto",
-    "tariffa": 100.00,
-    "polizza_assicurativa": "base"
-},
 {
-  "id": 2,
-  "cliente": "ABC1234",
-  "data_prenotazione": "2023-11-29",
-  "data_inizio_noleggio": "2023-12-01",
-  "data_fine_noleggio": "2023-12-10",
-  "mezzo_prenotato": "Auto",
-  "tariffa": 100.00,
-  "polizza_assicurativa": "base"
-  }
-]
+    "prenotazioni": [
+        {
+            "id": "",
+            "cliente": {
+                "codiceFiscale": "mrzmhl02h20g157g",
+                "nome": "michelon",
+                "cognome": "micheloni",
+                "dataNascita": "2024-01-22",
+                "email": "a",
+                "password": "a",
+                "cellulare": "3333333333",
+                "prenotazioni": [],
+                "dataRegistrazione": "22012024"
+            },
+            "data_prenotazione": "lun mar 4 2024",
+            "data_inizio": "2024-03-14",
+            "data_fine": "2024-03-20",
+            "filiale": "Milano, via roma",
+            "mezzo": {
+                "URL_immagine": "viste/Icone/auto/white-car.png",
+                "telaio": "01",
+                "produttore": "bmw",
+                "modello": "x3",
+                "cavalli": "130",
+                "cilindrata": "1600",
+                "anno": "2020",
+                "alimentazione": "benzina",
+                "cambio": "automatico",
+                "nPosti": "5",
+                "stato": "disponibile",
+                "tariffa_oraria": "40"
+            },
+            "tariffa": "kasko",
+            "polizza": "oraria"
+        }
+    ]
+}

@@ -58,7 +58,7 @@ class VistaCliente(QMainWindow):
         campo = QLineEdit()
         campo.setText(valore)
         campo.setReadOnly(True)
-        campo.setStyleSheet("max-width: 500px; min-height: 40px; color: grey; background-color: #e3e1dc;")
+        campo.setStyleSheet("max-width: 500px; min-height: 40px; color: black; background-color: #e3e1dc;")
         self.layout.addWidget(campo)
         return campo
 

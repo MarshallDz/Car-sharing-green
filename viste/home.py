@@ -11,6 +11,8 @@ from viste.prenotazione import VistaPrenotazione
 class VistaHome(QMainWindow):
     def __init__(self, user, psw):
         super().__init__()
+        self.user = user
+        self.psw = psw
 
         self.setWindowTitle("Home")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
@@ -28,8 +30,7 @@ class VistaHome(QMainWindow):
         cliente_button.setStyleSheet("max-width: 200px; color: white;")
         cliente_button.setIcon(QIcon("viste/Icone/boy.png"))
         cliente_button.setIconSize(QSize(50, 50))
-        self.user = user
-        self.psw = psw
+
         cliente_button.clicked.connect(self.area_clienti)
         left_layout.addWidget(cliente_button)
         form_layout.addLayout(left_layout)
@@ -93,6 +94,6 @@ class VistaHome(QMainWindow):
         self.area.show()
 
     def go_registrazione(self):
-        self.area = VistaPrenotazione()
+        self.area = VistaPrenotazione(self.user, self.psw)
         self.area.show()
 

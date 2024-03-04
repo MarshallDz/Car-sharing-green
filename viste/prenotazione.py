@@ -7,8 +7,10 @@ from viste.prenotazione_van import VistaPrenotazioneVan
 from viste.prenotazione_furgoni import VistaPrenotazioneFurgone
 
 class VistaPrenotazione(QMainWindow):
-    def __init__(self):
+    def __init__(self, user, psw):
         super().__init__()
+        self.user = user
+        self.psw = psw
 
         self.setWindowTitle("Pagina di prenotazione")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
@@ -77,11 +79,11 @@ class VistaPrenotazione(QMainWindow):
         self.close()
 
     def go_auto(self):
-        self.vista_auto = VistaPrenotazioneAuto()
+        self.vista_auto = VistaPrenotazioneAuto(self.user, self.psw)
         self.vista_auto.show()
 
     def go_moto(self):
-        self.vista_moto = VistaPrenotazioneMoto()
+        self.vista_moto = VistaPrenotazioneMoto(self.user, self.psw)
         self.vista_moto.show()
 
     def go_van(self):
