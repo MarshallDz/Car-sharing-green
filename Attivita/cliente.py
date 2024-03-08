@@ -76,3 +76,22 @@ class Cliente(Utilizzatore):
                 if u["email"] == email and u["password"] == password:
                     cliente = u
                     return cliente
+
+    def set_prenotazioni_cliente(self, user, psw, id):
+        # Carica i dati dei clienti dal file JSON
+        with open("dati/clienti.json", "r") as file:
+            data = json.load(file)
+
+        # Cerca il cliente specifico usando il suo codice fiscale
+        for cliente in data["clienti"]:
+            if cliente["email"] == user and cliente["password"] == psw:
+                # Aggiungi il codice della nuova prenotazione alla lista delle prenotazioni del cliente
+                cliente["prenotazioni"].append(id)
+                break
+
+        # Scrivi i dati aggiornati nel file JSON
+        with open("dati/clienti.json", "w") as file:
+            json.dump(data, file, indent=4)
+
+
+

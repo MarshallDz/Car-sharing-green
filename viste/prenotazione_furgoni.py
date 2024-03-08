@@ -6,8 +6,10 @@ from PyQt5.QtCore import Qt
 from viste.effettua_prenotazione import VistaEffettuaPrenotazione
 
 class VistaPrenotazioneFurgone(QMainWindow):
-    def __init__(self):
+    def __init__(self, user, psw):
         super().__init__()
+        self.user = user
+        self.psw = psw
 
         self.setWindowTitle("Pagina di prenotazione furgoni")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
@@ -36,27 +38,15 @@ class VistaPrenotazioneFurgone(QMainWindow):
         self.central_layout.addLayout(title_layout)
 
         file_path = "dati/furgoni.json"
-        url_array = []
-        prod_array = []
-        mod_array = []
-        anno_array = []
-        cavalli_array = []
-        cc_array = []
-        cambio_array = []
-        alimentazione_array = []
-        nPosti_array = []
+        mezzi = []
         with open(file_path) as file:
             data = json.load(file)
+            chiavi = list(data[0].keys())
             for info in data:
-                url_array.append(info["URL_immagine"])
-                prod_array.append(info["produttore"])
-                mod_array.append(info["modello"])
-                cavalli_array.append(info["cavalli"])
-                alimentazione_array.append(info["alimentazione"])
-                cambio_array.append(info["cambio"])
-                nPosti_array.append(info["nPosti"])
-                cc_array.append(info["cilindrata"])
-                anno_array.append(info["anno"])
+                valori = list(info.values())
+                for i in range(len(valori)):
+                    info[chiavi[i]] = valori[i]
+                mezzi.append(info)
 
         scroll_area = QScrollArea()
         scroll_area.setStyleSheet("QScrollBar:vertical {"
@@ -84,9 +74,8 @@ class VistaPrenotazioneFurgone(QMainWindow):
 
         self.central_layout.addWidget(scroll_area)
 
-        for url, prod, mod, cv, cc, np, anno, al, cambio in zip(url_array, prod_array, mod_array, cavalli_array,
-                                                                cc_array, nPosti_array, anno_array, alimentazione_array, cambio_array):
-            self.aggiungi_box_furgone(url, prod, mod, cv, cc, np, anno, al, cambio)
+        for i in range(len(mezzi)):
+            self.aggiungi_box_furgone(mezzi[i])
 
         # Aggiungiamo il pulsante "Indietro"
         button_layout = QVBoxLayout()
@@ -100,7 +89,7 @@ class VistaPrenotazioneFurgone(QMainWindow):
         button_layout.addWidget(self.back_button)
         self.central_layout.addLayout(button_layout)
 
-    def aggiungi_box_furgone(self, url, prod, mod, cv, cc, n, anno, alim, cambio):
+    def aggiungi_box_furgone(self, mezzo):
         car_info_frame = QFrame()
         car_info_frame.setStyleSheet("border: 2px solid white; border-radius: 5px; margin-right: 5px;")
         car_info_frame.setMinimumWidth(600)
@@ -110,14 +99,14 @@ class VistaPrenotazioneFurgone(QMainWindow):
         car_info_layout.setAlignment(Qt.AlignTop)
 
         # Aggiungi le informazioni alla griglia
-        labels_values = [("Produttore:", prod),
-                         ("Modello:", mod),
-                         ("Anno:", anno),
-                         ("Alimentazione:", alim),
-                         ("Cavalli:", cv),
-                         ("Cilindrata:", cc),
-                         ("Cambio:", cambio),
-                         ("Numero Posti:", n)]
+        labels_values =  [("Produttore:", mezzo["produttore"]),
+                              ("Modello:", mezzo["modello"]),
+                              ("Anno:", mezzo["anno"]),
+                              ("Alimentazione:", mezzo["alimentazione"]),
+                              ("Cavalli:", mezzo["cavalli"]),
+                              ("Cilindrata:", mezzo["cilindrata"]),
+                              ("Cambio:", mezzo["cambio"]),
+                              ("Numero Posti:", mezzo["nPosti"])]
 
         for i, (label_name, value) in enumerate(labels_values):
             label_name = QLabel(label_name, self)
@@ -134,12 +123,12 @@ class VistaPrenotazioneFurgone(QMainWindow):
 
         prenota_button = QPushButton("Prenota")
         prenota_button.setStyleSheet("color: black; border-radius: 5px; background-color: #D9D9D9")
-        prenota_button.clicked.connect(self.go_prenota)
+        prenota_button.clicked.connect(lambda _, car=mezzo: self.go_prenota(car))
         car_info_layout.addWidget(prenota_button, 6, 3)
         car_layout = QHBoxLayout()
         car_layout.setAlignment(Qt.AlignTop)
 
-        pixmap = QPixmap(url)
+        pixmap = QPixmap(mezzo["URL_immagine"])
         if not pixmap.isNull():
             label = QLabel()
             label.setStyleSheet("margin-left: 20px;")
@@ -160,6 +149,6 @@ class VistaPrenotazioneFurgone(QMainWindow):
     def go_back(self):
         self.close()
 
-    def go_prenota(self):
-        self.vista_prenotazione = VistaEffettuaPrenotazione()
+    def go_prenota(self, mezzo):
+        self.vista_prenotazione = VistaEffettuaPrenotazione(self.user, self.psw, mezzo)
         self.vista_prenotazione.show()

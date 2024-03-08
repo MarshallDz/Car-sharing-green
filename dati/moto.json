@@ -1,6 +1,7 @@
 [
   {
     "URL_immagine": "viste/Icone/scooter/yamaha.jpg",
+    "talaio": "abc123",
     "produttore": "yamaha",
     "modello": "r1",
     "cavalli": "50",
@@ -10,8 +11,7 @@
     "cambio": "manuale",
     "nPosti": "2",
     "stato": "disponibile",
-    "tariffa_oraria": "40",
-    "tariffa_giornaliera": "90"
+    "tariffa_oraria": "40"
   },
   {
     "URL_immagine": "viste/Icone/scooter/bmw.png",
@@ -25,8 +25,7 @@
     "cambio": "manuale",
     "nPosti": "2",
     "stato": "disponibile",
-    "tariffa_oraria": "40",
-    "tariffa_giornaliera": "90"
+    "tariffa_oraria": "40"
   },
   {
     "URL_immagine": "viste/Icone/scooter/ktm.png",
@@ -40,8 +39,7 @@
     "cambio": "manuale",
     "nPosti": "2",
     "stato": "disponibile",
-    "tariffa_oraria": "40",
-    "tariffa_giornaliera": "90"
+    "tariffa_oraria": "40"
   },
   {
     "URL_immagine": "viste/Icone/scooter/kawasaki.png",
@@ -55,8 +53,7 @@
     "cambio": "manuale ",
     "nPosti": "2",
     "stato": "disponibile",
-    "tariffa_oraria": "40",
-    "tariffa_giornaliera": "90"
+    "tariffa_oraria": "40"
   },
   {
     "URL_immagine": "viste/Icone/scooter/ducati.png",
@@ -70,8 +67,7 @@
     "cambio": "manuale",
     "nPosti": "2",
     "stato": "disponibile",
-    "tariffa_oraria": "40",
-    "tariffa_giornaliera": "90"
+    "tariffa_oraria": "40"
   },
   {
     "URL_immagine": "viste/Icone/scooter/tmax.png",
@@ -85,7 +81,6 @@
     "cambio": "manuale",
     "nPosti": "2",
     "stato": "disponibile",
-    "tariffa_oraria": "40",
-    "tariffa_giornaliera": "90"
+    "tariffa_oraria": "40"
   }
 ]

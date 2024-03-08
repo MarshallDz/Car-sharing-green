@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import Qt, QDate
 from Attivita.cliente import *
 from Attivita.prenotazione import *
-import datetime
+from viste.confermaPrenotazione import VistaConfermaPrenotazione
 
 
 class VistaEffettuaPrenotazione(QMainWindow):
@@ -32,7 +32,7 @@ class VistaEffettuaPrenotazione(QMainWindow):
         self.title_label.setFont(self.title_font)
         self.title_label.setAlignment(Qt.AlignTop | Qt.AlignHCenter)
         self.title_label.adjustSize()
-        self.central_layout.addWidget(self.title_label, 0, 1)
+        self.central_layout.addWidget(self.title_label, 0, 1, 2, 3)
 
         self.valori = {}
 
@@ -43,7 +43,7 @@ class VistaEffettuaPrenotazione(QMainWindow):
         self.campo1 = QDateEdit()
         self.campo1.setCalendarPopup(True)
         self.campo1.setMinimumDate(QDate.currentDate())
-        self.campo1.setStyleSheet("color: black; background-color: white; max-width: 1000px; min-width: 800px")
+        self.campo1.setStyleSheet(f"color: black; background-color: white; max-width: {self.width()*0.45}; min-width: {self.width()*0.45}")
         self.campo1.setSpecialValueText("Scegli data inizio noleggio")
         self.central_layout.addWidget(self.campo1, 1, 3)
         self.campo1.dateChanged.connect(self.update_valori)
@@ -56,7 +56,7 @@ class VistaEffettuaPrenotazione(QMainWindow):
         self.campo2 = QDateEdit()
         self.campo2.setCalendarPopup(True)
         self.campo2.setMinimumDate(QDate.currentDate())
-        self.campo2.setStyleSheet("color: black; background-color: white; max-width: 1000px; min-width: 800px; "
+        self.campo2.setStyleSheet(f"color: black; background-color: white; max-width: {self.width()*0.45}; min-width: {self.width()*0.45};"
                                   "margin-right: 15px")
         self.campo2.setSpecialValueText("Scegli data fine noleggio")
         self.central_layout.addWidget(self.campo2, 2, 3)
@@ -68,7 +68,8 @@ class VistaEffettuaPrenotazione(QMainWindow):
         self.central_layout.addWidget(filiale_label, 3, 0)
 
         self.filiale = QComboBox(self)
-        self.filiale.setStyleSheet("background-color: white; margin-right: 15px; color: black;")
+        self.filiale.setStyleSheet("background-color: white; margin-right: 15px; color: black; "
+                                   f"max-width: {self.width()*0.45}; min-width: {self.width()*0.45}")
         self.filiale.setPlaceholderText("Scegli:")
         self.filiale.addItems(["Milano, via padova", "Milano, via roma"])
         self.filiale.currentIndexChanged.connect(self.update_valori)
@@ -80,7 +81,8 @@ class VistaEffettuaPrenotazione(QMainWindow):
         self.central_layout.addWidget(assicurazione_label, 4, 0)
 
         self.polizza = QComboBox(self)
-        self.polizza.setStyleSheet("background-color: white; margin-right: 15px; color: black")
+        self.polizza.setStyleSheet("background-color: white; margin-right: 15px; color: black;"
+                                   f"max-width: {self.width()*0.45}; min-width: {self.width()*0.45}")
         self.polizza.setPlaceholderText("Scegli:")
         self.polizza.addItems(["rca", "kasko"])
         self.central_layout.addWidget(self.polizza, 4, 3)
@@ -92,7 +94,8 @@ class VistaEffettuaPrenotazione(QMainWindow):
         self.central_layout.addWidget(tariffa, 5, 0)
 
         self.tariffa = QComboBox(self)
-        self.tariffa.setStyleSheet(f"background-color: white; margin-right: 15px; color: black;")
+        self.tariffa.setStyleSheet("background-color: white; margin-right: 15px; color: black;"
+                                   f"max-width: {self.width()*0.45}; min-width: {self.width()*0.45}")
         self.tariffa.setPlaceholderText("Scegli:")
         self.tariffa.addItems(["oraria", "giornaliera"])
         self.central_layout.addWidget(self.tariffa, 5, 3)
@@ -138,8 +141,18 @@ class VistaEffettuaPrenotazione(QMainWindow):
         self.close()
 
     def conferma_prenotazione(self):
+        for value in self.valori.values():
+            if not value:
+                QMessageBox.warning(self, "Attenzione", "Per favore compila tutti i campi.")
+                return
+
         cliente = Cliente.get_cliente(self, self.user, self.psw)
         prenotazione = Prenotazione()
-        prenotazione.aggiungiPrenotazione("", cliente, QDate.currentDate().toString(), self.valori["data_inizio"],
+        c = Cliente()
+        prenotazione.aggiungiPrenotazione(cliente, QDate.currentDate().toString(), self.valori["data_inizio"],
                                           self.valori["data_fine"], self.mezzo, self.valori["filiale"],
-                                          self.valori["polizza"], self.valori["tariffa"])
+                                          self.valori["tariffa"], self.valori["polizza"])
+        c.set_prenotazioni_cliente(self.user, self.psw, str(prenotazione.set_id()))
+        self.vistaPrenotazione = VistaConfermaPrenotazione(self.user, self.psw, QDate.currentDate().toString(), self.mezzo, self.valori["data_inizio"], self.valori["data_fine"], self.valori["tariffa"], self.valori["polizza"])
+        self.vistaPrenotazione.show()
+        self.close()

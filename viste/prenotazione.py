@@ -76,7 +76,10 @@ class VistaPrenotazione(QMainWindow):
         central_layout.addLayout(self.back_layout)
 
     def close_window(self):
+        from viste.home import VistaHome
         self.close()
+        vista_home = VistaHome(self.user, self.psw)
+        vista_home.show()
 
     def go_auto(self):
         self.vista_auto = VistaPrenotazioneAuto(self.user, self.psw)
@@ -87,9 +90,9 @@ class VistaPrenotazione(QMainWindow):
         self.vista_moto.show()
 
     def go_van(self):
-        self.vista_van = VistaPrenotazioneVan()
+        self.vista_van = VistaPrenotazioneVan(self.user, self.psw)
         self.vista_van.show()
 
     def go_furgone(self):
-        self.vista_furgone = VistaPrenotazioneFurgone()
+        self.vista_furgone = VistaPrenotazioneFurgone(self.user, self.psw)
         self.vista_furgone.show()

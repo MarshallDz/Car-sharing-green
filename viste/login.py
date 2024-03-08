@@ -3,6 +3,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from Attivita.cliente import Cliente
 from viste.home import VistaHome
+import darkdetect
 
 
 class VistaLogin(QMainWindow):
@@ -12,7 +13,8 @@ class VistaLogin(QMainWindow):
 
         self.setWindowTitle("Pagina di login")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
-        self.setStyleSheet("background-color: #121212;")
+        if(darkdetect.isDark()):
+            self.setStyleSheet("background-color: #121212;")
 
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
@@ -25,7 +27,6 @@ class VistaLogin(QMainWindow):
         self.central_widget.setLayout(central_layout)
 
         self.title_label = QLabel("Accedi")
-        self.title_label.setStyleSheet("color: white;")
         self.title_font = QFont("Arial", 42, QFont.Bold)
         self.title_label.setFont(self.title_font)
         self.title_label.adjustSize()
@@ -59,8 +60,10 @@ class VistaLogin(QMainWindow):
         if nome == "password":
             campo.setEchoMode(2)
         campo.setPlaceholderText(nome)
-        campo.setStyleSheet("max-width: 500px; min-height: 60px; background-color: #403F3F; border-radius: 15px; "
-                            "color: white")
+        campo.setStyleSheet("max-width: 500px; min-height: 60px; border-radius: 15px; ")
+        if(darkdetect.isDark()):
+            campo.setStyleSheet("max-width: 500px; min-height: 60px; border-radius: 15px; "
+                                "background-color: #403F3F")
         self.campi[nome] = campo
         self.form_layout.addWidget(campo)
 

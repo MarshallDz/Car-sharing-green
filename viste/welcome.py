@@ -4,14 +4,15 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from viste.registrazione import VistaRegistrazione
 from viste.login import VistaLogin
-
+import darkdetect
 
 class WelcomeWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Benvenuto")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
-        self.setStyleSheet("background-color: #121212;")
+        if(darkdetect.isDark()):
+            self.setStyleSheet("background-color: #121212;")
 
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
@@ -25,7 +26,7 @@ class WelcomeWindow(QMainWindow):
         title_layout.setAlignment(Qt.AlignTop)
 
         self.title_label = QLabel("Benvenuto, accedi oppure registrati", self)
-        self.title_label.setStyleSheet("color: white;")
+        #self.title_label.setStyleSheet("color: white;")
         self.title_font = QFont("Arial", 42, QFont.Bold)
         self.title_label.setFont(self.title_font)
         self.title_label.adjustSize()

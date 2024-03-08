@@ -11,8 +11,7 @@
     "cambio": "manuale",
     "nPosti": 3,
     "stato": "disponibile",
-    "tariffa_oraria": 60,
-    "tariffa_giornaliera": 150
+    "tariffa_oraria": 60
   },
   {
     "URL_immagine": "viste/Icone/furgoni/mercedes_vito.png",
@@ -26,8 +25,7 @@
     "cambio": "manuale",
     "nPosti": 3,
     "stato": "disponibile",
-    "tariffa_oraria": 55,
-    "tariffa_giornaliera": 130
+    "tariffa_oraria": 55
   },
   {
     "URL_immagine": "viste/Icone/furgoni/ford_transit.png",
@@ -41,8 +39,7 @@
     "cambio": "manuale",
     "nPosti": 3,
     "stato": "disponibile",
-    "tariffa_oraria": 50,
-    "tariffa_giornaliera": 120
+    "tariffa_oraria": 50
   },
   {
     "URL_immagine": "viste/Icone/furgoni/vw_trasporter.png",
@@ -56,8 +53,7 @@
     "cambio": "automatico",
     "nPosti": 3,
     "stato": "disponibile",
-    "tariffa_oraria": 65,
-    "tariffa_giornaliera": 140
+    "tariffa_oraria": 65
   },
   {
     "URL_immagine": "viste/Icone/furgoni/renautl_trafic.jpg",
@@ -71,7 +67,6 @@
     "cambio": "manuale",
     "nPosti": 3,
     "stato": "disponibile",
-    "tariffa_oraria": 55,
-    "tariffa_giornaliera": 130
+    "tariffa_oraria": 55
   }
 ]

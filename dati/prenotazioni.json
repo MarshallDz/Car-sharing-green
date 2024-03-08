@@ -1,7 +1,7 @@
 {
     "prenotazioni": [
         {
-            "id": "",
+            "id": "2",
             "cliente": {
                 "codiceFiscale": "mrzmhl02h20g157g",
                 "nome": "michelon",
@@ -13,9 +13,44 @@
                 "prenotazioni": [],
                 "dataRegistrazione": "22012024"
             },
-            "data_prenotazione": "lun mar 4 2024",
-            "data_inizio": "2024-03-14",
-            "data_fine": "2024-03-20",
+            "data_prenotazione": "Tue Mar 5 2024",
+            "data_inizio": "2024-03-07",
+            "data_fine": "2024-03-08",
+            "filiale": "Milano, via roma",
+            "mezzo": {
+                "URL_immagine": "viste/Icone/furgoni/fiat_ducato.png",
+                "telaio": "ABC123",
+                "produttore": "Fiat",
+                "modello": "Ducato",
+                "cavalli": 130,
+                "cilindrata": 2200,
+                "anno": 2021,
+                "alimentazione": "diesel",
+                "cambio": "manuale",
+                "nPosti": 3,
+                "stato": "disponibile",
+                "tariffa_oraria": 60,
+                "tariffa_giornaliera": 150
+            },
+            "tariffa": "giornaliera",
+            "polizza": "kasko"
+        },
+        {
+            "id": "3",
+            "cliente": {
+                "codiceFiscale": "mrzmhl02h20g157g",
+                "nome": "michelon",
+                "cognome": "micheloni",
+                "dataNascita": "2024-01-22",
+                "email": "a",
+                "password": "a",
+                "cellulare": "3333333333",
+                "prenotazioni": [],
+                "dataRegistrazione": "22012024"
+            },
+            "data_prenotazione": "Tue Mar 5 2024",
+            "data_inizio": "2024-03-07",
+            "data_fine": "2024-03-08",
             "filiale": "Milano, via roma",
             "mezzo": {
                 "URL_immagine": "viste/Icone/auto/white-car.png",
@@ -31,8 +66,45 @@
                 "stato": "disponibile",
                 "tariffa_oraria": "40"
             },
-            "tariffa": "kasko",
-            "polizza": "oraria"
+            "tariffa": "giornaliera",
+            "polizza": "kasko"
+        },
+        {
+            "id": 4,
+            "cliente": {
+                "codiceFiscale": "mrzmhl02h20g157g",
+                "nome": "michelon",
+                "cognome": "micheloni",
+                "dataNascita": "2024-01-22",
+                "email": "a",
+                "password": "a",
+                "cellulare": "3333333333",
+                "prenotazioni": [
+                    "4"
+                ],
+                "dataRegistrazione": "22012024"
+            },
+            "data_prenotazione": "Thu Mar 7 2024",
+            "data_inizio": "2024-03-15",
+            "data_fine": "2024-03-18",
+            "filiale": "Milano, via roma",
+            "mezzo": {
+                "URL_immagine": "viste/Icone/scooter/bmw.png",
+                "telaio": "abc123",
+                "produttore": "bmw",
+                "modello": "gs2",
+                "cavalli": "130",
+                "cilindrata": "600",
+                "anno": "2020",
+                "alimentazione": "benzina",
+                "cambio": "manuale",
+                "nPosti": "2",
+                "stato": "disponibile",
+                "tariffa_oraria": "40",
+                "talaio": "abc123"
+            },
+            "tariffa": "giornaliera",
+            "polizza": "kasko"
         }
     ]
 }

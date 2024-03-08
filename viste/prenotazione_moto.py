@@ -38,27 +38,17 @@ class VistaPrenotazioneMoto(QMainWindow):
         self.central_layout.addLayout(title_layout)
 
         file_path = "dati/moto.json"
-        url_array = []
-        prod_array = []
-        mod_array = []
-        anno_array = []
-        cavalli_array = []
-        cc_array = []
-        cambio_array = []
-        alimentazione_array = []
-        nPosti_array = []
-        with open(file_path) as file:
+        mezzi = []
+        with open(file_path, "r") as file:
             data = json.load(file)
-            for info in data:
-                url_array.append(info["URL_immagine"])
-                prod_array.append(info["produttore"])
-                mod_array.append(info["modello"])
-                cavalli_array.append(info["cavalli"])
-                alimentazione_array.append(info["alimentazione"])
-                cambio_array.append(info["cambio"])
-                nPosti_array.append(info["nPosti"])
-                cc_array.append(info["cilindrata"])
-                anno_array.append(info["anno"])
+            chiavi = list(data[0].keys())
+            for moto in data:
+                valori = list(moto.values())
+
+                for i in range(len(valori)):
+                    moto[chiavi[i]] = valori[i]
+                # print(auto)
+                mezzi.append(moto)
 
         scroll_area = QScrollArea()
         scroll_area.setStyleSheet("QScrollBar:vertical {"
@@ -86,8 +76,8 @@ class VistaPrenotazioneMoto(QMainWindow):
 
         self.central_layout.addWidget(scroll_area)
 
-        for url, prod, mod, cv, cc, np, anno, al, cambio in zip(url_array, prod_array, mod_array, cavalli_array, cc_array, nPosti_array, anno_array, alimentazione_array, cambio_array):
-            self.aggiungi_box_moto(url, prod, mod, cv, cc, np, anno, al, cambio)
+        for i in range(len(mezzi)):
+            self.aggiungi_box_moto(mezzi[i])
 
         # Aggiungiamo il pulsante "Indietro"
         button_layout = QVBoxLayout()
@@ -101,7 +91,7 @@ class VistaPrenotazioneMoto(QMainWindow):
         button_layout.addWidget(self.back_button)
         self.central_layout.addLayout(button_layout)
 
-    def aggiungi_box_moto(self, url, prod, mod, cv, cc, n, anno, alim, cambio):
+    def aggiungi_box_moto(self, moto):
         car_info_frame = QFrame()
         car_info_frame.setStyleSheet("border: 2px solid white; border-radius: 5px; margin-right: 5px;")
         car_info_frame.setMinimumWidth(600)
@@ -111,16 +101,16 @@ class VistaPrenotazioneMoto(QMainWindow):
         car_info_layout.setAlignment(Qt.AlignTop)
 
         # Aggiungi le informazioni alla griglia
-        labels_values = [("Produttore:", prod),
-                         ("Modello:", mod),
-                         ("Anno:", anno),
-                         ("Alimentazione:", alim),
-                         ("Cavalli:", cv),
-                         ("Cilindrata:", cc),
-                         ("Cambio:", cambio),
-                         ("Numero Posti:", n)]
+        self.labels_values = [("Produttore:", moto["produttore"]),
+                              ("Modello:", moto["modello"]),
+                              ("Anno:", moto["anno"]),
+                              ("Alimentazione:", moto["alimentazione"]),
+                              ("Cavalli:", moto["cavalli"]),
+                              ("Cilindrata:", moto["cilindrata"]),
+                              ("Cambio:", moto["cambio"]),
+                              ("Numero Posti:", moto["nPosti"])]
 
-        for i, (label_name, value) in enumerate(labels_values):
+        for i, (label_name, value) in enumerate(self.labels_values):
             label_name = QLabel(label_name, self)
             label_name.setStyleSheet("color: white; border: 0px")
 
@@ -135,12 +125,12 @@ class VistaPrenotazioneMoto(QMainWindow):
 
         prenota_button = QPushButton("Prenota")
         prenota_button.setStyleSheet("color: black; border-radius: 5px; background-color: #D9D9D9")
-        prenota_button.clicked.connect(self.go_prenota)
+        prenota_button.clicked.connect(lambda _, car=moto: self.go_prenota(car))
         car_info_layout.addWidget(prenota_button, 6, 3)
         car_layout = QHBoxLayout()
         car_layout.setAlignment(Qt.AlignTop)
 
-        pixmap = QPixmap(url)
+        pixmap = QPixmap(moto["URL_immagine"])
         if not pixmap.isNull():
             label = QLabel()
             label.setStyleSheet("margin-left: 20px;")
@@ -161,6 +151,6 @@ class VistaPrenotazioneMoto(QMainWindow):
     def go_back(self):
         self.close()
 
-    def go_prenota(self):
-        self.vista_prenotazione = VistaEffettuaPrenotazione(self.user, self.psw)
+    def go_prenota(self, moto):
+        self.vista_prenotazione = VistaEffettuaPrenotazione(self.user, self.psw, moto)
         self.vista_prenotazione.show()
