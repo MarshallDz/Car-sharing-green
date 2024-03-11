@@ -198,7 +198,8 @@ class VistaEffettuaPrenotazione(QMainWindow):
         prenotazione.aggiungiPrenotazione(cliente, QDate.currentDate().toString(), self.valori["data_inizio"],
                                           self.valori["data_fine"], self.mezzo, self.valori["filiale"],
                                           self.valori["tariffa"], self.valori["polizza"])
-        pagamento.aggiungiPagamento(QDate.currentDate().toString(), prenotazione.__dict__, cliente)
+
+        pagamento.aggiungiPagamento("", prenotazione.__dict__, cliente)
         c.set_prenotazioni_cliente(self.user, self.psw, str(prenotazione.set_id()))
         self.vistaPrenotazione = VistaConfermaPrenotazione(self.user, self.psw, QDate.currentDate().toString(), self.mezzo,
                                                            self.valori["data_inizio"], self.valori["data_fine"], self.valori["tariffa"],

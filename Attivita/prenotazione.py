@@ -24,11 +24,11 @@ class Prenotazione():
         self.tariffa = tariffa
         self.polizza = polizza
 
-        prenotazioni = self.get_dati()
+        """prenotazioni = self.get_dati()
         prenotazioni.append(self.__dict__)
         with open("dati/prenotazioni.json", "w") as f:
             json.dump({"prenotazioni": prenotazioni}, f, indent=4)
-        return 1
+        return 1"""
 
     def eliminaPrenotazione(self, p):
         url = "dati/prenotazioni.json"
@@ -58,3 +58,4 @@ class Prenotazione():
         # Generazione della stringa casuale di 6 caratteri
         stringa_random = ''.join(random.choice(caratteri) for _ in range(6))
         return stringa_random
+

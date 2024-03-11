@@ -1,8 +1,8 @@
-import datetime
+from datetime import datetime
 import json
 import random
 import string
-class Pagamento:
+class Pagamento():
     def __init__(self):
         self.codice = ""
         self.totale = ""
@@ -13,15 +13,15 @@ class Pagamento:
 
     def aggiungiPagamento(self, data, pren, cliente):
         self.codice = self.set_id()
-        self.totale = self.calcolaTotale()
+        self.totale = self.calcolaTotale(pren)
         self.dataPagamento = data
-        self.prenotazione = pren
-        self.cliente = cliente
-        """pagamenti = self.get_dati()
+        self.prenotazione = pren["id"]
+        self.cliente = cliente['codiceFiscale']
+        pagamenti = self.get_dati()
         pagamenti.append(self.__dict__)
         with open("dati/pagamenti.json", "w") as f:
             json.dump({"pagamenti":pagamenti}, f, indent=4)
-        return 1"""
+        return 1
 
 
     def get_dati(self):
@@ -38,19 +38,18 @@ class Pagamento:
         stringa_random = ''.join(random.choice(caratteri) for _ in range(6))
         return stringa_random
 
-    def calcolaTotale(self):
-        print(self.prenotazione.__dict__['tariffa'])
-        """if self.prenotazione["tariffa"] == "giornaliera":
-            formato = "%Y-%m-%d %H:%M:%S"
-            data_inizio = datetime.strptime(self.prenotazione["data_inizio"], formato)
-            data_fine = datetime.strptime(self.prenotazione["data_fine"], formato)
-
+    def calcolaTotale(self, p):
+        totale = None
+        if p["tariffa"] == "giornaliera":
+            formato = "%Y-%m-%d %H.%M"
+            data_inizio = datetime.strptime(p["data_inizio"], formato).date()
+            data_fine = datetime.strptime(p["data_fine"], formato).date()
             differenza = data_fine - data_inizio
-            ore = differenza.total_seconds() / 3600  # 3600 secondi in un'ora
-            totale = ore * self.prenotazione['mezzo']['tariffa']
-            if self.prenotazione['polizza'] == 'rca':
+            ore = differenza.total_seconds() / 3600
+            totale = ore * int(p['mezzo']['tariffa_oraria'])
+            if p['polizza'] == 'rca':
                 totale += 30
-            else: totale += 50
-        print(totale)
-        return totale"""
+            else:
+                totale += 50
+        return totale
 

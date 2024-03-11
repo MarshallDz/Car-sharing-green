@@ -1,8 +1,12 @@
 {
     "pagamenti": [
-        {},
         {
-            "codice": "9p5wh6",
-            "totale": null,
-            "dataPagamento": "Sun Mar 10 2024",
-            "prenotazione": 
+            "codice": "cNTbAf",
+            "totale": 1010.0,
+            "dataPagamento": "lun mar 11 2024",
+            "prenotazione": "ALb15s",
+            "cliente": "mrzmhl02h20g157g",
+            "statoPagamento": "da pagare"
+        }
+    ]
+}
