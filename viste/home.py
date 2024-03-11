@@ -45,27 +45,23 @@ class VistaHome(QMainWindow):
         self.title_label.adjustSize()
         center_layout.addWidget(self.title_label)
 
-        options_layout = QGridLayout()
-        button1 = QPushButton("Nuova \nprenotazione")
+        options_layout = QVBoxLayout()
+        button1 = QPushButton("Nuova prenotazione")
         button1.setStyleSheet(
-            "max-width: 150px; background-color: #74b1fc; border-radius: 55px; color: black; padding: 100px; "
+            "width: 500px; height: 75px; background-color: #D9D9D9; border-radius: 5px; padding: 10px; "
             "margin-top: 100px;")
         button1.clicked.connect(self.go_registrazione)
-        button2 = QPushButton("Visualizza \n prenotazioni")
+        button2 = QPushButton("Visualizza prenotazioni")
         button2.setStyleSheet(
-            "max-width: 150px; background-color: #74b1fc; border-radius: 55px; color: black; padding: 100px; "
-            "margin-top: 100px;")
+            "width: 500px; height: 75px; background-color: #D9D9D9; border-radius: 5px; color: black; padding: 10px; ")
         button2.clicked.connect(self.go_visualizza_prenotazioni)
-        button3 = QPushButton("Cancella \nuna prenotazione")
+        button3 = QPushButton("Visualizza pagamenti")
         button3.setStyleSheet(
-            "max-width: 150px; background-color: #74b1fc; border-radius: 55px; color: black; padding: 100px;")
-        button4 = QPushButton("Gestisci \npagamenti")
-        button4.setStyleSheet(
-            "max-width: 150px; background-color: #74b1fc; border-radius: 55px; color: black; padding: 100px;")
-        options_layout.addWidget(button1, 0, 0)
-        options_layout.addWidget(button2, 0, 1)
-        options_layout.addWidget(button3, 1, 0)
-        options_layout.addWidget(button4, 1, 1)
+            "width: 500px; height: 75px; background-color: #D9D9D9; border-radius: 5px; color: black; padding: 10px;")
+
+        options_layout.addWidget(button1)
+        options_layout.addWidget(button2)
+        options_layout.addWidget(button3)
         options_layout.setSpacing(50)
         center_layout.addLayout(options_layout)
         form_layout.addLayout(center_layout)
@@ -76,7 +72,7 @@ class VistaHome(QMainWindow):
         back_button.setStyleSheet("max-width: 200px; color:")
         back_button.setIcon(QIcon("viste/Icone/logout.png"))
         back_button.setIconSize(QSize(50, 50))
-        back_button.clicked.connect(self.close)
+        back_button.clicked.connect(self.go_back)
         right_layout.addWidget(back_button)
         form_layout.addLayout(right_layout)
 
@@ -97,7 +93,14 @@ class VistaHome(QMainWindow):
     def go_registrazione(self):
         self.area = VistaPrenotazione(self.user, self.psw)
         self.area.show()
+        self.close()
 
     def go_visualizza_prenotazioni(self):
         self.vista = PrenotazioniView(self.user, self.psw)
         self.vista.show()
+
+    def go_back(self):
+        from viste.login import VistaLogin
+        self.vista = VistaLogin()
+        self.vista.show()
+        self.close()

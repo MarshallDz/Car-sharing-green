@@ -50,7 +50,7 @@ class VistaLogin(QMainWindow):
             "max-width: 150px; background-color: #F85959; border-radius: 15px; color: black; padding: 10px;"
             "margin-left: 175px;")
         invia_button.clicked.connect(self.verifica_dati)
-        back_button.clicked.connect(self.close)
+        back_button.clicked.connect(self.go_back)
         self.form_layout.addWidget(invia_button)
         self.form_layout.addWidget(back_button)
         central_layout.addLayout(self.form_layout)
@@ -88,6 +88,7 @@ class VistaLogin(QMainWindow):
                     trovato = True
                     self.vista_home = VistaHome(e, password[i])
                     self.vista_home.show()
+                    self.close()
                     break
 
         if not trovato:
@@ -96,3 +97,8 @@ class VistaLogin(QMainWindow):
             self.campi["password"].clear()
             return
 
+    def go_back(self):
+        from viste.welcome import WelcomeWindow
+        self.vista = WelcomeWindow()
+        self.vista.show()
+        self.close()

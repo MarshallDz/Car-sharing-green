@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from Attivita.prenotazione import *
 import darkdetect
-
+import datetime
 
 class PrenotazioniView(QMainWindow):
     def __init__(self, user, psw):
@@ -27,7 +27,6 @@ class PrenotazioniView(QMainWindow):
         self.central_widget.setLayout(self.central_layout)
 
         self.title_label = QLabel("Visualizza lista delle prenotazioni: ")
-        #self.title_label.setStyleSheet("color: white;")
         self.title_font = self.title_label.font()
         self.title_font.setPointSize(42)
         self.title_font.setBold(True)
@@ -133,10 +132,9 @@ class PrenotazioniView(QMainWindow):
 
     def disdici(self, p):
         oggi = datetime.date.today()
-        data_inizio = datetime.datetime.strptime(p["data_inizio"], "%Y-%m-%d").date()
-        data_fine = datetime.datetime.strptime(p["data_fine"], "%Y-%m-%d").date()
-
-        if data_inizio <= oggi <= data_fine:
+        data_inizio = datetime.datetime.strptime(p["data_inizio"].split(" ")[0], "%Y-%m-%d").date()
+        #posso disdire la prenotazione fino ad un giorno prima dell'inizio della prenotazione
+        if data_inizio > oggi:
             reply = QMessageBox.warning(self, 'Conferma Disdetta', 'Sei sicuro di voler disdire questa prenotazione?',
                                          QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
 

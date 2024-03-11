@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from Attivita.cliente import Cliente
-
+import darkdetect
 
 class VistaRegistrazione(QMainWindow):
     def __init__(self):
@@ -12,7 +12,8 @@ class VistaRegistrazione(QMainWindow):
 
         self.setWindowTitle("Pagina di registrazione")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
-        self.setStyleSheet("background-color: #121212;")
+        if darkdetect.isDark():
+            self.setStyleSheet("background-color: #121212;")
 
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
@@ -55,7 +56,7 @@ class VistaRegistrazione(QMainWindow):
             "max-width: 150px; background-color: #F85959; border-radius: 15px; color: black; padding: 10px;"
             "margin-left: 60px;")
         invia_button.clicked.connect(self.invio_dati)
-        back_button.clicked.connect(self.close)
+        back_button.clicked.connect(self.go_back)
         self.form_layout.addWidget(invia_button)
         self.form_layout.addWidget(back_button)
 
@@ -96,3 +97,9 @@ class VistaRegistrazione(QMainWindow):
         cliente = Cliente()
         if cliente.aggiungiCliente(data_to_save["codice fiscale"], data_to_save["nome"], data_to_save["cognome"], data_to_save["data di nascita"], data_to_save["e-mail"], data_to_save["password"], data_to_save["cellulare"]):
             self.close()
+
+    def go_back(self):
+        from viste.welcome import WelcomeWindow
+        self.vista = WelcomeWindow()
+        self.vista.show()
+        self.close()

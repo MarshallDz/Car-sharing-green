@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import *
 import sys
 from viste.welcome import WelcomeWindow
-from viste.visualizzaPrenotazioni import PrenotazioniView
+
 
 def main():
     app = QApplication(sys.argv)

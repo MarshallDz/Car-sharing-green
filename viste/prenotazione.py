@@ -5,6 +5,7 @@ from viste.prenotazione_auto import VistaPrenotazioneAuto
 from viste.prenotazione_moto import  VistaPrenotazioneMoto
 from viste.prenotazione_van import VistaPrenotazioneVan
 from viste.prenotazione_furgoni import VistaPrenotazioneFurgone
+import darkdetect
 
 class VistaPrenotazione(QMainWindow):
     def __init__(self, user, psw):
@@ -14,7 +15,8 @@ class VistaPrenotazione(QMainWindow):
 
         self.setWindowTitle("Pagina di prenotazione")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
-        self.setStyleSheet("background-color: #121212;")
+        if darkdetect.isDark():
+            self.setStyleSheet("background-color: #121212;")
 
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
@@ -77,22 +79,26 @@ class VistaPrenotazione(QMainWindow):
 
     def close_window(self):
         from viste.home import VistaHome
+        self.vista = VistaHome(self.user, self.psw)
+        self.vista.show()
         self.close()
-        vista_home = VistaHome(self.user, self.psw)
-        vista_home.show()
 
     def go_auto(self):
         self.vista_auto = VistaPrenotazioneAuto(self.user, self.psw)
         self.vista_auto.show()
+        self.close()
 
     def go_moto(self):
         self.vista_moto = VistaPrenotazioneMoto(self.user, self.psw)
         self.vista_moto.show()
+        self.close()
 
     def go_van(self):
         self.vista_van = VistaPrenotazioneVan(self.user, self.psw)
         self.vista_van.show()
+        self.close()
 
     def go_furgone(self):
         self.vista_furgone = VistaPrenotazioneFurgone(self.user, self.psw)
         self.vista_furgone.show()
+        self.close()

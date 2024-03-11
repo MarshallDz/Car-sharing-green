@@ -1,7 +1,6 @@
-import datetime
 import json
-from PyQt5.QtWidgets import QWidget, QMessageBox
-
+import random
+import string
 class Prenotazione():
     def __init__(self):
         self.id = ""
@@ -54,9 +53,8 @@ class Prenotazione():
             return prenotazioni
 
     def set_id(self):
-        url = "dati/prenotazioni.json"
-        with open(url, "r") as file:
-            data = json.load(file)
-            prenotazioni = data.get("prenotazioni", [])
-            n = len(prenotazioni)
-            return n
+        # Creazione di una stringa contenente lettere minuscole, lettere maiuscole e numeri
+        caratteri = string.ascii_letters + string.digits
+        # Generazione della stringa casuale di 6 caratteri
+        stringa_random = ''.join(random.choice(caratteri) for _ in range(6))
+        return stringa_random

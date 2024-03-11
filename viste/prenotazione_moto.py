@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import Qt
 from viste.effettua_prenotazione import VistaEffettuaPrenotazione
+import darkdetect
 
 class VistaPrenotazioneMoto(QMainWindow):
     def __init__(self, user, psw):
@@ -13,7 +14,8 @@ class VistaPrenotazioneMoto(QMainWindow):
 
         self.setWindowTitle("Pagina di prenotazione moto")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
-        self.setStyleSheet("background-color: #121212;")
+        if darkdetect.isDark():
+            self.setStyleSheet("background-color: #121212;")
         self.setMinimumWidth(1000)
 
         self.central_widget = QWidget()
@@ -27,7 +29,6 @@ class VistaPrenotazioneMoto(QMainWindow):
         self.central_widget.setLayout(self.central_layout)
 
         self.title_label = QLabel("Prenota il tuo scooter: ")
-        self.title_label.setStyleSheet("color: white;")
         self.title_font = self.title_label.font()
         self.title_font.setPointSize(42)
         self.title_font.setBold(True)
@@ -112,10 +113,10 @@ class VistaPrenotazioneMoto(QMainWindow):
 
         for i, (label_name, value) in enumerate(self.labels_values):
             label_name = QLabel(label_name, self)
-            label_name.setStyleSheet("color: white; border: 0px")
+            label_name.setStyleSheet("border: 0px")
 
             value_label = QLabel(str(value), self)
-            value_label.setStyleSheet("color: white; border: 0px")
+            value_label.setStyleSheet("border: 0px")
 
             row = i // 2
             col = i % 2
@@ -149,8 +150,12 @@ class VistaPrenotazioneMoto(QMainWindow):
         self.scroll_layout.addLayout(car_layout)
 
     def go_back(self):
+        from viste.prenotazione import VistaPrenotazione
+        self.vista = VistaPrenotazione(self.user, self.psw)
+        self.vista.show()
         self.close()
 
     def go_prenota(self, moto):
         self.vista_prenotazione = VistaEffettuaPrenotazione(self.user, self.psw, moto)
         self.vista_prenotazione.show()
+        self.close()

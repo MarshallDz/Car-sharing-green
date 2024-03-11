@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import Qt
 from viste.effettua_prenotazione import VistaEffettuaPrenotazione
+import darkdetect
 
 class VistaPrenotazioneVan(QMainWindow):
     def __init__(self, user, psw):
@@ -12,7 +13,8 @@ class VistaPrenotazioneVan(QMainWindow):
 
         self.setWindowTitle("Pagina di prenotazione van")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
-        self.setStyleSheet("background-color: #121212;")
+        if darkdetect.isDark():
+            self.setStyleSheet("background-color: #121212;")
         self.setMinimumWidth(1000)
 
         self.central_widget = QWidget()
@@ -26,7 +28,6 @@ class VistaPrenotazioneVan(QMainWindow):
         self.central_widget.setLayout(self.central_layout)
 
         self.title_label = QLabel("Prenota van: ")
-        self.title_label.setStyleSheet("color: white;")
         self.title_font = self.title_label.font()
         self.title_font.setPointSize(42)
         self.title_font.setBold(True)
@@ -111,10 +112,10 @@ class VistaPrenotazioneVan(QMainWindow):
 
         for i, (label_name, value) in enumerate(labels_values):
             label_name = QLabel(label_name, self)
-            label_name.setStyleSheet("color: white; border: 0px")
+            label_name.setStyleSheet("border: 0px")
 
             value_label = QLabel(str(value), self)
-            value_label.setStyleSheet("color: white; border: 0px")
+            value_label.setStyleSheet("border: 0px")
 
             row = i // 2
             col = i % 2
@@ -148,8 +149,12 @@ class VistaPrenotazioneVan(QMainWindow):
         self.scroll_layout.addLayout(car_layout)
 
     def go_back(self):
+        from viste.prenotazione import VistaPrenotazione
+        self.vista = VistaPrenotazione(self.user, self.psw)
+        self.vista.show()
         self.close()
 
     def go_prenota(self, van):
         self.vista_prenotazione = VistaEffettuaPrenotazione(self.user, self.psw, van)
         self.vista_prenotazione.show()
+        self.close()
