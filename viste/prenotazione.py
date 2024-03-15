@@ -29,7 +29,6 @@ class VistaPrenotazione(QMainWindow):
         self.central_widget.setLayout(central_layout)
 
         self.title_label = QLabel("Scegli il mezzo da prenotare: ")
-        self.title_label.setStyleSheet("color: white;")
         self.title_font = QFont("Arial", 42, QFont.Bold)
         self.title_label.setFont(self.title_font)
         self.title_label.adjustSize()

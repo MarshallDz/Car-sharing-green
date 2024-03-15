@@ -39,7 +39,6 @@ class Pagamento():
         return stringa_random
 
     def calcolaTotale(self, p):
-        totale = None
         if p["tariffa"] == "giornaliera":
             formato = "%Y-%m-%d %H.%M"
             data_inizio = datetime.strptime(p["data_inizio"], formato).date()
@@ -51,5 +50,7 @@ class Pagamento():
                 totale += 30
             else:
                 totale += 50
+        else:
+            totale = 'da definire'
         return totale
 

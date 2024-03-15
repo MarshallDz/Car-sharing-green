@@ -5,6 +5,7 @@ from viste.areacliente import VistaCliente
 from Attivita.cliente import Cliente
 from viste.prenotazione import VistaPrenotazione
 from viste.visualizzaPrenotazioni import PrenotazioniView
+from viste.vistaPagamenti import VistaPagamenti
 import darkdetect
 
 
@@ -48,7 +49,7 @@ class VistaHome(QMainWindow):
         options_layout = QVBoxLayout()
         button1 = QPushButton("Nuova prenotazione")
         button1.setStyleSheet(
-            "width: 500px; height: 75px; background-color: #D9D9D9; border-radius: 5px; padding: 10px; "
+            "width: 500px; height: 75px; color: black; background-color: #D9D9D9; border-radius: 5px; padding: 10px; "
             "margin-top: 100px;")
         button1.clicked.connect(self.go_registrazione)
         button2 = QPushButton("Visualizza prenotazioni")
@@ -58,6 +59,7 @@ class VistaHome(QMainWindow):
         button3 = QPushButton("Visualizza pagamenti")
         button3.setStyleSheet(
             "width: 500px; height: 75px; background-color: #D9D9D9; border-radius: 5px; color: black; padding: 10px;")
+        button3.clicked.connect(self.go_pagamenti)
 
         options_layout.addWidget(button1)
         options_layout.addWidget(button2)
@@ -102,5 +104,10 @@ class VistaHome(QMainWindow):
     def go_back(self):
         from viste.login import VistaLogin
         self.vista = VistaLogin()
+        self.vista.show()
+        self.close()
+
+    def go_pagamenti(self):
+        self.vista = VistaPagamenti(self.user, self.psw)
         self.vista.show()
         self.close()

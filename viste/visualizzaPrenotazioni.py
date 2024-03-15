@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from Attivita.prenotazione import *
+from Attivita.cliente import Cliente
 import darkdetect
 import datetime
 
@@ -74,14 +75,9 @@ class PrenotazioniView(QMainWindow):
         self.prenotazione = Prenotazione()
         prenotazioni = self.prenotazione.get_dati()
         trovato = False
-
-        # Nascondi tutti gli elementi presenti nel layout della scelta
-        for i in reversed(range(self.scroll_layout.count())):
-            widget = self.scroll_layout.itemAt(i).widget()
-            widget.hide()
-
+        cliente = Cliente().get_cliente(self.user, self.psw)
         for x in prenotazioni:
-            if x["cliente"]["email"] == self.user and x["cliente"]["password"] == self.psw:
+            if x["cliente"]['codiceFiscale'] == cliente['codiceFiscale']:
                 trovato = True
                 info_box = QGroupBox(f"Informazioni sulla prenotazione codice {x['id']}")
                 info_box.setStyleSheet("QGroupBox{max-height: 200px;}")

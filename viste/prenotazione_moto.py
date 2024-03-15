@@ -1,5 +1,7 @@
 import sys
 import json
+
+from PyQt5 import QtGui
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import Qt
@@ -124,6 +126,12 @@ class VistaPrenotazioneMoto(QMainWindow):
             car_info_layout.addWidget(label_name, row, col * 2)
             car_info_layout.addWidget(value_label, row, col * 2 + 1)
 
+        tariffaLabel = QLabel(f"A partire da {moto['tariffa_oraria']}€ ad ora \n oppure  {int(moto['tariffa_oraria']) * 24 * 0.7}€ al giorno")
+        tariffaLabel.setStyleSheet("border: 0px")
+        myFont = QtGui.QFont()
+        myFont.setBold(True)
+        tariffaLabel.setFont(myFont)
+        car_info_layout.addWidget(tariffaLabel, 6, 0)
         prenota_button = QPushButton("Prenota")
         prenota_button.setStyleSheet("color: black; border-radius: 5px; background-color: #D9D9D9")
         prenota_button.clicked.connect(lambda _, car=moto: self.go_prenota(car))

@@ -1,4 +1,4 @@
-from Attivita.mezzo import Mezzo
+from Servizio.mezzo import Mezzo
 import json
 
 class Auto(Mezzo):

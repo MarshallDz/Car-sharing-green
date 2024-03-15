@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import Qt, QDate
+from PyQt5.QtCore import Qt, QDate, QDateTime
 from Attivita.cliente import *
 from Attivita.prenotazione import *
 from viste.confermaPrenotazione import VistaConfermaPrenotazione
@@ -200,7 +200,7 @@ class VistaEffettuaPrenotazione(QMainWindow):
                                           self.valori["tariffa"], self.valori["polizza"])
 
         pagamento.aggiungiPagamento("", prenotazione.__dict__, cliente)
-        c.set_prenotazioni_cliente(self.user, self.psw, str(prenotazione.set_id()))
+        c.set_prenotazioni_cliente(self.user, self.psw, prenotazione.id)
         self.vistaPrenotazione = VistaConfermaPrenotazione(self.user, self.psw, QDate.currentDate().toString(), self.mezzo,
                                                            self.valori["data_inizio"], self.valori["data_fine"], self.valori["tariffa"],
                                                            self.valori["polizza"])

@@ -26,7 +26,6 @@ class VistaRegistrazione(QMainWindow):
         self.central_widget.setLayout(central_layout)
 
         self.title_label = QLabel("Crea il tuo account")
-        self.title_label.setStyleSheet("color: white;")
         self.title_font = QFont("Arial", 42, QFont.Bold)
         self.title_label.setFont(self.title_font)
         self.title_label.adjustSize()
@@ -64,16 +63,22 @@ class VistaRegistrazione(QMainWindow):
 
     def crea_campo(self, nome):
         if nome == "data di nascita":
+            layout = QHBoxLayout()  # Layout orizzontale per posizionare la label accanto al campo
+            label = QLabel("Data di nascita:")
             campo = QDateEdit()
             campo.setCalendarPopup(True)
             campo.setStyleSheet("color: black; background-color: white;")
             campo.setDate(QDate.currentDate())
+            layout.addWidget(label)
+            layout.addWidget(campo)
+            self.form_layout.addLayout(layout)
         else:
             campo = QLineEdit()
             campo.setPlaceholderText(nome)
             campo.setStyleSheet("color: black;  max-width: 300px; min-height: 40px; background-color: white;")
+            self.form_layout.addWidget(campo)
+
         self.campi[nome] = campo
-        self.form_layout.addWidget(campo)
 
     def invio_dati(self):
         data_to_save = {}
