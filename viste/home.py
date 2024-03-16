@@ -100,6 +100,7 @@ class VistaHome(QMainWindow):
     def go_visualizza_prenotazioni(self):
         self.vista = PrenotazioniView(self.user, self.psw)
         self.vista.show()
+        self.close()
 
     def go_back(self):
         from viste.login import VistaLogin

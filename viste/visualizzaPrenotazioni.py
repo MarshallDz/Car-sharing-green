@@ -72,13 +72,18 @@ class PrenotazioniView(QMainWindow):
         self.central_layout.addWidget(back_button, alignment=Qt.AlignHCenter | Qt.AlignBottom)
 
     def aggiungi_box_info(self):
-        self.prenotazione = Prenotazione()
-        prenotazioni = self.prenotazione.get_dati()
-        trovato = False
         cliente = Cliente().get_cliente(self.user, self.psw)
-        for x in prenotazioni:
-            if x["cliente"]['codiceFiscale'] == cliente['codiceFiscale']:
-                trovato = True
+        prenotazioniCliente = Cliente().get_prenotazione(cliente['codiceFiscale'])
+        if len(prenotazioniCliente) == 0:
+            label = QLabel("Non hai effettuato nessuna prenotazione")
+            label.setStyleSheet("color: #F85959; border: 1px solid red; padding: 0px; max-height: 44px")
+            label_font = label.font()
+            label_font.setPointSize(42)
+            label_font.setBold(True)
+            label.setFont(label_font)
+            self.scroll_layout.addWidget(label, alignment=Qt.AlignHCenter)
+        else:
+            for x in prenotazioniCliente:
                 info_box = QGroupBox(f"Informazioni sulla prenotazione codice {x['id']}")
                 info_box.setStyleSheet("QGroupBox{max-height: 200px;}")
                 info_layout = QGridLayout(info_box)
@@ -114,14 +119,6 @@ class PrenotazioniView(QMainWindow):
                 info_layout.addWidget(disdici, 4, 2, alignment= Qt.AlignRight)
 
                 self.scroll_layout.addWidget(info_box)
-        if trovato == False:
-            label = QLabel("Non hai effettuato nessuna prenotazione")
-            label.setStyleSheet("color: #F85959; border: 1px solid red; padding: 0px; max-height: 44px")
-            label_font = label.font()
-            label_font.setPointSize(42)
-            label_font.setBold(True)
-            label.setFont(label_font)
-            self.scroll_layout.addWidget(label, alignment=Qt.AlignHCenter)
 
     def go_back(self):
         self.close()

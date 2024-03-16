@@ -36,10 +36,9 @@ class Cliente(Utilizzatore):
         with open(file_path) as file:
             data = json.load(file)
 
-            for value in data:
-                prenotazione = value
-                if prenotazione["cliente"] == cf:
-                    lista_prenotazioni.append(prenotazione["id"])
+            for value in data['prenotazioni']:
+                if value["cliente"]['codiceFiscale'] == cf:
+                    lista_prenotazioni.append(value)
 
         return lista_prenotazioni
 
