@@ -16,7 +16,7 @@ class VistaEffettuaPrenotazione(QMainWindow):
 
         self.setWindowTitle("Schermata di prenotazione")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
-
+        self.showMaximized()
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
         if darkdetect.isDark():
@@ -191,7 +191,7 @@ class VistaEffettuaPrenotazione(QMainWindow):
                 QMessageBox.warning(self, "Attenzione", "Per favore compila tutti i campi.")
                 return
 
-        cliente = Cliente.get_cliente(self, self.user, self.psw)
+        cliente = Cliente.get_dati(self, self.user, self.psw)
         prenotazione = Prenotazione()
         pagamento = Pagamento()
         c = Cliente()

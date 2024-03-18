@@ -66,6 +66,44 @@
             },
             "tariffa": "giornaliera",
             "polizza": "kasko"
+        },
+        {
+            "id": "5h4ow6",
+            "cliente": {
+                "codiceFiscale": "mrzmhl02h20g157g",
+                "nome": "michelon",
+                "cognome": "micheloni",
+                "dataNascita": "2024-01-22",
+                "email": "a",
+                "password": "a",
+                "cellulare": "3333333333",
+                "prenotazioni": [
+                    "8MLhvx",
+                    "OCv2Wx"
+                ],
+                "dataRegistrazione": "22012024"
+            },
+            "data_prenotazione": "Sat Mar 16 2024",
+            "data_inizio": "2024-03-22 08.00",
+            "data_fine": "2024-03-23 08.00",
+            "filiale": "Milano, via roma",
+            "mezzo": {
+                "URL_immagine": "viste/Icone/van/mercedes_sprinter.png",
+                "telaio": "def456",
+                "produttore": "Mercedes",
+                "modello": "Sprinter",
+                "cavalli": "150",
+                "cilindrata": "2500",
+                "anno": "2020",
+                "alimentazione": "diesel",
+                "cambio": "manuale",
+                "nPosti": "3",
+                "stato": "disponibile",
+                "tariffa_oraria": "60",
+                "tariffa_giornaliera": "150"
+            },
+            "tariffa": "giornaliera",
+            "polizza": "kasko"
         }
     ]
 }

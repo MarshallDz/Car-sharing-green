@@ -12,7 +12,7 @@ class VistaCliente(QMainWindow):
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
         if darkdetect.isDark():
             self.setStyleSheet("background-color: #121212;")
-
+        self.showMaximized()
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
 
@@ -57,7 +57,7 @@ class VistaCliente(QMainWindow):
         campo = QLineEdit()
         campo.setText(valore)
         campo.setReadOnly(True)
-        campo.setStyleSheet("max-width: 500px; min-height: 40px; background-color: #e3e1dc;")
+        campo.setStyleSheet("max-width: 500px; min-height: 40px; background-color: #e3e1dc; color: black;")
         self.layout.addWidget(campo)
         return campo
 

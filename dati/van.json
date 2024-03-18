@@ -11,8 +11,7 @@
     "cambio": "manuale",
     "nPosti": "3",
     "stato": "disponibile",
-    "tariffa_oraria": "50",
-    "tariffa_giornaliera": "120"
+    "tariffa_oraria": "50"
   },
   {
     "URL_immagine": "viste/Icone/van/mercedes_sprinter.png",
@@ -26,8 +25,7 @@
     "cambio": "manuale",
     "nPosti": "3",
     "stato": "disponibile",
-    "tariffa_oraria": "60",
-    "tariffa_giornaliera": "150"
+    "tariffa_oraria": "60"
   },
   {
     "URL_immagine": "viste/Icone/van/vw_crafter.png",
@@ -41,7 +39,6 @@
     "cambio": "manuale",
     "nPosti": "3",
     "stato": "disponibile",
-    "tariffa_oraria": "55",
-    "tariffa_giornaliera": "130"
+    "tariffa_oraria": "55"
   }
 ]

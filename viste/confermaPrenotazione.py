@@ -18,7 +18,7 @@ class VistaConfermaPrenotazione(QMainWindow):
         if darkdetect.isDark():
             self.setStyleSheet("background-color: #121212;")
         self.setStyleSheet(f"max-width: {self.width()}")
-
+        self.showMaximized()
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
 

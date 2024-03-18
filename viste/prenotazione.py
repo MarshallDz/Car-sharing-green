@@ -17,7 +17,7 @@ class VistaPrenotazione(QMainWindow):
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
         if darkdetect.isDark():
             self.setStyleSheet("background-color: #121212;")
-
+        self.showMaximized()
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
 

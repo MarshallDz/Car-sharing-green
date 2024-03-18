@@ -18,7 +18,7 @@ class VistaPrenotazioneFurgone(QMainWindow):
         if darkdetect.isDark():
             self.setStyleSheet("background-color: #121212;")
         self.setMinimumWidth(1000)
-
+        self.showMaximized()
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
 
@@ -123,7 +123,7 @@ class VistaPrenotazioneFurgone(QMainWindow):
             car_info_layout.addWidget(label_name, row, col * 2)
             car_info_layout.addWidget(value_label, row, col * 2 + 1)
 
-        tariffaLabel = QLabel(f"A partire da {mezzo['tariffa_oraria']}€ ad ora \n oppure  {int(mezzo['tariffa_oraria']) * 24 * 0.7}€ al giorno")
+        tariffaLabel = QLabel(f"A partire da {mezzo['tariffa_oraria']}€ ad ora \n oppure  {int(int(mezzo['tariffa_oraria']) * 24 * 0.7)}€ al giorno")
         tariffaLabel.setStyleSheet("border: 0px")
         myFont = QtGui.QFont()
         myFont.setBold(True)

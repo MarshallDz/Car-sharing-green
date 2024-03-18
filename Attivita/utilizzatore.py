@@ -41,7 +41,7 @@ class Utilizzatore:
         pass
 
     @abstractmethod
-    def ricercaUtilizzatoreCodice(self, codice):
+    def ricercaUtilizzatoreNominativo(self, nome, cogome):
         pass
 
     def rimuoviUtilizzatore(self):

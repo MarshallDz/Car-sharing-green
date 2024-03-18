@@ -28,18 +28,16 @@ class Cliente(Utilizzatore):
             json.dump({"clienti": clienti}, f, indent=4)
         QMessageBox.information(None, "Success", "Account registrato correttamente!")
         return 1
-    
-    # per ora non serve a nulla
+
     def get_prenotazione(self, cf):
         lista_prenotazioni = []
         file_path = "dati/prenotazioni.json"
         with open(file_path) as file:
             data = json.load(file)
 
-            for value in data:
-                prenotazione = value
-                if prenotazione["cliente"] == cf:
-                    lista_prenotazioni.append(prenotazione["id"])
+            for value in data['prenotazioni']:
+                if value["cliente"]['codiceFiscale'] == cf:
+                    lista_prenotazioni.append(value)
 
         return lista_prenotazioni
 
@@ -67,15 +65,6 @@ class Cliente(Utilizzatore):
                     if u["email"] == email and u["password"] == password:
                         cliente = u
                         return cliente
-
-    def get_cliente(self, email, password):
-        file_path = "dati/clienti.json"
-        with open(file_path, "r") as file:
-            data = json.load(file)
-            for u in data["clienti"]:
-                if u["email"] == email and u["password"] == password:
-                    cliente = u
-                    return cliente
 
     def set_prenotazioni_cliente(self, user, psw, id):
         # Carica i dati dei clienti dal file JSON
