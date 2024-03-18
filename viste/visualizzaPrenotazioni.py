@@ -122,6 +122,9 @@ class PrenotazioniView(QMainWindow):
 
     def go_back(self):
         self.close()
+        from viste.home import VistaHome
+        self.vista = VistaHome(self.user, self.psw)
+        self.vista.show()
 
     def disdici(self, p):
         oggi = datetime.date.today()
