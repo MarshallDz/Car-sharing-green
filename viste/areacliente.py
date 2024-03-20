@@ -1,8 +1,7 @@
-import sys
-
 from PyQt5.QtCore import *
 from PyQt5.QtGui import QPixmap, QIcon, QFont
 from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QVBoxLayout, QLineEdit, QPushButton, QLabel
+import darkdetect
 
 
 class VistaCliente(QMainWindow):
@@ -11,8 +10,9 @@ class VistaCliente(QMainWindow):
 
         self.setWindowTitle("Profilo utente")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
-        self.setStyleSheet("background-color: #121212;")
-
+        if darkdetect.isDark():
+            self.setStyleSheet("background-color: #121212;")
+        self.showMaximized()
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
 
@@ -39,7 +39,7 @@ class VistaCliente(QMainWindow):
         self.modify_button.clicked.connect(self.modifica)
         self.back_button = QPushButton("Torna alla home")
         self.modify_button.setStyleSheet(
-            "max-width: 200px; background-color: #edf5f3; border-radius: 15px; color: black; padding: 10px;"
+            "max-width: 200px; background-color: #6AFE67; border-radius: 15px; color: black; padding: 10px;"
             "margin-left: 150px; margin-top: 50px;")
         self.layout.addWidget(self.modify_button)
         self.layout.addWidget(self.back_button)
@@ -50,7 +50,6 @@ class VistaCliente(QMainWindow):
 
     def crea_campo(self, nome, valore):
         titolo = QLabel(nome)
-        titolo.setStyleSheet("color: white;")
         titolof = QFont("Arial", 12, QFont.Bold)
         titolo.setFont(titolof)
         titolo.adjustSize()
@@ -58,17 +57,17 @@ class VistaCliente(QMainWindow):
         campo = QLineEdit()
         campo.setText(valore)
         campo.setReadOnly(True)
-        campo.setStyleSheet("max-width: 500px; min-height: 40px; color: grey; background-color: #e3e1dc;")
+        campo.setStyleSheet("max-width: 500px; min-height: 40px; background-color: #e3e1dc; color: black;")
         self.layout.addWidget(campo)
         return campo
 
     def modifica(self):
         self.email.setReadOnly(False)
-        self.email.setStyleSheet("max-width: 500px; min-height: 40px; color: black; background-color: #e3e1dc;")
+        self.email.setStyleSheet("max-width: 500px; min-height: 40px;background-color: #e3e1dc;")
         self.password.setReadOnly(False)
-        self.password.setStyleSheet("max-width: 500px; min-height: 40px; color: black; background-color: #e3e1dc;")
+        self.password.setStyleSheet("max-width: 500px; min-height: 40px;background-color: #e3e1dc;")
         self.cellulare.setReadOnly(False)
-        self.cellulare.setStyleSheet("max-width: 500px; min-height: 40px; color: black; background-color: #e3e1dc;")
+        self.cellulare.setStyleSheet("max-width: 500px; min-height: 40px; background-color: #e3e1dc;")
         self.modify_button.setText("Conferma")
         self.modify_button.clicked.connect(self.conferma)
         # self.back_button.clicked.connect()

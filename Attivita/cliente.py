@@ -28,18 +28,16 @@ class Cliente(Utilizzatore):
             json.dump({"clienti": clienti}, f, indent=4)
         QMessageBox.information(None, "Success", "Account registrato correttamente!")
         return 1
-    
-    # per ora non serve a nulla
+
     def get_prenotazione(self, cf):
         lista_prenotazioni = []
-        file_path = "Attvita/dati/prenotazioni.json"
+        file_path = "dati/prenotazioni.json"
         with open(file_path) as file:
             data = json.load(file)
 
-            for value in data:
-                prenotazione = value
-                if prenotazione["cliente"] == cf:
-                    lista_prenotazioni.append(prenotazione["id"])
+            for value in data['prenotazioni']:
+                if value["cliente"]['codiceFiscale'] == cf:
+                    lista_prenotazioni.append(value)
 
         return lista_prenotazioni
 
@@ -56,7 +54,7 @@ class Cliente(Utilizzatore):
         return email, psw
 
     def get_dati(self, email=None, password=None):
-        file_path = "Attivita/dati/clienti.json"
+        file_path = "dati/clienti.json"
         with open(file_path, "r") as file:
             data = json.load(file)
             if not email and not password:
@@ -67,3 +65,22 @@ class Cliente(Utilizzatore):
                     if u["email"] == email and u["password"] == password:
                         cliente = u
                         return cliente
+
+    def set_prenotazioni_cliente(self, user, psw, id):
+        # Carica i dati dei clienti dal file JSON
+        with open("dati/clienti.json", "r") as file:
+            data = json.load(file)
+
+        # Cerca il cliente specifico usando il suo codice fiscale
+        for cliente in data["clienti"]:
+            if cliente["email"] == user and cliente["password"] == psw:
+                # Aggiungi il codice della nuova prenotazione alla lista delle prenotazioni del cliente
+                cliente["prenotazioni"].append(id)
+                break
+
+        # Scrivi i dati aggiornati nel file JSON
+        with open("dati/clienti.json", "w") as file:
+            json.dump(data, file, indent=4)
+
+
+

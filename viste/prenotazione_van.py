@@ -7,13 +7,13 @@ from PyQt5.QtCore import Qt
 from viste.effettua_prenotazione import VistaEffettuaPrenotazione
 import darkdetect
 
-class VistaPrenotazioneAuto(QMainWindow):
+class VistaPrenotazioneVan(QMainWindow):
     def __init__(self, user, psw):
         super().__init__()
         self.user = user
         self.psw = psw
 
-        self.setWindowTitle("Pagina di prenotazione auto")
+        self.setWindowTitle("Pagina di prenotazione van")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
         if darkdetect.isDark():
             self.setStyleSheet("background-color: #121212;")
@@ -29,7 +29,7 @@ class VistaPrenotazioneAuto(QMainWindow):
 
         self.central_widget.setLayout(self.central_layout)
 
-        self.title_label = QLabel("Prenota la tua auto: ")
+        self.title_label = QLabel("Prenota van: ")
         self.title_font = self.title_label.font()
         self.title_font.setPointSize(42)
         self.title_font.setBold(True)
@@ -39,18 +39,18 @@ class VistaPrenotazioneAuto(QMainWindow):
         title_layout.addWidget(self.title_label)
         self.central_layout.addLayout(title_layout)
 
+        file_path = "dati/van.json"
         mezzi = []
-        file_path = "dati/auto.json"
         with open(file_path, "r") as file:
             data = json.load(file)
             chiavi = list(data[0].keys())
-            for auto in data:
-                valori = list(auto.values())
+            for van in data:
+                valori = list(van.values())
 
                 for i in range(len(valori)):
-                    auto[chiavi[i]] = valori[i]
+                    van[chiavi[i]] = valori[i]
                 # print(auto)
-                mezzi.append(auto)
+                mezzi.append(van)
 
         scroll_area = QScrollArea()
         scroll_area.setStyleSheet("QScrollBar:vertical {"
@@ -79,7 +79,7 @@ class VistaPrenotazioneAuto(QMainWindow):
         self.central_layout.addWidget(scroll_area)
 
         for i in range(len(mezzi)):
-            self.aggiungi_box_auto(mezzi[i])
+            self.aggiungi_box_van(mezzi[i])
 
         # Aggiungiamo il pulsante "Indietro"
         button_layout = QVBoxLayout()
@@ -93,7 +93,7 @@ class VistaPrenotazioneAuto(QMainWindow):
         button_layout.addWidget(self.back_button)
         self.central_layout.addLayout(button_layout)
 
-    def aggiungi_box_auto(self, auto):
+    def aggiungi_box_van(self, van):
         car_info_frame = QFrame()
         car_info_frame.setStyleSheet("border: 2px solid white; border-radius: 5px; margin-right: 5px;")
         car_info_frame.setMinimumWidth(600)
@@ -101,17 +101,18 @@ class VistaPrenotazioneAuto(QMainWindow):
 
         car_info_layout = QGridLayout(car_info_frame)
         car_info_layout.setAlignment(Qt.AlignTop)
-        # Aggiungi le informazioni alla griglia
-        self.labels_values = [("Produttore:", auto["produttore"]),
-                              ("Modello:", auto["modello"]),
-                              ("Anno:", auto["anno"]),
-                              ("Alimentazione:", auto["alimentazione"]),
-                              ("Cavalli:", auto["cavalli"]),
-                              ("Cilindrata:", auto["cilindrata"]),
-                              ("Cambio:", auto["cambio"]),
-                              ("Numero Posti:", auto["nPosti"])]
 
-        for i, (label_name, value) in enumerate(self.labels_values):
+        # Aggiungi le informazioni alla griglia
+        labels_values = [("Produttore:", van["produttore"]),
+                              ("Modello:", van["modello"]),
+                              ("Anno:", van["anno"]),
+                              ("Alimentazione:", van["alimentazione"]),
+                              ("Cavalli:", van["cavalli"]),
+                              ("Cilindrata:", van["cilindrata"]),
+                              ("Cambio:", van["cambio"]),
+                              ("Numero Posti:", van["nPosti"])]
+
+        for i, (label_name, value) in enumerate(labels_values):
             label_name = QLabel(label_name, self)
             label_name.setStyleSheet("border: 0px")
 
@@ -124,7 +125,7 @@ class VistaPrenotazioneAuto(QMainWindow):
             car_info_layout.addWidget(label_name, row, col * 2)
             car_info_layout.addWidget(value_label, row, col * 2 + 1)
 
-        tariffaLabel = QLabel(f"A partire da {auto['tariffa_oraria']}€ ad ora \n oppure  {int(int(auto['tariffa_oraria'])*24*0.7)}€ al giorno")
+        tariffaLabel = QLabel(f"A partire da {van['tariffa_oraria']}€ ad ora \n oppure  {int(int(van['tariffa_oraria']) * 24 * 0.7)}€ al giorno")
         tariffaLabel.setStyleSheet("border: 0px")
         myFont = QtGui.QFont()
         myFont.setBold(True)
@@ -132,13 +133,12 @@ class VistaPrenotazioneAuto(QMainWindow):
         car_info_layout.addWidget(tariffaLabel, 6, 0)
         prenota_button = QPushButton("Prenota")
         prenota_button.setStyleSheet("color: black; border-radius: 5px; background-color: #D9D9D9")
-        prenota_button.clicked.connect(
-            lambda _, car=auto: self.go_prenota(car))  # Connessione con la funzione go_prenota
+        prenota_button.clicked.connect(lambda _, car=van: self.go_prenota(car))
         car_info_layout.addWidget(prenota_button, 6, 3)
         car_layout = QHBoxLayout()
         car_layout.setAlignment(Qt.AlignTop)
 
-        pixmap = QPixmap(auto["URL_immagine"])
+        pixmap = QPixmap(van["URL_immagine"])
         if not pixmap.isNull():
             label = QLabel()
             label.setStyleSheet("margin-left: 20px;")
@@ -162,7 +162,7 @@ class VistaPrenotazioneAuto(QMainWindow):
         self.vista.show()
         self.close()
 
-    def go_prenota(self, auto):
-        self.vista_prenotazione = VistaEffettuaPrenotazione(self.user, self.psw, auto)
+    def go_prenota(self, van):
+        self.vista_prenotazione = VistaEffettuaPrenotazione(self.user, self.psw, van)
         self.vista_prenotazione.show()
         self.close()

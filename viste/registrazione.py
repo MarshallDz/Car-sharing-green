@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from Attivita.cliente import Cliente
-
+import darkdetect
 
 class VistaRegistrazione(QMainWindow):
     def __init__(self):
@@ -12,8 +12,9 @@ class VistaRegistrazione(QMainWindow):
 
         self.setWindowTitle("Pagina di registrazione")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
-        self.setStyleSheet("background-color: #121212;")
-
+        if darkdetect.isDark():
+            self.setStyleSheet("background-color: #121212;")
+        self.showMaximized()
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
 
@@ -25,7 +26,6 @@ class VistaRegistrazione(QMainWindow):
         self.central_widget.setLayout(central_layout)
 
         self.title_label = QLabel("Crea il tuo account")
-        self.title_label.setStyleSheet("color: white;")
         self.title_font = QFont("Arial", 42, QFont.Bold)
         self.title_label.setFont(self.title_font)
         self.title_label.adjustSize()
@@ -55,7 +55,7 @@ class VistaRegistrazione(QMainWindow):
             "max-width: 150px; background-color: #F85959; border-radius: 15px; color: black; padding: 10px;"
             "margin-left: 60px;")
         invia_button.clicked.connect(self.invio_dati)
-        back_button.clicked.connect(self.close)
+        back_button.clicked.connect(self.go_back)
         self.form_layout.addWidget(invia_button)
         self.form_layout.addWidget(back_button)
 
@@ -63,16 +63,22 @@ class VistaRegistrazione(QMainWindow):
 
     def crea_campo(self, nome):
         if nome == "data di nascita":
+            layout = QHBoxLayout()  # Layout orizzontale per posizionare la label accanto al campo
+            label = QLabel("Data di nascita:")
             campo = QDateEdit()
             campo.setCalendarPopup(True)
-            campo.setStyleSheet("color: grey; background-color: white;")
+            campo.setStyleSheet("color: black; background-color: white;")
             campo.setDate(QDate.currentDate())
+            layout.addWidget(label)
+            layout.addWidget(campo)
+            self.form_layout.addLayout(layout)
         else:
             campo = QLineEdit()
             campo.setPlaceholderText(nome)
-            campo.setStyleSheet("color: grey;  max-width: 300px; min-height: 40px; background-color: white;")
+            campo.setStyleSheet("color: black;  max-width: 300px; min-height: 40px; background-color: white;")
+            self.form_layout.addWidget(campo)
+
         self.campi[nome] = campo
-        self.form_layout.addWidget(campo)
 
     def invio_dati(self):
         data_to_save = {}
@@ -96,3 +102,9 @@ class VistaRegistrazione(QMainWindow):
         cliente = Cliente()
         if cliente.aggiungiCliente(data_to_save["codice fiscale"], data_to_save["nome"], data_to_save["cognome"], data_to_save["data di nascita"], data_to_save["e-mail"], data_to_save["password"], data_to_save["cellulare"]):
             self.close()
+
+    def go_back(self):
+        from viste.welcome import WelcomeWindow
+        self.vista = WelcomeWindow()
+        self.vista.show()
+        self.close()

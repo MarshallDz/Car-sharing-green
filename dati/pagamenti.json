@@ -1,0 +1,28 @@
+{
+    "pagamenti": [
+        {
+            "codice": "V8aFFS",
+            "totale": null,
+            "dataPagamento": "",
+            "prenotazione": "8MLhvx",
+            "cliente": "mrzmhl02h20g157g",
+            "statoPagamento": "da pagare"
+        },
+        {
+            "codice": "MoWuKV",
+            "totale": 1010.0,
+            "dataPagamento": "",
+            "prenotazione": "OCv2Wx",
+            "cliente": "mrzmhl02h20g157g",
+            "statoPagamento": "pagato"
+        },
+        {
+            "codice": "7m8Wfn",
+            "totale": 1490.0,
+            "dataPagamento": "",
+            "prenotazione": "5h4ow6",
+            "cliente": "mrzmhl02h20g157g",
+            "statoPagamento": "da pagare"
+        }
+    ]
+}
