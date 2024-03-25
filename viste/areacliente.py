@@ -1,6 +1,8 @@
+import json
+
 from PyQt5.QtCore import *
 from PyQt5.QtGui import QPixmap, QIcon, QFont
-from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QVBoxLayout, QLineEdit, QPushButton, QLabel
+from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QVBoxLayout, QLineEdit, QPushButton, QLabel, QMessageBox
 import darkdetect
 
 
@@ -8,6 +10,8 @@ class VistaCliente(QMainWindow):
     def __init__(self, c):
         super().__init__()
 
+        self.cliente = c
+        self.campi = {}
         self.setWindowTitle("Profilo utente")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
         if darkdetect.isDark():
@@ -21,7 +25,7 @@ class VistaCliente(QMainWindow):
         self.central_widget.setLayout(self.layout)
 
         icona = QLabel()
-        foto = QPixmap("Attivita/Icone/boy.png")
+        foto = QPixmap("Attivita/Icone/varie/boy.png")
         foto.setDevicePixelRatio(3.5)
         icona.setPixmap(foto)
         icona.setAlignment(Qt.AlignCenter)
@@ -58,6 +62,8 @@ class VistaCliente(QMainWindow):
         campo.setText(valore)
         campo.setReadOnly(True)
         campo.setStyleSheet("max-width: 500px; min-height: 40px; background-color: #e3e1dc; color: black;")
+        if nome == "e-mail" or nome == "password":
+            self.campi[nome] = campo
         self.layout.addWidget(campo)
         return campo
 
@@ -69,15 +75,38 @@ class VistaCliente(QMainWindow):
         self.cellulare.setReadOnly(False)
         self.cellulare.setStyleSheet("max-width: 500px; min-height: 40px; background-color: #e3e1dc;")
         self.modify_button.setText("Conferma")
-        self.modify_button.clicked.connect(self.conferma)
-        # self.back_button.clicked.connect()
+        self.modify_button.toggled.connect(self.conferma)
+        self.back_button.setText("Annulla")
 
     def conferma(self):
-        pass
+        message_box = QMessageBox()
+        message_box.setIcon(QMessageBox.Question)
+        message_box.setText("Sei sicuro di voler modificare i tuoi dati di accesso?")
+        message_box.setWindowTitle("Salvataggio")
+        message_box.setStandardButtons(QMessageBox.Save | QMessageBox.Cancel)
 
-# app = QApplication(sys.argv)
+        risposta = message_box.exec_()
 
-# window = VistaCliente()
-# window.show()
+        if risposta == QMessageBox.Save:
+            login = {}
+            for campo_nome, campo_widget in self.campi.items():
+                login[campo_nome] = campo_widget.text()
+            with open("dati/clienti.json", "r") as file:
+                data = json.load(file)
 
-# app.exec_()
+            # Cerca il cliente specifico usando il suo codice fiscale
+            for cliente in data["clienti"]:
+                if cliente["codiceFiscale"] == self.cliente["codiceFiscale"]:
+                    # Aggiungi il codice della nuova prenotazione alla lista delle prenotazioni del cliente
+                    cliente["email"] = login["e-mail"]
+                    cliente["password"] = login["password"]
+                    break
+
+            # Scrivi i dati aggiornati nel file JSON
+            with open("dati/clienti.json", "w") as file:
+                json.dump(data, file, indent=4)
+
+            self.cliente["email"] = login["e-mail"]
+            self.cliente["password"] = login["password"]
+            QMessageBox.information(None, "Success", "Dati modificati correttamente!")
+            self.close()

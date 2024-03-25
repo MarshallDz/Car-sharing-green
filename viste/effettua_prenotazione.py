@@ -184,7 +184,6 @@ class VistaEffettuaPrenotazione(QMainWindow):
         self.vista.show()
         self.close()
 
-
     def conferma_prenotazione(self):
         for value in self.valori.values():
             if not value:

@@ -7,6 +7,7 @@ from PyQt5.QtCore import Qt
 from viste.effettua_prenotazione import VistaEffettuaPrenotazione
 import darkdetect
 
+
 class VistaPrenotazioneAuto(QMainWindow):
     def __init__(self, user, psw):
         super().__init__()
