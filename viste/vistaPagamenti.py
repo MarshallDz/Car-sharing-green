@@ -6,12 +6,13 @@ from Attivita.cliente import Cliente
 from Attivita.prenotazione import Prenotazione
 import darkdetect
 
+
 class VistaPagamenti(QMainWindow):
     def __init__(self, user, psw):
         super().__init__()
         self.user = user
         self.psw = psw
-        self.setWindowTitle("Pagina visualizzazione pagamenti")
+        self.setWindowTitle("Pagamenti cliente")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
         if darkdetect.isDark():
             self.setStyleSheet("background-color: #121212;")
@@ -75,7 +76,6 @@ class VistaPagamenti(QMainWindow):
         prenotazione = Prenotazione()
         prenotazioni = prenotazione.get_dati()
 
-
         for x in pagamenti:
             if clienteCorrente['codiceFiscale'] == x['cliente']:
                 info_box = QGroupBox(f"Informazioni sul pagamento {x['codice']}")
@@ -107,6 +107,7 @@ class VistaPagamenti(QMainWindow):
                     dataPagamento.setStyleSheet("font-size: 24px; ")
                     info_layout.addWidget(dataPagamento)
                 self.scroll_layout.addWidget(info_box)
+
     def go_back(self):
         from viste.home import VistaHome
         self.vista = VistaHome(self.user, self.psw)

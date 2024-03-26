@@ -2,10 +2,11 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from viste.prenotazione_auto import VistaPrenotazioneAuto
-from viste.prenotazione_moto import  VistaPrenotazioneMoto
+from viste.prenotazione_moto import VistaPrenotazioneMoto
 from viste.prenotazione_van import VistaPrenotazioneVan
 from viste.prenotazione_furgoni import VistaPrenotazioneFurgone
 import darkdetect
+
 
 class VistaPrenotazione(QMainWindow):
     def __init__(self, user, psw):
@@ -58,7 +59,6 @@ class VistaPrenotazione(QMainWindow):
         self.furgone_button.setStyleSheet(
             "color: black; width: 700px; background-color: #d9d9d9; border-radius: 15px; padding: 20px;")
         self.furgone_button.clicked.connect(self.go_furgone)
-
 
         self.buttons_layout.addWidget(self.auto_button)
         self.buttons_layout.addWidget(self.scooter_button)

@@ -5,6 +5,7 @@ from Attivita.cliente import Cliente
 import darkdetect
 import datetime
 
+
 class PrenotazioniView(QMainWindow):
     def __init__(self, user, psw):
         super().__init__()
@@ -12,9 +13,9 @@ class PrenotazioniView(QMainWindow):
         self.user = user
         self.psw = psw
 
-        self.setWindowTitle("Pagina prenotazioni cliente")
+        self.setWindowTitle("Prenotazioni cliente")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
-        if(darkdetect.isDark()):
+        if darkdetect.isDark():
             self.setStyleSheet("background-color: #121212;")
         self.showMaximized()
         self.central_widget = QWidget()
@@ -27,7 +28,7 @@ class PrenotazioniView(QMainWindow):
 
         self.central_widget.setLayout(self.central_layout)
 
-        self.title_label = QLabel("Visualizza lista delle prenotazioni: ")
+        self.title_label = QLabel("Lista delle tue prenotazioni: ")
         self.title_font = self.title_label.font()
         self.title_font.setPointSize(42)
         self.title_font.setBold(True)
@@ -67,8 +68,8 @@ class PrenotazioniView(QMainWindow):
 
         back_button = QPushButton("Indietro")
         back_button.clicked.connect(self.go_back)
-        back_button.setStyleSheet("width: 150px; max-width: 150px; background-color: #F85959; border-radius: 15px; color: black; "
-                                  "padding: 10px; margin-bottom: 20px")
+        back_button.setStyleSheet("width: 150px; max-width: 150px; background-color: #F85959; border-radius: 15px; "
+                                  "color: black; padding: 10px; margin-bottom: 20px")
         self.central_layout.addWidget(back_button, alignment=Qt.AlignHCenter | Qt.AlignBottom)
 
     def aggiungi_box_info(self):
