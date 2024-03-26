@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
-from Attivita.prenotazione import *
+from Attivita.prenotazione import Prenotazione
 from Attivita.cliente import Cliente
 import darkdetect
 import datetime
@@ -136,7 +136,7 @@ class PrenotazioniView(QMainWindow):
                                          QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
 
             if reply == QMessageBox.Yes:
-                self.prenotazione.eliminaPrenotazione(p)
+                Prenotazione().eliminaPrenotazione(p)
             if reply == QMessageBox.Yes:
                 QMessageBox.information(self, 'Disdetta Confermata', 'La prenotazione è stata disdetta con successo.', QMessageBox.Ok)
                 self.close()
