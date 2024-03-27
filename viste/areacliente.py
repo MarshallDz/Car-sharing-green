@@ -3,14 +3,17 @@ import json
 from PyQt5.QtCore import *
 from PyQt5.QtGui import QPixmap, QIcon, QFont
 from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QVBoxLayout, QLineEdit, QPushButton, QLabel, QMessageBox
+from Attivita.cliente import Cliente
 import darkdetect
 
 
 class VistaCliente(QMainWindow):
-    def __init__(self, c):
+    def __init__(self, user, psw):
         super().__init__()
 
-        self.cliente = c
+        self.user = user
+        self.psw = psw
+        self.cliente = Cliente.get_dati(self, self.user, self.psw)
         self.campi = {}
         self.setWindowTitle("Profilo utente")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
@@ -30,13 +33,13 @@ class VistaCliente(QMainWindow):
         icona.setPixmap(foto)
         icona.setAlignment(Qt.AlignCenter)
         self.layout.addWidget(icona)
-        self.crea_campo("codice fiscale", c["codiceFiscale"])
-        self.crea_campo("nome", c["nome"])
-        self.crea_campo("cognome", c["cognome"])
-        self.crea_campo("data di nascita", c["dataNascita"])
-        self.email = self.crea_campo("e-mail", c["email"])
-        self.password = self.crea_campo("password", c["password"])
-        self.cellulare = self.crea_campo("cellulare", c["cellulare"])
+        self.crea_campo("codice fiscale", self.cliente["codiceFiscale"])
+        self.crea_campo("nome", self.cliente["nome"])
+        self.crea_campo("cognome", self.cliente["cognome"])
+        self.crea_campo("data di nascita", self.cliente["dataNascita"])
+        self.email = self.crea_campo("e-mail", self.cliente["email"])
+        self.password = self.crea_campo("password", self.cliente["password"])
+        self.cellulare = self.crea_campo("cellulare", self.cliente["cellulare"])
 
         self.modify_button = QPushButton("Modifica")
         self.modify_button.setCheckable(True)
@@ -50,7 +53,7 @@ class VistaCliente(QMainWindow):
         self.back_button.setStyleSheet(
             "max-width: 150px; background-color: #F85959; border-radius: 15px; color: black; padding: 10px;"
             "margin-left: 175px; margin-top: 10px")
-        self.back_button.clicked.connect(self.close)
+        self.back_button.clicked.connect(self.go_back)
 
     def crea_campo(self, nome, valore):
         titolo = QLabel(nome)
@@ -95,11 +98,11 @@ class VistaCliente(QMainWindow):
                 data = json.load(file)
 
             # Cerca il cliente specifico usando il suo codice fiscale
-            for cliente in data["clienti"]:
-                if cliente["codiceFiscale"] == self.cliente["codiceFiscale"]:
+            for c in data["clienti"]:
+                if c["codiceFiscale"] == self.cliente["codiceFiscale"]:
                     # Aggiungi il codice della nuova prenotazione alla lista delle prenotazioni del cliente
-                    cliente["email"] = login["e-mail"]
-                    cliente["password"] = login["password"]
+                    c["email"] = login["e-mail"]
+                    c["password"] = login["password"]
                     break
 
             # Scrivi i dati aggiornati nel file JSON
@@ -109,4 +112,13 @@ class VistaCliente(QMainWindow):
             self.cliente["email"] = login["e-mail"]
             self.cliente["password"] = login["password"]
             QMessageBox.information(None, "Success", "Dati modificati correttamente!")
+            from viste.home import VistaHome
+            self.vista = VistaHome(self.cliente["email"], self.cliente["password"])
+            self.vista.show()
             self.close()
+
+    def go_back(self):
+        from viste.home import VistaHome
+        self.vista = VistaHome(self.user, self.psw)
+        self.vista.show()
+        self.close()

@@ -88,9 +88,9 @@ class VistaHome(QMainWindow):
         self.animation1.start()
 
     def area_clienti(self):
-        self.cliente = Cliente.get_dati(self, self.user, self.psw)
-        self.area = VistaCliente(self.cliente)
+        self.area = VistaCliente(self.user, self.psw)
         self.area.show()
+        self.close()
 
     def go_registrazione(self):
         self.area = VistaPrenotazione(self.user, self.psw)
