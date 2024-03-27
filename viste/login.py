@@ -10,7 +10,7 @@ class VistaLogin(QMainWindow):
     def __init__(self):
         super().__init__()
         self.campi = {}
-
+        self.showMaximized()
         self.setWindowTitle("Pagina di login")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
         if(darkdetect.isDark()):

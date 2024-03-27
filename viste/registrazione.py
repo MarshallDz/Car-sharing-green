@@ -17,7 +17,7 @@ class VistaRegistrazione(QMainWindow):
         self.showMaximized()
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
-
+        self.showMaximized()
         central_layout = QVBoxLayout()
 
         title_layout = QVBoxLayout()

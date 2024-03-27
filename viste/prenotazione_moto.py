@@ -22,7 +22,7 @@ class VistaPrenotazioneMoto(QMainWindow):
         self.showMaximized()
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
-
+        self.showMaximized()
         self.central_layout = QVBoxLayout()
 
         title_layout = QVBoxLayout()

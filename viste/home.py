@@ -14,7 +14,7 @@ class VistaHome(QMainWindow):
         super().__init__()
         self.user = user
         self.psw = psw
-
+        self.showMaximized()
         self.setWindowTitle("Home")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
         if(darkdetect.isDark()):

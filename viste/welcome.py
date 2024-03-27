@@ -11,6 +11,7 @@ class WelcomeWindow(QMainWindow):
         super().__init__()
         self.setWindowTitle("Benvenuto")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
+        self.showMaximized()
         if(darkdetect.isDark()):
             self.setStyleSheet("background-color: #121212;")
         self.showMaximized()

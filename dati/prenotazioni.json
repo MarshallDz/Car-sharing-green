@@ -104,6 +104,119 @@
             },
             "tariffa": "giornaliera",
             "polizza": "kasko"
+        },
+        {
+            "id": "iNnhB1",
+            "cliente": {
+                "codiceFiscale": "mrzmhl02h20g157g",
+                "nome": "michelon",
+                "cognome": "micheloni",
+                "dataNascita": "2024-01-22",
+                "email": "a",
+                "password": "a",
+                "cellulare": "3333333333",
+                "prenotazioni": [
+                    "8MLhvx",
+                    "OCv2Wx"
+                ],
+                "dataRegistrazione": "22012024"
+            },
+            "data_prenotazione": "sab mar 16 2024",
+            "data_inizio": "2025-03-20 08.00",
+            "data_fine": "2025-03-21",
+            "filiale": "Milano, via padova",
+            "mezzo": {
+                "URL_immagine": "viste/Icone/auto/white-car.png",
+                "telaio": "05",
+                "produttore": "toyota",
+                "modello": "x3",
+                "cavalli": "130",
+                "cilindrata": "1600",
+                "anno": "2020",
+                "alimentazione": "benzina",
+                "cambio": "automatico",
+                "nPosti": "5",
+                "stato": "disponibile",
+                "tariffa_oraria": "40"
+            },
+            "tariffa": "giornaliera",
+            "polizza": "rca"
+        },
+        {
+            "id": "THxu7H",
+            "cliente": {
+                "codiceFiscale": "mrzmhl02h20g157g",
+                "nome": "michelon",
+                "cognome": "micheloni",
+                "dataNascita": "2024-01-22",
+                "email": "a",
+                "password": "a",
+                "cellulare": "3333333333",
+                "prenotazioni": [
+                    "8MLhvx",
+                    "OCv2Wx"
+                ],
+                "dataRegistrazione": "22012024"
+            },
+            "data_prenotazione": "sab mar 16 2024",
+            "data_inizio": "2024-03-22 08.00",
+            "data_fine": "2024-03-23",
+            "filiale": "Milano, via padova",
+            "mezzo": {
+                "URL_immagine": "viste/Icone/scooter/ktm.png",
+                "telaio": "abc123",
+                "produttore": "ktm",
+                "modello": "duke",
+                "cavalli": "130",
+                "cilindrata": "800",
+                "anno": "2020",
+                "alimentazione": "benzina",
+                "cambio": "manuale",
+                "nPosti": "2",
+                "stato": "disponibile",
+                "tariffa_oraria": "40",
+                "talaio": "abc123"
+            },
+            "tariffa": "oraria",
+            "polizza": "rca"
+        },
+        {
+            "id": "aVhJnk",
+            "cliente": {
+                "codiceFiscale": "mrzmhl02h20g157g",
+                "nome": "michelon",
+                "cognome": "micheloni",
+                "dataNascita": "2024-01-22",
+                "email": "a",
+                "password": "a",
+                "cellulare": "3333333333",
+                "prenotazioni": [
+                    "8MLhvx",
+                    "OCv2Wx",
+                    "THxu7H"
+                ],
+                "dataRegistrazione": "22012024"
+            },
+            "data_prenotazione": "sab mar 16 2024",
+            "data_inizio": "2024-03-16 08.00",
+            "data_fine": "2024-03-17 08.00",
+            "filiale": "Milano, via padova",
+            "mezzo": {
+                "URL_immagine": "viste/Icone/auto/white-car.png",
+                "telaio": "03",
+                "produttore": "audi",
+                "modello": "x3",
+                "cavalli": "130",
+                "cilindrata": "1600",
+                "anno": "2020",
+                "alimentazione": "benzina",
+                "cambio": "automatico",
+                "nPosti": "5",
+                "stato": "disponibile",
+                "tariffa_oraria": "40"
+            },
+            "tariffa": "giornaliera",
+            "polizza": "kasko"
         }
     ]
 }

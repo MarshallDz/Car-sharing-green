@@ -19,7 +19,7 @@ class VistaCliente(QMainWindow):
         self.layout = QVBoxLayout()
         self.layout.setAlignment(Qt.AlignCenter)
         self.central_widget.setLayout(self.layout)
-
+        self.showMaximized()
         icona = QLabel()
         foto = QPixmap("Attivita/Icone/boy.png")
         foto.setDevicePixelRatio(3.5)
@@ -74,10 +74,3 @@ class VistaCliente(QMainWindow):
 
     def conferma(self):
         pass
-
-# app = QApplication(sys.argv)
-
-# window = VistaCliente()
-# window.show()
-
-# app.exec_()
