@@ -6,6 +6,7 @@ from viste.registrazione import VistaRegistrazione
 from viste.login import VistaLogin
 import darkdetect
 
+
 class WelcomeWindow(QMainWindow):
     def __init__(self):
         super().__init__()

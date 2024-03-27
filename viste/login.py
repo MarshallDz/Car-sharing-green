@@ -13,7 +13,7 @@ class VistaLogin(QMainWindow):
         self.showMaximized()
         self.setWindowTitle("Pagina di login")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
-        if(darkdetect.isDark()):
+        if darkdetect.isDark():
             self.setStyleSheet("background-color: #121212;")
         self.showMaximized()
         self.central_widget = QWidget()
@@ -61,7 +61,7 @@ class VistaLogin(QMainWindow):
             campo.setEchoMode(2)
         campo.setPlaceholderText(nome)
         campo.setStyleSheet("max-width: 500px; min-height: 60px; border-radius: 15px; ")
-        if(darkdetect.isDark()):
+        if darkdetect.isDark():
             campo.setStyleSheet("max-width: 500px; min-height: 60px; border-radius: 15px; "
                                 "background-color: #403F3F")
         self.campi[nome] = campo

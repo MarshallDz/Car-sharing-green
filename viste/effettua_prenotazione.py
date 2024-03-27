@@ -1,3 +1,4 @@
+import datetime
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import Qt, QDate, QDateTime
 from Attivita.cliente import *
@@ -55,11 +56,12 @@ class VistaEffettuaPrenotazione(QMainWindow):
         self.campo1.dateChanged.connect(self.update_valori)
 
         self.oraCampo1 = QComboBox(self)
-        for i in range(8, 21):
-            if i <= 9:
-                self.oraCampo1.addItems([f"0{i}.00"])
-            else:
-                self.oraCampo1.addItems([f"{i}.00"])
+        if self.verifica_data_corrente():
+            for i in range(self.ora_corrente(), 21):
+                    if i >= 8 and i <= 9:
+                        self.oraCampo1.addItems([f"0{i}.00"])
+                    else:
+                        self.oraCampo1.addItems([f"{i}.00"])
         self.central_layout.addWidget(self.oraCampo1, 1, 4)
         self.oraCampo1.currentIndexChanged.connect(self.update_valori)
         self.valori["data_inizio"] = self.campo1.date().toString(Qt.ISODate) + " " + self.oraCampo1.currentText()
@@ -156,6 +158,13 @@ class VistaEffettuaPrenotazione(QMainWindow):
                 # Se la data di fine noleggio è minore o uguale alla data di inizio noleggio più un giorno,
                 # imposta la data di fine noleggio un giorno dopo della data di inizio
                 self.campo2.setDate(new_start_date.addDays(1))
+            if not self.verifica_data_corrente():
+                self.oraCampo1.clear()
+                for i in range(8, 21):
+                    if i <= 9:
+                        self.oraCampo1.addItems([f"0{i}.00"])
+                    else:
+                        self.oraCampo1.addItems([f"{i}.00"])
         elif sender == self.oraCampo1:
             info = self.valori["data_inizio"].split(" ")
             info[1] = sender.currentText()
@@ -184,7 +193,6 @@ class VistaEffettuaPrenotazione(QMainWindow):
         self.vista.show()
         self.close()
 
-
     def conferma_prenotazione(self):
         for value in self.valori.values():
             if not value:
@@ -206,3 +214,15 @@ class VistaEffettuaPrenotazione(QMainWindow):
                                                            self.valori["polizza"])
         self.vistaPrenotazione.show()
         self.close()
+
+    def ora_corrente(self):
+        now = datetime.now()
+        ora = now.hour + 1
+        if ora >= 24:
+            ora -= 24
+        return ora
+
+    def verifica_data_corrente(self):
+        data_inserita = self.campo1.date().toString(Qt.ISODate)
+        data_corrente = QDate.currentDate().toString(Qt.ISODate)
+        return data_inserita == data_corrente

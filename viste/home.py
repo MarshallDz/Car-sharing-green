@@ -17,7 +17,7 @@ class VistaHome(QMainWindow):
         self.showMaximized()
         self.setWindowTitle("Home")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
-        if(darkdetect.isDark()):
+        if darkdetect.isDark():
             self.setStyleSheet("background-color: #121212;")
         self.showMaximized()
         self.central_widget = QWidget()
@@ -30,7 +30,7 @@ class VistaHome(QMainWindow):
         left_layout.setAlignment(Qt.AlignTop | Qt.AlignLeft)
         cliente_button = QPushButton("Area clienti")
         cliente_button.setStyleSheet("max-width: 200px;")
-        cliente_button.setIcon(QIcon("viste/Icone/boy.png"))
+        cliente_button.setIcon(QIcon("viste/Icone/varie/boy.png"))
         cliente_button.setIconSize(QSize(50, 50))
 
         cliente_button.clicked.connect(self.area_clienti)
@@ -72,7 +72,7 @@ class VistaHome(QMainWindow):
         right_layout.setAlignment(Qt.AlignTop | Qt.AlignRight)
         back_button = QPushButton("Esci")
         back_button.setStyleSheet("max-width: 200px; color:")
-        back_button.setIcon(QIcon("viste/Icone/logout.png"))
+        back_button.setIcon(QIcon("viste/Icone/varie/logout.png"))
         back_button.setIconSize(QSize(50, 50))
         back_button.clicked.connect(self.go_back)
         right_layout.addWidget(back_button)
@@ -88,9 +88,9 @@ class VistaHome(QMainWindow):
         self.animation1.start()
 
     def area_clienti(self):
-        cliente = Cliente.get_dati(self, self.user, self.psw)
-        self.area = VistaCliente(cliente)
+        self.area = VistaCliente(self.user, self.psw)
         self.area.show()
+        self.close()
 
     def go_registrazione(self):
         self.area = VistaPrenotazione(self.user, self.psw)

@@ -1,6 +1,7 @@
 import datetime
 from abc import abstractmethod
 
+
 class Utilizzatore:
 
     def __init__(self):

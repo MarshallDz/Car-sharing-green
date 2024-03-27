@@ -4,6 +4,7 @@ from PyQt5.QtCore import *
 from Attivita.cliente import Cliente
 import darkdetect
 
+
 class VistaRegistrazione(QMainWindow):
     def __init__(self):
         super().__init__()
