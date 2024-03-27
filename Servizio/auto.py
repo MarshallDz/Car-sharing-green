@@ -1,10 +1,14 @@
+from datetime import datetime
+
 from Servizio.mezzo import Mezzo
+from Attivita.prenotazione import Prenotazione
 import json
 
 class Auto(Mezzo):
     def __init__(self):
         super().__init__()
         self.tariffaOraria = ""
+        self.stato = "disponibile"
 
     def aggiungiAuto(self, to, url, t, prod, mod, anno, cv, cc, np, c, a):
         self.aggiungiMezzo(url, t, prod, mod, anno, cv, cc, np, c, a)
@@ -26,3 +30,5 @@ class Auto(Mezzo):
         info["tariffa_oraria"] = self.tariffaOraria
         return info
 
+    def controllaPrenotazione(self):
+        pass
