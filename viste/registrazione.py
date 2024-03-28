@@ -97,7 +97,7 @@ class VistaRegistrazione(QMainWindow):
             QMessageBox.warning(None, "CF non valido", "Il codice fiscale inserito non è valido.")
             return
         if not data_to_save["cellulare"].isdigit() or data_to_save["cellulare"].__len__() != 10:
-            QMessageBox.warning(None, "Cellulare non valido", "Il numero di cellulare deve essere un numero di 10 "
+            QMessageBox.warning(None, "Cellulare non valido", "Il numero di cellulare deve essere composto da 10 "
                                                               "cifre.")
             return
         cliente = Cliente()
