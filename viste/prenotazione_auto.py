@@ -14,7 +14,7 @@ class VistaPrenotazioneAuto(QMainWindow):
         self.user = user
         self.psw = psw
 
-        self.setWindowTitle("Pagina di prenotazione auto")
+        self.setWindowTitle("CarGreen")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
         if darkdetect.isDark():
             self.setStyleSheet("background-color: #121212;")

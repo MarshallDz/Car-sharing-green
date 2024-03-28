@@ -10,9 +10,9 @@ import darkdetect
 class WelcomeWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Benvenuto")
+        self.setWindowTitle("CarGreen")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
-        if(darkdetect.isDark()):
+        if darkdetect.isDark():
             self.setStyleSheet("background-color: #121212;")
         self.showMaximized()
         central_widget = QWidget()

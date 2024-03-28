@@ -11,7 +11,7 @@ class VistaRegistrazione(QMainWindow):
         # dizionario in cui salvi i campi del form
         self.campi = {}
 
-        self.setWindowTitle("Pagina di registrazione")
+        self.setWindowTitle("CarGreen")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
         if darkdetect.isDark():
             self.setStyleSheet("background-color: #121212;")

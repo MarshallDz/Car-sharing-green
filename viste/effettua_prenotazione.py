@@ -15,7 +15,7 @@ class VistaEffettuaPrenotazione(QMainWindow):
         self.psw = psw
         self.mezzo = mezzo
 
-        self.setWindowTitle("Schermata di prenotazione")
+        self.setWindowTitle("CarGreen")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
         self.showMaximized()
         self.central_widget = QWidget()

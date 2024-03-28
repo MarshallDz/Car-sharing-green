@@ -15,7 +15,7 @@ class VistaCliente(QMainWindow):
         self.psw = psw
         self.cliente = Cliente.get_dati(self, self.user, self.psw)
         self.campi = {}
-        self.setWindowTitle("Profilo utente")
+        self.setWindowTitle("CarGreen")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
         if darkdetect.isDark():
             self.setStyleSheet("background-color: #121212;")
@@ -102,7 +102,7 @@ class VistaCliente(QMainWindow):
         if not login["cellulare"].isdigit() or login["cellulare"].__len__() != 10:
                 QMessageBox.warning(None, "Cellulare non valido", "Il numero di cellulare deve essere composto da 10 "
                                                         "cifre.")
-
+                return
 
         message_box = QMessageBox()
         message_box.setIcon(QMessageBox.Question)

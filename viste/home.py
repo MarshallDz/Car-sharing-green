@@ -15,7 +15,7 @@ class VistaHome(QMainWindow):
         self.user = user
         self.psw = psw
 
-        self.setWindowTitle("Home")
+        self.setWindowTitle("CarGreen")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
         if darkdetect.isDark():
             self.setStyleSheet("background-color: #121212;")

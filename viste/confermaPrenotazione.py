@@ -13,7 +13,7 @@ class VistaConfermaPrenotazione(QMainWindow):
         self.fine = fine
         self.tariffa = tariffa
         self.polizza = polizza
-        self.setWindowTitle("Pagina conferma prenotazione")
+        self.setWindowTitle("CarGreen")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
         if darkdetect.isDark():
             self.setStyleSheet("background-color: #121212;")
