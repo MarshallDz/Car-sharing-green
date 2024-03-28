@@ -26,11 +26,18 @@ class WelcomeWindow(QMainWindow):
         title_layout = QVBoxLayout()
         title_layout.setAlignment(Qt.AlignTop)
 
-        self.title_label = QLabel("Benvenuto, accedi oppure registrati", self)
+        self.title_label = QLabel("Benvenuto")
         self.title_font = QFont("Arial", 42, QFont.Bold)
         self.title_label.setFont(self.title_font)
         self.title_label.adjustSize()
+        self.title_label.setAlignment(Qt.AlignCenter)
         title_layout.addWidget(self.title_label)
+        self.subtitle_label = QLabel("accedi oppure registrati")
+        self.subtitle_font = QFont("Arial", 26, QFont.Bold)
+        self.subtitle_label.setFont(self.subtitle_font)
+        self.subtitle_label.adjustSize()
+        self.subtitle_label.setAlignment(Qt.AlignCenter)
+        title_layout.addWidget(self.subtitle_label)
         central_layout.addLayout(title_layout)
 
         # Aggiungi un layout orizzontale per allineare i pulsanti

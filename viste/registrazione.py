@@ -66,6 +66,7 @@ class VistaRegistrazione(QMainWindow):
         if nome == "data di nascita":
             layout = QHBoxLayout()  # Layout orizzontale per posizionare la label accanto al campo
             label = QLabel("Data di nascita:")
+            label.setStyleSheet("color: #a0a0a0")
             campo = QDateEdit()
             campo.setCalendarPopup(True)
             campo.setStyleSheet("color: black; background-color: white;")
@@ -76,7 +77,10 @@ class VistaRegistrazione(QMainWindow):
         else:
             campo = QLineEdit()
             campo.setPlaceholderText(nome)
-            campo.setStyleSheet("color: black;  max-width: 300px; min-height: 40px; background-color: white;")
+            campo.setStyleSheet("max-width: 300px; min-height: 40px; border-radius: 15px;")
+            if darkdetect.isDark():
+                campo.setStyleSheet("max-width: 300px; min-height: 40px; border-radius: 15px; "
+                                    "background-color: #403f3f")
             self.form_layout.addWidget(campo)
 
         self.campi[nome] = campo
