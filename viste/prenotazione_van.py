@@ -3,7 +3,7 @@ import json
 from PyQt5 import QtGui
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QSize
 from viste.effettua_prenotazione import VistaEffettuaPrenotazione
 import darkdetect
 
@@ -23,20 +23,30 @@ class VistaPrenotazioneVan(QMainWindow):
         self.setCentralWidget(self.central_widget)
 
         self.central_layout = QVBoxLayout()
-
-        title_layout = QVBoxLayout()
-        title_layout.setAlignment(Qt.AlignTop | Qt.AlignCenter)
-
         self.central_widget.setLayout(self.central_layout)
 
-        self.title_label = QLabel("Prenota van: ")
+        title_layout = QHBoxLayout()
+
+        back_button = QPushButton()
+        back_button.setStyleSheet("max-width: 100px; border: none")
+        back_button.setIcon(QIcon("viste/Icone/varie/back.png"))
+        back_button.setIconSize(QSize(50, 50))
+        back_button.clicked.connect(self.go_back)
+        title_layout.addWidget(back_button)
+
+        self.title_label = QLabel("Prenota il tuo van")
         self.title_font = self.title_label.font()
         self.title_font.setPointSize(42)
         self.title_font.setBold(True)
         self.title_label.setFont(self.title_font)
         self.title_label.adjustSize()
-
+        self.title_label.setAlignment(Qt.AlignCenter)
         title_layout.addWidget(self.title_label)
+
+        ghost_button = QPushButton()
+        ghost_button.setStyleSheet("max-width: 100px; border: none")
+        title_layout.addWidget(ghost_button)
+
         self.central_layout.addLayout(title_layout)
 
         file_path = "dati/van.json"
@@ -69,6 +79,9 @@ class VistaPrenotazioneVan(QMainWindow):
                                   "}"
                                   "QScrollBar::sub-line:vertical {"
                                   "    background: none;"
+                                  "}"
+                                  "QScrollArea {"
+                                  "border: none"
                                   "}")
 
         scroll_area.setWidgetResizable(True)
@@ -81,23 +94,11 @@ class VistaPrenotazioneVan(QMainWindow):
         for i in range(len(mezzi)):
             self.aggiungi_box_van(mezzi[i])
 
-        # Aggiungiamo il pulsante "Indietro"
-        button_layout = QVBoxLayout()
-        button_layout.setAlignment(Qt.AlignBottom | Qt.AlignRight)
-
-        self.back_button = QPushButton("Indietro")
-        self.back_button.setStyleSheet("width: 150px; background-color: #F85959; border-radius: 15px; color: black; padding: 10px;"
-            "margin-right: 60px; margin-bottom: 60px;")
-        self.back_button.clicked.connect(self.go_back)
-
-        button_layout.addWidget(self.back_button)
-        self.central_layout.addLayout(button_layout)
-
     def aggiungi_box_van(self, van):
         car_info_frame = QFrame()
         car_info_frame.setStyleSheet("border: 2px solid white; border-radius: 5px; margin-right: 5px;")
         car_info_frame.setMinimumWidth(600)
-        car_info_frame.setMaximumWidth(1000)
+        car_info_frame.setMaximumWidth(1500)
 
         car_info_layout = QGridLayout(car_info_frame)
         car_info_layout.setAlignment(Qt.AlignTop)
@@ -142,8 +143,8 @@ class VistaPrenotazioneVan(QMainWindow):
         if not pixmap.isNull():
             label = QLabel()
             label.setStyleSheet("margin-left: 20px;")
-            label.setMaximumWidth(200)
-            label.setPixmap(pixmap.scaled(200, 200, Qt.KeepAspectRatio))
+            label.setMaximumWidth(300)
+            label.setPixmap(pixmap.scaled(300, 400, Qt.KeepAspectRatio))
             label.setAlignment(Qt.AlignCenter)
             car_layout.addWidget(label)
         else:

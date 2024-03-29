@@ -29,10 +29,9 @@ class VistaHome(QMainWindow):
         left_layout = QVBoxLayout()
         left_layout.setAlignment(Qt.AlignTop | Qt.AlignLeft)
         cliente_button = QPushButton("Area clienti")
-        cliente_button.setStyleSheet("max-width: 200px;")
+        cliente_button.setStyleSheet("max-width: 200px; border: none")
         cliente_button.setIcon(QIcon("viste/Icone/varie/boy.png"))
         cliente_button.setIconSize(QSize(50, 50))
-
         cliente_button.clicked.connect(self.area_clienti)
         left_layout.addWidget(cliente_button)
         form_layout.addLayout(left_layout)
@@ -71,21 +70,18 @@ class VistaHome(QMainWindow):
         right_layout = QVBoxLayout()
         right_layout.setAlignment(Qt.AlignTop | Qt.AlignRight)
         back_button = QPushButton("Esci")
-        back_button.setStyleSheet("max-width: 200px; color:")
+        back_button.setStyleSheet("max-width: 200px; border: none")
         back_button.setIcon(QIcon("viste/Icone/varie/logout.png"))
         back_button.setIconSize(QSize(50, 50))
         back_button.clicked.connect(self.go_back)
         right_layout.addWidget(back_button)
         form_layout.addLayout(right_layout)
 
-        # self.animation1 = QPropertyAnimation(button1, b"pos")
-        # self.animation1.setDuration(150)
-        # self.animation1.setEndValue()
-        # self.animation1.setEasingCurve(QEasingCurve.InOutCubic)
-        # button1.clicked.connect(self.clickAnimation)
-
-    def clickAnimation(self):
-        self.animation1.start()
+        # self.animation = QPropertyAnimation(self, b"opacity")
+        # self.animation.setStartValue(0.0)
+        # self.animation.setEndValue(0.5)
+        # self.animation.setDuration(200)
+        # self.animation.valueChanged().connect()
 
     def area_clienti(self):
         self.area = VistaCliente(self.user, self.psw)

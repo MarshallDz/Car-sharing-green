@@ -1,7 +1,7 @@
 import json
 
 from PyQt5.QtCore import *
-from PyQt5.QtGui import QPixmap, QIcon, QFont
+from PyQt5.QtGui import QPixmap, QFont
 from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QVBoxLayout, QLineEdit, QPushButton, QLabel, \
     QMessageBox, QHBoxLayout
 from Attivita.cliente import Cliente

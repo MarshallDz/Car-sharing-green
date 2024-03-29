@@ -29,7 +29,7 @@ class VistaPrenotazione(QMainWindow):
 
         self.central_widget.setLayout(central_layout)
 
-        self.title_label = QLabel("Scegli il mezzo da prenotare: ")
+        self.title_label = QLabel("Di cosa hai bisogno?")
         self.title_font = QFont("Arial", 42, QFont.Bold)
         self.title_label.setFont(self.title_font)
         self.title_label.adjustSize()
@@ -40,22 +40,22 @@ class VistaPrenotazione(QMainWindow):
         self.buttons_layout = QVBoxLayout()
         self.buttons_layout.setAlignment(Qt.AlignTop | Qt.AlignHCenter)
 
-        self.auto_button = QPushButton("Prenota auto")
+        self.auto_button = QPushButton("Auto")
         self.auto_button.setStyleSheet(
             "color: black; width: 700px; background-color: #d9d9d9; border-radius: 15px; padding: 20px;")
         self.auto_button.clicked.connect(self.go_auto)
 
-        self.scooter_button = QPushButton("Prenota scooter")
+        self.scooter_button = QPushButton("Scooter")
         self.scooter_button.setStyleSheet(
             "color: black; width: 700px; background-color: #d9d9d9; border-radius: 15px; padding: 20px;")
         self.scooter_button.clicked.connect(self.go_moto)
 
-        self.van_button = QPushButton("Prenota van")
+        self.van_button = QPushButton("Van")
         self.van_button.setStyleSheet(
             "color: black; width: 700px; background-color: #d9d9d9; border-radius: 15px; padding: 20px;")
         self.van_button.clicked.connect(self.go_van)
 
-        self.furgone_button = QPushButton("Prenota furgone")
+        self.furgone_button = QPushButton("Furgone")
         self.furgone_button.setStyleSheet(
             "color: black; width: 700px; background-color: #d9d9d9; border-radius: 15px; padding: 20px;")
         self.furgone_button.clicked.connect(self.go_furgone)

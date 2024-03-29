@@ -38,13 +38,13 @@ class VistaRegistrazione(QMainWindow):
         self.form_layout = QVBoxLayout()
         self.form_layout.setAlignment(Qt.AlignTop | Qt.AlignHCenter)
 
-        self.crea_campo("codice fiscale")
-        self.crea_campo("nome")
-        self.crea_campo("cognome")
-        self.crea_campo("data di nascita")
-        self.crea_campo("e-mail")
-        self.crea_campo("password")
-        self.crea_campo("cellulare")
+        self.crea_campo("Codice Fiscale")
+        self.crea_campo("Nome")
+        self.crea_campo("Cognome")
+        self.crea_campo("Data di nascita")
+        self.crea_campo("E-mail")
+        self.crea_campo("Password")
+        self.crea_campo("Cellulare")
 
         # creo i bottoni invia e indietro
         invia_button = QPushButton("Invia")
@@ -63,13 +63,15 @@ class VistaRegistrazione(QMainWindow):
         central_layout.addLayout(self.form_layout)
 
     def crea_campo(self, nome):
-        if nome == "data di nascita":
+        if nome == "Data di nascita":
             layout = QHBoxLayout()  # Layout orizzontale per posizionare la label accanto al campo
-            label = QLabel("Data di nascita:")
-            label.setStyleSheet("color: #a0a0a0")
+            label = QLineEdit()
+            label.setPlaceholderText(nome)
+            label.setStyleSheet("max-width: 100px; min-height: 40px; border-radius: 15px;")
+            label.setReadOnly(True)
             campo = QDateEdit()
             campo.setCalendarPopup(True)
-            campo.setStyleSheet("color: black; background-color: white;")
+            campo.setStyleSheet("max-width: 200px; color: black; background-color: white;")
             campo.setDate(QDate.currentDate())
             layout.addWidget(label)
             layout.addWidget(campo)
