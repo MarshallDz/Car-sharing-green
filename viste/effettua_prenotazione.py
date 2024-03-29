@@ -58,7 +58,7 @@ class VistaEffettuaPrenotazione(QMainWindow):
         self.oraCampo1 = QComboBox(self)
         if self.verifica_data_corrente():
             for i in range(self.ora_corrente(), 21):
-                    if i >= 8 and i <= 9:
+                    if 8 <= i <= 9:
                         self.oraCampo1.addItems([f"0{i}.00"])
                     else:
                         self.oraCampo1.addItems([f"{i}.00"])

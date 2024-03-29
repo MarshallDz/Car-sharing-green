@@ -48,16 +48,18 @@ class VistaHome(QMainWindow):
         options_layout = QVBoxLayout()
         button1 = QPushButton("Nuova prenotazione")
         button1.setStyleSheet(
-            "width: 500px; height: 75px; color: black; background-color: #D9D9D9; border-radius: 5px; padding: 10px; "
-            "margin-top: 100px;")
+            "width: 500px; height: 100px; color: black; background-color: #D9D9D9; border-radius: 25px; padding: 10px; "
+            "margin-top: 100px; font-size: 20px")
         button1.clicked.connect(self.go_registrazione)
         button2 = QPushButton("Visualizza prenotazioni")
         button2.setStyleSheet(
-            "width: 500px; height: 75px; background-color: #D9D9D9; border-radius: 5px; color: black; padding: 10px; ")
+            "width: 500px; height: 100px; background-color: #D9D9D9; border-radius: 25px; color: black; padding: "
+            "10px; font-size: 20px")
         button2.clicked.connect(self.go_visualizza_prenotazioni)
         button3 = QPushButton("Visualizza pagamenti")
         button3.setStyleSheet(
-            "width: 500px; height: 75px; background-color: #D9D9D9; border-radius: 5px; color: black; padding: 10px;")
+            "width: 500px; height: 100px; background-color: #D9D9D9; border-radius: 25px; color: black; padding: "
+            "10px; font-size: 20px")
         button3.clicked.connect(self.go_pagamenti)
 
         options_layout.addWidget(button1)
