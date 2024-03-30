@@ -10,7 +10,7 @@
     "alimentazione": "diesel",
     "cambio": "manuale",
     "nPosti": 3,
-    "stato": "disponibile",
+    "stato": "non disponibile",
     "tariffa_oraria": 60
   },
   {

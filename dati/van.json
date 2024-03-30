@@ -38,7 +38,7 @@
     "alimentazione": "diesel",
     "cambio": "automatico",
     "nPosti": "7",
-    "stato": "disponibile",
+    "stato": "non disponibile",
     "tariffa_oraria": "55"
   }
 ]

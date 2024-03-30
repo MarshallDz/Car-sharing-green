@@ -9,10 +9,11 @@ import darkdetect
 
 
 class PrenotazioneFurgone(QWidget):
-    def __init__(self, user, psw):
+    def __init__(self, user, psw, s):
         super().__init__()
         self.user = user
         self.psw = psw
+        self.shell = s
         self.layout = QVBoxLayout()
 
         file_path = "dati/furgoni.json"
@@ -97,9 +98,16 @@ class PrenotazioneFurgone(QWidget):
         myFont.setBold(True)
         tariffaLabel.setFont(myFont)
         car_info_layout.addWidget(tariffaLabel, 6, 0)
-        prenota_button = QPushButton("Prenota")
-        prenota_button.setStyleSheet("color: black; border-radius: 5px; background-color: #D9D9D9")
-        prenota_button.clicked.connect(lambda _, car=mezzo: self.go_prenota(car))
+        if mezzo["stato"] == "disponibile":
+            prenota_button = QPushButton("Prenota")
+            prenota_button.setStyleSheet("max-height: 25px; color: black; border-radius: 10px; background-color: "
+                                         "#0bd400")
+            prenota_button.clicked.connect(
+                lambda _, car=mezzo: self.go_prenota(car))  # Connessione con la funzione go_prenota
+        else:
+            prenota_button = QPushButton("Non disponibile")
+            prenota_button.setStyleSheet("max-height: 25px; color: black; border-radius: 10px; background-color: "
+                                         "#9c9c9c")
         car_info_layout.addWidget(prenota_button, 6, 3)
         car_layout = QHBoxLayout()
         car_layout.setAlignment(Qt.AlignTop)
@@ -125,4 +133,4 @@ class PrenotazioneFurgone(QWidget):
     def go_prenota(self, mezzo):
         self.vista_prenotazione = VistaEffettuaPrenotazione(self.user, self.psw, mezzo)
         self.vista_prenotazione.show()
-        self.close()
+        self.shell.close()
