@@ -2,7 +2,6 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from viste.areacliente import VistaCliente
-from Attivita.cliente import Cliente
 from viste.prenotazione import VistaPrenotazione
 from viste.visualizzaPrenotazioni import PrenotazioniView
 from viste.vistaPagamenti import VistaPagamenti
@@ -49,8 +48,9 @@ class VistaHome(QMainWindow):
         button1 = QPushButton("Nuova prenotazione")
         button1.setStyleSheet(
             "width: 500px; height: 100px; color: black; background-color: #D9D9D9; border-radius: 25px; padding: 10px; "
-            "margin-top: 100px; font-size: 20px")
+            "margin-top: 100px; font-size: 20px;")
         button1.clicked.connect(self.go_registrazione)
+        # button1.setMouseTracking(True)
         button2 = QPushButton("Visualizza prenotazioni")
         button2.setStyleSheet(
             "width: 500px; height: 100px; background-color: #D9D9D9; border-radius: 25px; color: black; padding: "

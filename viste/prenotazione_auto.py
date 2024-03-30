@@ -8,47 +8,12 @@ from viste.effettua_prenotazione import VistaEffettuaPrenotazione
 import darkdetect
 
 
-class VistaPrenotazioneAuto(QMainWindow):
+class PrenotazioneAuto(QWidget):
     def __init__(self, user, psw):
         super().__init__()
         self.user = user
         self.psw = psw
-
-        self.setWindowTitle("CarGreen")
-        self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
-        if darkdetect.isDark():
-            self.setStyleSheet("background-color: #121212;")
-        self.setMinimumWidth(1000)
-        self.showMaximized()
-        self.central_widget = QWidget()
-        self.setCentralWidget(self.central_widget)
-
-        self.central_layout = QVBoxLayout()
-        self.central_widget.setLayout(self.central_layout)
-
-        title_layout = QHBoxLayout()
-
-        back_button = QPushButton()
-        back_button.setStyleSheet("max-width: 100px; border: none")
-        back_button.setIcon(QIcon("viste/Icone/varie/back.png"))
-        back_button.setIconSize(QSize(50, 50))
-        back_button.clicked.connect(self.go_back)
-        title_layout.addWidget(back_button)
-
-        self.title_label = QLabel("Prenota la tua auto")
-        self.title_font = self.title_label.font()
-        self.title_font.setPointSize(42)
-        self.title_font.setBold(True)
-        self.title_label.setFont(self.title_font)
-        self.title_label.adjustSize()
-        self.title_label.setAlignment(Qt.AlignCenter)
-        title_layout.addWidget(self.title_label)
-
-        ghost_button = QPushButton()
-        ghost_button.setStyleSheet("max-width: 100px; border: none")
-        title_layout.addWidget(ghost_button)
-
-        self.central_layout.addLayout(title_layout)
+        self.layout = QVBoxLayout()
 
         mezzi = []
         file_path = "dati/auto.json"
@@ -83,13 +48,13 @@ class VistaPrenotazioneAuto(QMainWindow):
                                   "QScrollArea {"
                                   "border: none"
                                   "}")
-
         scroll_area.setWidgetResizable(True)
         self.scroll_content = QWidget(scroll_area)
         scroll_area.setWidget(self.scroll_content)
         self.scroll_layout = QVBoxLayout(self.scroll_content)
 
-        self.central_layout.addWidget(scroll_area)
+        self.layout.addWidget(scroll_area)
+        self.setLayout(self.layout)
 
         for i in range(len(mezzi)):
             self.aggiungi_box_auto(mezzi[i])
@@ -156,12 +121,6 @@ class VistaPrenotazioneAuto(QMainWindow):
         car_layout.addWidget(car_info_frame)
 
         self.scroll_layout.addLayout(car_layout)
-
-    def go_back(self):
-        from viste.prenotazione import VistaPrenotazione
-        self.vista = VistaPrenotazione(self.user, self.psw)
-        self.vista.show()
-        self.close()
 
     def go_prenota(self, auto):
         self.vista_prenotazione = VistaEffettuaPrenotazione(self.user, self.psw, auto)
