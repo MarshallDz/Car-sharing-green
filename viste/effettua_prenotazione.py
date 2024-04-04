@@ -1,4 +1,6 @@
 import datetime
+
+from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import Qt, QDate, QDateTime
 from Attivita.cliente import *
@@ -26,152 +28,175 @@ class VistaEffettuaPrenotazione(QMainWindow):
                                               "background-color: #303030;"
                                               "}")
 
-        self.central_layout = QGridLayout()
-
-        self.central_layout.setContentsMargins(20, 0, 20, 0)
-        self.central_layout.setVerticalSpacing(int(self.width() * 0.04))
-        self.central_widget.setLayout(self.central_layout)
+        self.page_layout = QVBoxLayout()
+        self.central_widget.setLayout(self.page_layout)
 
         self.title_label = QLabel("Effettua la tua prenotazione ")
         self.title_font = self.title_label.font()
         self.title_font.setPointSize(42)
         self.title_font.setBold(True)
         self.title_label.setFont(self.title_font)
-        self.title_label.setAlignment(Qt.AlignTop | Qt.AlignHCenter)
+        self.title_label.setStyleSheet("max-height: 100px")
+        self.title_label.setAlignment(Qt.AlignHCenter)
         self.title_label.adjustSize()
-        self.central_layout.addWidget(self.title_label, 0, 1, 2, 3)
+        self.page_layout.addWidget(self.title_label)
 
         self.valori = {}
 
-        inizio_noleggio = QLabel("Data inizio noleggio:")
-        inizio_noleggio.setStyleSheet("font-size: 18px")
-        self.central_layout.addWidget(inizio_noleggio, 1, 0, alignment=Qt.AlignTop)
+        self.central_layout = QHBoxLayout()
+        form_layout = QGridLayout()
+        form_layout.setHorizontalSpacing(200)
+        buttons_layout = QVBoxLayout()
 
-        self.campo1 = QDateEdit()
-        self.campo1.setCalendarPopup(True)
-        self.campo1.lineEdit().setReadOnly(True)
-        self.campo1.setMinimumDate(QDate.currentDate())
-        self.campo1.setStyleSheet(f"max-width: {self.width() * 0.45}; min-width: {self.width() * 0.45}")
-        self.central_layout.addWidget(self.campo1, 1, 3)
-        self.campo1.dateChanged.connect(self.update_valori)
+        inoleggio_label = QLabel("Data inizio noleggio:")
+        inoleggio_label.setStyleSheet("font-size: 18px; max-width: 200px; max-height: 50px")
+        form_layout.addWidget(inoleggio_label, 0, 0)
 
-        self.oraCampo1 = QComboBox(self)
-        if self.verifica_data_corrente():
-            for i in range(self.ora_corrente(), 21):
-                    if 8 <= i <= 9:
-                        self.oraCampo1.addItems([f"0{i}.00"])
-                    else:
-                        self.oraCampo1.addItems([f"{i}.00"])
-        self.central_layout.addWidget(self.oraCampo1, 1, 4)
-        self.oraCampo1.currentIndexChanged.connect(self.update_valori)
-        self.valori["data_inizio"] = self.campo1.date().toString(Qt.ISODate) + " " + self.oraCampo1.currentText()
-
-        fine_noleggio = QLabel("Data fine noleggio:")
-        fine_noleggio.setStyleSheet("font-size: 18px")
-        self.central_layout.addWidget(fine_noleggio, 2, 0, alignment=Qt.AlignTop)
-
-        self.campo2 = QDateEdit()
-        self.campo2.setCalendarPopup(True)
-        self.campo2.lineEdit().setReadOnly(True)
-        self.campo2.setMinimumDate(QDate.currentDate().addDays(1))
-        self.campo2.setStyleSheet(f"max-width: {self.width() * 0.45}; min-width: {self.width() * 0.45};"
-                                  "margin-right: 15px")
-        self.central_layout.addWidget(self.campo2, 2, 3)
-        self.campo2.dateChanged.connect(self.update_valori)
-
-        self.oraCampo2 = QComboBox(self)
-        for i in range(8, 21):
-            if i <= 9:
-                self.oraCampo2.addItems([f"0{i}.00"])
-            else:
-                self.oraCampo2.addItems([f"{i}.00"])
-        self.central_layout.addWidget(self.oraCampo2, 2, 4)
-        self.oraCampo2.setVisible(False)
-        self.oraCampo2.currentIndexChanged.connect(self.update_valori)
-        self.valori["data_fine"] = self.campo2.date().toString(Qt.ISODate)
+        fnoleggio_label = QLabel("Data fine noleggio:")
+        fnoleggio_label.setStyleSheet("font-size: 18px; max-width: 200px; max-height: 50px")
+        form_layout.addWidget(fnoleggio_label, 1, 0)
 
         filiale_label = QLabel("Filiale ritiro mezzo:")
-        filiale_label.setStyleSheet("font-size: 18px")
-        self.central_layout.addWidget(filiale_label, 3, 0)
+        filiale_label.setStyleSheet("font-size: 18px; max-width: 200px; max-height: 50px")
+        form_layout.addWidget(filiale_label, 2, 0)
+
+        assicurazione_label = QLabel("Polizza assicurativa:")
+        assicurazione_label.setStyleSheet("font-size: 18px; max-width: 200px; max-height: 50px")
+        form_layout.addWidget(assicurazione_label, 3, 0)
+
+        tariffa_label = QLabel("Tariffa:")
+        tariffa_label.setStyleSheet("font-size: 18px; max-width: 200px; max-height: 50px")
+        form_layout.addWidget(tariffa_label, 4, 0)
+
+        dlayout1 = QHBoxLayout()
+        self.datacampo1 = QDateEdit()
+        self.datacampo1.setCalendarPopup(True)
+        self.datacampo1.lineEdit().setReadOnly(True)
+        self.datacampo1.setMinimumDate(QDate.currentDate())
+        self.datacampo1.setStyleSheet("max-width: 300px; max-height: 50px")
+        dlayout1.addWidget(self.datacampo1)
+        self.datacampo1.dateChanged.connect(self.update_valori)
+
+        self.oracampo1 = QComboBox(self)
+        if self.verifica_data_corrente():
+            for i in range(self.ora_corrente(), 21):
+                if 8 <= i <= 9:
+                    self.oracampo1.addItems([f"0{i}.00"])
+                else:
+                    self.oracampo1.addItems([f"{i}.00"])
+        dlayout1.addWidget(self.oracampo1)
+        self.oracampo1.currentIndexChanged.connect(self.update_valori)
+        self.valori["data_inizio"] = self.datacampo1.date().toString(Qt.ISODate) + " " + self.oracampo1.currentText()
+        form_layout.addLayout(dlayout1, 0, 1)
+
+        dlayout2 = QHBoxLayout()
+        self.datacampo2 = QDateEdit()
+        self.datacampo2.setCalendarPopup(True)
+        self.datacampo2.lineEdit().setReadOnly(True)
+        self.datacampo2.setMinimumDate(QDate.currentDate().addDays(1))
+        self.datacampo2.setStyleSheet("max-width: 300px; max-height: 50px")
+        dlayout2.addWidget(self.datacampo2)
+        self.datacampo2.dateChanged.connect(self.update_valori)
+
+        self.oracampo2 = QComboBox(self)
+        for i in range(8, 21):
+            if i <= 9:
+                self.oracampo2.addItems([f"0{i}.00"])
+            else:
+                self.oracampo2.addItems([f"{i}.00"])
+        dlayout2.addWidget(self.oracampo2)
+        self.oracampo2.currentIndexChanged.connect(self.update_valori)
+        self.valori["data_fine"] = self.datacampo2.date().toString(Qt.ISODate)
+        form_layout.addLayout(dlayout2, 1, 1)
 
         self.filiale = QComboBox(self)
-        self.filiale.setStyleSheet("margin-right: 15px;"
-                                   f"max-width: {self.width() * 0.45}; min-width: {self.width() * 0.45}")
+        self.filiale.setStyleSheet("max-width: 300px; max-height: 50px")
         self.filiale.setPlaceholderText("Scegli:")
         self.filiale.addItems(["Milano, via padova", "Milano, via roma"])
         self.filiale.currentIndexChanged.connect(self.update_valori)
-        self.central_layout.addWidget(self.filiale, 3, 3)
+        form_layout.addWidget(self.filiale, 2, 1)
         self.valori["filiale"] = self.filiale.currentText()
 
-        assicurazione_label = QLabel("Polizza assicurativa:")
-        assicurazione_label.setStyleSheet("font-size: 18px")
-        self.central_layout.addWidget(assicurazione_label, 4, 0)
-
         self.polizza = QComboBox(self)
-        self.polizza.setStyleSheet("margin-right: 15px;"
-                                   f"max-width: {self.width() * 0.45}; min-width: {self.width() * 0.45}")
+        self.polizza.setStyleSheet("max-width: 300px; max-height: 50px")
         self.polizza.setPlaceholderText("Scegli:")
         self.polizza.addItems(["rca", "kasko"])
-        self.central_layout.addWidget(self.polizza, 4, 3)
+        form_layout.addWidget(self.polizza, 3, 1)
         self.polizza.currentIndexChanged.connect(self.update_valori)
         self.valori["polizza"] = self.polizza.currentText()
 
-        tariffa = QLabel("Tariffa:")
-        tariffa.setStyleSheet(f"font-size: 18px;")
-        self.central_layout.addWidget(tariffa, 5, 0)
-
         self.tariffa = QComboBox(self)
-        self.tariffa.setStyleSheet("margin-right: 15px;"
-                                   f"max-width: {self.width() * 0.45}; min-width: {self.width() * 0.45}")
+        self.tariffa.setStyleSheet("max-width: 300px; max-height: 50px")
         self.tariffa.setPlaceholderText("Scegli:")
         self.tariffa.addItems(["oraria", "giornaliera"])
-        self.central_layout.addWidget(self.tariffa, 5, 3)
+        form_layout.addWidget(self.tariffa, 4, 1)
         self.tariffa.currentIndexChanged.connect(self.update_valori)
         self.valori["tariffa"] = self.tariffa.currentText()
 
+        self.central_layout.addLayout(form_layout)
+
         conferma_button = QPushButton("Conferma")
         conferma_button.setStyleSheet(
-            "width: 200px; max-width: 200px; background-color: #6AFE67; border-radius: 15px; color: black; "
-            "padding: 10px; margin-right: 40px;")
+            "max-width: 200px; max-height: 50px; background-color: #6AFE67; border-radius: 15px; color: black; "
+            "padding: 10px")
         conferma_button.clicked.connect(self.conferma_prenotazione)
-        self.central_layout.addWidget(conferma_button, 6, 3, alignment=Qt.AlignRight)
+        buttons_layout.addWidget(conferma_button)
 
         back_button = QPushButton("Annulla")
         back_button.setStyleSheet(
-            "width: 150px; max-width: 150px; background-color: #F85959; border-radius: 15px; color: black; "
-            "padding: 10px; margin-right: 50px")
+            "max-width: 150px; max-height: 30px; background-color: #F85959; border-radius: 15px; color: black; "
+            "padding: 10px")
         back_button.clicked.connect(self.go_back)
-        self.central_layout.addWidget(back_button, 7, 3, alignment=(Qt.AlignRight | Qt.AlignTop))
+        buttons_layout.addWidget(back_button)
+
+        self.central_layout.addLayout(buttons_layout)
+
+        self.page_layout.addLayout(self.central_layout)
+
+        bottom_layout = QHBoxLayout()
+
+        image = QPixmap(mezzo["URL_immagine"])
+        self.label = QLabel()
+        self.label.setStyleSheet("margin-left: 20px")
+        self.label.setPixmap(image.scaled(600, 800, Qt.KeepAspectRatio))
+        self.label.setAlignment(Qt.AlignCenter)
+        bottom_layout.addWidget(self.label)
+
+        self.alt = QLabel("La tua scelta: \n\n" + mezzo["produttore"] + " " + mezzo["modello"] + " " + mezzo["cavalli"] + " cv")
+        self.alt.setStyleSheet("font-size: 25px")
+        bottom_layout.addWidget(self.alt)
+
+        self.page_layout.addLayout(bottom_layout)
 
     def update_valori(self):
         sender = self.sender()  # Identifica quale combobox ha generato il segnale
 
         # Aggiorna self.valori
-        if sender == self.campo1:
+        if sender == self.datacampo1:
             info = self.valori["data_inizio"].split(" ")
             info[0] = sender.date().toString(Qt.ISODate)
             self.valori["data_inizio"] = f"{info[0]} {info[1]}"
             new_start_date = sender.date()
-            self.campo2.setMinimumDate(new_start_date.addDays(1))  # Imposta la data minima di campo2 al giorno successivo
-            current_end_date = self.campo2.date()
+            self.datacampo2.setMinimumDate(new_start_date.addDays(1))  # Imposta la data minima di campo2 al giorno successivo
+            current_end_date = self.datacampo2.date()
             if current_end_date <= new_start_date:
                 # Se la data di fine noleggio è minore o uguale alla data di inizio noleggio più un giorno,
                 # imposta la data di fine noleggio un giorno dopo della data di inizio
-                self.campo2.setDate(new_start_date.addDays(1))
+                self.datacampo2.setDate(new_start_date.addDays(1))
             if not self.verifica_data_corrente():
-                self.oraCampo1.clear()
+                self.oracampo1.clear()
                 for i in range(8, 21):
                     if i <= 9:
-                        self.oraCampo1.addItems([f"0{i}.00"])
+                        self.oracampo1.addItems([f"0{i}.00"])
                     else:
-                        self.oraCampo1.addItems([f"{i}.00"])
-        elif sender == self.oraCampo1:
+                        self.oracampo1.addItems([f"{i}.00"])
+        elif sender == self.oracampo1:
             info = self.valori["data_inizio"].split(" ")
             info[1] = sender.currentText()
             self.valori["data_inizio"] = f"{info[0]} {info[1]}"
-        elif sender == self.campo2:
+        elif sender == self.datacampo2:
             self.valori["data_fine"] = sender.date().toString(Qt.ISODate)
-        elif sender == self.oraCampo2:
+        elif sender == self.oracampo2:
             info = self.valori["data_fine"].split(" ")
             info[1] = sender.currentText()
             self.valori["data_fine"] = f"{info[0]} {info[1]}"
@@ -182,10 +207,10 @@ class VistaEffettuaPrenotazione(QMainWindow):
         else:
             self.valori["tariffa"] = sender.currentText()
             if sender.currentText() == "giornaliera":
-                self.oraCampo2.setVisible(True)
-                self.valori["data_fine"] = self.campo2.date().toString(Qt.ISODate) + " " + self.oraCampo2.currentText()
+                self.oracampo2.setVisible(True)
+                self.valori["data_fine"] = self.datacampo2.date().toString(Qt.ISODate) + " " + self.oracampo2.currentText()
             elif sender.currentText() == "oraria":
-                self.oraCampo2.setVisible(False)
+                self.oracampo2.setVisible(False)
 
     def go_back(self):
         from viste.prenotazione import VistaPrenotazione
@@ -223,6 +248,6 @@ class VistaEffettuaPrenotazione(QMainWindow):
         return ora
 
     def verifica_data_corrente(self):
-        data_inserita = self.campo1.date().toString(Qt.ISODate)
+        data_inserita = self.datacampo1.date().toString(Qt.ISODate)
         data_corrente = QDate.currentDate().toString(Qt.ISODate)
         return data_inserita == data_corrente

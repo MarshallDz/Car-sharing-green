@@ -139,5 +139,5 @@ class PrenotazioniView(QMainWindow):
                 Prenotazione().eliminaPrenotazione(p)
             if reply == QMessageBox.Yes:
                 QMessageBox.information(self, 'Disdetta Confermata', 'La prenotazione è stata disdetta con successo.', QMessageBox.Ok)
-                self.close()
+                self.go_back()
         else: QMessageBox.warning(self, 'Attenzione', 'Non puoi disdire questa prenotazione')

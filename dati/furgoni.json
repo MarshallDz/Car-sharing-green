@@ -16,57 +16,57 @@
   {
     "URL_immagine": "viste/Icone/furgoni/mercedes_vito.png",
     "telaio": "DEF456",
-    "produttore": "Mercedes",
+    "produttore": "Mercedes-Benz",
     "modello": "Vito",
-    "cavalli": 140,
-    "cilindrata": 2000,
-    "anno": 2020,
+    "cavalli": "140",
+    "cilindrata": "2000",
+    "anno": "2020",
     "alimentazione": "diesel",
     "cambio": "manuale",
-    "nPosti": 3,
+    "nPosti": "3",
     "stato": "disponibile",
-    "tariffa_oraria": 55
+    "tariffa_oraria": "55"
   },
   {
     "URL_immagine": "viste/Icone/furgoni/ford_transit.png",
     "telaio": "GHI789",
     "produttore": "Ford",
     "modello": "Transit Custom",
-    "cavalli": 120,
-    "cilindrata": 1800,
-    "anno": 2021,
+    "cavalli": "120",
+    "cilindrata": "1800",
+    "anno": "2021",
     "alimentazione": "diesel",
     "cambio": "manuale",
-    "nPosti": 3,
+    "nPosti": "3",
     "stato": "disponibile",
-    "tariffa_oraria": 50
+    "tariffa_oraria": "50"
   },
   {
     "URL_immagine": "viste/Icone/furgoni/vw_trasporter.png",
     "telaio": "JKL012",
     "produttore": "Volkswagen",
     "modello": "Transporter",
-    "cavalli": 150,
-    "cilindrata": 2200,
-    "anno": 2022,
+    "cavalli": "150",
+    "cilindrata": "2200",
+    "anno": "2022",
     "alimentazione": "diesel",
     "cambio": "automatico",
-    "nPosti": 3,
+    "nPosti": "3",
     "stato": "disponibile",
-    "tariffa_oraria": 65
+    "tariffa_oraria": "65"
   },
   {
     "URL_immagine": "viste/Icone/furgoni/renautl_trafic.jpg",
     "telaio": "MNO345",
     "produttore": "Renault",
     "modello": "Trafic",
-    "cavalli": 130,
-    "cilindrata": 1900,
-    "anno": 2020,
+    "cavalli": "130",
+    "cilindrata": "1900",
+    "anno": "2020",
     "alimentazione": "diesel",
     "cambio": "manuale",
-    "nPosti": 3,
+    "nPosti": "3",
     "stato": "disponibile",
-    "tariffa_oraria": 55
+    "tariffa_oraria": "55"
   }
 ]
