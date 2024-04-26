@@ -1,10 +1,8 @@
 from PyQt5.QtWidgets import *
 import sys
 from viste.welcome import WelcomeWindow
-from Servizio.auto import Auto
 
 def main():
-    Auto().controllaPrenotazione()
     app = QApplication(sys.argv)
     welcome_window = WelcomeWindow()
     welcome_window.show()
