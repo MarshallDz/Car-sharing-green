@@ -99,15 +99,15 @@ class VistaRegistrazione(QMainWindow):
                     return
             elif isinstance(campo_widget, QDateEdit):
                 data_to_save[campo_nome] = campo_widget.date().toString(Qt.ISODate)
-        if data_to_save["codice fiscale"].__len__() != 16:
+        if data_to_save["Codice Fiscale"].__len__() != 16:
             QMessageBox.warning(None, "CF non valido", "Il codice fiscale inserito non è valido.")
             return
-        if not data_to_save["cellulare"].isdigit() or data_to_save["cellulare"].__len__() != 10:
+        if not data_to_save["Cellulare"].isdigit() or data_to_save["Cellulare"].__len__() != 10:
             QMessageBox.warning(None, "Cellulare non valido", "Il numero di cellulare deve essere composto da 10 "
                                                               "cifre.")
             return
         cliente = Cliente()
-        if cliente.aggiungiCliente(data_to_save["codice fiscale"], data_to_save["nome"], data_to_save["cognome"], data_to_save["data di nascita"], data_to_save["e-mail"], data_to_save["password"], data_to_save["cellulare"]):
+        if cliente.aggiungiCliente(data_to_save["Codice Fiscale"], data_to_save["Nome"], data_to_save["Cognome"], data_to_save["Data di nascita"], data_to_save["E-mail"], data_to_save["Password"], data_to_save["Cellulare"]):
             self.close()
 
     def go_back(self):
