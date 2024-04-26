@@ -13,7 +13,7 @@ class PrenotazioniView(QMainWindow):
         self.user = user
         self.psw = psw
 
-        self.setWindowTitle("Prenotazioni cliente")
+        self.setWindowTitle("CarGreen")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
         if darkdetect.isDark():
             self.setStyleSheet("background-color: #121212;")
@@ -139,5 +139,5 @@ class PrenotazioniView(QMainWindow):
                 Prenotazione().eliminaPrenotazione(p)
             if reply == QMessageBox.Yes:
                 QMessageBox.information(self, 'Disdetta Confermata', 'La prenotazione è stata disdetta con successo.', QMessageBox.Ok)
-                self.close()
+                self.go_back()
         else: QMessageBox.warning(self, 'Attenzione', 'Non puoi disdire questa prenotazione')

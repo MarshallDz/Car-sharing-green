@@ -1,8 +1,9 @@
 import json
 
 from PyQt5.QtCore import *
-from PyQt5.QtGui import QPixmap, QIcon, QFont
-from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QVBoxLayout, QLineEdit, QPushButton, QLabel, QMessageBox
+from PyQt5.QtGui import QPixmap, QFont
+from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QVBoxLayout, QLineEdit, QPushButton, QLabel, \
+    QMessageBox, QHBoxLayout
 from Attivita.cliente import Cliente
 import darkdetect
 
@@ -15,7 +16,7 @@ class VistaCliente(QMainWindow):
         self.psw = psw
         self.cliente = Cliente.get_dati(self, self.user, self.psw)
         self.campi = {}
-        self.setWindowTitle("Profilo utente")
+        self.setWindowTitle("CarGreen")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
         if darkdetect.isDark():
             self.setStyleSheet("background-color: #121212;")
@@ -28,7 +29,7 @@ class VistaCliente(QMainWindow):
         self.central_widget.setLayout(self.layout)
 
         icona = QLabel()
-        foto = QPixmap("Attivita/Icone/varie/boy.png")
+        foto = QPixmap("viste/Icone/varie/boy.png")
         foto.setDevicePixelRatio(3.5)
         icona.setPixmap(foto)
         icona.setAlignment(Qt.AlignCenter)
@@ -42,75 +43,100 @@ class VistaCliente(QMainWindow):
         self.cellulare = self.crea_campo("cellulare", self.cliente["cellulare"])
 
         self.modify_button = QPushButton("Modifica")
-        self.modify_button.setCheckable(True)
         self.modify_button.clicked.connect(self.modifica)
         self.back_button = QPushButton("Torna alla home")
         self.modify_button.setStyleSheet(
             "max-width: 200px; background-color: #6AFE67; border-radius: 15px; color: black; padding: 10px;"
-            "margin-left: 150px; margin-top: 50px;")
+            "margin-left: 200px; margin-top: 20px;")
         self.layout.addWidget(self.modify_button)
         self.layout.addWidget(self.back_button)
         self.back_button.setStyleSheet(
             "max-width: 150px; background-color: #F85959; border-radius: 15px; color: black; padding: 10px;"
-            "margin-left: 175px; margin-top: 10px")
+            "margin-left: 225px; margin-top: 10px")
         self.back_button.clicked.connect(self.go_back)
 
     def crea_campo(self, nome, valore):
+        layout = QHBoxLayout()
         titolo = QLabel(nome)
         titolof = QFont("Arial", 12, QFont.Bold)
         titolo.setFont(titolof)
         titolo.adjustSize()
-        self.layout.addWidget(titolo)
+        titolo.setStyleSheet("max-width: 100px; margin-left: 150px")
+        layout.addWidget(titolo)
         campo = QLineEdit()
         campo.setText(valore)
         campo.setReadOnly(True)
-        campo.setStyleSheet("max-width: 500px; min-height: 40px; background-color: #e3e1dc; color: black;")
-        if nome == "e-mail" or nome == "password":
+        campo.setStyleSheet("margin-right: 200px; max-width: 200px; min-height: 40px; background-color: #e3e1dc; color: black;")
+        if nome == "e-mail" or nome == "password" or nome == "cellulare":
             self.campi[nome] = campo
-        self.layout.addWidget(campo)
+        layout.addWidget(campo)
+        self.layout.addLayout(layout)
         return campo
 
     def modifica(self):
         self.email.setReadOnly(False)
-        self.email.setStyleSheet("max-width: 500px; min-height: 40px;background-color: #e3e1dc;")
+        self.email.setStyleSheet("margin-right: 200px; max-width: 200px; min-height: 40px; border-radius: 10px; background-color: #c0e3fc;")
         self.password.setReadOnly(False)
-        self.password.setStyleSheet("max-width: 500px; min-height: 40px;background-color: #e3e1dc;")
+        self.password.setStyleSheet("margin-right: 200px; max-width: 200px; min-height: 40px; border-radius: 10px; background-color: #c0e3fc;")
         self.cellulare.setReadOnly(False)
-        self.cellulare.setStyleSheet("max-width: 500px; min-height: 40px; background-color: #e3e1dc;")
+        self.cellulare.setStyleSheet("margin-right: 200px; max-width: 200px; min-height: 40px; border-radius: 10px; background-color: #c0e3fc;")
         self.modify_button.setText("Conferma")
-        self.modify_button.toggled.connect(self.conferma)
+        self.modify_button.clicked.connect(self.conferma)
         self.back_button.setText("Annulla")
+        self.back_button.clicked.connect(self.annulla)
+
+    def annulla(self):
+        self.email.setReadOnly(True)
+        self.email.setStyleSheet("max-width: 500px; min-height: 40px; background-color: #e3e1dc;")
+        self.password.setReadOnly(True)
+        self.password.setStyleSheet(
+            "max-width: 500px; min-height: 40px; background-color: #e3e1dc;")
+        self.cellulare.setReadOnly(True)
+        self.cellulare.setStyleSheet(
+            "max-width: 500px; min-height: 40px; background-color: #e3e1dc;")
+        self.modify_button.setText("Modifica")
+        self.modify_button.clicked.connect(self.modifica)
+        self.back_button.setText("Torna alla home")
+        self.back_button.clicked.connect(self.go_back)
 
     def conferma(self):
+        login = {}
+        for campo_nome, campo_widget in self.campi.items():
+            login[campo_nome] = campo_widget.text()
+        if not login["cellulare"].isdigit() or login["cellulare"].__len__() != 10:
+                QMessageBox.warning(None, "Cellulare non valido", "Il numero di cellulare deve essere composto da 10 "
+                                                        "cifre.")
+                return
+
         message_box = QMessageBox()
         message_box.setIcon(QMessageBox.Question)
-        message_box.setText("Sei sicuro di voler modificare i tuoi dati di accesso?")
+        message_box.setText("Sei sicuro di voler modificare i tuoi dati personali?")
         message_box.setWindowTitle("Salvataggio")
         message_box.setStandardButtons(QMessageBox.Save | QMessageBox.Cancel)
 
         risposta = message_box.exec_()
 
         if risposta == QMessageBox.Save:
-            login = {}
-            for campo_nome, campo_widget in self.campi.items():
-                login[campo_nome] = campo_widget.text()
             with open("dati/clienti.json", "r") as file:
                 data = json.load(file)
 
             # Cerca il cliente specifico usando il suo codice fiscale
             for c in data["clienti"]:
                 if c["codiceFiscale"] == self.cliente["codiceFiscale"]:
-                    # Aggiungi il codice della nuova prenotazione alla lista delle prenotazioni del cliente
+                    # Aggiorno i dati del cliente
                     c["email"] = login["e-mail"]
                     c["password"] = login["password"]
+                    c["cellulare"] = login["cellulare"]
                     break
 
             # Scrivi i dati aggiornati nel file JSON
             with open("dati/clienti.json", "w") as file:
                 json.dump(data, file, indent=4)
 
+            # Aggiorno i dati della variabile cliente
             self.cliente["email"] = login["e-mail"]
             self.cliente["password"] = login["password"]
+            self.cliente["cellulare"] = login["cellulare"]
             QMessageBox.information(None, "Success", "Dati modificati correttamente!")
             from viste.home import VistaHome
             self.vista = VistaHome(self.cliente["email"], self.cliente["password"])

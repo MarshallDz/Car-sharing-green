@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import *
 import sys
 from viste.welcome import WelcomeWindow
 
+
 def main():
     app = QApplication(sys.argv)
     welcome_window = WelcomeWindow()

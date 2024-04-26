@@ -4,41 +4,18 @@ import json
 from PyQt5 import QtGui
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QSize
 from viste.effettua_prenotazione import VistaEffettuaPrenotazione
 import darkdetect
 
-class VistaPrenotazioneMoto(QMainWindow):
-    def __init__(self, user, psw):
+
+class PrenotazioneMoto(QWidget):
+    def __init__(self, user, psw, s):
         super().__init__()
         self.user = user
         self.psw = psw
-
-        self.setWindowTitle("Pagina di prenotazione moto")
-        self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
-        if darkdetect.isDark():
-            self.setStyleSheet("background-color: #121212;")
-        self.setMinimumWidth(1000)
-        self.showMaximized()
-        self.central_widget = QWidget()
-        self.setCentralWidget(self.central_widget)
-        self.showMaximized()
-        self.central_layout = QVBoxLayout()
-
-        title_layout = QVBoxLayout()
-        title_layout.setAlignment(Qt.AlignTop | Qt.AlignCenter)
-
-        self.central_widget.setLayout(self.central_layout)
-
-        self.title_label = QLabel("Prenota il tuo scooter: ")
-        self.title_font = self.title_label.font()
-        self.title_font.setPointSize(42)
-        self.title_font.setBold(True)
-        self.title_label.setFont(self.title_font)
-        self.title_label.adjustSize()
-
-        title_layout.addWidget(self.title_label)
-        self.central_layout.addLayout(title_layout)
+        self.shell = s
+        self.layout = QVBoxLayout()
 
         file_path = "dati/moto.json"
         mezzi = []
@@ -70,6 +47,9 @@ class VistaPrenotazioneMoto(QMainWindow):
                                   "}"
                                   "QScrollBar::sub-line:vertical {"
                                   "    background: none;"
+                                  "}"
+                                  "QScrollArea {"
+                                  "border: none"
                                   "}")
 
         scroll_area.setWidgetResizable(True)
@@ -77,28 +57,17 @@ class VistaPrenotazioneMoto(QMainWindow):
         scroll_area.setWidget(self.scroll_content)
         self.scroll_layout = QVBoxLayout(self.scroll_content)
 
-        self.central_layout.addWidget(scroll_area)
+        self.layout.addWidget(scroll_area)
+        self.setLayout(self.layout)
 
         for i in range(len(mezzi)):
             self.aggiungi_box_moto(mezzi[i])
-
-        # Aggiungiamo il pulsante "Indietro"
-        button_layout = QVBoxLayout()
-        button_layout.setAlignment(Qt.AlignBottom | Qt.AlignRight)
-
-        self.back_button = QPushButton("Indietro")
-        self.back_button.setStyleSheet("width: 150px; background-color: #F85959; border-radius: 15px; color: black; padding: 10px;"
-            "margin-right: 60px; margin-bottom: 60px;")
-        self.back_button.clicked.connect(self.go_back)
-
-        button_layout.addWidget(self.back_button)
-        self.central_layout.addLayout(button_layout)
 
     def aggiungi_box_moto(self, moto):
         car_info_frame = QFrame()
         car_info_frame.setStyleSheet("border: 2px solid white; border-radius: 5px; margin-right: 5px;")
         car_info_frame.setMinimumWidth(600)
-        car_info_frame.setMaximumWidth(1000)
+        car_info_frame.setMaximumWidth(1500)
 
         car_info_layout = QGridLayout(car_info_frame)
         car_info_layout.setAlignment(Qt.AlignTop)
@@ -132,9 +101,16 @@ class VistaPrenotazioneMoto(QMainWindow):
         myFont.setBold(True)
         tariffaLabel.setFont(myFont)
         car_info_layout.addWidget(tariffaLabel, 6, 0)
-        prenota_button = QPushButton("Prenota")
-        prenota_button.setStyleSheet("color: black; border-radius: 5px; background-color: #D9D9D9")
-        prenota_button.clicked.connect(lambda _, car=moto: self.go_prenota(car))
+        if moto["stato"] == "disponibile":
+            prenota_button = QPushButton("Prenota")
+            prenota_button.setStyleSheet("max-height: 25px; color: black; border-radius: 10px; background-color: "
+                                         "#0bd400")
+            prenota_button.clicked.connect(
+                lambda _, car=moto: self.go_prenota(car))  # Connessione con la funzione go_prenota
+        else:
+            prenota_button = QPushButton("Non disponibile")
+            prenota_button.setStyleSheet("max-height: 25px; color: black; border-radius: 10px; background-color: "
+                                         "#9c9c9c")
         car_info_layout.addWidget(prenota_button, 6, 3)
         car_layout = QHBoxLayout()
         car_layout.setAlignment(Qt.AlignTop)
@@ -143,8 +119,8 @@ class VistaPrenotazioneMoto(QMainWindow):
         if not pixmap.isNull():
             label = QLabel()
             label.setStyleSheet("margin-left: 20px;")
-            label.setMaximumWidth(200)
-            label.setPixmap(pixmap.scaled(200, 200, Qt.KeepAspectRatio))
+            label.setMaximumWidth(300)
+            label.setPixmap(pixmap.scaled(300, 400, Qt.KeepAspectRatio))
             label.setAlignment(Qt.AlignCenter)
             car_layout.addWidget(label)
         else:
@@ -157,13 +133,7 @@ class VistaPrenotazioneMoto(QMainWindow):
 
         self.scroll_layout.addLayout(car_layout)
 
-    def go_back(self):
-        from viste.prenotazione import VistaPrenotazione
-        self.vista = VistaPrenotazione(self.user, self.psw)
-        self.vista.show()
-        self.close()
-
     def go_prenota(self, moto):
         self.vista_prenotazione = VistaEffettuaPrenotazione(self.user, self.psw, moto)
         self.vista_prenotazione.show()
-        self.close()
+        self.shell.close()

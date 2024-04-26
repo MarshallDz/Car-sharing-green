@@ -12,7 +12,7 @@ class VistaPagamenti(QMainWindow):
         super().__init__()
         self.user = user
         self.psw = psw
-        self.setWindowTitle("Pagamenti cliente")
+        self.setWindowTitle("CarGreen")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
         if darkdetect.isDark():
             self.setStyleSheet("background-color: #121212;")
