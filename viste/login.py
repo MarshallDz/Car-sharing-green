@@ -11,7 +11,7 @@ class VistaLogin(QMainWindow):
         super().__init__()
         self.campi = {}
 
-        self.setWindowTitle("Pagina di login")
+        self.setWindowTitle("CarGreen")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
         if darkdetect.isDark():
             self.setStyleSheet("background-color: #121212;")

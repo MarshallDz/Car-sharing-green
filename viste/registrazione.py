@@ -11,7 +11,7 @@ class VistaRegistrazione(QMainWindow):
         # dizionario in cui salvi i campi del form
         self.campi = {}
 
-        self.setWindowTitle("Pagina di registrazione")
+        self.setWindowTitle("CarGreen")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
         if darkdetect.isDark():
             self.setStyleSheet("background-color: #121212;")
@@ -38,13 +38,13 @@ class VistaRegistrazione(QMainWindow):
         self.form_layout = QVBoxLayout()
         self.form_layout.setAlignment(Qt.AlignTop | Qt.AlignHCenter)
 
-        self.crea_campo("codice fiscale")
-        self.crea_campo("nome")
-        self.crea_campo("cognome")
-        self.crea_campo("data di nascita")
-        self.crea_campo("e-mail")
-        self.crea_campo("password")
-        self.crea_campo("cellulare")
+        self.crea_campo("Codice Fiscale")
+        self.crea_campo("Nome")
+        self.crea_campo("Cognome")
+        self.crea_campo("Data di nascita")
+        self.crea_campo("E-mail")
+        self.crea_campo("Password")
+        self.crea_campo("Cellulare")
 
         # creo i bottoni invia e indietro
         invia_button = QPushButton("Invia")
@@ -63,12 +63,15 @@ class VistaRegistrazione(QMainWindow):
         central_layout.addLayout(self.form_layout)
 
     def crea_campo(self, nome):
-        if nome == "data di nascita":
+        if nome == "Data di nascita":
             layout = QHBoxLayout()  # Layout orizzontale per posizionare la label accanto al campo
-            label = QLabel("Data di nascita:")
+            label = QLineEdit()
+            label.setPlaceholderText(nome)
+            label.setStyleSheet("max-width: 100px; min-height: 40px; border-radius: 15px;")
+            label.setReadOnly(True)
             campo = QDateEdit()
             campo.setCalendarPopup(True)
-            campo.setStyleSheet("color: black; background-color: white;")
+            campo.setStyleSheet("max-width: 200px; color: black; background-color: white;")
             campo.setDate(QDate.currentDate())
             layout.addWidget(label)
             layout.addWidget(campo)
@@ -76,7 +79,10 @@ class VistaRegistrazione(QMainWindow):
         else:
             campo = QLineEdit()
             campo.setPlaceholderText(nome)
-            campo.setStyleSheet("color: black;  max-width: 300px; min-height: 40px; background-color: white;")
+            campo.setStyleSheet("max-width: 300px; min-height: 40px; border-radius: 15px;")
+            if darkdetect.isDark():
+                campo.setStyleSheet("max-width: 300px; min-height: 40px; border-radius: 15px; "
+                                    "background-color: #403f3f")
             self.form_layout.addWidget(campo)
 
         self.campi[nome] = campo
@@ -97,7 +103,7 @@ class VistaRegistrazione(QMainWindow):
             QMessageBox.warning(None, "CF non valido", "Il codice fiscale inserito non è valido.")
             return
         if not data_to_save["cellulare"].isdigit() or data_to_save["cellulare"].__len__() != 10:
-            QMessageBox.warning(None, "Cellulare non valido", "Il numero di cellulare deve essere un numero di 10 "
+            QMessageBox.warning(None, "Cellulare non valido", "Il numero di cellulare deve essere composto da 10 "
                                                               "cifre.")
             return
         cliente = Cliente()
