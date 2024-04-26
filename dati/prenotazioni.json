@@ -104,6 +104,44 @@
             },
             "tariffa": "giornaliera",
             "polizza": "kasko"
+        },
+        {
+            "id": "SylHmp",
+            "cliente": {
+                "codiceFiscale": "mrzmhl02h20g157g",
+                "nome": "michelon",
+                "cognome": "micheloni",
+                "dataNascita": "2024-01-22",
+                "email": "a",
+                "password": "a",
+                "cellulare": "3333333333",
+                "prenotazioni": [
+                    "8MLhvx",
+                    "OCv2Wx",
+                    "5h4ow6"
+                ],
+                "dataRegistrazione": "22012024"
+            },
+            "data_prenotazione": "Fri Apr 26 2024",
+            "data_inizio": "2024-04-26 11.00",
+            "data_fine": "2024-04-30 08.00",
+            "filiale": "Milano, via roma",
+            "mezzo": {
+                "URL_immagine": "viste/Icone/auto/white-car.png",
+                "telaio": "01",
+                "produttore": "bmw",
+                "modello": "x3",
+                "cavalli": "130",
+                "cilindrata": "1600",
+                "anno": "2020",
+                "alimentazione": "benzina",
+                "cambio": "automatico",
+                "nPosti": "5",
+                "stato": "disponibile",
+                "tariffa_oraria": "40"
+            },
+            "tariffa": "giornaliera",
+            "polizza": "kasko"
         }
     ]
 }
