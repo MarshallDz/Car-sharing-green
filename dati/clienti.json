@@ -38,6 +38,17 @@
                 "1pPlgJ"
             ],
             "dataRegistrazione": "22012024"
+        },
+        {
+            "codiceFiscale": "aaaaaaaaaaaaaaaa",
+            "nome": "a",
+            "cognome": "a",
+            "dataNascita": "2024-04-26",
+            "email": "a",
+            "password": "a",
+            "cellulare": "1234567890",
+            "prenotazioni": [],
+            "dataRegistrazione": "26042024"
         }
     ]
 }

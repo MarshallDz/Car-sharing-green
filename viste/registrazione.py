@@ -107,8 +107,8 @@ class VistaRegistrazione(QMainWindow):
                                                               "cifre.")
             return
         cliente = Cliente()
-        if cliente.aggiungiCliente(data_to_save["Codice Fiscale"], data_to_save["Nome"], data_to_save["Cognome"], data_to_save["Data di nascita"], data_to_save["E-mail"], data_to_save["Password"], data_to_save["Cellulare"]):
-            self.close()
+        cliente.aggiungiCliente(data_to_save["Codice Fiscale"], data_to_save["Nome"], data_to_save["Cognome"], data_to_save["Data di nascita"], data_to_save["E-mail"], data_to_save["Password"], data_to_save["Cellulare"])
+        self.go_back()
 
     def go_back(self):
         from viste.welcome import WelcomeWindow

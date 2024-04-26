@@ -5,7 +5,7 @@ import qdarktheme
 
 def main():
     app = QApplication(sys.argv)
-    qdarktheme.setup_theme()
+    qdarktheme.setup_theme("auto")
     welcome_window = WelcomeWindow()
     welcome_window.show()
     sys.exit(app.exec_())

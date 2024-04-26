@@ -16,7 +16,6 @@ class TestClienteMethods(unittest.TestCase):
             os.remove("dati/clienti.json")
 
     def test_aggiungiCliente(self):
-        self.cliente = Cliente()
         self.cliente.aggiungiCliente("CF123456", "John", "Doe", "1990-01-01", "john@example.com", "password", "1234567890")
         clienti = None
         if os.path.isfile('dati/clienti.json'):
