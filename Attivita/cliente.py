@@ -55,7 +55,7 @@ class Cliente(Utilizzatore):
 
     def get_dati(self, email=None, password=None):
         file_path = "dati/clienti.json"
-        with open(file_path, "r") as file:
+        with open(file_path) as file:
             data = json.load(file)
             if not email and not password:
                 clienti = data.get("clienti", [])

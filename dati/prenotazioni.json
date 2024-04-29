@@ -142,6 +142,45 @@
             },
             "tariffa": "giornaliera",
             "polizza": "kasko"
+        },
+        {
+            "id": "1pPlgJ",
+            "cliente": {
+                "codiceFiscale": "mrzmhl02h20g157g",
+                "nome": "michelon",
+                "cognome": "micheloni",
+                "dataNascita": "2024-01-22",
+                "email": "a",
+                "password": "a",
+                "cellulare": "3333333333",
+                "prenotazioni": [
+                    "8MLhvx",
+                    "OCv2Wx",
+                    "5h4ow6",
+                    "SylHmp"
+                ],
+                "dataRegistrazione": "22012024"
+            },
+            "data_prenotazione": "ven apr 26 2024",
+            "data_inizio": "2024-04-28 08.00",
+            "data_fine": "2024-04-29",
+            "filiale": "Milano, via padova",
+            "mezzo": {
+                "URL_immagine": "viste/Icone/auto/mercedes-c300.png",
+                "telaio": "02",
+                "produttore": "Mercedes-Benz",
+                "modello": "C300",
+                "cavalli": "245",
+                "cilindrata": "2000",
+                "anno": "2021",
+                "alimentazione": "diesel",
+                "cambio": "automatico",
+                "nPosti": "5",
+                "stato": "disponibile",
+                "tariffa_oraria": "40"
+            },
+            "tariffa": "oraria",
+            "polizza": "rca"
         }
     ]
 }
