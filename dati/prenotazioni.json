@@ -181,6 +181,12 @@
             },
             "tariffa": "oraria",
             "polizza": "rca"
+        },
+        {
+            "cliente": {
+                "codiceFiscale": "CF123456"
+            },
+            "id": 1
         }
     ]
 }

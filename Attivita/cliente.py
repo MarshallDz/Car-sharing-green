@@ -2,7 +2,7 @@ import datetime
 import json
 from PyQt5.QtWidgets import QWidget, QMessageBox
 from Attivita.utilizzatore import Utilizzatore
-
+import os
 
 class Cliente(Utilizzatore):
 
@@ -24,14 +24,14 @@ class Cliente(Utilizzatore):
         clienti.append(self.__dict__)
 
         # salvo nel file
-        with open("dati/clienti.json", "w") as f:
+        with open("../dati/clienti.json", "w") as f:
             json.dump({"clienti": clienti}, f, indent=4)
         QMessageBox.information(None, "Success", "Account registrato correttamente!")
         return 1
 
     def get_prenotazione(self, cf):
         lista_prenotazioni = []
-        file_path = "dati/prenotazioni.json"
+        file_path = "../dati/prenotazioni.json"
         with open(file_path) as file:
             data = json.load(file)
 
@@ -54,7 +54,7 @@ class Cliente(Utilizzatore):
         return email, psw
 
     def get_dati(self, email=None, password=None):
-        file_path = "dati/clienti.json"
+        file_path = "/Users/michelemarzioni/Documents/Python/dati/clienti.json"
         with open(file_path) as file:
             data = json.load(file)
             if not email and not password:
