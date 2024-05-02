@@ -1,9 +1,7 @@
 import unittest
-import os
 import json
 from PyQt5.QtWidgets import QApplication, QMessageBox  # Aggiungi QApplication qui
 from Attivita.cliente import Cliente
-import os
 
 class TestClienteMethods(unittest.TestCase):
 

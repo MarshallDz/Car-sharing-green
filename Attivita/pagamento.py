@@ -19,13 +19,13 @@ class Pagamento():
         self.cliente = cliente['codiceFiscale']
         pagamenti = self.get_dati()
         pagamenti.append(self.__dict__)
-        with open("dati/pagamenti.json", "w") as f:
+        with open("../dati/pagamenti.json", "w") as f:
             json.dump({"pagamenti":pagamenti}, f, indent=4)
         return 1
 
 
     def get_dati(self):
-        url = "dati/pagamenti.json"
+        url = "../dati/pagamenti.json"
         with open(url, "r") as file:
             data = json.load(file)
             pagamenti = data.get("pagamenti", [])
