@@ -28,14 +28,14 @@ class Prenotazione():
 
         prenotazioni = self.get_dati()
         prenotazioni.append(self.__dict__)
-        with open("dati/prenotazioni.json", "w") as f:
+        with open("../dati/prenotazioni.json", "w") as f:
             json.dump({"prenotazioni": prenotazioni}, f, indent=4)
         return 1
 
     def eliminaPrenotazione(self, p):
-        url_prenotazioni = "dati/prenotazioni.json"
-        url_clienti = "dati/clienti.json"
-        url_pagamenti = "dati/pagamenti.json"
+        url_prenotazioni = "../dati/prenotazioni.json"
+        url_clienti = "../dati/clienti.json"
+        url_pagamenti = "../dati/pagamenti.json"
 
         # Rimuovi la prenotazione dalla lista delle prenotazioni nel file JSON principale
         with open(url_prenotazioni, "r") as file:
@@ -75,7 +75,7 @@ class Prenotazione():
         self.vista.show()
 
     def get_dati(self):
-        url = "dati/prenotazioni.json"
+        url = "../dati/prenotazioni.json"
         with open(url, "r") as file:
             data = json.load(file)
             prenotazioni = data.get("prenotazioni", [])

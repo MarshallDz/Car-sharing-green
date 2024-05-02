@@ -183,10 +183,18 @@
             "polizza": "rca"
         },
         {
+            "id": "16SIzG",
             "cliente": {
-                "codiceFiscale": "CF123456"
+                "email": "test@example.com",
+                "password": "testpassword"
             },
-            "id": 1
+            "data_prenotazione": "2024-05-02 18:17:54",
+            "data_inizio": "2024-05-03 10:00:00",
+            "data_fine": "2024-05-04 10:00:00",
+            "filiale": "Milano",
+            "mezzo": "Auto",
+            "tariffa": "giornaliera",
+            "polizza": "rca"
         }
     ]
 }
