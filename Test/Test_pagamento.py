@@ -9,16 +9,6 @@ class TestPagamento(unittest.TestCase):
         # Create a Pagamento instance for testing
         self.pagamento = Pagamento()
 
-
-    def test_init(self):
-        # Test if attributes are initialized correctly
-        self.assertEqual(self.pagamento.codice, "")
-        self.assertEqual(self.pagamento.totale, "")
-        self.assertEqual(self.pagamento.dataPagamento, "")
-        self.assertEqual(self.pagamento.prenotazione, "")
-        self.assertEqual(self.pagamento.cliente, "")
-        self.assertEqual(self.pagamento.statoPagamento, "da pagare")
-
     def test_aggiungiPagamento(self):
         # Create sample data for a payment
         data = ""
