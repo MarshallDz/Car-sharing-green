@@ -31,7 +31,7 @@ class Cliente(Utilizzatore):
 
     def get_prenotazione(self, cf):
         lista_prenotazioni = []
-        file_path = "../dati/prenotazioni.json"
+        file_path = "dati/prenotazioni.json"
         with open(file_path) as file:
             data = json.load(file)
 

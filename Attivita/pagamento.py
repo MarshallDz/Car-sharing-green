@@ -2,6 +2,7 @@ from datetime import datetime
 import json
 import random
 import string
+import os
 class Pagamento():
     def __init__(self):
         self.codice = ""
@@ -10,6 +11,13 @@ class Pagamento():
         self.prenotazione = ""
         self.cliente = ""
         self.statoPagamento = "da pagare"
+        #ottendo il path assoluto del file in cui salvare
+        absolute_path = os.path.dirname(__file__)
+        relative_path = "dati/pagamenti.json"
+        dir_list = absolute_path.split(os.sep)
+        dir_list.pop()
+        new_dir = os.sep.join(dir_list)
+        self.url = os.path.join(new_dir, relative_path)
 
     def aggiungiPagamento(self, data, pren, cliente):
         self.codice = self.set_id()
@@ -19,14 +27,13 @@ class Pagamento():
         self.cliente = cliente['codiceFiscale']
         pagamenti = self.get_dati()
         pagamenti.append(self.__dict__)
-        with open("../dati/pagamenti.json", "w") as f:
+        with open(self.url, "w") as f:
             json.dump({"pagamenti":pagamenti}, f, indent=4)
         return 1
 
 
     def get_dati(self):
-        url = "../dati/pagamenti.json"
-        with open(url, "r") as file:
+        with open(self.url, "r") as file:
             data = json.load(file)
             pagamenti = data.get("pagamenti", [])
             return pagamenti

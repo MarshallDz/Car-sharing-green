@@ -73,7 +73,7 @@ class VistaEffettuaPrenotazione(QMainWindow):
         self.datacampo1.setCalendarPopup(True)
         self.datacampo1.lineEdit().setReadOnly(True)
         self.datacampo1.setMinimumDate(QDate.currentDate())
-        self.datacampo1.setStyleSheet("max-width: 300px; max-height: 50px")
+        self.datacampo1.setStyleSheet("max-width: 300px; max-height: 50px;")
         dlayout1.addWidget(self.datacampo1)
         self.datacampo1.dateChanged.connect(self.update_valori)
 
