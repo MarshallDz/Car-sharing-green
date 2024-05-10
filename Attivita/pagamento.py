@@ -11,7 +11,7 @@ class Pagamento():
         self.prenotazione = ""
         self.cliente = ""
         self.statoPagamento = "da pagare"
-        #ottendo il path assoluto del file in cui salvare
+        #ottengo il path assoluto del file in cui salvare
         absolute_path = os.path.dirname(__file__)
         relative_path = "dati/pagamenti.json"
         dir_list = absolute_path.split(os.sep)
