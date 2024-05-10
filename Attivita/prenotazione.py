@@ -15,7 +15,7 @@ class Prenotazione():
         self.mezzo = ""
         self.tariffa = ""
         self.polizza = ""
-        # ottendo il path assoluto del file in cui salvare
+        # ottengo il path assoluto del file in cui salvare
         absolute_path = os.path.dirname(__file__)
         relative_path = "dati/prenotazioni.json"
         dir_list = absolute_path.split(os.sep)
