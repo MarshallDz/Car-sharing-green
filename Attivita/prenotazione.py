@@ -1,4 +1,5 @@
 import json
+import os
 import random
 import string
 
@@ -14,7 +15,13 @@ class Prenotazione():
         self.mezzo = ""
         self.tariffa = ""
         self.polizza = ""
-
+        # ottengo il path assoluto del file in cui salvare
+        absolute_path = os.path.dirname(__file__)
+        relative_path = "dati/prenotazioni.json"
+        dir_list = absolute_path.split(os.sep)
+        dir_list.pop()
+        new_dir = os.sep.join(dir_list)
+        self.url = os.path.join(new_dir, relative_path)
     def aggiungiPrenotazione(self, cliente, data_prenotazione, data_inizio, data_fine, mezzo,  filiale, tariffa, polizza):
         self.id = self.set_id()
         self.cliente = cliente
@@ -28,14 +35,14 @@ class Prenotazione():
 
         prenotazioni = self.get_dati()
         prenotazioni.append(self.__dict__)
-        with open("dati/prenotazioni.json", "w") as f:
+        with open(self.url, "w") as f:
             json.dump({"prenotazioni": prenotazioni}, f, indent=4)
         return 1
 
     def eliminaPrenotazione(self, p):
-        url_prenotazioni = "dati/prenotazioni.json"
-        url_clienti = "dati/clienti.json"
-        url_pagamenti = "dati/pagamenti.json"
+        url_prenotazioni = "./dati/prenotazioni.json"
+        url_clienti = "./dati/clienti.json"
+        url_pagamenti = "./dati/pagamenti.json"
 
         # Rimuovi la prenotazione dalla lista delle prenotazioni nel file JSON principale
         with open(url_prenotazioni, "r") as file:
@@ -75,8 +82,7 @@ class Prenotazione():
         self.vista.show()
 
     def get_dati(self):
-        url = "dati/prenotazioni.json"
-        with open(url, "r") as file:
+        with open(self.url, "r") as file:
             data = json.load(file)
             prenotazioni = data.get("prenotazioni", [])
             return prenotazioni

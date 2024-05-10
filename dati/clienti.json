@@ -49,6 +49,17 @@
             "cellulare": "1234567890",
             "prenotazioni": [],
             "dataRegistrazione": "26042024"
+        },
+        {
+            "codiceFiscale": "CF123456",
+            "nome": "John",
+            "cognome": "Doe",
+            "dataNascita": "1990-01-01",
+            "email": "john@example.com",
+            "password": "password",
+            "cellulare": "1234567890",
+            "prenotazioni": [],
+            "dataRegistrazione": "30042024"
         }
     ]
 }
