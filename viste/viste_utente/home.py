@@ -1,10 +1,10 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-from viste.areacliente import VistaCliente
-from viste.prenotazione import VistaPrenotazione
-from viste.visualizzaPrenotazioni import PrenotazioniView
-from viste.vistaPagamenti import VistaPagamenti
+from viste.viste_utente.areacliente import VistaCliente
+from viste.viste_utente.prenotazione import VistaPrenotazione
+from viste.viste_utente.visualizzaPrenotazioni import PrenotazioniView
+from viste.viste_utente.vistaPagamenti import VistaPagamenti
 import darkdetect
 
 
@@ -13,7 +13,6 @@ class VistaHome(QMainWindow):
         super().__init__()
         self.user = user
         self.psw = psw
-
         self.setWindowTitle("CarGreen")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
         if darkdetect.isDark():

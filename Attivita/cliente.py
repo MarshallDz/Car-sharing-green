@@ -54,7 +54,7 @@ class Cliente(Utilizzatore):
         return email, psw
 
     def get_dati(self, email=None, password=None):
-        file_path = "/Users/michelemarzioni/Documents/Python/dati/clienti.json"
+        file_path = "dati/clienti.json"
         with open(file_path) as file:
             data = json.load(file)
             if not email and not password:

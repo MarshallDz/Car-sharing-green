@@ -22,6 +22,7 @@ class Prenotazione():
         dir_list.pop()
         new_dir = os.sep.join(dir_list)
         self.url = os.path.join(new_dir, relative_path)
+
     def aggiungiPrenotazione(self, cliente, data_prenotazione, data_inizio, data_fine, mezzo,  filiale, tariffa, polizza):
         self.id = self.set_id()
         self.cliente = cliente
@@ -77,7 +78,7 @@ class Prenotazione():
             json.dump({"pagamenti": updated_pagamenti}, file, indent=4)
 
         # Aggiorna l'interfaccia utente per visualizzare le prenotazioni aggiornate
-        from viste.visualizzaPrenotazioni import PrenotazioniView
+        from viste.viste_utente.visualizzaPrenotazioni import PrenotazioniView
         self.vista = PrenotazioniView(p['cliente']['email'], p['cliente']['password'])
         self.vista.show()
 
