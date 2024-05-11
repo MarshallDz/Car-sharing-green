@@ -3,7 +3,7 @@ from PyQt5.QtCore import *
 from Attivita.prenotazione import Prenotazione
 from Attivita.cliente import Cliente
 import darkdetect
-
+from datetime import datetime
 class VistaGestionePrenotazione(QMainWindow):
     def __init__(self, user, psw):
         super().__init__()
@@ -63,7 +63,11 @@ class VistaGestionePrenotazione(QMainWindow):
         self.central_layout.addWidget(scroll_area)
 
         self.aggiungi_box_info()
-
+        aggiungiPrenotazione_button = QPushButton("Aggiungi prenotazione")
+        aggiungiPrenotazione_button.setStyleSheet("width: 150px; max-width: 150px; background-color: #6AFE67; border-radius: 15px; "
+                                  "color: black; padding: 10px; margin-bottom: 20px")
+        #aggiungiPrenotazione_button.clicked.connect()
+        self.central_layout.addWidget(aggiungiPrenotazione_button, alignment=Qt.AlignHCenter | Qt.AlignBottom)
         back_button = QPushButton("Indietro")
         back_button.clicked.connect(self.go_back)
         back_button.setStyleSheet("width: 150px; max-width: 150px; background-color: #F85959; border-radius: 15px; "
@@ -83,35 +87,72 @@ class VistaGestionePrenotazione(QMainWindow):
                     info_box.setStyleSheet("QGroupBox{max-height: 200px;}")
                     info_layout = QGridLayout(info_box)
 
-                    data_label = QLabel(f"data prenotazione: {x['data_prenotazione']} ")
+                    data_label = QLabel("Data prenotazione:")
                     data_label.setStyleSheet("font-size: 24px; ")
                     info_layout.addWidget(data_label, 1, 0)
+                    data_testo = str(x["data_prenotazione"])
+                    formato_data_testo = "%a %b %d %Y"
+                    data = datetime.strptime(data_testo, formato_data_testo)
+                    data_edit = QDateEdit(data)
+                    data_edit.setCalendarPopup(True)
+                    data_edit.setEnabled(False)
 
-                    mezzo_label = QLabel(f"mezzo prenotato: {x['mezzo']['produttore']} {x['mezzo']['modello']}")
+                    info_layout.addWidget(data_edit, 1, 1)
+
+                    mezzo_label = QLabel("Mezzo prenotato:")
                     mezzo_label.setStyleSheet("font-size: 24px; ")
-                    info_layout.addWidget(mezzo_label)
+                    info_layout.addWidget(mezzo_label, 2, 0)
+                    mezzo_edit = QLineEdit(f"{x['mezzo']['produttore']} {x['mezzo']['modello']}")
+                    mezzo_edit.setEnabled(False)
+                    info_layout.addWidget(mezzo_edit, 2, 1)
 
-                    tariffa_label = QLabel(f"tariffa selezionata: {x['tariffa']}")
+                    tariffa_label = QLabel("Tariffa selezionata:")
                     tariffa_label.setStyleSheet("font-size: 24px; ")
-                    info_layout.addWidget(tariffa_label)
+                    info_layout.addWidget(tariffa_label, 3, 0)
+                    tariffa_edit = QComboBox()
+                    tariffa_edit.addItems(["oraria", "giornaliera"])
+                    tariffa_edit.setCurrentText(str(x['tariffa']))
+                    tariffa_edit.setEnabled(False)
+                    info_layout.addWidget(tariffa_edit, 3, 1)
 
-                    dataInizio_label = QLabel(f"data inizio prenotazione: {x['data_inizio']}")
+                    dataInizio_label = QLabel("Data inizio prenotazione:")
                     dataInizio_label.setStyleSheet("font-size: 24px; ")
                     info_layout.addWidget(dataInizio_label, 1, 2)
+                    dataInizio_edit = QLineEdit(str(x['data_inizio']))
+                    dataInizio_edit.setEnabled(False)
+                    info_layout.addWidget(dataInizio_edit, 1, 3)
 
-                    dataFine_label = QLabel(f"data fine prenotazione: {x['data_fine']}")
+                    dataFine_label = QLabel("Data fine prenotazione:")
                     dataFine_label.setStyleSheet("font-size: 24px; ")
                     info_layout.addWidget(dataFine_label, 2, 2)
+                    dataFine_edit = QLineEdit(str(x['data_fine']))
+                    dataFine_edit.setEnabled(False)
+                    info_layout.addWidget(dataFine_edit, 2, 3)
 
-                    polizza_label = QLabel(f"polizza selezionata: {x['polizza']}")
+                    polizza_label = QLabel("Polizza selezionata:")
                     polizza_label.setStyleSheet("font-size: 24px; ")
                     info_layout.addWidget(polizza_label, 3, 2)
+                    polizza_edit = QComboBox()
+                    polizza_edit.setCurrentText(str(x['polizza']))
+                    polizza_edit.addItems(["rca", "kasko"])
+                    polizza_edit.setEnabled(False)
+                    info_layout.addWidget(polizza_edit, 3, 3)
 
+                    buttons_layout = QHBoxLayout()
+                    info_layout.addLayout(buttons_layout, 4, 2, alignment=Qt.AlignRight)
+                    modify_button = QPushButton("Modifica")
+                    modify_button.setStyleSheet("width: 150px; max-width: 150px; background-color: #D9D9D9; border-radius: 15px; color: black; "
+                                   "padding: 10px;")
+                    modify_button.clicked.connect(
+                        lambda _, a=data_edit, b=mezzo_edit, c=tariffa_edit, d=dataInizio_edit,
+                               e=dataFine_edit, f=polizza_edit, g=modify_button: self.modifica_valori_lineedit(a, b, c, d, e, f, g))
+
+                    buttons_layout.addWidget(modify_button)
                     disdici = QPushButton("Disdici")
                     disdici.clicked.connect(lambda _, p=x: self.disdici(p))
                     disdici.setStyleSheet("width: 150px; max-width: 150px; background-color: #F85959; border-radius: 15px; color: black; "
                                           "padding: 10px;")
-                    info_layout.addWidget(disdici, 4, 2, alignment=Qt.AlignRight)
+                    buttons_layout.addWidget(disdici)
 
                     self.scroll_layout.addWidget(info_box)
 
@@ -130,3 +171,25 @@ class VistaGestionePrenotazione(QMainWindow):
         if reply == QMessageBox.Yes:
             QMessageBox.information(self, 'Disdetta Confermata', 'La prenotazione è stata disdetta con successo.', QMessageBox.Ok)
             self.go_back()
+
+    def modifica_valori_lineedit(self, data_edit, mezzo_edit, tariffa_edit, dataInizio_edit, dataFine_edit, polizza_edit, modify_button):
+        if modify_button.text() == "Modifica":
+            modify_button.setText("Salva")
+            data_edit.setEnabled(True)
+            mezzo_edit.setEnabled(True)
+            tariffa_edit.setEnabled(True)
+            dataInizio_edit.setEnabled(True)
+            dataFine_edit.setEnabled(True)
+            polizza_edit.setEnabled(True)
+        else:
+            modify_button.setText("Modifica")
+            data_edit.setEnabled(False)
+            mezzo_edit.setEnabled(False)
+            tariffa_edit.setEnabled(False)
+            dataInizio_edit.setEnabled(False)
+            dataFine_edit.setEnabled(False)
+            polizza_edit.setEnabled(False)
+
+
+    def go_aggiungiPrenotazione(self):
+        pass
