@@ -1,0 +1,22 @@
+{
+    "impiegati": [
+        {
+            "codiceFiscale": "hfbhfurevuieuert",
+            "nome": "brutto",
+            "cognome": "scemo",
+            "dataNascita": "2004-04-20",
+            "email": "brutto",
+            "password": "scemo",
+            "cellulare": "0123456789"
+        },
+        {
+            "codiceFiscale": "dcvneovjirhgiteg",
+            "nome": "brutto",
+            "cognome": "imbecille",
+            "dataNascita": "2000-09-17",
+            "email": "brutto",
+            "password": "imbecille",
+            "cellulare": "0123456789"
+        }
+    ]
+}

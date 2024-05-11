@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from Attivita.cliente import Cliente
+from Attivita.utilizzatore import Utilizzatore
 from viste.home import VistaHome
 import darkdetect
 
@@ -77,8 +78,8 @@ class VistaLogin(QMainWindow):
                 return
 
         # da risolvere la doppia chiamata alla funzione
-        email = Cliente.get_login(self)[0]
-        password = Cliente.get_login(self)[1]
+        email = Utilizzatore.get_login(self)[0]
+        password = Utilizzatore.get_login(self)[1]
 
         trovato = False
         for e in email:
