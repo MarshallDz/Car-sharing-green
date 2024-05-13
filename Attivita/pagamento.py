@@ -26,7 +26,9 @@ class Pagamento():
         self.prenotazione = pren["id"]
         self.cliente = cliente['codiceFiscale']
         pagamenti = self.get_dati()
-        pagamenti.append(self.__dict__)
+        nuovoPagamento = self.__dict__.copy()
+        nuovoPagamento.popitem()
+        pagamenti.append(nuovoPagamento)
         with open(self.url, "w") as f:
             json.dump({"pagamenti":pagamenti}, f, indent=4)
         return 1

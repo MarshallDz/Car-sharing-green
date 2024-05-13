@@ -8,7 +8,9 @@
             "email": "user",
             "password": "admin",
             "cellulare": "0123456789",
-            "prenotazioni": [],
+            "prenotazioni": [
+                "wnraX9"
+            ],
             "dataRegistrazione": "11012024"
         },
         {

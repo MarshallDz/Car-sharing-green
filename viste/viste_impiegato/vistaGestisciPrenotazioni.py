@@ -35,7 +35,20 @@ class VistaGestionePrenotazione(QMainWindow):
 
         title_layout.addWidget(self.title_label)
         self.central_layout.addLayout(title_layout)
+        # Aggiungi la barra di ricerca in alto a destra
+        self.search_layout = QHBoxLayout()
+        self.search_layout.setAlignment(Qt.AlignRight | Qt.AlignTop)
 
+        self.search_label = QLabel("Cerca per nome cliente:")
+        self.search_layout.addWidget(self.search_label)
+
+        self.search_edit = QLineEdit()
+        self.search_edit.setPlaceholderText("Inserisci il nome del cliente")
+        self.search_layout.addWidget(self.search_edit)
+
+        self.search_edit.textChanged.connect(self.search_prenotazioni)
+
+        self.central_layout.addLayout(self.search_layout)
         scroll_area = QScrollArea()
         scroll_area.setStyleSheet("QScrollBar:vertical {"
                                   "    border: none;"
@@ -66,7 +79,7 @@ class VistaGestionePrenotazione(QMainWindow):
         aggiungiPrenotazione_button = QPushButton("Aggiungi prenotazione")
         aggiungiPrenotazione_button.setStyleSheet("width: 150px; max-width: 150px; background-color: #6AFE67; border-radius: 15px; "
                                   "color: black; padding: 10px; margin-bottom: 20px")
-        #aggiungiPrenotazione_button.clicked.connect()
+        aggiungiPrenotazione_button.clicked.connect(self.go_aggiungiPrenotazione)
         self.central_layout.addWidget(aggiungiPrenotazione_button, alignment=Qt.AlignHCenter | Qt.AlignBottom)
         back_button = QPushButton("Indietro")
         back_button.clicked.connect(self.go_back)
@@ -88,55 +101,62 @@ class VistaGestionePrenotazione(QMainWindow):
                     info_layout = QGridLayout(info_box)
 
                     data_label = QLabel("Data prenotazione:")
+
                     data_label.setStyleSheet("font-size: 24px; ")
                     info_layout.addWidget(data_label, 1, 0)
+
                     data_testo = str(x["data_prenotazione"])
                     formato_data_testo = "%a %b %d %Y"
                     data = datetime.strptime(data_testo, formato_data_testo)
-                    data_edit = QDateEdit(data)
-                    data_edit.setCalendarPopup(True)
-                    data_edit.setEnabled(False)
-
-                    info_layout.addWidget(data_edit, 1, 1)
-
+                    self.data_edit = QDateEdit(data)
+                    self.data_edit.setCalendarPopup(True)
+                    self.data_edit.setEnabled(False)
+                    info_layout.addWidget(self.data_edit, 1, 1)
+                    
                     mezzo_label = QLabel("Mezzo prenotato:")
                     mezzo_label.setStyleSheet("font-size: 24px; ")
                     info_layout.addWidget(mezzo_label, 2, 0)
-                    mezzo_edit = QLineEdit(f"{x['mezzo']['produttore']} {x['mezzo']['modello']}")
-                    mezzo_edit.setEnabled(False)
-                    info_layout.addWidget(mezzo_edit, 2, 1)
+
+                    self.mezzo_edit = QLineEdit(f"{x['mezzo']['produttore']} {x['mezzo']['modello']}")
+                    self.mezzo_edit.setEnabled(False)
+                    info_layout.addWidget(self.mezzo_edit, 2, 1)
 
                     tariffa_label = QLabel("Tariffa selezionata:")
                     tariffa_label.setStyleSheet("font-size: 24px; ")
                     info_layout.addWidget(tariffa_label, 3, 0)
-                    tariffa_edit = QComboBox()
-                    tariffa_edit.addItems(["oraria", "giornaliera"])
-                    tariffa_edit.setCurrentText(str(x['tariffa']))
-                    tariffa_edit.setEnabled(False)
-                    info_layout.addWidget(tariffa_edit, 3, 1)
+                    self.tariffa_edit = QComboBox()
+                    self.tariffa_edit.addItems(["oraria", "giornaliera"])
+                    self.tariffa_edit.setCurrentText(str(x['tariffa']))
+                    self.tariffa_edit.setEnabled(False)
+                    info_layout.addWidget(self.tariffa_edit, 3, 1)
 
                     dataInizio_label = QLabel("Data inizio prenotazione:")
                     dataInizio_label.setStyleSheet("font-size: 24px; ")
                     info_layout.addWidget(dataInizio_label, 1, 2)
-                    dataInizio_edit = QLineEdit(str(x['data_inizio']))
-                    dataInizio_edit.setEnabled(False)
-                    info_layout.addWidget(dataInizio_edit, 1, 3)
+                    self.dataInizio_edit = QLineEdit(str(x['data_inizio']))
+                    self.dataInizio_edit.setEnabled(False)
+                    info_layout.addWidget(self.dataInizio_edit, 1, 3)
 
                     dataFine_label = QLabel("Data fine prenotazione:")
                     dataFine_label.setStyleSheet("font-size: 24px; ")
                     info_layout.addWidget(dataFine_label, 2, 2)
-                    dataFine_edit = QLineEdit(str(x['data_fine']))
-                    dataFine_edit.setEnabled(False)
-                    info_layout.addWidget(dataFine_edit, 2, 3)
+                    self.dataFine_edit = QLineEdit(str(x['data_fine']))
+                    self.dataFine_edit.setEnabled(False)
+                    info_layout.addWidget(self.dataFine_edit, 2, 3)
 
                     polizza_label = QLabel("Polizza selezionata:")
                     polizza_label.setStyleSheet("font-size: 24px; ")
                     info_layout.addWidget(polizza_label, 3, 2)
-                    polizza_edit = QComboBox()
-                    polizza_edit.setCurrentText(str(x['polizza']))
-                    polizza_edit.addItems(["rca", "kasko"])
-                    polizza_edit.setEnabled(False)
-                    info_layout.addWidget(polizza_edit, 3, 3)
+                    self.polizza_edit = QComboBox()
+                    self.polizza_edit.setCurrentText(str(x['polizza']))
+                    self.polizza_edit.addItems(["rca", "kasko"])
+                    self.polizza_edit.setEnabled(False)
+                    info_layout.addWidget(self.polizza_edit, 3, 3)
+
+                    cliente_label = QLabel("Cliente: " + x["cliente"]["nome"] + " " + x["cliente"]["cognome"])
+
+                    cliente_label.setStyleSheet("font-size: 24px; ")
+                    info_layout.addWidget(cliente_label, 4, 0)
 
                     buttons_layout = QHBoxLayout()
                     info_layout.addLayout(buttons_layout, 4, 2, alignment=Qt.AlignRight)
@@ -144,8 +164,8 @@ class VistaGestionePrenotazione(QMainWindow):
                     modify_button.setStyleSheet("width: 150px; max-width: 150px; background-color: #D9D9D9; border-radius: 15px; color: black; "
                                    "padding: 10px;")
                     modify_button.clicked.connect(
-                        lambda _, a=data_edit, b=mezzo_edit, c=tariffa_edit, d=dataInizio_edit,
-                               e=dataFine_edit, f=polizza_edit, g=modify_button: self.modifica_valori_lineedit(a, b, c, d, e, f, g))
+                        lambda _, a=self.data_edit, b=self.mezzo_edit, c=self.tariffa_edit, d=self.dataInizio_edit,
+                               e=self.dataFine_edit, f=self.polizza_edit, g=modify_button, nc = cliente_label.text().split()[1:3]: self.modifica_valori_lineedit(a, b, c, d, e, f, g, nc))
 
                     buttons_layout.addWidget(modify_button)
                     disdici = QPushButton("Disdici")
@@ -172,7 +192,8 @@ class VistaGestionePrenotazione(QMainWindow):
             QMessageBox.information(self, 'Disdetta Confermata', 'La prenotazione è stata disdetta con successo.', QMessageBox.Ok)
             self.go_back()
 
-    def modifica_valori_lineedit(self, data_edit, mezzo_edit, tariffa_edit, dataInizio_edit, dataFine_edit, polizza_edit, modify_button):
+    def modifica_valori_lineedit(self, data_edit, mezzo_edit, tariffa_edit, dataInizio_edit, dataFine_edit, polizza_edit, modify_button, nc):
+        #bisogna aggiungere anche la modifica nel file prenotazioni.json
         if modify_button.text() == "Modifica":
             modify_button.setText("Salva")
             data_edit.setEnabled(True)
@@ -181,6 +202,15 @@ class VistaGestionePrenotazione(QMainWindow):
             dataInizio_edit.setEnabled(True)
             dataFine_edit.setEnabled(True)
             polizza_edit.setEnabled(True)
+            # Salva i riferimenti ai campi QLineEdit
+            self.modifica_data = data_edit
+            self.modifica_mezzo = mezzo_edit
+            self.modifica_tariffa = tariffa_edit
+            self.modifica_data_inizio = dataInizio_edit
+            self.modifica_data_fine = dataFine_edit
+            self.modifica_polizza = polizza_edit
+
+            self.nome_cliente = nc
         else:
             modify_button.setText("Modifica")
             data_edit.setEnabled(False)
@@ -189,7 +219,40 @@ class VistaGestionePrenotazione(QMainWindow):
             dataInizio_edit.setEnabled(False)
             dataFine_edit.setEnabled(False)
             polizza_edit.setEnabled(False)
+            self.salva_valori()
 
 
     def go_aggiungiPrenotazione(self):
-        pass
+        from viste.viste_impiegato.vistaEffettuaPrenotazioneImpiegato import VistaEffettuaPrenotazioneImpiegato
+        self.vista = VistaEffettuaPrenotazioneImpiegato(self.user, self.psw)
+        self.vista.show()
+        self.close()
+
+    def search_prenotazioni(self, text):
+        # Funzione per filtrare le prenotazioni in base al nome del cliente
+        for i in range(self.scroll_layout.count()):
+            item = self.scroll_layout.itemAt(i)
+            if isinstance(item, QLayoutItem):
+                widget = item.widget()
+                if isinstance(widget, QGroupBox):
+                    cliente_labels = widget.findChildren(QLabel)
+                    for label in cliente_labels:
+                        client_name = label.text()
+                        if text.lower() in client_name.lower():
+                            widget.show()
+                            break
+                    else:
+                        widget.hide()
+
+    def salva_valori(self):
+        # Estrai i valori dai campi QLineEdit e memorizzali nelle variabili di istanza
+        self.valore_data = self.modifica_data.date().toString(Qt.ISODate)
+        self.valore_mezzo = self.modifica_mezzo.text()
+        self.valore_tariffa = self.modifica_tariffa.currentText()
+        self.valore_data_inizio = self.modifica_data_inizio.text()
+        self.valore_data_fine = self.modifica_data_fine.text()
+        self.valore_polizza = self.modifica_polizza.currentText()
+        prenotazione = Prenotazione()
+        prenotazione.aggiornaValori(self.nome_cliente, self.valore_data, self.valore_polizza, self.valore_data_inizio,
+                                    self.valore_data_fine, self.valore_mezzo, self.valore_tariffa)
+

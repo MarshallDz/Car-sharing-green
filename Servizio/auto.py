@@ -30,6 +30,13 @@ class Auto(Mezzo):
         info["tariffa_oraria"] = self.tariffaOraria
         return info
 
+    def get_dati(self):
+        file_path = "dati/auto.json"
+        with open(file_path) as file:
+            data = json.load(file)
+            return data
+
+
     def eliminaAuto(self):
         pass
 
