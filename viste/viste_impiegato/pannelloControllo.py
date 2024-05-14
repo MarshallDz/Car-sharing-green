@@ -3,7 +3,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from viste.viste_impiegato.areaImpiegato import VistaImpiegato
 from viste.viste_impiegato.vistaGestisciPrenotazioni import VistaGestionePrenotazione
-from viste.viste_utente.visualizzaPrenotazioni import PrenotazioniView
+from viste.viste_impiegato.vistaGestisciClienti import VistaGestioneClienti
 from viste.viste_utente.vistaPagamenti import VistaPagamenti
 import darkdetect
 
@@ -53,7 +53,7 @@ class VistaPannelloControllo(QMainWindow):
         button2.setStyleSheet(
             "width: 500px; height: 100px; background-color: #D9D9D9; border-radius: 25px; color: black; padding: "
             "10px; font-size: 20px")
-        #button2.clicked.connect(self.go_visualizza_prenotazioni)
+        button2.clicked.connect(self.go_GestioneClienti)
         button3 = QPushButton("Gestisci pagamenti")
         button3.setStyleSheet(
             "width: 500px; height: 100px; background-color: #D9D9D9; border-radius: 25px; color: black; padding: "
@@ -98,8 +98,8 @@ class VistaPannelloControllo(QMainWindow):
         self.area.show()
         self.close()
 
-    def go_visualizza_prenotazioni(self):
-        self.vista = PrenotazioniView(self.user, self.psw)
+    def go_GestioneClienti(self):
+        self.vista = VistaGestioneClienti(self.user, self.psw)
         self.vista.show()
         self.close()
 

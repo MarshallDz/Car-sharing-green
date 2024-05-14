@@ -112,7 +112,7 @@ class VistaGestionePrenotazione(QMainWindow):
                     self.data_edit.setCalendarPopup(True)
                     self.data_edit.setEnabled(False)
                     info_layout.addWidget(self.data_edit, 1, 1)
-                    
+
                     mezzo_label = QLabel("Mezzo prenotato:")
                     mezzo_label.setStyleSheet("font-size: 24px; ")
                     info_layout.addWidget(mezzo_label, 2, 0)
