@@ -98,7 +98,7 @@ class Prenotazione():
         return stringa_random
 
     def aggiornaValori(self, nc, dataP, p, dI, dF, m, t):
-        with open("dati/prenotazioni.json", "r") as f:
+        with open(self.url, "r") as f:
             data = json.load(f)
             prenotazioni = data.get("prenotazioni", [])
             for prenotazione in prenotazioni:
@@ -108,6 +108,5 @@ class Prenotazione():
                     prenotazione["data_inizio"] = dI
                     prenotazione["data_fine"] = dF
                     prenotazione["tariffa"] = t
-                    print(prenotazione)
-            with open("dati/prenotazioni.json", "w") as f:
+            with open(self.url, "w") as f:
                 json.dump({"prenotazioni": prenotazioni}, f, indent=4)

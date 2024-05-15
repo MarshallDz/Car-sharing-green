@@ -77,11 +77,11 @@ class VistaGestioneClienti(QMainWindow):
         self.central_layout.addWidget(scroll_area)
 
         self.aggiungi_box_info()
-        """#aggiungiPrenotazione_button = QPushButton("Aggiungi prenotazione")
-        aggiungiPrenotazione_button.setStyleSheet("width: 150px; max-width: 150px; background-color: #6AFE67; border-radius: 15px; "
+        aggiungiCliente_button = QPushButton("Aggiungi cliente")
+        aggiungiCliente_button.setStyleSheet("width: 150px; max-width: 150px; background-color: #6AFE67; border-radius: 15px; "
                                   "color: black; padding: 10px; margin-bottom: 20px")
-        aggiungiPrenotazione_button.clicked.connect(self.go_aggiungiPrenotazione)
-        self.central_layout.addWidget(aggiungiPrenotazione_button, alignment=Qt.AlignHCenter | Qt.AlignBottom)"""
+        aggiungiCliente_button.clicked.connect(self.go_aggiungiCliente)
+        self.central_layout.addWidget(aggiungiCliente_button, alignment=Qt.AlignHCenter | Qt.AlignBottom)
         back_button = QPushButton("Indietro")
         back_button.clicked.connect(self.go_back)
         back_button.setStyleSheet("width: 150px; max-width: 150px; background-color: #F85959; border-radius: 15px; "
@@ -151,15 +151,15 @@ class VistaGestioneClienti(QMainWindow):
             modify_button.setStyleSheet("width: 150px; max-width: 150px; background-color: #D9D9D9; border-radius: 15px; color: black; "
                            "padding: 10px;")
             modify_button.clicked.connect(
-                lambda _, a=self.cf_edit, b=self.nome_edit, c=self.cognome_edit, d=self.dataNascita_edit,
-                       e=self.email_edit, f=self.cellulare_edit, g=modify_button: self.modifica_valori_lineedit(a, b, c, d, e, f, g))
+                lambda _, cc = client, a=self.cf_edit, b=self.nome_edit, c=self.cognome_edit, d=self.dataNascita_edit,
+                       e=self.email_edit, f=self.cellulare_edit, g=modify_button: self.modifica_valori_lineedit(cc, a, b, c, d, e, f, g))
 
             buttons_layout.addWidget(modify_button)
-            disdici = QPushButton("Elimina")
-            #disdici.clicked.connect(lambda _, p=x: self.disdici(p))
-            disdici.setStyleSheet("width: 150px; max-width: 150px; background-color: #F85959; border-radius: 15px; color: black; "
+            elimina = QPushButton("Elimina")
+            elimina.clicked.connect(lambda _, p=client: self.eliminaCliente(p))
+            elimina.setStyleSheet("width: 150px; max-width: 150px; background-color: #F85959; border-radius: 15px; color: black; "
                                   "padding: 10px;")
-            buttons_layout.addWidget(disdici)
+            buttons_layout.addWidget(elimina)
 
             self.scroll_layout.addWidget(info_box)
 
@@ -169,17 +169,17 @@ class VistaGestioneClienti(QMainWindow):
         self.vista = VistaPannelloControllo(self.user, self.psw)
         self.vista.show()
 
-    def disdici(self, p):
-        reply = QMessageBox.warning(self, 'Conferma Disdetta', 'Sei sicuro di voler disdire questa prenotazione?',
+    def eliminaCliente(self, c):
+        cliente = Cliente()
+        reply = QMessageBox.warning(self, 'Conferma eliminazione', 'Sei sicuro di voler eliminare il cliente?',
                                          QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
 
         if reply == QMessageBox.Yes:
-            Prenotazione().eliminaPrenotazione(p)
+            cliente.eliminaCliente(c, self.user, self.psw)
         if reply == QMessageBox.Yes:
             QMessageBox.information(self, 'Disdetta Confermata', 'La prenotazione è stata disdetta con successo.', QMessageBox.Ok)
-            self.go_back()
-
-    def modifica_valori_lineedit(self, cF, nome, cognome, dataN, email, cellulare, modify_button):
+        self.go_back()
+    def modifica_valori_lineedit(self, cc, cF, nome, cognome, dataN, email, cellulare, modify_button):
         #bisogna aggiungere anche la modifica nel file prenotazioni.json
         if modify_button.text() == "Modifica":
             modify_button.setText("Salva")
@@ -196,6 +196,7 @@ class VistaGestioneClienti(QMainWindow):
             self.datan = dataN
             self.email = email
             self.cel = cellulare
+            self.clientec = cc
         else:
             modify_button.setText("Modifica")
             cF.setEnabled(False)
@@ -204,14 +205,14 @@ class VistaGestioneClienti(QMainWindow):
             dataN.setEnabled(False)
             email.setEnabled(False)
             cellulare.setEnabled(False)
-            #self.salva_valori()"""
+            self.salva_valori()
 
 
-    """def go_aggiungiCliente(self):
-        from viste.viste_impiegato.vistaEffettuaPrenotazioneImpiegato import VistaEffettuaPrenotazioneImpiegato
-        self.vista = VistaEffettuaPrenotazioneImpiegato(self.user, self.psw)
+    def go_aggiungiCliente(self):
+        from viste.viste_impiegato.vistaRegistraCliente import VistaRegistrazioneCliente
+        self.vista = VistaRegistrazioneCliente(self.user, self.psw)
         self.vista.show()
-        self.close()"""
+        self.close()
 
     def search_cliente(self, text):
         for i in range(self.scroll_layout.count()):
@@ -228,15 +229,29 @@ class VistaGestioneClienti(QMainWindow):
                     else:
                         widget.hide()
 
-    """def salva_valori(self):
+    def salva_valori(self):
         # Estrai i valori dai campi QLineEdit e memorizzali nelle variabili di istanza
-        self.valore_data = self.modifica_data.date().toString(Qt.ISODate)
-        self.valore_mezzo = self.modifica_mezzo.text()
-        self.valore_tariffa = self.modifica_tariffa.currentText()
-        self.valore_data_inizio = self.modifica_data_inizio.text()
-        self.valore_data_fine = self.modifica_data_fine.text()
-        self.valore_polizza = self.modifica_polizza.currentText()
-        prenotazione = Prenotazione()
-        prenotazione.aggiornaValori(self.nome_cliente, self.valore_data, self.valore_polizza, self.valore_data_inizio,
-                                    self.valore_data_fine, self.valore_mezzo, self.valore_tariffa)"""
+        self.cod = self.cf.text()
+        self.n = self.nome.text()
+        self.c = self.cognome.text()
+        self.dN = self.datan.text()
+        self.e = self.email.text()
+        self.cl = self.cel.text()
+        cliente = Cliente()
+        cliente.aggiornaValori(self.clientec, self.cod, self.n, self.c, self.dN,
+                                    self.e, self.cl)
+        self.aggiorna_vista()
+
+    def aggiorna_vista(self):
+        # Rimuovi tutti i widget dalla scroll_layout
+        while self.scroll_layout.count():
+            item = self.scroll_layout.takeAt(0)
+            widget = item.widget()
+            if widget:
+                widget.deleteLater()
+
+        # Ora puoi chiamare nuovamente il metodo per aggiungere i widget aggiornati
+        self.aggiungi_box_info()
+
+
 

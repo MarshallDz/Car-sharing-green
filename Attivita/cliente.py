@@ -11,20 +11,31 @@ class Cliente(Utilizzatore):
         self.prenotazioni = []
         self.dataRegistrazione = ""
 
+        # ottengo il path assoluto del file in cui salvare
+        absolute_path = os.path.dirname(__file__)
+        relative_path = "dati/clienti.json"
+        dir_list = absolute_path.split(os.sep)
+        dir_list.pop()
+        new_dir = os.sep.join(dir_list)
+        self.url = os.path.join(new_dir, relative_path)
+
     def aggiungiCliente(self, codiceFiscale, nome, cognome, dataNascita, email, password, cellulare):
         self.aggiungiUtilizzatore(codiceFiscale, nome, cognome, dataNascita, email, password, cellulare)
         self.dataRegistrazione = datetime.datetime.now().strftime("%d%m%Y")
 
         # controllo se il cliente esiste gia
         clienti = self.get_dati()  # Ottieni la lista dei clienti
+
         for cliente_esistente in clienti:
             if cliente_esistente["codiceFiscale"] == self.codiceFiscale:
                 QMessageBox.warning(None, "Cliente esistente", "Il cliente esiste già.")
                 return
-        clienti.append(self.__dict__)
+        nuovoCliente = self.__dict__.copy()
+        nuovoCliente.popitem()
+        clienti.append(nuovoCliente)
 
         # salvo nel file
-        with open("../dati/clienti.json", "w") as f:
+        with open(self.url, "w") as f:
             json.dump({"clienti": clienti}, f, indent=4)
         QMessageBox.information(None, "Success", "Account registrato correttamente!")
         return 1
@@ -82,5 +93,37 @@ class Cliente(Utilizzatore):
         with open("dati/clienti.json", "w") as file:
             json.dump(data, file, indent=4)
 
+    def eliminaCliente(self, cliente, user, psw):
+        with open(self.url, 'r') as file:
+            data = json.load(file)
+
+        for client in data['clienti']:
+            if client['codiceFiscale'] == cliente["codiceFiscale"]:
+                data['clienti'].remove(client)
+                break
+
+        with open(self.url, 'w') as file:
+            json.dump(data, file, indent=4)
+
+        # Aggiorna l'interfaccia utente per visualizzare le prenotazioni aggiornate
+        from viste.viste_impiegato.vistaGestisciClienti import VistaGestioneClienti
+        self.vista = VistaGestioneClienti(user, psw)
+        self.vista.show()
+
+    def aggiornaValori(self, cc, cf, n, c, dN, e, cel):
+        print(cc, cf, n, c, dN, e, cel)
+        with open(self.url, "r") as f:
+            data = json.load(f)
+            clienti = data.get("clienti", [])
+            for cliente in clienti:
+                if cc["codiceFiscale"] == cliente["codiceFiscale"]:
+                    cliente["codiceFiscale"] = cf
+                    cliente["nome"] = n
+                    cliente["cognome"] = c
+                    cliente["dataNascita"] = dN
+                    cliente["email"] = e
+                    cliente["cellulare"] = cel
+            with open(self.url, "w") as f:
+                json.dump({"clienti": clienti}, f, indent=4)
 
 
