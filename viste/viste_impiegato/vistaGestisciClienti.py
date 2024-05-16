@@ -177,7 +177,7 @@ class VistaGestioneClienti(QMainWindow):
         if reply == QMessageBox.Yes:
             cliente.eliminaCliente(c, self.user, self.psw)
         if reply == QMessageBox.Yes:
-            QMessageBox.information(self, 'Disdetta Confermata', 'La prenotazione è stata disdetta con successo.', QMessageBox.Ok)
+            QMessageBox.information(self, 'Disdetta Confermata', 'Il cliente è stato eliminato con successo.', QMessageBox.Ok)
         self.go_back()
     def modifica_valori_lineedit(self, cc, cF, nome, cognome, dataN, email, cellulare, modify_button):
         #bisogna aggiungere anche la modifica nel file prenotazioni.json

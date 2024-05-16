@@ -2,6 +2,8 @@ import datetime
 import json
 from PyQt5.QtWidgets import QWidget, QMessageBox
 from Attivita.utilizzatore import Utilizzatore
+from Attivita.pagamento import Pagamento
+from Attivita.prenotazione import Prenotazione
 import os
 
 class Cliente(Utilizzatore):
@@ -111,7 +113,7 @@ class Cliente(Utilizzatore):
         self.vista.show()
 
     def aggiornaValori(self, cc, cf, n, c, dN, e, cel):
-        print(cc, cf, n, c, dN, e, cel)
+        #aggiorno i valori del cliente
         with open(self.url, "r") as f:
             data = json.load(f)
             clienti = data.get("clienti", [])
@@ -125,5 +127,20 @@ class Cliente(Utilizzatore):
                     cliente["cellulare"] = cel
             with open(self.url, "w") as f:
                 json.dump({"clienti": clienti}, f, indent=4)
+        #aggiorno il codice fiscale anche relativo ai pagamenti e prenotazione del cliente
+        pagamento = Pagamento()
+        pagamenti = pagamento.get_dati()
+        for x in pagamenti:
+            if cc["codiceFiscale"] == x["cliente"]:
+                x["cliente"] = cf
+        with open("dati/pagamenti.json", "w") as f:
+            json.dump({"pagamenti":pagamenti}, f, indent=4)
 
+            prenotazione = Prenotazione()
+            prenotazioni = prenotazione.get_dati()
+            for x in prenotazioni:
+                if cc["codiceFiscale"] == x["cliente"]["codiceFiscale"]:
+                    x["cliente"]["codiceFiscale"] = cf
+            with open("dati/prenotazioni.json", "w") as f:
+                json.dump({"prenotazioni": prenotazioni}, f, indent=4)
 

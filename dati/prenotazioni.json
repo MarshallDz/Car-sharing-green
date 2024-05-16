@@ -12,7 +12,7 @@
                 "cellulare": "3333333333",
                 "dataRegistrazione": "22012024"
             },
-            "data_prenotazione": "2026-03-14",
+            "data_prenotazione": "Fri Apr 26 2024",
             "data_inizio": "2024-03-14 08.00",
             "data_fine": "2024-03-15",
             "filiale": "Milano, via roma",
@@ -46,7 +46,7 @@
                 "cellulare": "3333333333",
                 "dataRegistrazione": "22012024"
             },
-            "data_prenotazione": "2026-03-14",
+            "data_prenotazione": "Fri Apr 26 2024",
             "data_inizio": "2024-03-14 08.00",
             "data_fine": "2024-03-15",
             "filiale": "Milano, via padova",
@@ -83,7 +83,7 @@
                 ],
                 "dataRegistrazione": "22012024"
             },
-            "data_prenotazione": "2026-03-14",
+            "data_prenotazione": "Fri Apr 26 2024",
             "data_inizio": "2024-03-14 08.00",
             "data_fine": "2024-03-15",
             "filiale": "Milano, via roma",
@@ -122,7 +122,7 @@
                 ],
                 "dataRegistrazione": "22012024"
             },
-            "data_prenotazione": "2026-03-14",
+            "data_prenotazione": "Fri Apr 26 2024",
             "data_inizio": "2024-03-14 08.00",
             "data_fine": "2024-03-15",
             "filiale": "Milano, via roma",
@@ -146,7 +146,7 @@
         {
             "id": "wnraX9",
             "cliente": {
-                "codiceFiscale": "abcdefghlmnopqrs",
+                "codiceFiscale": "abcdefghlmnoppop",
                 "nome": "edo",
                 "cognome": "seve",
                 "dataNascita": "2003-01-26",
