@@ -156,7 +156,7 @@
                 "prenotazioni": [],
                 "dataRegistrazione": "11012024"
             },
-            "data_prenotazione": "Fri Apr 26 2024",
+            "data_prenotazione": "Sat Apr 27 2024",
             "data_inizio": "2024-05-13 12.00",
             "data_fine": "2024-05-14",
             "filiale": "Milano, via padova",
@@ -175,7 +175,47 @@
                 "tariffa_oraria": "60"
             },
             "tariffa": "oraria",
-            "polizza": "kasko"
+            "polizza": "rca"
+        },
+        {
+            "id": "FYPbHX",
+            "cliente": {
+                "codiceFiscale": "mrzmhl02h20g157g",
+                "nome": "michelon",
+                "cognome": "micheloni",
+                "dataNascita": "2024-01-22",
+                "email": "a",
+                "password": "a",
+                "cellulare": "333333334",
+                "prenotazioni": [
+                    "8MLhvx",
+                    "OCv2Wx",
+                    "5h4ow6",
+                    "SylHmp",
+                    "bi4Zth"
+                ],
+                "dataRegistrazione": "22012024"
+            },
+            "data_prenotazione": "Thu May 16 2024",
+            "data_inizio": "2024-08-16 08.00",
+            "data_fine": "2024-08-17",
+            "filiale": "Milano, via padova",
+            "mezzo": {
+                "URL_immagine": "viste/Icone/scooter/yamaha-r1.png",
+                "telaio": "11",
+                "produttore": "Yamaha",
+                "modello": "R1",
+                "cavalli": "200",
+                "cilindrata": "1000",
+                "anno": "2023",
+                "alimentazione": "benzina",
+                "cambio": "manuale",
+                "nPosti": "2",
+                "stato": "disponibile",
+                "tariffa_oraria": "40"
+            },
+            "tariffa": "oraria",
+            "polizza": "rca"
         }
     ]
 }

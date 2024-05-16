@@ -159,7 +159,7 @@ class VistaGestionePrenotazione(QMainWindow):
                     info_layout.addWidget(cliente_label, 4, 0)
 
                     buttons_layout = QHBoxLayout()
-                    info_layout.addLayout(buttons_layout, 4, 2, alignment=Qt.AlignRight)
+                    info_layout.addLayout(buttons_layout, 4, 3, alignment= Qt.AlignRight)
                     modify_button = QPushButton("Modifica")
                     modify_button.setStyleSheet("width: 150px; max-width: 150px; background-color: #D9D9D9; border-radius: 15px; color: black; "
                                    "padding: 10px;")
@@ -209,7 +209,6 @@ class VistaGestionePrenotazione(QMainWindow):
             self.modifica_data_inizio = dataInizio_edit
             self.modifica_data_fine = dataFine_edit
             self.modifica_polizza = polizza_edit
-
             self.nome_cliente = nc
         else:
             modify_button.setText("Modifica")
@@ -247,12 +246,15 @@ class VistaGestionePrenotazione(QMainWindow):
     def salva_valori(self):
         # Estrai i valori dai campi QLineEdit e memorizzali nelle variabili di istanza
         self.valore_data = self.modifica_data.date().toString(Qt.ISODate)
+        # Parse the date string
+        date_obj = datetime.strptime(self.valore_data, "%Y-%m-%d")
+        formatted_date = date_obj.strftime("%a %b %d %Y")
         self.valore_mezzo = self.modifica_mezzo.text()
         self.valore_tariffa = self.modifica_tariffa.currentText()
         self.valore_data_inizio = self.modifica_data_inizio.text()
         self.valore_data_fine = self.modifica_data_fine.text()
         self.valore_polizza = self.modifica_polizza.currentText()
         prenotazione = Prenotazione()
-        prenotazione.aggiornaValori(self.nome_cliente, self.valore_data, self.valore_polizza, self.valore_data_inizio,
+        prenotazione.aggiornaValori(self.nome_cliente, formatted_date, self.valore_polizza, self.valore_data_inizio,
                                     self.valore_data_fine, self.valore_mezzo, self.valore_tariffa)
 

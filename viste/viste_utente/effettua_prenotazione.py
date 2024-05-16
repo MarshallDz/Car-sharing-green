@@ -226,7 +226,8 @@ class VistaEffettuaPrenotazione(QMainWindow):
         prenotazione = Prenotazione()
         pagamento = Pagamento()
         c = Cliente()
-        prenotazione.aggiungiPrenotazione(cliente, QDate.currentDate().toString(), self.valori["data_inizio"],
+
+        prenotazione.aggiungiPrenotazione(cliente, datetime.now().strftime("%a %b %d %Y"), self.valori["data_inizio"],
                                           self.valori["data_fine"], self.mezzo, self.valori["filiale"],
                                           self.valori["tariffa"], self.valori["polizza"])
 
