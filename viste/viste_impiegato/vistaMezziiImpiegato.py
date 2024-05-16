@@ -21,12 +21,12 @@ class VistaMezziImpiegato(QMainWindow):
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
 
-        central_layout = QVBoxLayout()
+        self.central_layout = QVBoxLayout()
 
         title_layout = QVBoxLayout()
         title_layout.setAlignment(Qt.AlignTop | Qt.AlignCenter)
 
-        self.central_widget.setLayout(central_layout)
+        self.central_widget.setLayout(self.central_layout)
 
         self.title_label = QLabel("Lista dei mezzi")
         self.title_font = QFont("Arial", 42, QFont.Bold)
@@ -34,12 +34,13 @@ class VistaMezziImpiegato(QMainWindow):
         self.title_label.adjustSize()
 
         title_layout.addWidget(self.title_label)
-        central_layout.addLayout(title_layout)
+        self.central_layout.addLayout(title_layout)
+        self.add_category_buttons()
         # Aggiungi la barra di ricerca in alto a destra
-        """self.search_layout = QHBoxLayout()
+        self.search_layout = QHBoxLayout()
         self.search_layout.setAlignment(Qt.AlignRight | Qt.AlignTop)
 
-        self.search_label = QLabel("Cerca per nome mezzo:")
+        self.search_label = QLabel("Cerca mezzo:")
         self.search_layout.addWidget(self.search_label)
 
         self.search_edit = QLineEdit()
@@ -48,7 +49,7 @@ class VistaMezziImpiegato(QMainWindow):
 
         self.search_edit.textChanged.connect(self.search_mezzi)
 
-        central_layout.addLayout(self.search_layout)"""
+        self.central_layout.addLayout(self.search_layout)
         scroll_area = QScrollArea()
         scroll_area.setStyleSheet("QScrollBar:vertical {"
                                   "    border: none;"
@@ -73,28 +74,17 @@ class VistaMezziImpiegato(QMainWindow):
         scroll_area.setWidget(self.scroll_content)
         self.scroll_layout = QVBoxLayout(self.scroll_content)
 
-        central_layout.addWidget(scroll_area)
-
-        self.aggiungiBoxMezzo()
+        self.central_layout.addWidget(scroll_area)
 
         back_button = QPushButton("Indietro")
         back_button.clicked.connect(self.go_back)
         back_button.setStyleSheet("width: 150px; max-width: 150px; background-color: #F85959; border-radius: 15px; color: black; "
                                   "padding: 10px; margin-bottom: 20px")
-        central_layout.addWidget(back_button, alignment=Qt.AlignHCenter | Qt.AlignBottom)
+        self.central_layout.addWidget(back_button, alignment=Qt.AlignHCenter | Qt.AlignBottom)
 
-    def aggiungiBoxMezzo(self):
-        auto = Auto()
-        moto = Moto()
-        van = Van()
-        furgone = Furgone()
-        lista_auto = auto.get_dati()
-        lista_moto = moto.get_dati()
-        lista_van = van.get_dati()
-        lista_furgoni = furgone.get_dati()
-
-        for x in lista_auto:
-            info_box = QGroupBox(f"Informazioni sull'auto")
+    def populate_scroll_layout(self, vehicle_list):
+        for x in vehicle_list:
+            info_box = QGroupBox(f"Informazioni sul mezzo")
             info_box.setStyleSheet("QGroupBox{max-height: 250px;}")
             info_layout = QGridLayout(info_box)
 
@@ -156,7 +146,7 @@ class VistaMezziImpiegato(QMainWindow):
                 error_label.setAlignment(Qt.AlignCenter)
                 info_layout.addWidget(error_label, alignment= Qt.AlignRight)
 
-            self.scroll_layout.addWidget(info_box,)
+            self.scroll_layout.addWidget(info_box)
 
     def go_back(self):
         from viste.viste_impiegato.pannelloControllo import VistaPannelloControllo
@@ -171,8 +161,8 @@ class VistaMezziImpiegato(QMainWindow):
             if isinstance(item, QLayoutItem):
                 widget = item.widget()
                 if isinstance(widget, QGroupBox):
-                    cliente_labels = widget.findChildren(QLabel)
-                    for label in cliente_labels:
+                    labels = widget.findChildren(QLabel)
+                    for label in labels:
                         client_name = label.text()
                         if text.lower() in client_name.lower():
                             widget.show()
@@ -180,13 +170,62 @@ class VistaMezziImpiegato(QMainWindow):
                     else:
                         widget.hide()
 
-    """def eliminaPagamento(self, p):
-        mezzo = Pagamento()
-        reply = QMessageBox.warning(self, 'Conferma eliminazione', 'Sei sicuro di voler eliminare il pagamento?',
-                                    QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+    def add_category_buttons(self):
+        # Create a horizontal layout for category buttons
+        self.category_layout = QHBoxLayout()
+        self.category_layout.setAlignment(Qt.AlignLeft | Qt.AlignTop)
 
-        if reply == QMessageBox.Yes:
-            pagamento.eliminaPagamento(p, self.user, self.psw)
-        if reply == QMessageBox.Yes:
-            QMessageBox.information(self, 'Disdetta Confermata', 'Il pagamento è stato eliminato con successo.', QMessageBox.Ok)
-        self.go_back()"""
+        # Create buttons for each category
+        self.auto_button = QPushButton("Auto")
+        self.auto_button.clicked.connect(lambda: self.filter_vehicles("Auto"))
+        self.category_layout.addWidget(self.auto_button)
+
+        self.moto_button = QPushButton("Moto")
+        self.moto_button.clicked.connect(lambda: self.filter_vehicles("Moto"))
+        self.category_layout.addWidget(self.moto_button)
+
+        self.van_button = QPushButton("Van")
+        self.van_button.clicked.connect(lambda: self.filter_vehicles("Van"))
+        self.category_layout.addWidget(self.van_button)
+
+        self.furgone_button = QPushButton("Furgone")
+        self.furgone_button.clicked.connect(lambda: self.filter_vehicles("Furgone"))
+        self.category_layout.addWidget(self.furgone_button)
+
+        # Set stretch factor for buttons to occupy all available horizontal space
+        self.auto_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        self.moto_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        self.van_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        self.furgone_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+
+        # Add category layout to the main layout
+        self.central_layout.addLayout(self.category_layout)
+
+    def filter_vehicles(self, category):
+        # Clear existing vehicles from scroll layout
+        self.clear_scroll_layout()
+
+        # Set background color for the pressed button and reset others
+        buttons = [self.auto_button, self.moto_button, self.van_button, self.furgone_button]
+        for button in buttons:
+            if button.text() == category:
+                button.setStyleSheet("QPushButton { background-color: #6AFE67; color: black}")
+            else:
+                button.setStyleSheet("QPushButton { background-color: none; }")
+
+        # Populate the scroll layout with vehicles of the selected category
+        if category == "Auto":
+            self.populate_scroll_layout(Auto().get_dati())
+        elif category == "Moto":
+            self.populate_scroll_layout(Moto().get_dati())
+        elif category == "Van":
+            self.populate_scroll_layout(Van().get_dati())
+        elif category == "Furgone":
+            self.populate_scroll_layout(Furgone().get_dati())
+
+    def clear_scroll_layout(self):
+        # Clear existing vehicles from scroll layout
+        for i in reversed(range(self.scroll_layout.count())):
+            widget = self.scroll_layout.itemAt(i).widget()
+            if widget:
+                widget.deleteLater()
