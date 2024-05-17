@@ -15,6 +15,7 @@ class Prenotazione():
         self.mezzo = ""
         self.tariffa = ""
         self.polizza = ""
+
         # ottendo il path assoluto del file in cui salvare
         absolute_path = os.path.dirname(__file__)
         relative_path = "dati/prenotazioni.json"
@@ -22,6 +23,7 @@ class Prenotazione():
         dir_list.pop()
         new_dir = os.sep.join(dir_list)
         self.url = os.path.join(new_dir, relative_path)
+
     def aggiungiPrenotazione(self, cliente, data_prenotazione, data_inizio, data_fine, mezzo,  filiale, tariffa, polizza):
         self.id = self.set_id()
         self.cliente = cliente
