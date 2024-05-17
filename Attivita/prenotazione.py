@@ -15,8 +15,7 @@ class Prenotazione():
         self.mezzo = ""
         self.tariffa = ""
         self.polizza = ""
-
-        # ottendo il path assoluto del file in cui salvare
+        # ottengo il path assoluto del file in cui salvare
         absolute_path = os.path.dirname(__file__)
         relative_path = "dati/prenotazioni.json"
         dir_list = absolute_path.split(os.sep)
@@ -36,7 +35,9 @@ class Prenotazione():
         self.polizza = polizza
 
         prenotazioni = self.get_dati()
-        prenotazioni.append(self.__dict__)
+        nuovaPrenotazione = self.__dict__.copy()
+        nuovaPrenotazione.popitem()
+        prenotazioni.append(nuovaPrenotazione)
         with open(self.url, "w") as f:
             json.dump({"prenotazioni": prenotazioni}, f, indent=4)
         return 1
@@ -79,7 +80,7 @@ class Prenotazione():
             json.dump({"pagamenti": updated_pagamenti}, file, indent=4)
 
         # Aggiorna l'interfaccia utente per visualizzare le prenotazioni aggiornate
-        from viste.visualizzaPrenotazioni import PrenotazioniView
+        from viste.viste_utente.visualizzaPrenotazioni import PrenotazioniView
         self.vista = PrenotazioniView(p['cliente']['email'], p['cliente']['password'])
         self.vista.show()
 
@@ -96,3 +97,16 @@ class Prenotazione():
         stringa_random = ''.join(random.choice(caratteri) for _ in range(6))
         return stringa_random
 
+    def aggiornaValori(self, nc, dataP, p, dI, dF, m, t):
+        with open(self.url, "r") as f:
+            data = json.load(f)
+            prenotazioni = data.get("prenotazioni", [])
+            for prenotazione in prenotazioni:
+                if nc[0] == prenotazione["cliente"]["nome"] and nc[1] == prenotazione["cliente"]["cognome"]:
+                    prenotazione["data_prenotazione"] = dataP
+                    prenotazione["polizza"] = p
+                    prenotazione["data_inizio"] = dI
+                    prenotazione["data_fine"] = dF
+                    prenotazione["tariffa"] = t
+            with open(self.url, "w") as f:
+                json.dump({"prenotazioni": prenotazioni}, f, indent=4)

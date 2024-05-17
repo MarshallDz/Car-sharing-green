@@ -87,7 +87,7 @@ class VistaConfermaPrenotazione(QMainWindow):
         self.central_layout.addWidget(info_box, 1, 0, alignment=Qt.AlignTop)
 
     def go_home(self):
-        from viste.home import VistaHome
+        from viste.viste_utente.home import VistaHome
         self.vistaHome = VistaHome(self.user, self.psw)
         self.vistaHome.show()
         self.close()

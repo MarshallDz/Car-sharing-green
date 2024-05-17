@@ -109,7 +109,7 @@ class VistaPagamenti(QMainWindow):
                 self.scroll_layout.addWidget(info_box)
 
     def go_back(self):
-        from viste.home import VistaHome
+        from viste.viste_utente.home import VistaHome
         self.vista = VistaHome(self.user, self.psw)
         self.vista.show()
         self.close()

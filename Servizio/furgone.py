@@ -30,6 +30,12 @@ class Furgone(Mezzo):
         info["tariffa_oraria"] = self.tariffaOraria
         return info
 
+    def get_dati(self):
+        file_path = "dati/furgoni.json"
+        with open(file_path) as file:
+            data = json.load(file)
+            return data
+
     def eliminaFurgone(self):
         pass
 

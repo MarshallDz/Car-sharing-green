@@ -12,7 +12,7 @@
                 "cellulare": "3333333333",
                 "dataRegistrazione": "22012024"
             },
-            "data_prenotazione": "Thu Mar 14 2024",
+            "data_prenotazione": "Fri Apr 26 2024",
             "data_inizio": "2024-03-14 08.00",
             "data_fine": "2024-03-15",
             "filiale": "Milano, via roma",
@@ -46,9 +46,9 @@
                 "cellulare": "3333333333",
                 "dataRegistrazione": "22012024"
             },
-            "data_prenotazione": "Thu Mar 14 2024",
+            "data_prenotazione": "Fri Apr 26 2024",
             "data_inizio": "2024-03-14 08.00",
-            "data_fine": "2024-03-15 08.00",
+            "data_fine": "2024-03-15",
             "filiale": "Milano, via padova",
             "mezzo": {
                 "URL_immagine": "viste/Icone/auto/bmw_serie3.png",
@@ -64,7 +64,7 @@
                 "stato": "disponibile",
                 "tariffa_oraria": "40"
             },
-            "tariffa": "giornaliera",
+            "tariffa": "oraria",
             "polizza": "kasko"
         },
         {
@@ -83,9 +83,9 @@
                 ],
                 "dataRegistrazione": "22012024"
             },
-            "data_prenotazione": "Sat Mar 16 2024",
-            "data_inizio": "2024-03-22 08.00",
-            "data_fine": "2024-03-23 08.00",
+            "data_prenotazione": "Fri Apr 26 2024",
+            "data_inizio": "2024-03-14 08.00",
+            "data_fine": "2024-03-15",
             "filiale": "Milano, via roma",
             "mezzo": {
                 "URL_immagine": "viste/Icone/van/mercedes_sprinter.png",
@@ -102,7 +102,7 @@
                 "tariffa_oraria": "60",
                 "tariffa_giornaliera": "150"
             },
-            "tariffa": "giornaliera",
+            "tariffa": "oraria",
             "polizza": "kasko"
         },
         {
@@ -123,8 +123,8 @@
                 "dataRegistrazione": "22012024"
             },
             "data_prenotazione": "Fri Apr 26 2024",
-            "data_inizio": "2024-04-26 11.00",
-            "data_fine": "2024-04-30 08.00",
+            "data_inizio": "2024-03-14 08.00",
+            "data_fine": "2024-03-15",
             "filiale": "Milano, via roma",
             "mezzo": {
                 "URL_immagine": "viste/Icone/auto/white-car.png",
@@ -140,11 +140,45 @@
                 "stato": "disponibile",
                 "tariffa_oraria": "40"
             },
-            "tariffa": "giornaliera",
+            "tariffa": "oraria",
             "polizza": "kasko"
         },
         {
-            "id": "1pPlgJ",
+            "id": "wnraX9",
+            "cliente": {
+                "codiceFiscale": "abcdefghlmnoppop",
+                "nome": "edo",
+                "cognome": "seve",
+                "dataNascita": "2003-01-26",
+                "email": "user",
+                "password": "admin",
+                "cellulare": "0123456789",
+                "prenotazioni": [],
+                "dataRegistrazione": "11012024"
+            },
+            "data_prenotazione": "Sat Apr 27 2024",
+            "data_inizio": "2024-05-13 12.00",
+            "data_fine": "2024-05-14",
+            "filiale": "Milano, via padova",
+            "mezzo": {
+                "URL_immagine": "viste/Icone/auto/bmw-335i.png",
+                "telaio": "01",
+                "produttore": "Bmw",
+                "modello": "335i",
+                "cavalli": "305",
+                "cilindrata": "3000",
+                "anno": "2019",
+                "alimentazione": "benzina",
+                "cambio": "automatico",
+                "nPosti": "5",
+                "stato": "disponibile",
+                "tariffa_oraria": "60"
+            },
+            "tariffa": "oraria",
+            "polizza": "rca"
+        },
+        {
+            "id": "FYPbHX",
             "cliente": {
                 "codiceFiscale": "mrzmhl02h20g157g",
                 "nome": "michelon",
@@ -152,30 +186,31 @@
                 "dataNascita": "2024-01-22",
                 "email": "a",
                 "password": "a",
-                "cellulare": "3333333333",
+                "cellulare": "333333334",
                 "prenotazioni": [
                     "8MLhvx",
                     "OCv2Wx",
                     "5h4ow6",
-                    "SylHmp"
+                    "SylHmp",
+                    "bi4Zth"
                 ],
                 "dataRegistrazione": "22012024"
             },
-            "data_prenotazione": "ven apr 26 2024",
-            "data_inizio": "2024-04-28 08.00",
-            "data_fine": "2024-04-29",
+            "data_prenotazione": "Thu May 16 2024",
+            "data_inizio": "2024-08-16 08.00",
+            "data_fine": "2024-08-17",
             "filiale": "Milano, via padova",
             "mezzo": {
-                "URL_immagine": "viste/Icone/auto/mercedes-c300.png",
-                "telaio": "02",
-                "produttore": "Mercedes-Benz",
-                "modello": "C300",
-                "cavalli": "245",
-                "cilindrata": "2000",
-                "anno": "2021",
-                "alimentazione": "diesel",
-                "cambio": "automatico",
-                "nPosti": "5",
+                "URL_immagine": "viste/Icone/scooter/yamaha-r1.png",
+                "telaio": "11",
+                "produttore": "Yamaha",
+                "modello": "R1",
+                "cavalli": "200",
+                "cilindrata": "1000",
+                "anno": "2023",
+                "alimentazione": "benzina",
+                "cambio": "manuale",
+                "nPosti": "2",
                 "stato": "disponibile",
                 "tariffa_oraria": "40"
             },

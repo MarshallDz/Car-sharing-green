@@ -2,7 +2,9 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from Attivita.cliente import Cliente
-from viste.home import VistaHome
+from Attivita.impiegato import Impiegato
+from viste.viste_utente.home import VistaHome
+from viste.viste_impiegato.pannelloControllo import VistaPannelloControllo
 import darkdetect
 
 
@@ -77,19 +79,32 @@ class VistaLogin(QMainWindow):
                 return
 
         # da risolvere la doppia chiamata alla funzione
-        email = Cliente.get_login(self)[0]
-        password = Cliente.get_login(self)[1]
+        cliente = Cliente()
+        email_utente, password_utente = cliente.get_login()
 
+        #controllo il login per un cliente
         trovato = False
-        for e in email:
+        for e in email_utente:
             if e == data_to_match["email"]:
-                i = email.index(e)
-                if password[i] == data_to_match["password"]:
+                i = email_utente.index(e)
+                if password_utente[i] == data_to_match["password"]:
                     trovato = True
-                    self.vista_home = VistaHome(e, password[i])
+                    self.vista_home = VistaHome(e, password_utente[i])
                     self.vista_home.show()
                     self.close()
                     break
+        if not trovato:
+            impiegato = Impiegato()
+            email_impiegato, password_impiegato = impiegato.get_login()
+            #controllo login per un impiegato
+            for e in email_impiegato:
+                if e == data_to_match["email"]:
+                    i = email_impiegato.index(e)
+                    if password_impiegato[i] == data_to_match["password"]:
+                        trovato = True
+                        self.vista_home = VistaPannelloControllo(e, password_impiegato[i])
+                        self.vista_home.show()
+                        self.close()
 
         if not trovato:
             QMessageBox.warning(None, "Errore", "L'utente o la password sono errati! \nRiprova")

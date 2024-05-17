@@ -1,14 +1,16 @@
 {
     "clienti": [
         {
-            "codiceFiscale": "abcdefghlmnopqrs",
+            "codiceFiscale": "abcdefghlmnoppop",
             "nome": "edo",
             "cognome": "seve",
             "dataNascita": "2003-01-26",
             "email": "user",
             "password": "admin",
-            "cellulare": "0123456789",
-            "prenotazioni": [],
+            "cellulare": "1231231239",
+            "prenotazioni": [
+                "wnraX9"
+            ],
             "dataRegistrazione": "11012024"
         },
         {
@@ -29,13 +31,14 @@
             "dataNascita": "2024-01-22",
             "email": "a",
             "password": "a",
-            "cellulare": "3333333333",
+            "cellulare": "333333334",
             "prenotazioni": [
                 "8MLhvx",
                 "OCv2Wx",
                 "5h4ow6",
                 "SylHmp",
-                "1pPlgJ"
+                "bi4Zth",
+                "FYPbHX"
             ],
             "dataRegistrazione": "22012024"
         },
