@@ -33,11 +33,27 @@
             "statoPagamento": "da pagare"
         },
         {
-            "codice": "gFdCm1",
-            "totale": 270.0,
-            "dataPagamento": "2024-04-26",
-            "prenotazione": "booking_123",
-            "cliente": "ABC123456789",
+            "codice": "aKrhCq",
+            "totale": "da definire",
+            "dataPagamento": "",
+            "prenotazione": "wnraX9",
+            "cliente": "abcdefghlmnoppop",
+            "statoPagamento": "da pagare"
+        },
+        {
+            "codice": "u6qmSq",
+            "totale": "da definire",
+            "dataPagamento": "",
+            "prenotazione": "bi4Zth",
+            "cliente": "mrzmhl02h20g157g",
+            "statoPagamento": "da pagare"
+        },
+        {
+            "codice": "AHvkvn",
+            "totale": "da definire",
+            "dataPagamento": "",
+            "prenotazione": "FYPbHX",
+            "cliente": "mrzmhl02h20g157g",
             "statoPagamento": "da pagare"
         }
     ]

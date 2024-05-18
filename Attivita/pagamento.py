@@ -26,7 +26,9 @@ class Pagamento():
         self.prenotazione = pren["id"]
         self.cliente = cliente['codiceFiscale']
         pagamenti = self.get_dati()
-        pagamenti.append(self.__dict__)
+        nuovoPagamento = self.__dict__.copy()
+        nuovoPagamento.popitem()
+        pagamenti.append(nuovoPagamento)
         with open(self.url, "w") as f:
             json.dump({"pagamenti":pagamenti}, f, indent=4)
         return 1
@@ -61,3 +63,18 @@ class Pagamento():
             totale = 'da definire'
         return totale
 
+    def eliminaPagamento(self, p, user, psw):
+        pagamenti = self.get_dati()
+
+        for i in pagamenti:
+            if i['cocice'] == p["codice"]:
+                pagamenti['codice'].remove(i)
+                break
+
+        with open(self.url, 'w') as file:
+            json.dump(pagamenti, file, indent=4)
+
+        # Aggiorna l'interfaccia utente per visualizzare le prenotazioni aggiornate
+        from viste.viste_impiegato.vistaPagamentiImpiegato import VistaPagamentiImpiegato
+        self.vista = VistaPagamentiImpiegato(user, psw)
+        self.vista.show()

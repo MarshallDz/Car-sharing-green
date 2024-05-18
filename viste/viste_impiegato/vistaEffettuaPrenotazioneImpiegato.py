@@ -1,19 +1,17 @@
-from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import Qt, QDate
 from Attivita.cliente import *
 from Attivita.prenotazione import *
-from viste.viste_utente.confermaPrenotazione import VistaConfermaPrenotazione
 from Attivita.pagamento import *
+from Attivita.cliente import Cliente
 import darkdetect
 
 
-class VistaEffettuaPrenotazione(QMainWindow):
-    def __init__(self, user, psw, mezzo):
+class VistaEffettuaPrenotazioneImpiegato(QMainWindow):
+    def __init__(self, user, psw):
         super().__init__()
         self.user = user
         self.psw = psw
-        self.mezzo = mezzo
 
         self.setWindowTitle("CarGreen")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
@@ -29,7 +27,7 @@ class VistaEffettuaPrenotazione(QMainWindow):
         self.page_layout = QVBoxLayout()
         self.central_widget.setLayout(self.page_layout)
 
-        self.title_label = QLabel("Effettua la tua prenotazione ")
+        self.title_label = QLabel("Aggiungi prenotazione per un cliente")
         self.title_font = self.title_label.font()
         self.title_font.setPointSize(42)
         self.title_font.setBold(True)
@@ -46,25 +44,56 @@ class VistaEffettuaPrenotazione(QMainWindow):
         form_layout.setHorizontalSpacing(200)
         buttons_layout = QVBoxLayout()
 
+        cliente_label = QLabel("Seleziona cliente: ")
+        cliente_label.setStyleSheet("font-size: 18px; max-width: 200px; max-height: 50px")
+        form_layout.addWidget(cliente_label, 0, 0)
+
+        cliente = Cliente()
+        listaClienti = cliente.get_dati()
+        self.sceltaCliente = QComboBox()
+        self.sceltaCliente.setPlaceholderText("Seleziona cliente")
+        for c in listaClienti:
+            self.sceltaCliente.addItem(c["codiceFiscale"])
+        form_layout.addWidget(self.sceltaCliente, 0, 1)
+
+        categoria_label = QLabel("Seleziona categoria mezzo:")
+        categoria_label.setStyleSheet("font-size: 18px; max-width: 215px; max-height: 50px")
+        form_layout.addWidget(categoria_label, 1, 0)
+
+        self.categoriaBox = QComboBox()
+        self.categoriaBox.setPlaceholderText("--Categoria--")
+        self.categoriaBox.addItems(["auto", "moto", "van", "furgone"])
+        form_layout.addWidget(self.categoriaBox, 1, 1)
+
+        # Aggiungi la seconda combobox inizialmente nascosta
+        self.scelta_mezzo_combobox = QComboBox()
+        self.scelta_mezzo_combobox.setPlaceholderText("")
+        self.scelta_mezzo_combobox.setStyleSheet("font-size: 18px; max-width: 200px; max-height: 50px")
+        self.scelta_mezzo_combobox.hide()  # Nascondi la combobox inizialmente
+        form_layout.addWidget(self.scelta_mezzo_combobox, 1, 2)
+
+        # Connetti il segnale currentIndexChanged della combobox della categoria
+        self.categoriaBox.currentIndexChanged.connect(self.mostra_scelta_mezzo)
+
         inoleggio_label = QLabel("Data inizio noleggio:")
         inoleggio_label.setStyleSheet("font-size: 18px; max-width: 200px; max-height: 50px")
-        form_layout.addWidget(inoleggio_label, 0, 0)
+        form_layout.addWidget(inoleggio_label, 2, 0)
 
         fnoleggio_label = QLabel("Data fine noleggio:")
         fnoleggio_label.setStyleSheet("font-size: 18px; max-width: 200px; max-height: 50px")
-        form_layout.addWidget(fnoleggio_label, 1, 0)
+        form_layout.addWidget(fnoleggio_label, 3, 0)
 
         filiale_label = QLabel("Filiale ritiro mezzo:")
         filiale_label.setStyleSheet("font-size: 18px; max-width: 200px; max-height: 50px")
-        form_layout.addWidget(filiale_label, 2, 0)
+        form_layout.addWidget(filiale_label, 4, 0)
 
         assicurazione_label = QLabel("Polizza assicurativa:")
         assicurazione_label.setStyleSheet("font-size: 18px; max-width: 200px; max-height: 50px")
-        form_layout.addWidget(assicurazione_label, 3, 0)
+        form_layout.addWidget(assicurazione_label, 5, 0)
 
         tariffa_label = QLabel("Tariffa:")
         tariffa_label.setStyleSheet("font-size: 18px; max-width: 200px; max-height: 50px")
-        form_layout.addWidget(tariffa_label, 4, 0)
+        form_layout.addWidget(tariffa_label, 6, 0)
 
         dlayout1 = QHBoxLayout()
         self.datacampo1 = QDateEdit()
@@ -85,7 +114,7 @@ class VistaEffettuaPrenotazione(QMainWindow):
         dlayout1.addWidget(self.oracampo1)
         self.oracampo1.currentIndexChanged.connect(self.update_valori)
         self.valori["data_inizio"] = self.datacampo1.date().toString(Qt.ISODate) + " " + self.oracampo1.currentText()
-        form_layout.addLayout(dlayout1, 0, 1)
+        form_layout.addLayout(dlayout1, 2, 1)
 
         dlayout2 = QHBoxLayout()
         self.datacampo2 = QDateEdit()
@@ -105,21 +134,21 @@ class VistaEffettuaPrenotazione(QMainWindow):
         dlayout2.addWidget(self.oracampo2)
         self.oracampo2.currentIndexChanged.connect(self.update_valori)
         self.valori["data_fine"] = self.datacampo2.date().toString(Qt.ISODate)
-        form_layout.addLayout(dlayout2, 1, 1)
+        form_layout.addLayout(dlayout2, 3, 1)
 
         self.filiale = QComboBox(self)
         self.filiale.setStyleSheet("max-width: 300px; max-height: 50px")
         self.filiale.setPlaceholderText("Scegli:")
         self.filiale.addItems(["Milano, via padova", "Milano, via roma"])
         self.filiale.currentIndexChanged.connect(self.update_valori)
-        form_layout.addWidget(self.filiale, 2, 1)
+        form_layout.addWidget(self.filiale, 4, 1)
         self.valori["filiale"] = self.filiale.currentText()
 
         self.polizza = QComboBox(self)
         self.polizza.setStyleSheet("max-width: 300px; max-height: 50px")
         self.polizza.setPlaceholderText("Scegli:")
         self.polizza.addItems(["rca", "kasko"])
-        form_layout.addWidget(self.polizza, 3, 1)
+        form_layout.addWidget(self.polizza, 5, 1)
         self.polizza.currentIndexChanged.connect(self.update_valori)
         self.valori["polizza"] = self.polizza.currentText()
 
@@ -127,7 +156,7 @@ class VistaEffettuaPrenotazione(QMainWindow):
         self.tariffa.setStyleSheet("max-width: 300px; max-height: 50px")
         self.tariffa.setPlaceholderText("Scegli:")
         self.tariffa.addItems(["oraria", "giornaliera"])
-        form_layout.addWidget(self.tariffa, 4, 1)
+        form_layout.addWidget(self.tariffa, 6, 1)
         self.tariffa.currentIndexChanged.connect(self.update_valori)
         self.valori["tariffa"] = self.tariffa.currentText()
 
@@ -151,20 +180,6 @@ class VistaEffettuaPrenotazione(QMainWindow):
 
         self.page_layout.addLayout(self.central_layout)
 
-        bottom_layout = QHBoxLayout()
-
-        image = QPixmap(mezzo["URL_immagine"])
-        self.label = QLabel()
-        self.label.setStyleSheet("margin-left: 20px")
-        self.label.setPixmap(image.scaled(600, 800, Qt.KeepAspectRatio))
-        self.label.setAlignment(Qt.AlignCenter)
-        bottom_layout.addWidget(self.label)
-
-        self.alt = QLabel("La tua scelta: \n\n" + mezzo["produttore"] + " " + mezzo["modello"] + " " + mezzo["cavalli"] + " cv")
-        self.alt.setStyleSheet("font-size: 25px")
-        bottom_layout.addWidget(self.alt)
-
-        self.page_layout.addLayout(bottom_layout)
 
     def update_valori(self):
         sender = self.sender()  # Identifica quale combobox ha generato il segnale
@@ -202,6 +217,8 @@ class VistaEffettuaPrenotazione(QMainWindow):
             self.valori["filiale"] = sender.currentText()
         elif sender == self.polizza:
             self.valori["polizza"] = sender.currentText()
+        elif sender == self.sceltaCliente:
+            self.valori["cliente"] = sender.currentText()
         else:
             self.valori["tariffa"] = sender.currentText()
             if sender.currentText() == "giornaliera":
@@ -211,33 +228,30 @@ class VistaEffettuaPrenotazione(QMainWindow):
                 self.oracampo2.setVisible(False)
 
     def go_back(self):
-        from viste.viste_utente.prenotazione import VistaPrenotazione
-        self.vista = VistaPrenotazione(self.user, self.psw)
+        from viste. viste_impiegato.vistaGestisciPrenotazioni import VistaGestionePrenotazione
+        self.vista = VistaGestionePrenotazione(self.user, self.psw)
         self.vista.show()
         self.close()
 
     def conferma_prenotazione(self):
         for value in self.valori.values():
-            if not value:
+            if not value or not self.sceltaCliente.currentText():
                 QMessageBox.warning(self, "Attenzione", "Per favore compila tutti i campi.")
                 return
 
-        cliente = Cliente.get_dati(self, self.user, self.psw)
         prenotazione = Prenotazione()
         pagamento = Pagamento()
-        c = Cliente()
-
-        prenotazione.aggiungiPrenotazione(cliente, datetime.now().strftime("%a %b %d %Y"), self.valori["data_inizio"],
-                                          self.valori["data_fine"], self.mezzo, self.valori["filiale"],
+        cliente = Cliente()
+        c = self.cercaClienteByCF()
+        mezzo = self.cercaMezzo()
+        prenotazione.aggiungiPrenotazione(c, datetime.now().strftime("%a %b %d %Y"), self.valori["data_inizio"],
+                                          self.valori["data_fine"], mezzo, self.valori["filiale"],
                                           self.valori["tariffa"], self.valori["polizza"])
 
-        pagamento.aggiungiPagamento("", prenotazione.__dict__, cliente)
-        c.set_prenotazioni_cliente(self.user, self.psw, prenotazione.id)
-        self.vistaPrenotazione = VistaConfermaPrenotazione(self.user, self.psw, QDate.currentDate().toString(), self.mezzo,
-                                                           self.valori["data_inizio"], self.valori["data_fine"], self.valori["tariffa"],
-                                                           self.valori["polizza"])
-        self.vistaPrenotazione.show()
-        self.close()
+        pagamento.aggiungiPagamento("", prenotazione.__dict__, c)
+        cliente.set_prenotazioni_cliente(c["email"], c["password"], prenotazione.id)
+        QMessageBox.information(None, "Prenotazione fatta", "Prenotazione salvata")
+
 
     def ora_corrente(self):
         now = datetime.now()
@@ -250,3 +264,64 @@ class VistaEffettuaPrenotazione(QMainWindow):
         data_inserita = self.datacampo1.date().toString(Qt.ISODate)
         data_corrente = QDate.currentDate().toString(Qt.ISODate)
         return data_inserita == data_corrente
+
+    def mostra_scelta_mezzo(self):
+        # Mostra la seconda combobox solo se è stata selezionata una categoria valida
+        self.scelta_mezzo_combobox.clear()  # Pulisci la combobox
+        # Popola la seconda combobox in base alla categoria selezionata
+        if self.categoriaBox.currentText() == "auto":
+            from Servizio.auto import Auto
+            lista_auto = Auto().get_dati()
+            for auto in lista_auto:
+                self.scelta_mezzo_combobox.addItem(auto["produttore"] + " " + auto["modello"])
+        elif self.categoriaBox.currentText() == "moto":
+            from Servizio.moto import Moto
+            lista_moto = Moto().get_dati()
+            for moto in lista_moto:
+                self.scelta_mezzo_combobox.addItem(moto["produttore"] + " " + moto["modello"])
+        elif self.categoriaBox.currentText() == "van":
+            from Servizio.van import Van
+            lista_van = Van().get_dati()
+            for van in lista_van:
+                self.scelta_mezzo_combobox.addItem(van["produttore"] + " " + van["modello"])
+        else:
+            from Servizio.furgone import Furgone
+            lista_f = Furgone().get_dati()
+            for f in lista_f:
+                self.scelta_mezzo_combobox.addItem(f["produttore"] + " " + f["modello"])
+        self.scelta_mezzo_combobox.show()
+        self.valori["mezzo"] = self.scelta_mezzo_combobox.currentText()
+
+    def cercaClienteByCF(self):
+        with open("dati/clienti.json") as f:
+            data = json.load(f)
+            clienti = data.get("clienti", [])
+            for i in clienti:
+                if(self.sceltaCliente.currentText() == i["codiceFiscale"]):
+                    return i
+
+    def cercaMezzo(self):
+        if self.categoriaBox.currentText() == "auto":
+            with open("dati/auto.json") as f:
+                data = json.load(f)
+                for i in data:
+                    if self.scelta_mezzo_combobox.currentText() == i["produttore"] + " " + i["modello"]:
+                        return i
+        elif self.categoriaBox.currentText() == "moto":
+            with open("dati/moto.json") as f:
+                data = json.load(f)
+                for i in data:
+                    if self.scelta_mezzo_combobox.currentText() == i["produttore"] + " " + i["modello"]:
+                        return i
+        elif self.categoriaBox.currentText() == "van":
+            with open("dati/van.json") as f:
+                data = json.load(f)
+                for i in data:
+                    if self.scelta_mezzo_combobox.currentText() == i["produttore"] + " " + i["modello"]:
+                        return i
+        else:
+            with open("dati/furgoni.json") as f:
+                data = json.load(f)
+                for i in data:
+                    if self.scelta_mezzo_combobox.currentText() == i["produttore"] + " " + i["modello"]:
+                        return i
