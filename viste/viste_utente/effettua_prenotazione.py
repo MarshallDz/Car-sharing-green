@@ -1,11 +1,9 @@
-import datetime
-
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import Qt, QDate, QDateTime
+from PyQt5.QtCore import Qt, QDate
 from Attivita.cliente import *
 from Attivita.prenotazione import *
-from viste.confermaPrenotazione import VistaConfermaPrenotazione
+from viste.viste_utente.confermaPrenotazione import VistaConfermaPrenotazione
 from Attivita.pagamento import *
 import darkdetect
 
@@ -213,7 +211,7 @@ class VistaEffettuaPrenotazione(QMainWindow):
                 self.oracampo2.setVisible(False)
 
     def go_back(self):
-        from viste.prenotazione import VistaPrenotazione
+        from viste.viste_utente.prenotazione import VistaPrenotazione
         self.vista = VistaPrenotazione(self.user, self.psw)
         self.vista.show()
         self.close()

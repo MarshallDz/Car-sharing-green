@@ -1,15 +1,11 @@
-import json
-
-from PyQt5 import QtGui
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 
-from viste.effettua_prenotazione import VistaEffettuaPrenotazione
-from viste.prenotazione_auto import PrenotazioneAuto
-from viste.prenotazione_moto import PrenotazioneMoto
-from viste.prenotazione_van import PrenotazioneVan
-from viste.prenotazione_furgoni import PrenotazioneFurgone
+from viste.viste_utente.prenotazione_auto import PrenotazioneAuto
+from viste.viste_utente.prenotazione_moto import PrenotazioneMoto
+from viste.viste_utente.prenotazione_van import PrenotazioneVan
+from viste.viste_utente.prenotazione_furgoni import PrenotazioneFurgone
 import darkdetect
 
 
@@ -84,7 +80,7 @@ class VistaPrenotazione(QMainWindow):
         self.central_widget.setLayout(page_layout)
 
     def go_back(self):
-        from viste.home import VistaHome
+        from viste.viste_utente.home import VistaHome
         self.vista = VistaHome(self.user, self.psw)
         self.vista.show()
         self.close()

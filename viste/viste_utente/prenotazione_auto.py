@@ -3,12 +3,11 @@ import json
 from PyQt5 import QtGui
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
-from PyQt5.QtCore import Qt, QSize
-from viste.effettua_prenotazione import VistaEffettuaPrenotazione
-import darkdetect
+from PyQt5.QtCore import Qt
+from viste.viste_utente.effettua_prenotazione import VistaEffettuaPrenotazione
 
 
-class PrenotazioneFurgone(QWidget):
+class PrenotazioneAuto(QWidget):
     def __init__(self, user, psw, s):
         super().__init__()
         self.user = user
@@ -16,16 +15,17 @@ class PrenotazioneFurgone(QWidget):
         self.shell = s
         self.layout = QVBoxLayout()
 
-        file_path = "dati/furgoni.json"
         mezzi = []
-        with open(file_path) as file:
+        file_path = "dati/auto.json"
+        with open(file_path, "r") as file:
             data = json.load(file)
             chiavi = list(data[0].keys())
-            for info in data:
-                valori = list(info.values())
+            for auto in data:
+                valori = list(auto.values())
+
                 for i in range(len(valori)):
-                    info[chiavi[i]] = valori[i]
-                mezzi.append(info)
+                    auto[chiavi[i]] = valori[i]
+                mezzi.append(auto)
 
         scroll_area = QScrollArea()
         scroll_area.setStyleSheet("QScrollBar:vertical {"
@@ -40,7 +40,7 @@ class PrenotazioneFurgone(QWidget):
                                   "    min-height: 20px;"  # Imposta l'altezza minima del cursore
                                   "}"
                                   "QScrollBar::add-line:vertical {"
-                                  "    background: none;"
+                                  "    border: none;"
                                   "}"
                                   "QScrollBar::sub-line:vertical {"
                                   "    background: none;"
@@ -48,7 +48,6 @@ class PrenotazioneFurgone(QWidget):
                                   "QScrollArea {"
                                   "border: none"
                                   "}")
-
         scroll_area.setWidgetResizable(True)
         self.scroll_content = QWidget(scroll_area)
         scroll_area.setWidget(self.scroll_content)
@@ -58,9 +57,9 @@ class PrenotazioneFurgone(QWidget):
         self.setLayout(self.layout)
 
         for i in range(len(mezzi)):
-            self.aggiungi_box_furgone(mezzi[i])
+            self.aggiungi_box_auto(mezzi[i])
 
-    def aggiungi_box_furgone(self, mezzo):
+    def aggiungi_box_auto(self, auto):
         car_info_frame = QFrame()
         car_info_frame.setStyleSheet("border: 2px solid white; border-radius: 5px; margin-right: 5px;")
         car_info_frame.setMinimumWidth(600)
@@ -68,18 +67,17 @@ class PrenotazioneFurgone(QWidget):
 
         car_info_layout = QGridLayout(car_info_frame)
         car_info_layout.setAlignment(Qt.AlignTop)
-
         # Aggiungi le informazioni alla griglia
-        labels_values = [("Produttore:", mezzo["produttore"]),
-                              ("Modello:", mezzo["modello"]),
-                              ("Anno:", mezzo["anno"]),
-                              ("Alimentazione:", mezzo["alimentazione"]),
-                              ("Cavalli:", mezzo["cavalli"]),
-                              ("Cilindrata:", mezzo["cilindrata"]),
-                              ("Cambio:", mezzo["cambio"]),
-                              ("Numero Posti:", mezzo["nPosti"])]
+        self.labels_values = [("Produttore:", auto["produttore"]),
+                              ("Modello:", auto["modello"]),
+                              ("Anno:", auto["anno"]),
+                              ("Alimentazione:", auto["alimentazione"]),
+                              ("Cavalli:", auto["cavalli"]),
+                              ("Cilindrata:", auto["cilindrata"]),
+                              ("Cambio:", auto["cambio"]),
+                              ("Numero Posti:", auto["nPosti"])]
 
-        for i, (label_name, value) in enumerate(labels_values):
+        for i, (label_name, value) in enumerate(self.labels_values):
             label_name = QLabel(label_name, self)
             label_name.setStyleSheet("border: 0px")
 
@@ -92,18 +90,18 @@ class PrenotazioneFurgone(QWidget):
             car_info_layout.addWidget(label_name, row, col * 2)
             car_info_layout.addWidget(value_label, row, col * 2 + 1)
 
-        tariffaLabel = QLabel(f"A partire da {mezzo['tariffa_oraria']}€ ad ora \n oppure  {int(int(mezzo['tariffa_oraria']) * 24 * 0.7)}€ al giorno")
+        tariffaLabel = QLabel(f"A partire da {auto['tariffa_oraria']}€ ad ora \n oppure  {int(int(auto['tariffa_oraria'])*24*0.7)}€ al giorno")
         tariffaLabel.setStyleSheet("border: 0px")
         myFont = QtGui.QFont()
         myFont.setBold(True)
         tariffaLabel.setFont(myFont)
         car_info_layout.addWidget(tariffaLabel, 6, 0)
-        if mezzo["stato"] == "disponibile":
+        if auto["stato"] == "disponibile":
             prenota_button = QPushButton("Prenota")
             prenota_button.setStyleSheet("max-height: 25px; color: black; border-radius: 10px; background-color: "
                                          "#0bd400")
             prenota_button.clicked.connect(
-                lambda _, car=mezzo: self.go_prenota(car))  # Connessione con la funzione go_prenota
+                lambda _, car=auto: self.go_prenota(car))  # Connessione con la funzione go_prenota
         else:
             prenota_button = QPushButton("Non disponibile")
             prenota_button.setStyleSheet("max-height: 25px; color: black; border-radius: 10px; background-color: "
@@ -112,7 +110,7 @@ class PrenotazioneFurgone(QWidget):
         car_layout = QHBoxLayout()
         car_layout.setAlignment(Qt.AlignTop)
 
-        pixmap = QPixmap(mezzo["URL_immagine"])
+        pixmap = QPixmap(auto["URL_immagine"])
         if not pixmap.isNull():
             label = QLabel()
             label.setStyleSheet("margin-left: 20px;")
@@ -130,7 +128,7 @@ class PrenotazioneFurgone(QWidget):
 
         self.scroll_layout.addLayout(car_layout)
 
-    def go_prenota(self, mezzo):
-        self.vista_prenotazione = VistaEffettuaPrenotazione(self.user, self.psw, mezzo)
+    def go_prenota(self, auto):
+        self.vista_prenotazione = VistaEffettuaPrenotazione(self.user, self.psw, auto)
         self.vista_prenotazione.show()
         self.shell.close()

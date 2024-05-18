@@ -1,20 +1,18 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-from viste.areacliente import VistaCliente
-from viste.prenotazione import VistaPrenotazione
-from viste.visualizzaPrenotazioni import PrenotazioniView
-from viste.vistaPagamenti import VistaPagamenti
+from viste.viste_impiegato.areaImpiegato import VistaImpiegato
+from viste.viste_impiegato.vistaGestisciPrenotazioni import VistaGestionePrenotazione
+from viste.viste_utente.visualizzaPrenotazioni import PrenotazioniView
+from viste.viste_utente.vistaPagamenti import VistaPagamenti
 import darkdetect
 
 
-class VistaHome(QMainWindow):
+class VistaPannelloControllo(QMainWindow):
     def __init__(self, user, psw):
         super().__init__()
-
         self.user = user
         self.psw = psw
-
         self.setWindowTitle("CarGreen")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
         if darkdetect.isDark():
@@ -28,17 +26,17 @@ class VistaHome(QMainWindow):
 
         left_layout = QVBoxLayout()
         left_layout.setAlignment(Qt.AlignTop | Qt.AlignLeft)
-        cliente_button = QPushButton("Area clienti")
+        cliente_button = QPushButton("Visualizza profilo")
         cliente_button.setStyleSheet("max-width: 200px; border: none")
         cliente_button.setIcon(QIcon("viste/Icone/varie/boy.png"))
         cliente_button.setIconSize(QSize(50, 50))
-        cliente_button.clicked.connect(self.area_clienti)
+        cliente_button.clicked.connect(self.area_impiegati)
         left_layout.addWidget(cliente_button)
         form_layout.addLayout(left_layout)
 
         center_layout = QVBoxLayout()
         center_layout.setAlignment(Qt.AlignTop)
-        self.title_label = QLabel("Ciao " + user)
+        self.title_label = QLabel("Pannello di controllo")
         self.title_label.setAlignment(Qt.AlignCenter)
         self.title_font = QFont("Arial", 42, QFont.Bold)
         self.title_label.setFont(self.title_font)
@@ -46,26 +44,30 @@ class VistaHome(QMainWindow):
         center_layout.addWidget(self.title_label)
 
         options_layout = QVBoxLayout()
-        button1 = QPushButton("Nuova prenotazione")
+        button1 = QPushButton("Gestisci prenotazioni")
         button1.setStyleSheet(
             "width: 500px; height: 100px; color: black; background-color: #D9D9D9; border-radius: 25px; padding: 10px; "
             "margin-top: 100px; font-size: 20px;")
-        button1.clicked.connect(self.go_registrazione)
-        # button1.setMouseTracking(True)
-        button2 = QPushButton("Visualizza prenotazioni")
+        button1.clicked.connect(self.go_GestionePrenotazioni)
+        button2 = QPushButton("Gestisci clienti")
         button2.setStyleSheet(
             "width: 500px; height: 100px; background-color: #D9D9D9; border-radius: 25px; color: black; padding: "
             "10px; font-size: 20px")
-        button2.clicked.connect(self.go_visualizza_prenotazioni)
-        button3 = QPushButton("Visualizza pagamenti")
+        #button2.clicked.connect(self.go_visualizza_prenotazioni)
+        button3 = QPushButton("Gestisci pagamenti")
         button3.setStyleSheet(
             "width: 500px; height: 100px; background-color: #D9D9D9; border-radius: 25px; color: black; padding: "
             "10px; font-size: 20px")
-        button3.clicked.connect(self.go_pagamenti)
+        #button3.clicked.connect(self.go_pagamenti)
+        button4 = QPushButton("Visualizza mezzi")
+        button4.setStyleSheet(
+            "width: 500px; height: 100px; background-color: #D9D9D9; border-radius: 25px; color: black; padding: "
+            "10px; font-size: 20px")
 
         options_layout.addWidget(button1)
         options_layout.addWidget(button2)
         options_layout.addWidget(button3)
+        options_layout.addWidget(button4)
         options_layout.setSpacing(50)
         center_layout.addLayout(options_layout)
         form_layout.addLayout(center_layout)
@@ -86,13 +88,13 @@ class VistaHome(QMainWindow):
         # self.animation.setDuration(200)
         # self.animation.valueChanged().connect()
 
-    def area_clienti(self):
-        self.area = VistaCliente(self.user, self.psw)
+    def area_impiegati(self):
+        self.area = VistaImpiegato(self.user, self.psw)
         self.area.show()
         self.close()
 
-    def go_registrazione(self):
-        self.area = VistaPrenotazione(self.user, self.psw)
+    def go_GestionePrenotazioni(self):
+        self.area = VistaGestionePrenotazione(self.user, self.psw)
         self.area.show()
         self.close()
 

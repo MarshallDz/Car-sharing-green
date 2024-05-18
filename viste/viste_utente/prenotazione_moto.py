@@ -3,12 +3,11 @@ import json
 from PyQt5 import QtGui
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
-from PyQt5.QtCore import Qt, QSize
-from viste.effettua_prenotazione import VistaEffettuaPrenotazione
-import darkdetect
+from PyQt5.QtCore import Qt
+from viste.viste_utente.effettua_prenotazione import VistaEffettuaPrenotazione
 
 
-class PrenotazioneAuto(QWidget):
+class PrenotazioneMoto(QWidget):
     def __init__(self, user, psw, s):
         super().__init__()
         self.user = user
@@ -16,17 +15,18 @@ class PrenotazioneAuto(QWidget):
         self.shell = s
         self.layout = QVBoxLayout()
 
+        file_path = "dati/moto.json"
         mezzi = []
-        file_path = "dati/auto.json"
         with open(file_path, "r") as file:
             data = json.load(file)
             chiavi = list(data[0].keys())
-            for auto in data:
-                valori = list(auto.values())
+            for moto in data:
+                valori = list(moto.values())
 
                 for i in range(len(valori)):
-                    auto[chiavi[i]] = valori[i]
-                mezzi.append(auto)
+                    moto[chiavi[i]] = valori[i]
+                # print(auto)
+                mezzi.append(moto)
 
         scroll_area = QScrollArea()
         scroll_area.setStyleSheet("QScrollBar:vertical {"
@@ -41,7 +41,7 @@ class PrenotazioneAuto(QWidget):
                                   "    min-height: 20px;"  # Imposta l'altezza minima del cursore
                                   "}"
                                   "QScrollBar::add-line:vertical {"
-                                  "    border: none;"
+                                  "    background: none;"
                                   "}"
                                   "QScrollBar::sub-line:vertical {"
                                   "    background: none;"
@@ -49,6 +49,7 @@ class PrenotazioneAuto(QWidget):
                                   "QScrollArea {"
                                   "border: none"
                                   "}")
+
         scroll_area.setWidgetResizable(True)
         self.scroll_content = QWidget(scroll_area)
         scroll_area.setWidget(self.scroll_content)
@@ -58,9 +59,9 @@ class PrenotazioneAuto(QWidget):
         self.setLayout(self.layout)
 
         for i in range(len(mezzi)):
-            self.aggiungi_box_auto(mezzi[i])
+            self.aggiungi_box_moto(mezzi[i])
 
-    def aggiungi_box_auto(self, auto):
+    def aggiungi_box_moto(self, moto):
         car_info_frame = QFrame()
         car_info_frame.setStyleSheet("border: 2px solid white; border-radius: 5px; margin-right: 5px;")
         car_info_frame.setMinimumWidth(600)
@@ -68,15 +69,16 @@ class PrenotazioneAuto(QWidget):
 
         car_info_layout = QGridLayout(car_info_frame)
         car_info_layout.setAlignment(Qt.AlignTop)
+
         # Aggiungi le informazioni alla griglia
-        self.labels_values = [("Produttore:", auto["produttore"]),
-                              ("Modello:", auto["modello"]),
-                              ("Anno:", auto["anno"]),
-                              ("Alimentazione:", auto["alimentazione"]),
-                              ("Cavalli:", auto["cavalli"]),
-                              ("Cilindrata:", auto["cilindrata"]),
-                              ("Cambio:", auto["cambio"]),
-                              ("Numero Posti:", auto["nPosti"])]
+        self.labels_values = [("Produttore:", moto["produttore"]),
+                              ("Modello:", moto["modello"]),
+                              ("Anno:", moto["anno"]),
+                              ("Alimentazione:", moto["alimentazione"]),
+                              ("Cavalli:", moto["cavalli"]),
+                              ("Cilindrata:", moto["cilindrata"]),
+                              ("Cambio:", moto["cambio"]),
+                              ("Numero Posti:", moto["nPosti"])]
 
         for i, (label_name, value) in enumerate(self.labels_values):
             label_name = QLabel(label_name, self)
@@ -91,18 +93,18 @@ class PrenotazioneAuto(QWidget):
             car_info_layout.addWidget(label_name, row, col * 2)
             car_info_layout.addWidget(value_label, row, col * 2 + 1)
 
-        tariffaLabel = QLabel(f"A partire da {auto['tariffa_oraria']}€ ad ora \n oppure  {int(int(auto['tariffa_oraria'])*24*0.7)}€ al giorno")
+        tariffaLabel = QLabel(f"A partire da {moto['tariffa_oraria']}€ ad ora \n oppure  {int(int(moto['tariffa_oraria']) * 24 * 0.7)}€ al giorno")
         tariffaLabel.setStyleSheet("border: 0px")
         myFont = QtGui.QFont()
         myFont.setBold(True)
         tariffaLabel.setFont(myFont)
         car_info_layout.addWidget(tariffaLabel, 6, 0)
-        if auto["stato"] == "disponibile":
+        if moto["stato"] == "disponibile":
             prenota_button = QPushButton("Prenota")
             prenota_button.setStyleSheet("max-height: 25px; color: black; border-radius: 10px; background-color: "
                                          "#0bd400")
             prenota_button.clicked.connect(
-                lambda _, car=auto: self.go_prenota(car))  # Connessione con la funzione go_prenota
+                lambda _, car=moto: self.go_prenota(car))  # Connessione con la funzione go_prenota
         else:
             prenota_button = QPushButton("Non disponibile")
             prenota_button.setStyleSheet("max-height: 25px; color: black; border-radius: 10px; background-color: "
@@ -111,7 +113,7 @@ class PrenotazioneAuto(QWidget):
         car_layout = QHBoxLayout()
         car_layout.setAlignment(Qt.AlignTop)
 
-        pixmap = QPixmap(auto["URL_immagine"])
+        pixmap = QPixmap(moto["URL_immagine"])
         if not pixmap.isNull():
             label = QLabel()
             label.setStyleSheet("margin-left: 20px;")
@@ -121,15 +123,15 @@ class PrenotazioneAuto(QWidget):
             car_layout.addWidget(label)
         else:
             error_label = QLabel("Immagine non disponibile")
-            error_label.setMaximumWidth(200)
             error_label.setAlignment(Qt.AlignCenter)
+            error_label.setMaximumWidth(200)
             car_layout.addWidget(error_label)
 
         car_layout.addWidget(car_info_frame)
 
         self.scroll_layout.addLayout(car_layout)
 
-    def go_prenota(self, auto):
-        self.vista_prenotazione = VistaEffettuaPrenotazione(self.user, self.psw, auto)
+    def go_prenota(self, moto):
+        self.vista_prenotazione = VistaEffettuaPrenotazione(self.user, self.psw, moto)
         self.vista_prenotazione.show()
         self.shell.close()

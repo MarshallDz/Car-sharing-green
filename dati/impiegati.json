@@ -1,22 +1,15 @@
 {
     "impiegati": [
         {
-            "codiceFiscale": "hfbhfurevuieuert",
-            "nome": "brutto",
-            "cognome": "scemo",
-            "dataNascita": "2004-04-20",
-            "email": "brutto",
-            "password": "scemo",
-            "cellulare": "0123456789"
-        },
-        {
-            "codiceFiscale": "dcvneovjirhgiteg",
-            "nome": "brutto",
-            "cognome": "imbecille",
-            "dataNascita": "2000-09-17",
-            "email": "brutto",
-            "password": "imbecille",
-            "cellulare": "0123456789"
+            "codiceFiscale": "RSSMRA85M03H501R",
+            "nome": "Mario",
+            "cognome": "Rossi",
+            "dataNascita": "1985-03-03",
+            "email": "x",
+            "password": "x",
+            "cellulare": "+39123456789",
+            "stipendio": 30000,
+            "dataAssunzione": "2020-01-15"
         }
     ]
 }
