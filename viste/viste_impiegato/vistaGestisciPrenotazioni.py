@@ -4,6 +4,8 @@ from Attivita.prenotazione import Prenotazione
 from Attivita.cliente import Cliente
 import darkdetect
 from datetime import datetime
+
+
 class VistaGestionePrenotazione(QMainWindow):
     def __init__(self, user, psw):
         super().__init__()

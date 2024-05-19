@@ -1,8 +1,11 @@
+import json
+
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from Attivita.cliente import Cliente
 from Attivita.impiegato import Impiegato
+from viste.viste_amministratore.admin import VistaAmministrazione
 from viste.viste_utente.home import VistaHome
 from viste.viste_impiegato.pannelloControllo import VistaPannelloControllo
 import darkdetect
@@ -78,25 +81,47 @@ class VistaLogin(QMainWindow):
                 QMessageBox.critical(None, "Campi mancanti", "Tutti i campi devono essere compilati.")
                 return
 
-        # da risolvere la doppia chiamata alla funzione
-        cliente = Cliente()
-        email_utente, password_utente = cliente.get_login()
-
-        #controllo il login per un cliente
         trovato = False
-        for e in email_utente:
-            if e == data_to_match["email"]:
-                i = email_utente.index(e)
-                if password_utente[i] == data_to_match["password"]:
+        # controllo amministrazione
+        user = []
+        psw = []
+        file_path = "dati/amministratori.json"
+        with open(file_path, "r") as file:
+            data = json.load(file)
+            for u in data["amministratori"]:
+                user.append(u["username"])
+            for p in data["amministratori"]:
+                psw.append(p["password"])
+
+        for u in user:
+            if u == data_to_match["email"]:
+                i = user.index(u)
+                if psw[i] == data_to_match["password"]:
                     trovato = True
-                    self.vista_home = VistaHome(e, password_utente[i])
+                    self.vista_home = VistaAmministrazione()
                     self.vista_home.show()
                     self.close()
                     break
+
+
+        # controllo login per cliente
+        if not trovato:
+            cliente = Cliente()
+            email_utente, password_utente = cliente.get_login()
+            for e in email_utente:
+                if e == data_to_match["email"]:
+                    i = email_utente.index(e)
+                    if password_utente[i] == data_to_match["password"]:
+                        trovato = True
+                        self.vista_home = VistaHome(e, password_utente[i])
+                        self.vista_home.show()
+                        self.close()
+                        break
+
+        # controllo login per impiegato
         if not trovato:
             impiegato = Impiegato()
             email_impiegato, password_impiegato = impiegato.get_login()
-            #controllo login per un impiegato
             for e in email_impiegato:
                 if e == data_to_match["email"]:
                     i = email_impiegato.index(e)
