@@ -4,6 +4,8 @@ from PyQt5.QtGui import QIcon, QFont
 from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QHBoxLayout, QVBoxLayout, QPushButton, QLabel, \
     QGridLayout
 
+from viste.viste_amministratore.gestioneImpiegati import VistaGestioneImpiegati
+
 
 class VistaAmministrazione(QMainWindow):
     def __init__(self):
@@ -84,10 +86,9 @@ class VistaAmministrazione(QMainWindow):
         form_layout.addLayout(options_layout)
 
     def go_GestioneImpiegati(self):
-        pass
-        # self.area = VistaGestioneImpiegati(self.user, self.psw)
-        # self.area.show()
-        # self.close()
+        self.vista = VistaGestioneImpiegati()
+        self.vista.show()
+        self.close()
 
     def go_GestionePrenotazioni(self):
         pass
