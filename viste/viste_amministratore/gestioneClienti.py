@@ -119,7 +119,7 @@ class VistaGestioneClienti(QMainWindow):
             self.cf_edit.setEnabled(False)
             info_layout.addWidget(self.cf_edit, 1, 1)
 
-            nome_label = QLabel("Nome cliente:")
+            nome_label = QLabel("Nome:")
             nome_label.setStyleSheet("font-size: 24px; ")
             info_layout.addWidget(nome_label, 2, 0)
 
@@ -127,7 +127,7 @@ class VistaGestioneClienti(QMainWindow):
             self.nome_edit.setEnabled(False)
             info_layout.addWidget(self.nome_edit, 2, 1)
 
-            cognome_label = QLabel("Cognome cliente:")
+            cognome_label = QLabel("Cognome:")
             cognome_label.setStyleSheet("font-size: 24px; ")
             info_layout.addWidget(cognome_label, 3, 0)
 
@@ -135,7 +135,7 @@ class VistaGestioneClienti(QMainWindow):
             self.cognome_edit.setEnabled(False)
             info_layout.addWidget(self.cognome_edit, 3, 1)
 
-            dataNascita_label = QLabel("Data di nascita cliente:")
+            dataNascita_label = QLabel("Data di nascita:")
             dataNascita_label.setStyleSheet("font-size: 24px; ")
             info_layout.addWidget(dataNascita_label, 1, 2)
 
@@ -143,7 +143,7 @@ class VistaGestioneClienti(QMainWindow):
             self.dataNascita_edit.setEnabled(False)
             info_layout.addWidget(self.dataNascita_edit, 1, 3)
 
-            email_label = QLabel("Email cliente:")
+            email_label = QLabel("Email:")
             email_label.setStyleSheet("font-size: 24px; ")
             info_layout.addWidget(email_label, 2, 2)
 
@@ -151,7 +151,7 @@ class VistaGestioneClienti(QMainWindow):
             self.email_edit.setEnabled(False)
             info_layout.addWidget(self.email_edit, 2, 3)
 
-            cellulare_label = QLabel("Cellulare cliente:")
+            cellulare_label = QLabel("Cellulare:")
             cellulare_label.setStyleSheet("font-size: 24px; ")
             info_layout.addWidget(cellulare_label, 3, 2)
 
@@ -221,8 +221,8 @@ class VistaGestioneClienti(QMainWindow):
             self.salva_valori()
 
     def go_aggiungiCliente(self):
-        from viste.viste_impiegato.vistaRegistraCliente import VistaRegistrazioneCliente
-        self.vista = VistaRegistrazioneCliente(self.user, self.psw)
+        from viste.viste_amministratore.registraCliente import VistaRegistrazioneCliente
+        self.vista = VistaRegistrazioneCliente()
         self.vista.show()
         self.close()
 

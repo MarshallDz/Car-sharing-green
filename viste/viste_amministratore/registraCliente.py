@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QVBoxLayout, QLa
 from Attivita.impiegato import Impiegato
 
 
-class VistaRegistrazioneImpiegato(QMainWindow):
+class VistaRegistrazioneCliente(QMainWindow):
     def __init__(self):
         super().__init__()
 
@@ -29,7 +29,7 @@ class VistaRegistrazioneImpiegato(QMainWindow):
 
         self.central_widget.setLayout(central_layout)
 
-        self.title_label = QLabel("Aggiungi impiegato")
+        self.title_label = QLabel("Aggiungi cliente")
         self.title_font = QFont("Arial", 42, QFont.Bold)
         self.title_label.setFont(self.title_font)
         self.title_label.adjustSize()
@@ -48,8 +48,6 @@ class VistaRegistrazioneImpiegato(QMainWindow):
         self.crea_campo("E-mail")
         self.crea_campo("Password")
         self.crea_campo("Cellulare")
-        self.crea_campo("Stipendio")
-        self.crea_campo("Assunzione")
 
         # creo i bottoni invia e indietro
         invia_button = QPushButton("Invia")
@@ -68,7 +66,7 @@ class VistaRegistrazioneImpiegato(QMainWindow):
         central_layout.addLayout(self.form_layout)
 
     def crea_campo(self, nome):
-        if nome == "Data di nascita" or nome == "Assunzione":
+        if nome == "Data di nascita":
             layout = QHBoxLayout()  # Layout orizzontale per posizionare la label accanto al campo
             label = QLineEdit()
             label.setPlaceholderText(nome)
@@ -116,7 +114,7 @@ class VistaRegistrazioneImpiegato(QMainWindow):
         self.go_back()
 
     def go_back(self):
-        from viste.viste_amministratore.gestioneImpiegati import VistaGestioneImpiegati
-        self.vista = VistaGestioneImpiegati()
+        from viste.viste_amministratore.gestioneClienti import VistaGestioneClienti
+        self.vista = VistaGestioneClienti()
         self.vista.show()
         self.close()
