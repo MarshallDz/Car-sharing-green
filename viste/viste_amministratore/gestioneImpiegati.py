@@ -32,7 +32,7 @@ class VistaGestioneImpiegati(QMainWindow):
         back_button.clicked.connect(self.go_back)
         title_layout.addWidget(back_button)
 
-        self.title_label = QLabel("Gestisci impiegati")
+        self.title_label = QLabel("Gestione impiegati")
         self.title_font = self.title_label.font()
         self.title_font.setPointSize(42)
         self.title_font.setBold(True)
@@ -107,7 +107,7 @@ class VistaGestioneImpiegati(QMainWindow):
         impiegato = Impiegato()
         impiegati_info = impiegato.get_dati()
         for i in impiegati_info:
-            info_box = QGroupBox(f"Informazioni sul cliente")
+            info_box = QGroupBox()
             info_box.setStyleSheet("QGroupBox{max-height: 200px;}")
             info_layout = QGridLayout(info_box)
 

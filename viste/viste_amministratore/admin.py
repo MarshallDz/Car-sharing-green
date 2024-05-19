@@ -4,6 +4,7 @@ from PyQt5.QtGui import QIcon, QFont
 from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QHBoxLayout, QVBoxLayout, QPushButton, QLabel, \
     QGridLayout, QMessageBox
 
+from viste.viste_amministratore.gestioneClienti import VistaGestioneClienti
 from viste.viste_amministratore.gestioneImpiegati import VistaGestioneImpiegati
 
 
@@ -59,20 +60,20 @@ class VistaAmministrazione(QMainWindow):
         options_layout.setSpacing(50)
         options_layout.setContentsMargins(10, 0, 10, 50)
 
-        button1 = QPushButton("Gestisci impiegati")
+        button1 = QPushButton("Impiegati")
         button1.setStyleSheet("width: 200px; height: 200px; color: black; background-color: #D9D9D9; border-radius: "
                               "25px; padding: 10px; font-size: 20px")
         button1.clicked.connect(self.go_GestioneImpiegati)
 
-        button2 = QPushButton("Gestisci prenotazioni")
+        button2 = QPushButton("Clienti")
         button2.setStyleSheet("width: 200px; height: 200px; color: black; background-color: #D9D9D9; border-radius: "
                               "25px; padding: 10px; font-size: 20px")
-        button2.clicked.connect(self.go_GestionePrenotazioni)
+        button2.clicked.connect(self.go_GestioneClienti)
 
-        button3 = QPushButton("Gestisci clienti")
+        button3 = QPushButton("Prenotazioni")
         button3.setStyleSheet("width: 200px; height: 200px; color: black; background-color: #D9D9D9; border-radius: "
                               "25px; padding: 10px; font-size: 20px")
-        button3.clicked.connect(self.go_GestioneClienti)
+        button3.clicked.connect(self.go_GestionePrenotazioni)
 
         button4 = QPushButton("Pagamenti")
         button4.setStyleSheet("width: 200px; height: 200px; color: black; background-color: #D9D9D9; border-radius: "
@@ -111,9 +112,9 @@ class VistaAmministrazione(QMainWindow):
 
     def go_GestioneClienti(self):
         pass
-        # self.vista = VistaGestioneClienti(self.user, self.psw)
-        # self.vista.show()
-        # self.close()
+        self.vista = VistaGestioneClienti()
+        self.vista.show()
+        self.close()
 
     def go_pagamenti(self):
         pass
