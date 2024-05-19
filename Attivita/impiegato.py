@@ -3,6 +3,7 @@ import os
 from PyQt5.QtWidgets import QWidget, QMessageBox
 
 from Attivita.pagamento import Pagamento
+from Attivita.prenotazione import Prenotazione
 from Attivita.utilizzatore import Utilizzatore
 
 

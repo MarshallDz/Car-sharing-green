@@ -1,5 +1,6 @@
 import darkdetect
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QSize
+from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QVBoxLayout, QLabel, QHBoxLayout, QLineEdit, \
     QScrollArea, QPushButton, QGroupBox, QGridLayout, QMessageBox, QLayoutItem
 
@@ -20,10 +21,16 @@ class VistaGestioneImpiegati(QMainWindow):
 
         self.central_layout = QVBoxLayout()
 
-        title_layout = QVBoxLayout()
-        title_layout.setAlignment(Qt.AlignTop | Qt.AlignCenter)
+        title_layout = QHBoxLayout()
 
         self.central_widget.setLayout(self.central_layout)
+
+        back_button = QPushButton()
+        back_button.setStyleSheet("max-width: 100px; border: none")
+        back_button.setIcon(QIcon("viste/Icone/varie/back.png"))
+        back_button.setIconSize(QSize(50, 50))
+        back_button.clicked.connect(self.go_back)
+        title_layout.addWidget(back_button)
 
         self.title_label = QLabel("Gestisci impiegati")
         self.title_font = self.title_label.font()
@@ -31,14 +38,30 @@ class VistaGestioneImpiegati(QMainWindow):
         self.title_font.setBold(True)
         self.title_label.setFont(self.title_font)
         self.title_label.adjustSize()
+        self.title_label.setAlignment(Qt.AlignCenter)
         title_layout.addWidget(self.title_label)
+
+        ghost_button = QPushButton()
+        ghost_button.setStyleSheet("max-width: 100px; border: none")
+        title_layout.addWidget(ghost_button)
+
         self.central_layout.addLayout(title_layout)
 
         # Aggiungi la barra di ricerca in alto a destra
         self.search_layout = QHBoxLayout()
         self.search_layout.setAlignment(Qt.AlignRight | Qt.AlignTop)
+        search_icon = QLabel()
+        icon = QPixmap("viste/Icone/varie/search.png")
+        icon.setDevicePixelRatio(10)
+        search_icon.setPixmap(icon)
+        search_icon.setAlignment(Qt.AlignRight)
         self.search_edit = QLineEdit()
+        self.search_edit.setStyleSheet("max-width: 300px; max-height: 30px; border-radius: 15px; ")
+        if darkdetect.isDark():
+            self.search_edit.setStyleSheet("max-width: 300px; min-height: 60px; border-radius: 15px; "
+                                           "background-color: #403F3F")
         self.search_edit.setPlaceholderText("cerca per nome")
+        self.search_layout.addWidget(search_icon)
         self.search_layout.addWidget(self.search_edit)
         self.search_edit.textChanged.connect(self.search_impiegato)
         self.central_layout.addLayout(self.search_layout)
@@ -79,12 +102,6 @@ class VistaGestioneImpiegati(QMainWindow):
             "color: black; padding: 10px; margin-bottom: 20px")
         aggiungiImpiegato_button.clicked.connect(self.go_aggiungiImpiegato)
         self.central_layout.addWidget(aggiungiImpiegato_button, alignment=Qt.AlignHCenter | Qt.AlignBottom)
-
-        back_button = QPushButton("Indietro")
-        back_button.clicked.connect(self.go_back)
-        back_button.setStyleSheet("width: 150px; max-width: 150px; background-color: #F85959; border-radius: 15px; "
-                                  "color: black; padding: 10px; margin-bottom: 20px")
-        self.central_layout.addWidget(back_button, alignment=Qt.AlignHCenter | Qt.AlignBottom)
 
     def aggiungi_box_info(self):
         impiegato = Impiegato()
@@ -171,17 +188,15 @@ class VistaGestioneImpiegati(QMainWindow):
         self.vista = VistaAmministrazione()
         self.vista.show()
 
-    def eliminImpiegato(self, c):
+    def eliminaImpiegato(self, i):
         impiegato = Impiegato()
-        reply = QMessageBox.warning(self, 'Conferma eliminazione', 'Sei sicuro di voler eliminare il cliente?',
-                                    QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        reply = QMessageBox.warning(self, "Conferma eliminazione", "Sei sicuro di voler eliminare l'impiegato?",
+                                    QMessageBox.Yes, QMessageBox.No)
 
         if reply == QMessageBox.Yes:
-            impiegato.eliminaImpiegato(c, self.user, self.psw)
-        if reply == QMessageBox.Yes:
-            QMessageBox.information(self, 'Disdetta Confermata', 'Il cliente è stato eliminato con successo.',
+            impiegato.eliminaImpiegato(i, self.user, self.psw)
+            QMessageBox.information(self, "Disdetta Confermata", "L'impiegato è stato eliminato con successo.",
                                     QMessageBox.Ok)
-        self.go_back()
 
     def modifica_valori_lineedit(self, cc, cF, nome, cognome, dataN, email, cellulare, modify_button):
         # bisogna aggiungere anche la modifica nel file prenotazioni.json
