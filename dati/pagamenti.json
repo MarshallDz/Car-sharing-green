@@ -1,58 +1,122 @@
 {
     "pagamenti": [
         {
-            "codice": "V8aFFS",
-            "totale": null,
+            "codice": "qkIkzA",
+            "totale": 2910.0,
             "dataPagamento": "",
-            "prenotazione": "8MLhvx",
+            "prenotazione": "Scgh4Z",
             "cliente": "mrzmhl02h20g157g",
             "statoPagamento": "da pagare"
         },
         {
-            "codice": "MoWuKV",
-            "totale": 1010.0,
+            "codice": "rwPfOW",
+            "totale": 1470.0,
             "dataPagamento": "",
-            "prenotazione": "OCv2Wx",
+            "prenotazione": "AIqe7W",
             "cliente": "mrzmhl02h20g157g",
-            "statoPagamento": "pagato"
+            "statoPagamento": "da pagare"
         },
         {
-            "codice": "7m8Wfn",
+            "codice": "Zjyoh5",
+            "totale": 1470.0,
+            "dataPagamento": "",
+            "prenotazione": "7j2lXc",
+            "cliente": "mrzmhl02h20g157g",
+            "statoPagamento": "da pagare"
+        },
+        {
+            "codice": "t3EfQf",
             "totale": 1490.0,
             "dataPagamento": "",
-            "prenotazione": "5h4ow6",
+            "prenotazione": "0GnSyF",
             "cliente": "mrzmhl02h20g157g",
             "statoPagamento": "da pagare"
         },
         {
-            "codice": "MOEllI",
-            "totale": 3890.0,
+            "codice": "4CaDvA",
+            "totale": 1470.0,
             "dataPagamento": "",
-            "prenotazione": "SylHmp",
+            "prenotazione": "QuDeW5",
             "cliente": "mrzmhl02h20g157g",
             "statoPagamento": "da pagare"
         },
         {
-            "codice": "aKrhCq",
-            "totale": "da definire",
+            "codice": "pt9dr2",
+            "totale": 1490.0,
             "dataPagamento": "",
-            "prenotazione": "wnraX9",
-            "cliente": "abcdefghlmnoppop",
-            "statoPagamento": "da pagare"
-        },
-        {
-            "codice": "u6qmSq",
-            "totale": "da definire",
-            "dataPagamento": "",
-            "prenotazione": "bi4Zth",
+            "prenotazione": "xGv1jZ",
             "cliente": "mrzmhl02h20g157g",
             "statoPagamento": "da pagare"
         },
         {
-            "codice": "AHvkvn",
+            "codice": "CrezZd",
+            "totale": 1490.0,
+            "dataPagamento": "",
+            "prenotazione": "hGkJVL",
+            "cliente": "mrzmhl02h20g157g",
+            "statoPagamento": "da pagare"
+        },
+        {
+            "codice": "9uglSz",
+            "totale": 1470.0,
+            "dataPagamento": "",
+            "prenotazione": "kDDzH1",
+            "cliente": "mrzmhl02h20g157g",
+            "statoPagamento": "da pagare"
+        },
+        {
+            "codice": "UNPrCc",
+            "totale": 1490.0,
+            "dataPagamento": "",
+            "prenotazione": "GgyTCu",
+            "cliente": "mrzmhl02h20g157g",
+            "statoPagamento": "da pagare"
+        },
+        {
+            "codice": "0b9qSk",
+            "totale": 1470.0,
+            "dataPagamento": "",
+            "prenotazione": "IYmKub",
+            "cliente": "mrzmhl02h20g157g",
+            "statoPagamento": "da pagare"
+        },
+        {
+            "codice": "WZlJ5R",
+            "totale": 1470.0,
+            "dataPagamento": "",
+            "prenotazione": "Rewx6F",
+            "cliente": "mrzmhl02h20g157g",
+            "statoPagamento": "da pagare"
+        },
+        {
+            "codice": "OrsSvn",
+            "totale": 122450.0,
+            "dataPagamento": "",
+            "prenotazione": "nUKEIH",
+            "cliente": "mrzmhl02h20g157g",
+            "statoPagamento": "da pagare"
+        },
+        {
+            "codice": "6MzWHD",
             "totale": "da definire",
             "dataPagamento": "",
-            "prenotazione": "FYPbHX",
+            "prenotazione": "upKwS0",
+            "cliente": "mrzmhl02h20g157g",
+            "statoPagamento": "da pagare"
+        },
+        {
+            "codice": "6uhZfn",
+            "totale": 8670.0,
+            "dataPagamento": "",
+            "prenotazione": "ub7GVF",
+            "cliente": "mrzmhl02h20g157g",
+            "statoPagamento": "da pagare"
+        },
+        {
+            "codice": "Y5cC3C",
+            "totale": 1470.0,
+            "dataPagamento": "",
+            "prenotazione": "qWG9z8",
             "cliente": "mrzmhl02h20g157g",
             "statoPagamento": "da pagare"
         }
