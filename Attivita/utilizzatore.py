@@ -1,4 +1,5 @@
 import datetime
+import json
 from abc import abstractmethod
 
 
@@ -32,6 +33,27 @@ class Utilizzatore:
             "nome": self.nome,
             "telefono": self.telefono
         }
+
+    def get_login(self):
+        email = []
+        psw = []
+
+        file_path = "dati/clienti.json"
+        with open(file_path, "r") as file:
+            data = json.load(file)
+            for e in data["clienti"]:
+                email.append(e["email"])
+            for p in data["clienti"]:
+                psw.append(p["password"])
+
+        file_path = "dati/impiegati.json"
+        with open(file_path, "r") as file:
+            data = json.load(file)
+            for e in data["impiegati"]:
+                email.append(e["email"])
+            for p in data["impiegati"]:
+                psw.append(p["password"])
+        return email, psw
 
     @abstractmethod
     def ricercaUtilizzatoreNomeCognome(self, nome, cognome):

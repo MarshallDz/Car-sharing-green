@@ -83,12 +83,6 @@ class VistaPannelloControllo(QMainWindow):
         right_layout.addWidget(back_button)
         form_layout.addLayout(right_layout)
 
-        # self.animation = QPropertyAnimation(self, b"opacity")
-        # self.animation.setStartValue(0.0)
-        # self.animation.setEndValue(0.5)
-        # self.animation.setDuration(200)
-        # self.animation.valueChanged().connect()
-
     def area_impiegati(self):
         self.area = VistaImpiegato(self.user, self.psw)
         self.area.show()

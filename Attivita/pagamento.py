@@ -3,6 +3,8 @@ import json
 import random
 import string
 import os
+
+
 class Pagamento():
     def __init__(self):
         self.codice = ""
@@ -11,7 +13,8 @@ class Pagamento():
         self.prenotazione = ""
         self.cliente = ""
         self.statoPagamento = "da pagare"
-        #ottengo il path assoluto del file in cui salvare
+
+        # ottengo il path assoluto del file in cui salvare
         absolute_path = os.path.dirname(__file__)
         relative_path = "dati/pagamenti.json"
         dir_list = absolute_path.split(os.sep)
@@ -32,7 +35,6 @@ class Pagamento():
         with open(self.url, "w") as f:
             json.dump({"pagamenti":pagamenti}, f, indent=4)
         return 1
-
 
     def get_dati(self):
         with open(self.url, "r") as file:

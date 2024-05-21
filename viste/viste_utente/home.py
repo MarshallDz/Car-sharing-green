@@ -11,6 +11,7 @@ import darkdetect
 class VistaHome(QMainWindow):
     def __init__(self, user, psw):
         super().__init__()
+
         self.user = user
         self.psw = psw
         self.setWindowTitle("CarGreen")
@@ -36,7 +37,7 @@ class VistaHome(QMainWindow):
 
         center_layout = QVBoxLayout()
         center_layout.setAlignment(Qt.AlignTop)
-        self.title_label = QLabel("Home")
+        self.title_label = QLabel("Ciao " + user)
         self.title_label.setAlignment(Qt.AlignCenter)
         self.title_font = QFont("Arial", 42, QFont.Bold)
         self.title_label.setFont(self.title_font)
