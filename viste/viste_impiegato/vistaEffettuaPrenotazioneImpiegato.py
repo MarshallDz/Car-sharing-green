@@ -68,7 +68,6 @@ class VistaEffettuaPrenotazioneImpiegato(QMainWindow):
         # Aggiungi la seconda combobox inizialmente nascosta
         self.scelta_mezzo_combobox = QComboBox()
         self.scelta_mezzo_combobox.setPlaceholderText("")
-        self.scelta_mezzo_combobox.setStyleSheet("font-size: 18px; max-width: 200px; max-height: 50px")
         self.scelta_mezzo_combobox.hide()  # Nascondi la combobox inizialmente
         form_layout.addWidget(self.scelta_mezzo_combobox, 1, 2)
 
@@ -100,7 +99,6 @@ class VistaEffettuaPrenotazioneImpiegato(QMainWindow):
         self.datacampo1.setCalendarPopup(True)
         self.datacampo1.lineEdit().setReadOnly(True)
         self.datacampo1.setMinimumDate(QDate.currentDate())
-        self.datacampo1.setStyleSheet("max-width: 300px; max-height: 50px;")
         dlayout1.addWidget(self.datacampo1)
         self.datacampo1.dateChanged.connect(self.update_valori)
 
@@ -121,7 +119,6 @@ class VistaEffettuaPrenotazioneImpiegato(QMainWindow):
         self.datacampo2.setCalendarPopup(True)
         self.datacampo2.lineEdit().setReadOnly(True)
         self.datacampo2.setMinimumDate(QDate.currentDate().addDays(1))
-        self.datacampo2.setStyleSheet("max-width: 300px; max-height: 50px")
         dlayout2.addWidget(self.datacampo2)
         self.datacampo2.dateChanged.connect(self.update_valori)
 

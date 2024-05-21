@@ -71,7 +71,6 @@ class VistaEffettuaPrenotazione(QMainWindow):
         self.datacampo1.setCalendarPopup(True)
         self.datacampo1.lineEdit().setReadOnly(True)
         self.datacampo1.setMinimumDate(QDate.currentDate())
-        self.datacampo1.setStyleSheet("max-width: 300px; max-height: 50px;")
         dlayout1.addWidget(self.datacampo1)
         self.datacampo1.dateChanged.connect(self.update_valori)
 
@@ -92,7 +91,6 @@ class VistaEffettuaPrenotazione(QMainWindow):
         self.datacampo2.setCalendarPopup(True)
         self.datacampo2.lineEdit().setReadOnly(True)
         self.datacampo2.setMinimumDate(QDate.currentDate().addDays(1))
-        self.datacampo2.setStyleSheet("max-width: 300px; max-height: 50px")
         dlayout2.addWidget(self.datacampo2)
         self.datacampo2.dateChanged.connect(self.update_valori)
 
@@ -194,9 +192,13 @@ class VistaEffettuaPrenotazione(QMainWindow):
             self.valori["data_inizio"] = f"{info[0]} {info[1]}"
 
         elif sender == self.datacampo2:
-            info = self.valori["data_fine"].split(" ")
-            info[0] = sender.date().toString(Qt.ISODate)
-            self.valori["data_fine"] = f"{info[0]} {info[1]}"
+            if self.tariffa == "oraria":
+                self.valori["data_fine"] = sender.date().toString(Qt.ISODate)
+            else:
+                self.valori["data_fine"] = sender.date().toString(Qt.ISODate) + " " + self.oracampo2.currentText()
+                info = self.valori["data_fine"].split(" ")
+                info[0] = sender.date().toString(Qt.ISODate)
+                self.valori["data_fine"] = f"{info[0]} {info[1]}"
 
         elif sender == self.oracampo2:
             info = self.valori["data_fine"].split(" ")

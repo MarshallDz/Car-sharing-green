@@ -192,7 +192,6 @@ class VistaGestionePrenotazione(QMainWindow):
             Prenotazione().eliminaPrenotazione(p)
         if reply == QMessageBox.Yes:
             QMessageBox.information(self, 'Disdetta Confermata', 'La prenotazione è stata disdetta con successo.', QMessageBox.Ok)
-            self.go_back()
 
     def modifica_valori_lineedit(self, data_edit, mezzo_edit, tariffa_edit, dataInizio_edit, dataFine_edit, polizza_edit, modify_button, nc):
         #bisogna aggiungere anche la modifica nel file prenotazioni.json
@@ -259,3 +258,14 @@ class VistaGestionePrenotazione(QMainWindow):
         prenotazione = Prenotazione()
         prenotazione.aggiornaValori(self.nome_cliente, formatted_date, self.valore_polizza, self.valore_data_inizio,
                                     self.valore_data_fine, self.valore_mezzo, self.valore_tariffa)
+        self.aggiorna_vista()
+
+
+    def aggiorna_vista(self):
+        # Rimuovi tutti i widget dalla scroll_layout
+        while self.scroll_layout.count():
+            item = self.scroll_layout.takeAt(0)
+            widget = item.widget()
+            if widget:
+                widget.deleteLater()
+        self.aggiungi_box_info()

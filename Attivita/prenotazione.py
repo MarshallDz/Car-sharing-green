@@ -110,18 +110,22 @@ class Prenotazione():
             with open(self.url, "w") as f:
                 json.dump({"prenotazioni": prenotazioni}, f, indent=4)
 
-    def controllo_assegnamento_mezzo(self, mezzo, data_inizio = None, data_fine = None):
+    def controllo_assegnamento_mezzo(self, mezzo, data_inizio=None, data_fine=None):
         prenotazioni = self.get_dati()
+        validita = True
+        inizio = None
+        fine = None
         if not prenotazioni:
-            validita = True
-            return validita
+            return validita, inizio, fine
         for prenotazione in prenotazioni:
             if prenotazione["mezzo"] == mezzo:
                 if (data_inizio >= prenotazione["data_inizio"] and data_inizio <= prenotazione["data_fine"]
-                        or data_fine >= prenotazione["data_inizio"] and data_fine <= prenotazione["data_fine"]):
+                        or data_fine >= prenotazione["data_inizio"] and data_fine <= prenotazione["data_fine"]
+                        or data_inizio <= prenotazione["data_inizio"] and data_fine >= prenotazione["data_fine"]):
                     validita = False
+                    inizio = prenotazione["data_inizio"]
+                    fine = prenotazione["data_fine"]
                 else:
-                    if not mezzo["stato"] == "non disponibile":
+                    if mezzo["stato"] != "non disponibile":
                         mezzo["stato"] = "prenotato"
-                    validita = True
-        return validita, prenotazione["data_inizio"], prenotazione["data_fine"]
+        return validita, inizio, fine
