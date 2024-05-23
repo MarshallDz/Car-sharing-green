@@ -92,7 +92,6 @@ class VistaGestioneClienti(QMainWindow):
         self.scroll_content = QWidget(scroll_area)
         scroll_area.setWidget(self.scroll_content)
         self.scroll_layout = QVBoxLayout(self.scroll_content)
-
         self.central_layout.addWidget(scroll_area)
 
         self.aggiungi_box_info()
