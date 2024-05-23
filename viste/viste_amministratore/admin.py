@@ -6,6 +6,9 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QHBoxLayout, QVB
 
 from viste.viste_amministratore.gestioneClienti import VistaGestioneClienti
 from viste.viste_amministratore.gestioneImpiegati import VistaGestioneImpiegati
+from viste.viste_amministratore.gestioneMezzi import VistaMezziAmministratore
+from viste.viste_amministratore.gestionePagamenti import VistaPagamentiAmministratore
+from viste.viste_amministratore.gestionePrenotazioni import VistaGestionePrenotazione
 
 
 class VistaAmministrazione(QMainWindow):
@@ -36,7 +39,6 @@ class VistaAmministrazione(QMainWindow):
 
         m_layout = QVBoxLayout()
         self.title_label = QLabel("Manutenzione sistema")
-        # self.title_label.setAlignment(Qt.AlignCenter | Qt.AlignTop)
         self.title_font = QFont("Arial", 42, QFont.Bold)
         self.title_label.setFont(self.title_font)
         self.title_label.adjustSize()
@@ -105,10 +107,9 @@ class VistaAmministrazione(QMainWindow):
         self.close()
 
     def go_GestionePrenotazioni(self):
-        pass
-        # self.area = VistaGestionePrenotazione(self.user, self.psw)
-        # self.area.show()
-        # self.close()
+        self.area = VistaGestionePrenotazione()
+        self.area.show()
+        self.close()
 
     def go_GestioneClienti(self):
         pass
@@ -117,16 +118,14 @@ class VistaAmministrazione(QMainWindow):
         self.close()
 
     def go_pagamenti(self):
-        pass
-        # self.vista = VistaPagamentiImpiegato(self.user, self.psw)
-        # self.vista.show()
-        # self.close()
+        self.vista = VistaPagamentiAmministratore()
+        self.vista.show()
+        self.close()
 
     def go_mezzi(self):
-        pass
-        # self.vista = VistaMezziImpiegato(self.user, self.psw)
-        # self.vista.show()
-        # self.close()
+        self.vista = VistaMezziAmministratore()
+        self.vista.show()
+        self.close()
 
     def go_statistiche(self):
         pass

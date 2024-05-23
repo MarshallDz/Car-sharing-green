@@ -1,12 +1,12 @@
 from PyQt5.QtWidgets import *
 import sys
 from viste.welcome import WelcomeWindow
-import qdarktheme
+# import qdarktheme
 
 
 def main():
     app = QApplication(sys.argv)
-    qdarktheme.setup_theme("auto")
+    # qdarktheme.setup_theme("auto")
     welcome_window = WelcomeWindow()
     welcome_window.show()
     sys.exit(app.exec_())

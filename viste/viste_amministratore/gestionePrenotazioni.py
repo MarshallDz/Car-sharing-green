@@ -1,12 +1,10 @@
-import darkdetect
-from PyQt5.QtCore import Qt, QSize
-from PyQt5.QtGui import QPixmap, QIcon
-from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QVBoxLayout, QLabel, QHBoxLayout, QLineEdit, \
-    QScrollArea, QPushButton, QGroupBox, QGridLayout, QDateEdit, QComboBox, QMessageBox, QLayoutItem
-
-from datetime import datetime
-from Attivita.cliente import Cliente
+from PyQt5.QtGui import QIcon, QPixmap
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import *
 from Attivita.prenotazione import Prenotazione
+from Attivita.cliente import Cliente
+import darkdetect
+from datetime import datetime
 
 
 class VistaGestionePrenotazione(QMainWindow):
@@ -40,6 +38,7 @@ class VistaGestionePrenotazione(QMainWindow):
         self.title_font.setBold(True)
         self.title_label.setFont(self.title_font)
         self.title_label.adjustSize()
+        self.title_label.setAlignment(Qt.AlignCenter)
         title_layout.addWidget(self.title_label)
 
         ghost_button = QPushButton()
@@ -61,8 +60,7 @@ class VistaGestionePrenotazione(QMainWindow):
         if darkdetect.isDark():
             self.search_edit.setStyleSheet("max-width: 300px; min-height: 60px; border-radius: 15px; "
                                            "background-color: #403F3F")
-        self.search_edit = QLineEdit()
-        self.search_edit.setPlaceholderText("cerca per nome cliente")
+        self.search_edit.setPlaceholderText("cerca per nome")
         self.search_layout.addWidget(search_icon)
         self.search_layout.addWidget(self.search_edit)
         self.search_edit.textChanged.connect(self.search_prenotazioni)
@@ -88,20 +86,20 @@ class VistaGestionePrenotazione(QMainWindow):
                                   "}"
                                   "QScrollArea {"
                                   "border: none"
-                                  "}")
+                                  "}"
+                                  )
 
         scroll_area.setWidgetResizable(True)
         self.scroll_content = QWidget(scroll_area)
         scroll_area.setWidget(self.scroll_content)
         self.scroll_layout = QVBoxLayout(self.scroll_content)
-
         self.central_layout.addWidget(scroll_area)
 
         self.aggiungi_box_info()
+
         aggiungiPrenotazione_button = QPushButton("Aggiungi prenotazione")
-        aggiungiPrenotazione_button.setStyleSheet("width: 150px; max-width: 150px; background-color: #6AFE67; "
-                                                  "border-radius: 15px; color: black; padding: 10px; margin-bottom: "
-                                                  "20px")
+        aggiungiPrenotazione_button.setStyleSheet("width: 150px; max-width: 150px; background-color: #6AFE67; border-radius: 15px; "
+                                  "color: black; padding: 10px; margin-bottom: 20px")
         aggiungiPrenotazione_button.clicked.connect(self.go_aggiungiPrenotazione)
         self.central_layout.addWidget(aggiungiPrenotazione_button, alignment=Qt.AlignHCenter | Qt.AlignBottom)
 
@@ -183,7 +181,7 @@ class VistaGestionePrenotazione(QMainWindow):
                                                 "border-radius: 15px; color: black; padding: 10px;")
                     modify_button.clicked.connect(
                         lambda _, a=self.data_edit, b=self.mezzo_edit, c=self.tariffa_edit, d=self.dataInizio_edit,
-                               e=self.dataFine_edit, f=self.polizza_edit, g=modify_button, nc = cliente_label.text().split()[1:3]: self.modifica_valori_lineedit(a, b, c, d, e, f, g, nc))
+                               e=self.dataFine_edit, f=self.polizza_edit, g=modify_button, nc=cliente_label.text().split()[1:3]: self.modifica_valori_lineedit(a, b, c, d, e, f, g, nc))
 
                     buttons_layout.addWidget(modify_button)
                     disdici = QPushButton("Disdici")
@@ -201,12 +199,11 @@ class VistaGestionePrenotazione(QMainWindow):
         self.close()
 
     def disdici(self, p):
-        reply = QMessageBox.warning(self, 'Conferma Disdetta', 'Sei sicuro di voler disdire questa prenotazione?',
-                                         QMessageBox.Yes, QMessageBox.No)
+        reply = QMessageBox.warning(self, 'Conferma Disdetta', 'Sei sicuro di voler disdire questa prenotazione?', QMessageBox.Yes, QMessageBox.No)
 
         if reply == QMessageBox.Yes:
             Prenotazione().eliminaPrenotazione(p)
-            QMessageBox.information(self, 'Disdetta Confermata', 'La prenotazione è stata disdetta con successo.',QMessageBox.Ok)
+            QMessageBox.information(self, 'Disdetta Confermata', 'La prenotazione è stata disdetta con successo.', QMessageBox.Ok)
 
     def modifica_valori_lineedit(self, data_edit, mezzo_edit, tariffa_edit, dataInizio_edit, dataFine_edit, polizza_edit, modify_button, nc):
         # bisogna aggiungere anche la modifica nel file prenotazioni.json
@@ -273,4 +270,3 @@ class VistaGestionePrenotazione(QMainWindow):
         prenotazione = Prenotazione()
         prenotazione.aggiornaValori(self.nome_cliente, formatted_date, self.valore_polizza, self.valore_data_inizio,
                                     self.valore_data_fine, self.valore_mezzo, self.valore_tariffa)
-
