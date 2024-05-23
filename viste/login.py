@@ -46,6 +46,15 @@ class VistaLogin(QMainWindow):
         self.crea_campo("email")
         self.crea_campo("password")
 
+        accedi_otp = QPushButton('Accedi con OTP', self)
+        accedi_otp.setStyleSheet(
+            "QPushButton {"
+            "background-color: none;"
+            "border: none;"
+            "}"
+        )
+        accedi_otp.clicked.connect(self.show_otp)
+        self.form_layout.addWidget(accedi_otp)
         invia_button = QPushButton("Invia")
         invia_button.setStyleSheet(
             "max-width: 200px; background-color: #6AFE67; border-radius: 15px; color: black; padding: 10px;"
@@ -142,3 +151,8 @@ class VistaLogin(QMainWindow):
         self.vista = WelcomeWindow()
         self.vista.show()
         self.close()
+
+    def show_otp(self):
+        from viste.vistaOtp import QRCodeGenerator
+        self.vista = QRCodeGenerator()
+        self.vista.show()

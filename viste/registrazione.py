@@ -89,7 +89,7 @@ class VistaRegistrazione(QMainWindow):
 
     def invio_dati(self):
         data_to_save = {}
-
+        cliente = Cliente()
         # Extracting data from fields and formatting for JSON
         for campo_nome, campo_widget in self.campi.items():
             if isinstance(campo_widget, QLineEdit):
@@ -99,6 +99,12 @@ class VistaRegistrazione(QMainWindow):
                     return
             elif isinstance(campo_widget, QDateEdit):
                 data_to_save[campo_nome] = campo_widget.date().toString(Qt.ISODate)
+        clienti = cliente.get_dati()
+        #controllo univocita email
+        for cliente in clienti:
+            if cliente["email"] == data_to_save["E-mail"]:
+                QMessageBox.information(None, "attenzione", "Email già registrata")
+                return
         if data_to_save["Codice Fiscale"].__len__() != 16:
             QMessageBox.warning(None, "CF non valido", "Il codice fiscale inserito non è valido.")
             return
@@ -106,7 +112,7 @@ class VistaRegistrazione(QMainWindow):
             QMessageBox.warning(None, "Cellulare non valido", "Il numero di cellulare deve essere composto da 10 "
                                                               "cifre.")
             return
-        cliente = Cliente()
+
         cliente.aggiungiCliente(data_to_save["Codice Fiscale"], data_to_save["Nome"], data_to_save["Cognome"], data_to_save["Data di nascita"], data_to_save["E-mail"], data_to_save["Password"], data_to_save["Cellulare"])
         self.go_back()
 
@@ -115,3 +121,4 @@ class VistaRegistrazione(QMainWindow):
         self.vista = WelcomeWindow()
         self.vista.show()
         self.close()
+

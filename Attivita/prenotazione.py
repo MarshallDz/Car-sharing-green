@@ -40,6 +40,7 @@ class Prenotazione():
         prenotazioni.append(nuovaPrenotazione)
         with open(self.url, "w") as f:
             json.dump({"prenotazioni": prenotazioni}, f, indent=4)
+        self.aggiorna_stato_mezzo()
 
     def eliminaPrenotazione(self, p):
         url_prenotazioni = "./dati/prenotazioni.json"
@@ -125,7 +126,34 @@ class Prenotazione():
                     validita = False
                     inizio = prenotazione["data_inizio"]
                     fine = prenotazione["data_fine"]
-                else:
-                    if mezzo["stato"] != "non disponibile":
-                        mezzo["stato"] = "prenotato"
         return validita, inizio, fine
+
+    def aggiorna_stato_mezzo(self):
+        from Servizio.auto import Auto
+        from Servizio.moto import Moto
+        from Servizio.van import Van
+        from Servizio.furgone import Furgone
+        auto = Auto().get_dati()
+        moto = Moto().get_dati()
+        van = Van().get_dati()
+        fur = Furgone().get_dati()
+        for a in auto:
+            if self.mezzo == a:
+                a["stato"] = "prenotato"
+                with open("dati/auto.json", "w") as f:
+                    json.dump(auto, f, indent=4)
+        for a in moto:
+            if self.mezzo == a:
+                a["stato"] = "prenotato"
+                with open("dati/moto.json", "w") as f:
+                    json.dump(moto, f, indent=4)
+        for a in van:
+            if self.mezzo == a:
+                a["stato"] = "prenotato"
+                with open("dati/van.json", "w") as f:
+                    json.dump(van, f, indent=4)
+        for a in fur:
+            if self.mezzo == a:
+                a["stato"] = "prenotato"
+                with open("dati/fur.json", "w") as f:
+                    json.dump(fur, f, indent=4)
