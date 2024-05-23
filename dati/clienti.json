@@ -8,9 +8,7 @@
             "email": "user",
             "password": "admin",
             "cellulare": "1231231239",
-            "prenotazioni": [
-                "wnraX9"
-            ],
+            "prenotazioni": [],
             "dataRegistrazione": "11012024"
         },
         {
@@ -21,7 +19,9 @@
             "email": "aergag",
             "password": "gsfdgs",
             "cellulare": "0123456789",
-            "prenotazioni": [],
+            "prenotazioni": [
+                "sCa50Y"
+            ],
             "dataRegistrazione": "22012024"
         },
         {
@@ -32,14 +32,7 @@
             "email": "a",
             "password": "a",
             "cellulare": "333333334",
-            "prenotazioni": [
-                "8MLhvx",
-                "OCv2Wx",
-                "5h4ow6",
-                "SylHmp",
-                "bi4Zth",
-                "FYPbHX"
-            ],
+            "prenotazioni": [],
             "dataRegistrazione": "22012024"
         },
         {

@@ -40,7 +40,6 @@ class Prenotazione():
         prenotazioni.append(nuovaPrenotazione)
         with open(self.url, "w") as f:
             json.dump({"prenotazioni": prenotazioni}, f, indent=4)
-        return 1
 
     def eliminaPrenotazione(self, p):
         url_prenotazioni = "./dati/prenotazioni.json"
@@ -110,3 +109,23 @@ class Prenotazione():
                     prenotazione["tariffa"] = t
             with open(self.url, "w") as f:
                 json.dump({"prenotazioni": prenotazioni}, f, indent=4)
+
+    def controllo_assegnamento_mezzo(self, mezzo, data_inizio=None, data_fine=None):
+        prenotazioni = self.get_dati()
+        validita = True
+        inizio = None
+        fine = None
+        if not prenotazioni:
+            return validita, inizio, fine
+        for prenotazione in prenotazioni:
+            if prenotazione["mezzo"] == mezzo:
+                if (data_inizio >= prenotazione["data_inizio"] and data_inizio <= prenotazione["data_fine"]
+                        or data_fine >= prenotazione["data_inizio"] and data_fine <= prenotazione["data_fine"]
+                        or data_inizio <= prenotazione["data_inizio"] and data_fine >= prenotazione["data_fine"]):
+                    validita = False
+                    inizio = prenotazione["data_inizio"]
+                    fine = prenotazione["data_fine"]
+                else:
+                    if mezzo["stato"] != "non disponibile":
+                        mezzo["stato"] = "prenotato"
+        return validita, inizio, fine

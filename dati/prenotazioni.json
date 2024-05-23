@@ -1,204 +1,21 @@
 {
     "prenotazioni": [
         {
-            "id": "8MLhvx",
+            "id": "sCa50Y",
             "cliente": {
-                "codiceFiscale": "mrzmhl02h20g157g",
-                "nome": "michelon",
-                "cognome": "micheloni",
+                "codiceFiscale": "dfsfsfgaesgfsagf",
+                "nome": "adsfdsaf",
+                "cognome": "adsfdasf",
                 "dataNascita": "2024-01-22",
-                "email": "a",
-                "password": "a",
-                "cellulare": "3333333333",
-                "dataRegistrazione": "22012024"
-            },
-            "data_prenotazione": "Fri Apr 26 2024",
-            "data_inizio": "2024-03-14 08.00",
-            "data_fine": "2024-03-15",
-            "filiale": "Milano, via roma",
-            "mezzo": {
-                "URL_immagine": "viste/Icone/scooter/bmw.png",
-                "telaio": "abc123",
-                "produttore": "bmw",
-                "modello": "gs2",
-                "cavalli": "130",
-                "cilindrata": "600",
-                "anno": "2020",
-                "alimentazione": "benzina",
-                "cambio": "manuale",
-                "nPosti": "2",
-                "stato": "disponibile",
-                "tariffa_oraria": "40",
-                "talaio": "abc123"
-            },
-            "tariffa": "oraria",
-            "polizza": "kasko"
-        },
-        {
-            "id": "OCv2Wx",
-            "cliente": {
-                "codiceFiscale": "mrzmhl02h20g157g",
-                "nome": "michelon",
-                "cognome": "micheloni",
-                "dataNascita": "2024-01-22",
-                "email": "a",
-                "password": "a",
-                "cellulare": "3333333333",
-                "dataRegistrazione": "22012024"
-            },
-            "data_prenotazione": "Fri Apr 26 2024",
-            "data_inizio": "2024-03-14 08.00",
-            "data_fine": "2024-03-15",
-            "filiale": "Milano, via padova",
-            "mezzo": {
-                "URL_immagine": "viste/Icone/auto/bmw_serie3.png",
-                "telaio": "02",
-                "produttore": "mercedes",
-                "modello": "x3",
-                "cavalli": "130",
-                "cilindrata": "1600",
-                "anno": "2020",
-                "alimentazione": "benzina",
-                "cambio": "automatico",
-                "nPosti": "5",
-                "stato": "disponibile",
-                "tariffa_oraria": "40"
-            },
-            "tariffa": "oraria",
-            "polizza": "kasko"
-        },
-        {
-            "id": "5h4ow6",
-            "cliente": {
-                "codiceFiscale": "mrzmhl02h20g157g",
-                "nome": "michelon",
-                "cognome": "micheloni",
-                "dataNascita": "2024-01-22",
-                "email": "a",
-                "password": "a",
-                "cellulare": "3333333333",
-                "prenotazioni": [
-                    "8MLhvx",
-                    "OCv2Wx"
-                ],
-                "dataRegistrazione": "22012024"
-            },
-            "data_prenotazione": "Fri Apr 26 2024",
-            "data_inizio": "2024-03-14 08.00",
-            "data_fine": "2024-03-15",
-            "filiale": "Milano, via roma",
-            "mezzo": {
-                "URL_immagine": "viste/Icone/van/mercedes_sprinter.png",
-                "telaio": "def456",
-                "produttore": "Mercedes",
-                "modello": "Sprinter",
-                "cavalli": "150",
-                "cilindrata": "2500",
-                "anno": "2020",
-                "alimentazione": "diesel",
-                "cambio": "manuale",
-                "nPosti": "3",
-                "stato": "disponibile",
-                "tariffa_oraria": "60",
-                "tariffa_giornaliera": "150"
-            },
-            "tariffa": "oraria",
-            "polizza": "kasko"
-        },
-        {
-            "id": "SylHmp",
-            "cliente": {
-                "codiceFiscale": "mrzmhl02h20g157g",
-                "nome": "michelon",
-                "cognome": "micheloni",
-                "dataNascita": "2024-01-22",
-                "email": "a",
-                "password": "a",
-                "cellulare": "3333333333",
-                "prenotazioni": [
-                    "8MLhvx",
-                    "OCv2Wx",
-                    "5h4ow6"
-                ],
-                "dataRegistrazione": "22012024"
-            },
-            "data_prenotazione": "Fri Apr 26 2024",
-            "data_inizio": "2024-03-14 08.00",
-            "data_fine": "2024-03-15",
-            "filiale": "Milano, via roma",
-            "mezzo": {
-                "URL_immagine": "viste/Icone/auto/white-car.png",
-                "telaio": "01",
-                "produttore": "bmw",
-                "modello": "x3",
-                "cavalli": "130",
-                "cilindrata": "1600",
-                "anno": "2020",
-                "alimentazione": "benzina",
-                "cambio": "automatico",
-                "nPosti": "5",
-                "stato": "disponibile",
-                "tariffa_oraria": "40"
-            },
-            "tariffa": "oraria",
-            "polizza": "kasko"
-        },
-        {
-            "id": "wnraX9",
-            "cliente": {
-                "codiceFiscale": "abcdefghlmnoppop",
-                "nome": "edo",
-                "cognome": "seve",
-                "dataNascita": "2003-01-26",
-                "email": "user",
-                "password": "admin",
+                "email": "aergag",
+                "password": "gsfdgs",
                 "cellulare": "0123456789",
                 "prenotazioni": [],
-                "dataRegistrazione": "11012024"
-            },
-            "data_prenotazione": "Sat Apr 27 2024",
-            "data_inizio": "2024-05-13 12.00",
-            "data_fine": "2024-05-14",
-            "filiale": "Milano, via padova",
-            "mezzo": {
-                "URL_immagine": "viste/Icone/auto/bmw-335i.png",
-                "telaio": "01",
-                "produttore": "Bmw",
-                "modello": "335i",
-                "cavalli": "305",
-                "cilindrata": "3000",
-                "anno": "2019",
-                "alimentazione": "benzina",
-                "cambio": "automatico",
-                "nPosti": "5",
-                "stato": "disponibile",
-                "tariffa_oraria": "60"
-            },
-            "tariffa": "oraria",
-            "polizza": "rca"
-        },
-        {
-            "id": "FYPbHX",
-            "cliente": {
-                "codiceFiscale": "mrzmhl02h20g157g",
-                "nome": "michelon",
-                "cognome": "micheloni",
-                "dataNascita": "2024-01-22",
-                "email": "a",
-                "password": "a",
-                "cellulare": "333333334",
-                "prenotazioni": [
-                    "8MLhvx",
-                    "OCv2Wx",
-                    "5h4ow6",
-                    "SylHmp",
-                    "bi4Zth"
-                ],
                 "dataRegistrazione": "22012024"
             },
-            "data_prenotazione": "Thu May 16 2024",
-            "data_inizio": "2024-08-16 08.00",
-            "data_fine": "2024-08-17",
+            "data_prenotazione": "Tue May 21 2024",
+            "data_inizio": "2024-05-21 20.00",
+            "data_fine": "2024-05-22 08.00",
             "filiale": "Milano, via padova",
             "mezzo": {
                 "URL_immagine": "viste/Icone/scooter/yamaha-r1.png",
@@ -214,8 +31,8 @@
                 "stato": "disponibile",
                 "tariffa_oraria": "40"
             },
-            "tariffa": "oraria",
-            "polizza": "rca"
+            "tariffa": "giornaliera",
+            "polizza": "kasko"
         }
     ]
 }

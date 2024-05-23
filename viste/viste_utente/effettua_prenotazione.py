@@ -71,7 +71,6 @@ class VistaEffettuaPrenotazione(QMainWindow):
         self.datacampo1.setCalendarPopup(True)
         self.datacampo1.lineEdit().setReadOnly(True)
         self.datacampo1.setMinimumDate(QDate.currentDate())
-        self.datacampo1.setStyleSheet("max-width: 300px; max-height: 50px;")
         dlayout1.addWidget(self.datacampo1)
         self.datacampo1.dateChanged.connect(self.update_valori)
 
@@ -92,7 +91,6 @@ class VistaEffettuaPrenotazione(QMainWindow):
         self.datacampo2.setCalendarPopup(True)
         self.datacampo2.lineEdit().setReadOnly(True)
         self.datacampo2.setMinimumDate(QDate.currentDate().addDays(1))
-        self.datacampo2.setStyleSheet("max-width: 300px; max-height: 50px")
         dlayout2.addWidget(self.datacampo2)
         self.datacampo2.dateChanged.connect(self.update_valori)
 
@@ -104,7 +102,7 @@ class VistaEffettuaPrenotazione(QMainWindow):
                 self.oracampo2.addItems([f"{i}.00"])
         dlayout2.addWidget(self.oracampo2)
         self.oracampo2.currentIndexChanged.connect(self.update_valori)
-        self.valori["data_fine"] = self.datacampo2.date().toString(Qt.ISODate)
+        self.valori["data_fine"] = self.datacampo2.date().toString(Qt.ISODate)  + " " + self.oracampo2.currentText()
         form_layout.addLayout(dlayout2, 1, 1)
 
         self.filiale = QComboBox(self)
@@ -167,9 +165,8 @@ class VistaEffettuaPrenotazione(QMainWindow):
         self.page_layout.addLayout(bottom_layout)
 
     def update_valori(self):
-        sender = self.sender()  # Identifica quale combobox ha generato il segnale
+        sender = self.sender()  # Identifica quale widget ha generato il segnale
 
-        # Aggiorna self.valori
         if sender == self.datacampo1:
             info = self.valori["data_inizio"].split(" ")
             info[0] = sender.date().toString(Qt.ISODate)
@@ -178,9 +175,9 @@ class VistaEffettuaPrenotazione(QMainWindow):
             self.datacampo2.setMinimumDate(new_start_date.addDays(1))  # Imposta la data minima di campo2 al giorno successivo
             current_end_date = self.datacampo2.date()
             if current_end_date <= new_start_date:
-                # Se la data di fine noleggio è minore o uguale alla data di inizio noleggio più un giorno,
-                # imposta la data di fine noleggio un giorno dopo della data di inizio
                 self.datacampo2.setDate(new_start_date.addDays(1))
+
+            # Re-populate oracampo1 if the start date is changed to the current date
             if not self.verifica_data_corrente():
                 self.oracampo1.clear()
                 for i in range(8, 21):
@@ -188,27 +185,42 @@ class VistaEffettuaPrenotazione(QMainWindow):
                         self.oracampo1.addItems([f"0{i}.00"])
                     else:
                         self.oracampo1.addItems([f"{i}.00"])
+
         elif sender == self.oracampo1:
             info = self.valori["data_inizio"].split(" ")
             info[1] = sender.currentText()
             self.valori["data_inizio"] = f"{info[0]} {info[1]}"
+
         elif sender == self.datacampo2:
-            self.valori["data_fine"] = sender.date().toString(Qt.ISODate)
+            if self.tariffa == "oraria":
+                self.valori["data_fine"] = sender.date().toString(Qt.ISODate)
+            else:
+                self.valori["data_fine"] = sender.date().toString(Qt.ISODate) + " " + self.oracampo2.currentText()
+                info = self.valori["data_fine"].split(" ")
+                info[0] = sender.date().toString(Qt.ISODate)
+                self.valori["data_fine"] = f"{info[0]} {info[1]}"
+
         elif sender == self.oracampo2:
             info = self.valori["data_fine"].split(" ")
             info[1] = sender.currentText()
             self.valori["data_fine"] = f"{info[0]} {info[1]}"
+
         elif sender == self.filiale:
             self.valori["filiale"] = sender.currentText()
+
         elif sender == self.polizza:
             self.valori["polizza"] = sender.currentText()
-        else:
+
+        elif sender == self.tariffa:
             self.valori["tariffa"] = sender.currentText()
             if sender.currentText() == "giornaliera":
                 self.oracampo2.setVisible(True)
                 self.valori["data_fine"] = self.datacampo2.date().toString(Qt.ISODate) + " " + self.oracampo2.currentText()
             elif sender.currentText() == "oraria":
                 self.oracampo2.setVisible(False)
+                info = self.valori["data_fine"].split()
+                self.valori["data_fine"] = info[0]
+
 
     def go_back(self):
         from viste.viste_utente.prenotazione import VistaPrenotazione
@@ -226,18 +238,22 @@ class VistaEffettuaPrenotazione(QMainWindow):
         prenotazione = Prenotazione()
         pagamento = Pagamento()
         c = Cliente()
+        v, dI, dF = prenotazione.controllo_assegnamento_mezzo(self.mezzo, self.valori["data_inizio"], self.valori["data_fine"])
+        if v:
+            prenotazione.aggiungiPrenotazione(cliente, datetime.now().strftime("%a %b %d %Y"), self.valori["data_inizio"],
+                                              self.valori["data_fine"], self.mezzo, self.valori["filiale"],
+                                              self.valori["tariffa"], self.valori["polizza"])
+    
+            pagamento.aggiungiPagamento("", prenotazione.__dict__, cliente)
+            c.set_prenotazioni_cliente(self.user, self.psw, prenotazione.id)
+            self.vistaPrenotazione = VistaConfermaPrenotazione(self.user, self.psw, QDate.currentDate().toString(), self.mezzo,
+                                                               self.valori["data_inizio"], self.valori["data_fine"], self.valori["tariffa"],
+                                                               self.valori["polizza"])
+            self.vistaPrenotazione.show()
+            self.close()
+        else:
+            QMessageBox.warning(self, "prenotazione", f"Il mezzo è già stato prenotato da {dI} a {dF}")
 
-        prenotazione.aggiungiPrenotazione(cliente, datetime.now().strftime("%a %b %d %Y"), self.valori["data_inizio"],
-                                          self.valori["data_fine"], self.mezzo, self.valori["filiale"],
-                                          self.valori["tariffa"], self.valori["polizza"])
-
-        pagamento.aggiungiPagamento("", prenotazione.__dict__, cliente)
-        c.set_prenotazioni_cliente(self.user, self.psw, prenotazione.id)
-        self.vistaPrenotazione = VistaConfermaPrenotazione(self.user, self.psw, QDate.currentDate().toString(), self.mezzo,
-                                                           self.valori["data_inizio"], self.valori["data_fine"], self.valori["tariffa"],
-                                                           self.valori["polizza"])
-        self.vistaPrenotazione.show()
-        self.close()
 
     def ora_corrente(self):
         now = datetime.now()
