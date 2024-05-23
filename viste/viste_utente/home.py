@@ -5,6 +5,7 @@ from viste.viste_utente.areacliente import VistaCliente
 from viste.viste_utente.prenotazione import VistaPrenotazione
 from viste.viste_utente.visualizzaPrenotazioni import PrenotazioniView
 from viste.viste_utente.vistaPagamenti import VistaPagamenti
+from Attivita.cliente import Cliente
 import darkdetect
 
 
@@ -14,6 +15,7 @@ class VistaHome(QMainWindow):
 
         self.user = user
         self.psw = psw
+
         self.setWindowTitle("CarGreen")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
         if darkdetect.isDark():
@@ -37,7 +39,8 @@ class VistaHome(QMainWindow):
 
         center_layout = QVBoxLayout()
         center_layout.setAlignment(Qt.AlignTop)
-        self.title_label = QLabel("Ciao " + user)
+
+        self.title_label = QLabel(f"Benvenuto {Cliente().get_dati(self.user, self.psw)['nome']} {Cliente().get_dati(self.user, self.psw)['cognome']}")
         self.title_label.setAlignment(Qt.AlignCenter)
         self.title_font = QFont("Arial", 42, QFont.Bold)
         self.title_label.setFont(self.title_font)
