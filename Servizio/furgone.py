@@ -4,24 +4,25 @@ from Servizio.mezzo import Mezzo
 from Attivita.prenotazione import Prenotazione
 import json
 
+
 class Furgone(Mezzo):
     def __init__(self):
         super().__init__()
         self.tariffaOraria = ""
         self.stato = "disponibile"
 
-    def aggiungiFurgone(self, to, url, t, prod, mod, anno, cv, cc, np, c, a):
+    def aggiungiFurgone(self, url, t, prod, mod, anno, cv, cc, np, c, a, to):
         self.aggiungiMezzo(url, t, prod, mod, anno, cv, cc, np, c, a)
         self.tariffaOraria = to
 
         try:
-            # Apre il file JSON in modalità append
-            with open("dati/furgoni.json", 'a') as file:
-                # Scrive il dizionario dell'auto nel file JSON
-                json.dump(self, file, indent=4)
-                # Aggiunge un nuovo line feed dopo ogni auto per mantenere ogni auto su una riga separata
-                file.write('\n')
-            print("furgoni aggiunta correttamente.")
+            furgone = self.get_dati()
+            nuovoFurgone = self.__dict__.copy()
+            furgone.append(nuovoFurgone)
+            with open("dati/furgoni.json", "w") as f:
+                json.dump(furgone, f, indent=4)
+
+            print("Furgone aggiunto correttamente.")
         except Exception as e:
             print(f"Si è verificato un errore: {e}")
 

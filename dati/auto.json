@@ -1,6 +1,6 @@
 [
     {
-        "URL_immagine": "viste/Icone/auto/bmw-335i.png",
+        "immagine": "viste/Icone/auto/bmw-335i.png",
         "telaio": "01",
         "produttore": "Bmw",
         "modello": "335i",
@@ -11,10 +11,10 @@
         "cambio": "automatico",
         "nPosti": "5",
         "stato": "prenotato",
-        "tariffa_oraria": "60"
+        "tariffaOraria": "60"
     },
     {
-        "URL_immagine": "viste/Icone/auto/mercedes-c300.png",
+        "immagine": "viste/Icone/auto/mercedes-c300.png",
         "telaio": "02",
         "produttore": "Mercedes-Benz",
         "modello": "C300",
@@ -25,10 +25,10 @@
         "cambio": "automatico",
         "nPosti": "5",
         "stato": "disponibile",
-        "tariffa_oraria": "40"
+        "tariffaOraria": "40"
     },
     {
-        "URL_immagine": "viste/Icone/auto/audi-a4.png",
+        "immagine": "viste/Icone/auto/audi-a4.png",
         "telaio": "03",
         "produttore": "Audi",
         "modello": "A4",
@@ -39,10 +39,10 @@
         "cambio": "automatico",
         "nPosti": "5",
         "stato": "non disponibile",
-        "tariffa_oraria": "30"
+        "tariffaOraria": "30"
     },
     {
-        "URL_immagine": "viste/Icone/auto/alfa-giulietta.png",
+        "immagine": "viste/Icone/auto/alfa-giulietta.png",
         "telaio": "04",
         "produttore": "Alfa Romeo",
         "modello": "Giulietta",
@@ -53,10 +53,10 @@
         "cambio": "automatico",
         "nPosti": "5",
         "stato": "disponibile",
-        "tariffa_oraria": "20"
+        "tariffaOraria": "20"
     },
     {
-        "URL_immagine": "viste/Icone/auto/honda-civic.png",
+        "immagine": "viste/Icone/auto/honda-civic.png",
         "telaio": "05",
         "produttore": "Honda",
         "modello": "Civic",
@@ -67,10 +67,10 @@
         "cambio": "automatico",
         "nPosti": "5",
         "stato": "disponibile",
-        "tariffa_oraria": "20"
+        "tariffaOraria": "20"
     },
     {
-        "URL_immagine": "viste/Icone/auto/fiat-panda.png",
+        "immagine": "viste/Icone/auto/fiat-panda.png",
         "telaio": "06",
         "produttore": "Fiat",
         "modello": "Panda",
@@ -81,6 +81,6 @@
         "cambio": "manuale",
         "nPosti": "4",
         "stato": "disponibile",
-        "tariffa_oraria": "10"
+        "tariffaOraria": "10"
     }
 ]

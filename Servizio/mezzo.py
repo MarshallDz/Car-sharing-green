@@ -28,15 +28,7 @@ class Mezzo:
         self.alimentazione = alimentazione
 
     def getInfoMezzo(self):
-        return {
-            "URL_immagine": self.immagine,
-            "telaio": self.telaio,
-            "produttore": self.produttore,
-            "modello": self.modello,
-            "anno": self.anno,
-            "cavalli": self.cavalli,
-            "cilindrata": self.cilindrata,
-            "nPosti": self.nPosti,
-            "cambio": self.cambio,
-            "alimentazione": self.alimentazione
-        }
+        with open(url, "r") as file:
+            data = json.load(file)
+            mezzi = data.get([])
+            return mezzi

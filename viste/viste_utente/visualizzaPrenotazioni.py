@@ -1,3 +1,4 @@
+from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from Attivita.prenotazione import Prenotazione
@@ -21,22 +22,34 @@ class PrenotazioniView(QMainWindow):
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
 
-        self.central_layout = QVBoxLayout()
+        page_layout = QVBoxLayout()
+        button_layout = QVBoxLayout()
 
-        title_layout = QVBoxLayout()
-        title_layout.setAlignment(Qt.AlignTop | Qt.AlignCenter)
+        title_layout = QHBoxLayout()
+        back_button = QPushButton()
+        back_button.setStyleSheet("max-width: 100px; border: none")
+        back_button.setIcon(QIcon("viste/Icone/varie/back.png"))
+        back_button.setIconSize(QSize(50, 50))
+        back_button.clicked.connect(self.go_back)
+        title_layout.addWidget(back_button)
 
-        self.central_widget.setLayout(self.central_layout)
-
-        self.title_label = QLabel("Lista delle tue prenotazioni: ")
+        self.title_label = QLabel("Le tue prenotazioni")
         self.title_font = self.title_label.font()
         self.title_font.setPointSize(42)
         self.title_font.setBold(True)
         self.title_label.setFont(self.title_font)
         self.title_label.adjustSize()
-
+        self.title_label.setAlignment(Qt.AlignCenter)
         title_layout.addWidget(self.title_label)
-        self.central_layout.addLayout(title_layout)
+
+        ghost_button = QPushButton()
+        ghost_button.setStyleSheet("max-width: 100px; border: none")
+        title_layout.addWidget(ghost_button)
+
+        page_layout.addLayout(title_layout)
+        page_layout.addLayout(button_layout)
+
+        self.central_widget.setLayout(page_layout)
 
         scroll_area = QScrollArea()
         scroll_area.setStyleSheet("QScrollBar:vertical {"
@@ -62,24 +75,18 @@ class PrenotazioniView(QMainWindow):
         scroll_area.setWidget(self.scroll_content)
         self.scroll_layout = QVBoxLayout(self.scroll_content)
 
-        self.central_layout.addWidget(scroll_area)
+        page_layout.addWidget(scroll_area)
 
         self.aggiungi_box_info()
-
-        back_button = QPushButton("Indietro")
-        back_button.clicked.connect(self.go_back)
-        back_button.setStyleSheet("width: 150px; max-width: 150px; background-color: #F85959; border-radius: 15px; "
-                                  "color: black; padding: 10px; margin-bottom: 20px")
-        self.central_layout.addWidget(back_button, alignment=Qt.AlignHCenter | Qt.AlignBottom)
 
     def aggiungi_box_info(self):
         cliente = Cliente().get_dati(self.user, self.psw)
         prenotazioniCliente = Cliente().get_prenotazione(cliente['codiceFiscale'])
         if len(prenotazioniCliente) == 0:
             label = QLabel("Non hai effettuato nessuna prenotazione")
-            label.setStyleSheet("color: #F85959; border: 1px solid red; padding: 0px; max-height: 44px")
+            label.setStyleSheet("color: #F85959; padding: 0px; max-height: 44px")
             label_font = label.font()
-            label_font.setPointSize(42)
+            label_font.setPointSize(22)
             label_font.setBold(True)
             label.setFont(label_font)
             self.scroll_layout.addWidget(label, alignment=Qt.AlignHCenter)

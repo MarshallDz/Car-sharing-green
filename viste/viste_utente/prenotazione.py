@@ -49,7 +49,6 @@ class VistaPrenotazione(QMainWindow):
         title_layout.addWidget(ghost_button)
 
         page_layout.addLayout(title_layout)
-
         page_layout.addLayout(button_layout)
         page_layout.addLayout(self.stacklayout)
 

@@ -1,16 +1,15 @@
+from PyQt5.QtWidgets import *
+from PyQt5.QtGui import *
+from PyQt5.QtCore import *
+from Attivita.cliente import Cliente
 import darkdetect
-from PyQt5.QtCore import Qt, QDate
-from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QVBoxLayout, QLabel, QPushButton, QHBoxLayout, \
-    QLineEdit, QMessageBox, QDateEdit
-
-from Attivita.impiegato import Impiegato
 
 
 class VistaRegistrazioneCliente(QMainWindow):
-    def __init__(self):
+    def __init__(self, user, psw):
         super().__init__()
-
+        self.user = user
+        self.psw = psw
         # dizionario in cui salvi i campi del form
         self.campi = {}
 
@@ -68,10 +67,8 @@ class VistaRegistrazioneCliente(QMainWindow):
     def crea_campo(self, nome):
         if nome == "Data di nascita":
             layout = QHBoxLayout()  # Layout orizzontale per posizionare la label accanto al campo
-            label = QLineEdit()
-            label.setPlaceholderText(nome)
+            label = QLabel("Data di nascita")
             label.setStyleSheet("max-width: 100px; min-height: 40px; border-radius: 15px;")
-            label.setReadOnly(True)
             campo = QDateEdit()
             campo.setCalendarPopup(True)
             campo.setStyleSheet("max-width: 200px; color: black; background-color: white;")
@@ -109,12 +106,12 @@ class VistaRegistrazioneCliente(QMainWindow):
             QMessageBox.warning(None, "Cellulare non valido", "Il numero di cellulare deve essere composto da 10 "
                                                               "cifre.")
             return
-        impiegato = Impiegato()
-        impiegato.aggiungiImpiegato(data_to_save["Codice Fiscale"], data_to_save["Nome"], data_to_save["Cognome"], data_to_save["Data di nascita"], data_to_save["E-mail"], data_to_save["Password"], data_to_save["Cellulare"])
+        cliente = Cliente()
+        cliente.aggiungiCliente(data_to_save["Codice Fiscale"], data_to_save["Nome"], data_to_save["Cognome"], data_to_save["Data di nascita"], data_to_save["E-mail"], data_to_save["Password"], data_to_save["Cellulare"])
         self.go_back()
 
     def go_back(self):
-        from viste.viste_amministratore.gestioneClienti import VistaGestioneClienti
-        self.vista = VistaGestioneClienti()
+        from viste.viste_impiegato.gestioneClienti import VistaGestioneClienti
+        self.vista = VistaGestioneClienti(self.user, self.psw)
         self.vista.show()
         self.close()

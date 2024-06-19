@@ -7,6 +7,7 @@ from PyQt5.QtGui import QPixmap, QImage
 import qrcode
 from io import BytesIO
 
+
 class QRCodeGenerator(QMainWindow):
     def __init__(self):
         super().__init__()

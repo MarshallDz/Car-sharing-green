@@ -77,6 +77,6 @@ class Pagamento():
             json.dump(pagamenti, file, indent=4)
 
         # Aggiorna l'interfaccia utente per visualizzare le prenotazioni aggiornate
-        from viste.viste_impiegato.vistaPagamentiImpiegato import VistaPagamentiImpiegato
+        from viste.viste_impiegato.gestionePagamenti import VistaPagamentiImpiegato
         self.vista = VistaPagamentiImpiegato(user, psw)
         self.vista.show()

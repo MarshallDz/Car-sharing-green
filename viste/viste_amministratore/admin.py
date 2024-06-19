@@ -9,6 +9,7 @@ from viste.viste_amministratore.gestioneImpiegati import VistaGestioneImpiegati
 from viste.viste_amministratore.gestioneMezzi import VistaMezziAmministratore
 from viste.viste_amministratore.gestionePagamenti import VistaPagamentiAmministratore
 from viste.viste_amministratore.gestionePrenotazioni import VistaGestionePrenotazione
+from viste.viste_amministratore.statistiche import VistaStatistiche
 
 
 class VistaAmministrazione(QMainWindow):
@@ -28,13 +29,13 @@ class VistaAmministrazione(QMainWindow):
         upper_layout = QHBoxLayout()
 
         l_layout = QVBoxLayout()
-        back_button = QPushButton("Esci")
-        back_button.setStyleSheet("max-width: 200px; border: none")
-        back_button.setIcon(QIcon("viste/Icone/varie/logout.png"))
-        back_button.setIconSize(QSize(50, 50))
-        back_button.clicked.connect(self.go_back)
+        power_button = QPushButton("Shut down")
+        power_button.setStyleSheet("max-width: 200px; border: none")
+        power_button.setIcon(QIcon("viste/Icone/varie/poweroff.png"))
+        power_button.setIconSize(QSize(50, 50))
+        power_button.clicked.connect(self.shutdown)
         l_layout.setAlignment(Qt.AlignTop | Qt.AlignLeft)
-        l_layout.addWidget(back_button)
+        l_layout.addWidget(power_button)
         upper_layout.addLayout(l_layout)
 
         m_layout = QVBoxLayout()
@@ -47,13 +48,13 @@ class VistaAmministrazione(QMainWindow):
         upper_layout.addLayout(m_layout)
 
         r_layout = QVBoxLayout()
-        power_button = QPushButton("Shut down")
-        power_button.setStyleSheet("max-width: 200px; border: none")
-        power_button.setIcon(QIcon("viste/Icone/varie/poweroff.png"))
-        power_button.setIconSize(QSize(50, 50))
-        power_button.clicked.connect(self.shutdown)
+        back_button = QPushButton("Esci")
+        back_button.setStyleSheet("max-width: 200px; border: none")
+        back_button.setIcon(QIcon("viste/Icone/varie/logout.png"))
+        back_button.setIconSize(QSize(50, 50))
+        back_button.clicked.connect(self.go_back)
         r_layout.setAlignment(Qt.AlignTop | Qt.AlignRight)
-        r_layout.addWidget(power_button)
+        r_layout.addWidget(back_button)
         upper_layout.addLayout(r_layout)
 
         form_layout.addLayout(upper_layout)
@@ -128,10 +129,9 @@ class VistaAmministrazione(QMainWindow):
         self.close()
 
     def go_statistiche(self):
-        pass
-        # self.vista = VistaStatistiche(self.user, self.psw)
-        # self.vista.show()
-        # self.close()
+        self.vista = VistaStatistiche()
+        self.vista.show()
+        self.close()
 
     def go_back(self):
         from viste.login import VistaLogin

@@ -227,7 +227,7 @@ class VistaGestioneImpiegati(QMainWindow):
             self.salva_valori()
 
     def go_aggiungiImpiegato(self):
-        from viste.viste_amministratore.registraImpiegato import VistaRegistrazioneImpiegato
+        from viste.viste_amministratore.aggiungiImpiegato import VistaRegistrazioneImpiegato
         self.vista = VistaRegistrazioneImpiegato()
         self.vista.show()
         self.close()

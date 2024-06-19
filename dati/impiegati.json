@@ -5,8 +5,8 @@
             "nome": "Mario",
             "cognome": "Rossi",
             "dataNascita": "1985-03-03",
-            "email": "x",
-            "password": "x",
+            "email": "worker",
+            "password": "worker",
             "cellulare": "+39123456789",
             "stipendio": 30000,
             "dataAssunzione": "2020-01-15"

@@ -220,7 +220,7 @@ class VistaGestioneClienti(QMainWindow):
             self.salva_valori()
 
     def go_aggiungiCliente(self):
-        from viste.viste_amministratore.registraCliente import VistaRegistrazioneCliente
+        from viste.viste_amministratore.aggiungiCliente import VistaRegistrazioneCliente
         self.vista = VistaRegistrazioneCliente()
         self.vista.show()
         self.close()

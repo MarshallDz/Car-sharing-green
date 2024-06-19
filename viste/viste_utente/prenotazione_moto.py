@@ -93,7 +93,7 @@ class PrenotazioneMoto(QWidget):
             car_info_layout.addWidget(label_name, row, col * 2)
             car_info_layout.addWidget(value_label, row, col * 2 + 1)
 
-        tariffaLabel = QLabel(f"A partire da {moto['tariffa_oraria']}€ ad ora \n oppure  {int(int(moto['tariffa_oraria']) * 24 * 0.7)}€ al giorno")
+        tariffaLabel = QLabel(f"A partire da {moto['tariffaOraria']}€ ad ora \n oppure  {int(int(moto['tariffaOraria']) * 24 * 0.7)}€ al giorno")
         tariffaLabel.setStyleSheet("border: 0px")
         myFont = QtGui.QFont()
         myFont.setBold(True)
@@ -113,7 +113,7 @@ class PrenotazioneMoto(QWidget):
         car_layout = QHBoxLayout()
         car_layout.setAlignment(Qt.AlignTop)
 
-        pixmap = QPixmap(moto["URL_immagine"])
+        pixmap = QPixmap(moto["immagine"])
         if not pixmap.isNull():
             label = QLabel()
             label.setStyleSheet("margin-left: 20px;")

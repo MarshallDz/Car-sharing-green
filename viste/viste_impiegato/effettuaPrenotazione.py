@@ -231,7 +231,7 @@ class VistaEffettuaPrenotazioneImpiegato(QMainWindow):
                 self.valori["data_fine"] = info[0]
 
     def go_back(self):
-        from viste. viste_impiegato.vistaGestisciPrenotazioni import VistaGestionePrenotazione
+        from viste. viste_impiegato.gestionePrenotazioni import VistaGestionePrenotazione
         self.vista = VistaGestionePrenotazione(self.user, self.psw)
         self.vista.show()
         self.close()

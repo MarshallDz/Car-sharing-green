@@ -46,7 +46,7 @@ class VistaLogin(QMainWindow):
         self.crea_campo("email")
         self.crea_campo("password")
 
-        accedi_otp = QPushButton('Accedi con OTP', self)
+        accedi_otp = QPushButton("Hai dimenticato la password?", self)
         accedi_otp.setStyleSheet(
             "QPushButton {"
             "background-color: none;"

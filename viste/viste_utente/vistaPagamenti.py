@@ -20,20 +20,34 @@ class VistaPagamenti(QMainWindow):
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
 
-        central_layout = QVBoxLayout()
+        page_layout = QVBoxLayout()
+        button_layout = QVBoxLayout()
 
-        title_layout = QVBoxLayout()
-        title_layout.setAlignment(Qt.AlignTop | Qt.AlignCenter)
+        title_layout = QHBoxLayout()
+        back_button = QPushButton()
+        back_button.setStyleSheet("max-width: 100px; border: none")
+        back_button.setIcon(QIcon("viste/Icone/varie/back.png"))
+        back_button.setIconSize(QSize(50, 50))
+        back_button.clicked.connect(self.go_back)
+        title_layout.addWidget(back_button)
 
-        self.central_widget.setLayout(central_layout)
-
-        self.title_label = QLabel("Lista dei tuoi pagamenti")
-        self.title_font = QFont("Arial", 42, QFont.Bold)
+        self.title_label = QLabel("I tuoi pagamenti")
+        self.title_font = self.title_label.font()
+        self.title_font.setPointSize(42)
+        self.title_font.setBold(True)
         self.title_label.setFont(self.title_font)
         self.title_label.adjustSize()
-
+        self.title_label.setAlignment(Qt.AlignCenter)
         title_layout.addWidget(self.title_label)
-        central_layout.addLayout(title_layout)
+
+        ghost_button = QPushButton()
+        ghost_button.setStyleSheet("max-width: 100px; border: none")
+        title_layout.addWidget(ghost_button)
+
+        page_layout.addLayout(title_layout)
+        page_layout.addLayout(button_layout)
+
+        self.central_widget.setLayout(page_layout)
 
         scroll_area = QScrollArea()
         scroll_area.setStyleSheet("QScrollBar:vertical {"
@@ -59,15 +73,9 @@ class VistaPagamenti(QMainWindow):
         scroll_area.setWidget(self.scroll_content)
         self.scroll_layout = QVBoxLayout(self.scroll_content)
 
-        central_layout.addWidget(scroll_area)
+        page_layout.addWidget(scroll_area)
 
         self.aggiungiPagamento()
-
-        back_button = QPushButton("Indietro")
-        back_button.clicked.connect(self.go_back)
-        back_button.setStyleSheet("width: 150px; max-width: 150px; background-color: #F85959; border-radius: 15px; color: black; "
-                                  "padding: 10px; margin-bottom: 20px")
-        central_layout.addWidget(back_button, alignment=Qt.AlignHCenter | Qt.AlignBottom)
 
     def aggiungiPagamento(self):
         pagamenti = Pagamento().get_dati()

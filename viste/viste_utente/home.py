@@ -29,7 +29,7 @@ class VistaHome(QMainWindow):
 
         left_layout = QVBoxLayout()
         left_layout.setAlignment(Qt.AlignTop | Qt.AlignLeft)
-        cliente_button = QPushButton("Area clienti")
+        cliente_button = QPushButton("Area utente")
         cliente_button.setStyleSheet("max-width: 200px; border: none")
         cliente_button.setIcon(QIcon("viste/Icone/varie/boy.png"))
         cliente_button.setIconSize(QSize(50, 50))

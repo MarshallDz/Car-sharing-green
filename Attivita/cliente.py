@@ -108,7 +108,7 @@ class Cliente(Utilizzatore):
             json.dump(data, file, indent=4)
 
         # Aggiorna l'interfaccia utente per visualizzare le prenotazioni aggiornate
-        from viste.viste_impiegato.vistaGestisciClienti import VistaGestioneClienti
+        from viste.viste_impiegato.gestioneClienti import VistaGestioneClienti
         self.vista = VistaGestioneClienti(user, psw)
         self.vista.show()
 
