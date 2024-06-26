@@ -8,10 +8,9 @@ from viste.viste_utente.effettua_prenotazione import VistaEffettuaPrenotazione
 
 
 class PrenotazioneFurgone(QWidget):
-    def __init__(self, user, psw, s):
+    def __init__(self, cliente, s):
         super().__init__()
-        self.user = user
-        self.psw = psw
+        self.cliente = cliente
         self.shell = s
         self.layout = QVBoxLayout()
 
@@ -130,6 +129,6 @@ class PrenotazioneFurgone(QWidget):
         self.scroll_layout.addLayout(car_layout)
 
     def go_prenota(self, mezzo):
-        self.vista_prenotazione = VistaEffettuaPrenotazione(self.user, self.psw, mezzo)
+        self.vista_prenotazione = VistaEffettuaPrenotazione(self.cliente, mezzo)
         self.vista_prenotazione.show()
         self.shell.close()

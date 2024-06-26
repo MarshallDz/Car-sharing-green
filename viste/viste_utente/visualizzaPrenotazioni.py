@@ -8,11 +8,10 @@ import datetime
 
 
 class PrenotazioniView(QMainWindow):
-    def __init__(self, user, psw):
+    def __init__(self, cliente):
         super().__init__()
 
-        self.user = user
-        self.psw = psw
+        self.cliente = cliente
 
         self.setWindowTitle("CarGreen")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
@@ -80,8 +79,7 @@ class PrenotazioniView(QMainWindow):
         self.aggiungi_box_info()
 
     def aggiungi_box_info(self):
-        cliente = Cliente().get_dati(self.user, self.psw)
-        prenotazioniCliente = Cliente().get_prenotazione(cliente['codiceFiscale'])
+        prenotazioniCliente = Cliente().get_prenotazione(self.cliente["codiceFiscale"])
         if len(prenotazioniCliente) == 0:
             label = QLabel("Non hai effettuato nessuna prenotazione")
             label.setStyleSheet("color: #F85959; padding: 0px; max-height: 44px")
@@ -131,13 +129,13 @@ class PrenotazioniView(QMainWindow):
     def go_back(self):
         self.close()
         from viste.viste_utente.home import VistaHome
-        self.vista = VistaHome(self.user, self.psw)
+        self.vista = VistaHome(self.cliente)
         self.vista.show()
 
     def disdici(self, p):
         oggi = datetime.date.today()
         data_inizio = datetime.datetime.strptime(p["data_inizio"].split(" ")[0], "%Y-%m-%d").date()
-        #posso disdire la prenotazione fino ad un giorno prima dell'inizio della prenotazione
+        # posso disdire la prenotazione fino ad un giorno prima dell'inizio della prenotazione
         if data_inizio > oggi:
             reply = QMessageBox.warning(self, 'Conferma Disdetta', 'Sei sicuro di voler disdire questa prenotazione?',
                                          QMessageBox.Yes | QMessageBox.No, QMessageBox.No)

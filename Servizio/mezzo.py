@@ -27,8 +27,23 @@ class Mezzo:
         self.cambio = cambio
         self.alimentazione = alimentazione
 
-    def getInfoMezzo(self):
-        with open(url, "r") as file:
+    def eliminaMezzo(self, file, mezzo):
+        self.searchById(file, mezzo, True)
+
+    def searchById(self, file, mezzo, delete=False):
+        data = self.readData(file)
+        for m in data:
+            if m["telaio"] == mezzo.telaio:
+                if delete:
+                    data.remove(m)
+                    self.writeData(file)
+                return 1
+
+    def writeData(self, file, data):
+        with open(file, 'w') as file:
+            json.dump(data, file, indent=4)
+
+    def readData(self, file):
+        with open(file, "r") as file:
             data = json.load(file)
-            mezzi = data.get([])
-            return mezzi
+            return data

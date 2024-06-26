@@ -217,6 +217,40 @@
             },
             "tariffa": "oraria",
             "polizza": "rca"
+        },
+        {
+            "id": "l3Wzo7",
+            "cliente": {
+                "codiceFiscale": "abcdefghlmnoppop",
+                "nome": "edo",
+                "cognome": "seve",
+                "dataNascita": "2003-01-26",
+                "email": "user",
+                "password": "user",
+                "cellulare": "1231231230",
+                "prenotazioni": [],
+                "dataRegistrazione": "11012024"
+            },
+            "data_prenotazione": "Sat Jun 22 2024",
+            "data_inizio": "2024-06-22 19.00",
+            "data_fine": "2024-06-23",
+            "filiale": "Milano, via roma",
+            "mezzo": {
+                "immagine": "viste/Icone/auto/mercedes-c300.png",
+                "telaio": "02",
+                "produttore": "Mercedes-Benz",
+                "modello": "C300",
+                "cavalli": "245",
+                "cilindrata": "2000",
+                "anno": "2021",
+                "alimentazione": "diesel",
+                "cambio": "automatico",
+                "nPosti": "5",
+                "stato": "disponibile",
+                "tariffaOraria": "40"
+            },
+            "tariffa": "oraria",
+            "polizza": "kasko"
         }
     ]
 }

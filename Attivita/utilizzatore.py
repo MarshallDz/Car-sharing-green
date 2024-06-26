@@ -14,46 +14,45 @@ class Utilizzatore:
         self.password = ""
         self.cellulare = ""
 
-    def aggiungiUtilizzatore(self, codiceFiscale, nome, cognome, dataNascita, email, password, cellulare):
-        self.codiceFiscale = codiceFiscale
-        self.nome = nome
-        self.cognome = cognome
-        self.dataNascita = dataNascita
-        self.password = password
-        self.email = email
-        self.cellulare = cellulare
+    def aggiungiUtilizzatore(self, cF, no, cog, datN, em, pas, cel):
+        self.codiceFiscale = cF
+        self.nome = no
+        self.cognome = cog
+        self.dataNascita = datN
+        self.password = pas
+        self.email = em
+        self.cellulare = cel
 
     def getInfoUtilizzatore(self):
         return {
-            "codice": self.codice,
             "codiceFiscale": self.codiceFiscale,
+            "nome": self.nome,
             "cognome": self.cognome,
             "dataNascita": self.dataNascita,
             "email": self.email,
-            "nome": self.nome,
-            "telefono": self.telefono
+            "telefono": self.cellulare
         }
 
-    def get_login(self):
-        email = []
-        psw = []
+    def eliminaUtilizzatore(self, file, utilizzatore):
+        self.searchById(file, utilizzatore, True)
 
-        file_path = "dati/clienti.json"
-        with open(file_path, "r") as file:
-            data = json.load(file)
-            for e in data["clienti"]:
-                email.append(e["email"])
-            for p in data["clienti"]:
-                psw.append(p["password"])
+    def searchById(self, file, utilizzatore, delete=False):
+        data = self.readData(file)
+        for c in data:
+            if c["codiceFiscale"] == utilizzatore["codiceFiscale"]:
+                if delete:
+                    data.remove(c)
+                    self.writeData(file, data)
+                return 1
 
-        file_path = "dati/impiegati.json"
-        with open(file_path, "r") as file:
+    def verify_login(self, file, user, password):
+        with open(file, "r") as file:
             data = json.load(file)
-            for e in data["impiegati"]:
-                email.append(e["email"])
-            for p in data["impiegati"]:
-                psw.append(p["password"])
-        return email, psw
+            for u in data:
+                if u["email"] == user:
+                    if u["password"] == password:
+                        return u
+
 
     @abstractmethod
     def ricercaUtilizzatoreNomeCognome(self, nome, cognome):
@@ -67,11 +66,11 @@ class Utilizzatore:
     def ricercaUtilizzatoreNominativo(self, nome, cogome):
         pass
 
-    def rimuoviUtilizzatore(self):
-        self.codice = -1
-        self.codiceFiscale = ""
-        self.cognome = ""
-        self.dataNascita = datetime.datetime(year=1970, month=1, day=1)
-        self.email = ""
-        self.nome = ""
-        self.telefono = 0
+    def writeData(self, file, data):
+        with open(file, 'w') as file:
+            json.dump(data, file, indent=4)
+
+    def readData(self, file):
+        with open(file, "r") as file:
+            data = json.load(file)
+            return data

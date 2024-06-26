@@ -10,10 +10,9 @@ import darkdetect
 
 
 class VistaPannelloControllo(QMainWindow):
-    def __init__(self, user, psw):
+    def __init__(self, impiegato):
         super().__init__()
-        self.user = user
-        self.psw = psw
+        self.impiegato = impiegato
         self.setWindowTitle("CarGreen")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
         if darkdetect.isDark():
@@ -84,17 +83,17 @@ class VistaPannelloControllo(QMainWindow):
         form_layout.addLayout(right_layout)
 
     def area_impiegati(self):
-        self.area = VistaImpiegato(self.user, self.psw)
+        self.area = VistaImpiegato(self.impiegato)
         self.area.show()
         self.close()
 
     def go_GestionePrenotazioni(self):
-        self.area = VistaGestionePrenotazione(self.user, self.psw)
+        self.area = VistaGestionePrenotazione(self.impiegato)
         self.area.show()
         self.close()
 
     def go_GestioneClienti(self):
-        self.vista = VistaGestioneClienti(self.user, self.psw)
+        self.vista = VistaGestioneClienti(self.impiegato)
         self.vista.show()
         self.close()
 
@@ -105,11 +104,11 @@ class VistaPannelloControllo(QMainWindow):
         self.close()
 
     def go_pagamenti(self):
-        self.vista = VistaPagamentiImpiegato(self.user, self.psw)
+        self.vista = VistaPagamentiImpiegato(self.impiegato)
         self.vista.show()
         self.close()
 
     def go_mezzi(self):
-        self.vista = VistaMezziImpiegato(self.user, self.psw)
+        self.vista = VistaMezziImpiegato(self.impiegato)
         self.vista.show()
         self.close()

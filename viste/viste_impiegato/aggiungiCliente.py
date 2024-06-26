@@ -6,10 +6,9 @@ import darkdetect
 
 
 class VistaRegistrazioneCliente(QMainWindow):
-    def __init__(self, user, psw):
+    def __init__(self, impiegato):
         super().__init__()
-        self.user = user
-        self.psw = psw
+        self.impiegato = impiegato
         # dizionario in cui salvi i campi del form
         self.campi = {}
 
@@ -112,6 +111,6 @@ class VistaRegistrazioneCliente(QMainWindow):
 
     def go_back(self):
         from viste.viste_impiegato.gestioneClienti import VistaGestioneClienti
-        self.vista = VistaGestioneClienti(self.user, self.psw)
+        self.vista = VistaGestioneClienti(self.impiegato)
         self.vista.show()
         self.close()

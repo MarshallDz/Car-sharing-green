@@ -15,13 +15,8 @@ class Prenotazione():
         self.mezzo = ""
         self.tariffa = ""
         self.polizza = ""
-        # ottengo il path assoluto del file in cui salvare
-        absolute_path = os.path.dirname(__file__)
-        relative_path = "dati/prenotazioni.json"
-        dir_list = absolute_path.split(os.sep)
-        dir_list.pop()
-        new_dir = os.sep.join(dir_list)
-        self.url = os.path.join(new_dir, relative_path)
+
+        self.file = "dati/prenotazioni.json"
 
     def aggiungiPrenotazione(self, cliente, data_prenotazione, data_inizio, data_fine, mezzo,  filiale, tariffa, polizza):
         self.id = self.set_id()
@@ -38,14 +33,14 @@ class Prenotazione():
         nuovaPrenotazione = self.__dict__.copy()
         nuovaPrenotazione.popitem()
         prenotazioni.append(nuovaPrenotazione)
-        with open(self.url, "w") as f:
+        with open(self.file, "w") as f:
             json.dump({"prenotazioni": prenotazioni}, f, indent=4)
         self.aggiorna_stato_mezzo()
 
     def eliminaPrenotazione(self, p):
-        url_prenotazioni = "./dati/prenotazioni.json"
-        url_clienti = "./dati/clienti.json"
-        url_pagamenti = "./dati/pagamenti.json"
+        url_prenotazioni = "/dati/prenotazioni.json"
+        url_clienti = "/dati/clienti.json"
+        url_pagamenti = "/dati/pagamenti.json"
 
         # Rimuovi la prenotazione dalla lista delle prenotazioni nel file JSON principale
         with open(url_prenotazioni, "r") as file:
@@ -81,11 +76,11 @@ class Prenotazione():
 
         # Aggiorna l'interfaccia utente per visualizzare le prenotazioni aggiornate
         from viste.viste_utente.visualizzaPrenotazioni import PrenotazioniView
-        self.vista = PrenotazioniView(p['cliente']['email'], p['cliente']['password'])
+        self.vista = PrenotazioniView(p['cliente'])
         self.vista.show()
 
     def get_dati(self):
-        with open(self.url, "r") as file:
+        with open(self.file, "r") as file:
             data = json.load(file)
             prenotazioni = data.get("prenotazioni", [])
             return prenotazioni
@@ -98,7 +93,7 @@ class Prenotazione():
         return stringa_random
 
     def aggiornaValori(self, nc, dataP, p, dI, dF, m, t):
-        with open(self.url, "r") as f:
+        with open(self.file, "r") as f:
             data = json.load(f)
             prenotazioni = data.get("prenotazioni", [])
             for prenotazione in prenotazioni:
@@ -108,7 +103,7 @@ class Prenotazione():
                     prenotazione["data_inizio"] = dI
                     prenotazione["data_fine"] = dF
                     prenotazione["tariffa"] = t
-            with open(self.url, "w") as f:
+            with open(self.file, "w") as f:
                 json.dump({"prenotazioni": prenotazioni}, f, indent=4)
 
     def controllo_assegnamento_mezzo(self, mezzo, data_inizio=None, data_fine=None):

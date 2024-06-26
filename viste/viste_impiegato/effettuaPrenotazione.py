@@ -6,12 +6,16 @@ from Attivita.pagamento import *
 from Attivita.cliente import Cliente
 import darkdetect
 
+from Servizio.auto import Auto
+from Servizio.furgone import Furgone
+from Servizio.moto import Moto
+from Servizio.van import Van
+
 
 class VistaEffettuaPrenotazioneImpiegato(QMainWindow):
-    def __init__(self, user, psw):
+    def __init__(self, impiegato):
         super().__init__()
-        self.user = user
-        self.psw = psw
+        self.impiegato = impiegato
 
         self.setWindowTitle("CarGreen")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
@@ -232,7 +236,7 @@ class VistaEffettuaPrenotazioneImpiegato(QMainWindow):
 
     def go_back(self):
         from viste. viste_impiegato.gestionePrenotazioni import VistaGestionePrenotazione
-        self.vista = VistaGestionePrenotazione(self.user, self.psw)
+        self.vista = VistaGestionePrenotazione(self.impiegato)
         self.vista.show()
         self.close()
 
@@ -254,11 +258,10 @@ class VistaEffettuaPrenotazioneImpiegato(QMainWindow):
                                               self.valori["tariffa"], self.valori["polizza"])
 
             pagamento.aggiungiPagamento("", prenotazione.__dict__, c)
-            cliente.set_prenotazioni_cliente(c["email"], c["password"], prenotazione.id)
+            cliente.set_prenotazioni_cliente(c, prenotazione.id)
             QMessageBox.information(None, "Prenotazione fatta", "Prenotazione salvata")
         else:
             QMessageBox.warning(self, "prenotazione", f"Il mezzo è già stato prenotato da {dI} a {dF}")
-
 
     def ora_corrente(self):
         now = datetime.now()
@@ -300,35 +303,29 @@ class VistaEffettuaPrenotazioneImpiegato(QMainWindow):
         self.valori["mezzo"] = self.scelta_mezzo_combobox.currentText()
 
     def cercaClienteByCF(self):
-        with open("dati/clienti.json") as f:
-            data = json.load(f)
-            clienti = data.get("clienti", [])
-            for i in clienti:
-                if(self.sceltaCliente.currentText() == i["codiceFiscale"]):
-                    return i
+        clienti = Cliente().get_dati()
+        for i in clienti:
+            if self.sceltaCliente.currentText() == i["codiceFiscale"]:
+                return i
 
     def cercaMezzo(self):
         if self.categoriaBox.currentText() == "auto":
-            with open("dati/auto.json") as f:
-                data = json.load(f)
-                for i in data:
-                    if self.scelta_mezzo_combobox.currentText() == i["produttore"] + " " + i["modello"]:
-                        return i
+            data = Auto().get_dati()
+            for i in data:
+                if self.scelta_mezzo_combobox.currentText() == i["produttore"] + " " + i["modello"]:
+                    return i
         elif self.categoriaBox.currentText() == "moto":
-            with open("dati/moto.json") as f:
-                data = json.load(f)
-                for i in data:
-                    if self.scelta_mezzo_combobox.currentText() == i["produttore"] + " " + i["modello"]:
-                        return i
+            data = Moto().get_dati()
+            for i in data:
+                if self.scelta_mezzo_combobox.currentText() == i["produttore"] + " " + i["modello"]:
+                    return i
         elif self.categoriaBox.currentText() == "van":
-            with open("dati/van.json") as f:
-                data = json.load(f)
-                for i in data:
-                    if self.scelta_mezzo_combobox.currentText() == i["produttore"] + " " + i["modello"]:
-                        return i
+            data = Van().get_dati()
+            for i in data:
+                if self.scelta_mezzo_combobox.currentText() == i["produttore"] + " " + i["modello"]:
+                    return i
         else:
-            with open("dati/furgoni.json") as f:
-                data = json.load(f)
-                for i in data:
-                    if self.scelta_mezzo_combobox.currentText() == i["produttore"] + " " + i["modello"]:
-                        return i
+            data = Furgone().get_dati()
+            for i in data:
+                if self.scelta_mezzo_combobox.currentText() == i["produttore"] + " " + i["modello"]:
+                    return i

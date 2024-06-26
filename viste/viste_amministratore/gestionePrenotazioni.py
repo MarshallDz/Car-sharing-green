@@ -56,9 +56,9 @@ class VistaGestionePrenotazione(QMainWindow):
         search_icon.setPixmap(icon)
         search_icon.setAlignment(Qt.AlignRight)
         self.search_edit = QLineEdit()
-        self.search_edit.setStyleSheet("max-width: 300px; max-height: 30px; border-radius: 15px; ")
+        self.search_edit.setStyleSheet("max-width: 300px; max-height: 40px; border-radius: 15px; ")
         if darkdetect.isDark():
-            self.search_edit.setStyleSheet("max-width: 300px; min-height: 60px; border-radius: 15px; "
+            self.search_edit.setStyleSheet("max-width: 300px; max-height: 40px; border-radius: 15px; "
                                            "background-color: #403F3F")
         self.search_edit.setPlaceholderText("cerca per nome")
         self.search_layout.addWidget(search_icon)

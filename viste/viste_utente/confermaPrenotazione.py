@@ -3,10 +3,9 @@ from PyQt5.QtCore import Qt
 import darkdetect
 
 class VistaConfermaPrenotazione(QMainWindow):
-    def __init__(self, user, psw,  data, mezzo, inizio, fine, tariffa, polizza):
+    def __init__(self, cliente,  data, mezzo, inizio, fine, tariffa, polizza):
         super().__init__()
-        self.user = user
-        self.psw = psw
+        self.cliente = cliente
         self.data = data
         self.mezzo = mezzo
         self.inizio = inizio
@@ -88,7 +87,7 @@ class VistaConfermaPrenotazione(QMainWindow):
 
     def go_home(self):
         from viste.viste_utente.home import VistaHome
-        self.vistaHome = VistaHome(self.user, self.psw)
+        self.vistaHome = VistaHome(self.cliente)
         self.vistaHome.show()
         self.close()
 

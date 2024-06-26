@@ -2,10 +2,9 @@ from datetime import datetime
 import json
 import random
 import string
-import os
 
 
-class Pagamento():
+class Pagamento:
     def __init__(self):
         self.codice = ""
         self.totale = ""
@@ -14,13 +13,7 @@ class Pagamento():
         self.cliente = ""
         self.statoPagamento = "da pagare"
 
-        # ottengo il path assoluto del file in cui salvare
-        absolute_path = os.path.dirname(__file__)
-        relative_path = "dati/pagamenti.json"
-        dir_list = absolute_path.split(os.sep)
-        dir_list.pop()
-        new_dir = os.sep.join(dir_list)
-        self.url = os.path.join(new_dir, relative_path)
+        self.file = "dati/pagamenti.json"
 
     def aggiungiPagamento(self, data, pren, cliente):
         self.codice = self.set_id()
@@ -32,12 +25,11 @@ class Pagamento():
         nuovoPagamento = self.__dict__.copy()
         nuovoPagamento.popitem()
         pagamenti.append(nuovoPagamento)
-        with open(self.url, "w") as f:
-            json.dump({"pagamenti":pagamenti}, f, indent=4)
+        self.writeData(pagamenti)
         return 1
 
     def get_dati(self):
-        with open(self.url, "r") as file:
+        with open(self.file, "r") as file:
             data = json.load(file)
             pagamenti = data.get("pagamenti", [])
             return pagamenti
@@ -65,7 +57,7 @@ class Pagamento():
             totale = 'da definire'
         return totale
 
-    def eliminaPagamento(self, p, user, psw):
+    def eliminaPagamento(self, p, cliente):
         pagamenti = self.get_dati()
 
         for i in pagamenti:
@@ -73,10 +65,13 @@ class Pagamento():
                 pagamenti['codice'].remove(i)
                 break
 
-        with open(self.url, 'w') as file:
-            json.dump(pagamenti, file, indent=4)
+        self.writeData(pagamenti)
 
         # Aggiorna l'interfaccia utente per visualizzare le prenotazioni aggiornate
         from viste.viste_impiegato.gestionePagamenti import VistaPagamentiImpiegato
-        self.vista = VistaPagamentiImpiegato(user, psw)
+        self.vista = VistaPagamentiImpiegato(cliente)
         self.vista.show()
+
+    def writeData(self, data):
+        with open(self.file, 'w') as file:
+            json.dump({"pagamenti": data}, file, indent=4)

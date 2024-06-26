@@ -9,10 +9,9 @@ import darkdetect
 
 
 class VistaEffettuaPrenotazione(QMainWindow):
-    def __init__(self, user, psw, mezzo):
+    def __init__(self, cliente, mezzo):
         super().__init__()
-        self.user = user
-        self.psw = psw
+        self.cliente = cliente
         self.mezzo = mezzo
 
         self.setWindowTitle("CarGreen")
@@ -102,7 +101,7 @@ class VistaEffettuaPrenotazione(QMainWindow):
                 self.oracampo2.addItems([f"{i}.00"])
         dlayout2.addWidget(self.oracampo2)
         self.oracampo2.currentIndexChanged.connect(self.update_valori)
-        self.valori["data_fine"] = self.datacampo2.date().toString(Qt.ISODate)  + " " + self.oracampo2.currentText()
+        self.valori["data_fine"] = self.datacampo2.date().toString(Qt.ISODate) + " " + self.oracampo2.currentText()
         form_layout.addLayout(dlayout2, 1, 1)
 
         self.filiale = QComboBox(self)
@@ -151,7 +150,7 @@ class VistaEffettuaPrenotazione(QMainWindow):
 
         bottom_layout = QHBoxLayout()
 
-        image = QPixmap(mezzo["URL_immagine"])
+        image = QPixmap(mezzo["immagine"])
         self.label = QLabel()
         self.label.setStyleSheet("margin-left: 20px")
         self.label.setPixmap(image.scaled(600, 800, Qt.KeepAspectRatio))
@@ -177,7 +176,7 @@ class VistaEffettuaPrenotazione(QMainWindow):
             if current_end_date <= new_start_date:
                 self.datacampo2.setDate(new_start_date.addDays(1))
 
-            # Re-populate oracampo1 if the start date is changed to the current date
+            # Ripopola oracampo1
             if not self.verifica_data_corrente():
                 self.oracampo1.clear()
                 for i in range(8, 21):
@@ -221,10 +220,9 @@ class VistaEffettuaPrenotazione(QMainWindow):
                 info = self.valori["data_fine"].split()
                 self.valori["data_fine"] = info[0]
 
-
     def go_back(self):
         from viste.viste_utente.prenotazione import VistaPrenotazione
-        self.vista = VistaPrenotazione(self.user, self.psw)
+        self.vista = VistaPrenotazione(self.cliente)
         self.vista.show()
         self.close()
 
@@ -234,26 +232,24 @@ class VistaEffettuaPrenotazione(QMainWindow):
                 QMessageBox.warning(self, "Attenzione", "Per favore compila tutti i campi.")
                 return
 
-        cliente = Cliente.get_dati(self, self.user, self.psw)
         prenotazione = Prenotazione()
         pagamento = Pagamento()
         c = Cliente()
         v, dI, dF = prenotazione.controllo_assegnamento_mezzo(self.mezzo, self.valori["data_inizio"], self.valori["data_fine"])
         if v:
-            prenotazione.aggiungiPrenotazione(cliente, datetime.now().strftime("%a %b %d %Y"), self.valori["data_inizio"],
+            prenotazione.aggiungiPrenotazione(self.cliente, datetime.now().strftime("%a %b %d %Y"), self.valori["data_inizio"],
                                               self.valori["data_fine"], self.mezzo, self.valori["filiale"],
                                               self.valori["tariffa"], self.valori["polizza"])
     
-            pagamento.aggiungiPagamento("", prenotazione.__dict__, cliente)
-            c.set_prenotazioni_cliente(self.user, self.psw, prenotazione.id)
-            self.vistaPrenotazione = VistaConfermaPrenotazione(self.user, self.psw, QDate.currentDate().toString(), self.mezzo,
+            pagamento.aggiungiPagamento("", prenotazione.__dict__, self.cliente)
+            c.set_prenotazioni_cliente(self.cliente, prenotazione.id)
+            self.vistaPrenotazione = VistaConfermaPrenotazione(self.cliente, QDate.currentDate().toString(), self.mezzo,
                                                                self.valori["data_inizio"], self.valori["data_fine"], self.valori["tariffa"],
                                                                self.valori["polizza"])
             self.vistaPrenotazione.show()
             self.close()
         else:
             QMessageBox.warning(self, "prenotazione", f"Il mezzo è già stato prenotato da {dI} a {dF}")
-
 
     def ora_corrente(self):
         now = datetime.now()

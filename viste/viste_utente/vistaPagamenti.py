@@ -8,10 +8,9 @@ import darkdetect
 
 
 class VistaPagamenti(QMainWindow):
-    def __init__(self, user, psw):
+    def __init__(self, cliente):
         super().__init__()
-        self.user = user
-        self.psw = psw
+        self.cliente = cliente
         self.setWindowTitle("CarGreen")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
         if darkdetect.isDark():
@@ -79,13 +78,11 @@ class VistaPagamenti(QMainWindow):
 
     def aggiungiPagamento(self):
         pagamenti = Pagamento().get_dati()
-        cliente = Cliente()
-        clienteCorrente = cliente.get_dati(self.user, self.psw)
         prenotazione = Prenotazione()
         prenotazioni = prenotazione.get_dati()
 
         for x in pagamenti:
-            if clienteCorrente['codiceFiscale'] == x['cliente']:
+            if self.cliente['codiceFiscale'] == x['cliente']:
                 info_box = QGroupBox(f"Informazioni sul pagamento {x['codice']}")
                 info_box.setStyleSheet("QGroupBox{max-height: 250px;}")
                 info_layout = QGridLayout(info_box)
@@ -94,10 +91,10 @@ class VistaPagamenti(QMainWindow):
                 prenotazione.setStyleSheet("font-size: 24px; ")
                 info_layout.addWidget(prenotazione, 1, 0)
 
-                infoCliente = QLabel(f"Cliente: {clienteCorrente['nome']} {clienteCorrente['cognome']} ")
+                infoCliente = QLabel(f"Cliente: {self.cliente['nome']} {self.cliente['cognome']} ")
                 infoCliente.setStyleSheet("font-size: 24px; ")
                 info_layout.addWidget(infoCliente)
-                if x['prenotazione'] in clienteCorrente['prenotazioni']:
+                if x['prenotazione'] in self.cliente['prenotazioni']:
                     for s in prenotazioni:
                         if x['prenotazione'] == s['id']:
                             mezzoPrenotato = QLabel(f"Mezzo prenotato: {s['mezzo']['produttore']} {s['mezzo']['modello']}")
@@ -118,6 +115,6 @@ class VistaPagamenti(QMainWindow):
 
     def go_back(self):
         from viste.viste_utente.home import VistaHome
-        self.vista = VistaHome(self.user, self.psw)
+        self.vista = VistaHome(self.cliente)
         self.vista.show()
         self.close()

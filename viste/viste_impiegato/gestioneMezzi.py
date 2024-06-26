@@ -9,10 +9,9 @@ import darkdetect
 
 
 class VistaMezziImpiegato(QMainWindow):
-    def __init__(self, user, psw):
+    def __init__(self, impiegato):
         super().__init__()
-        self.user = user
-        self.psw = psw
+        self.impiegato = impiegato
 
         self.setWindowTitle("CarGreen")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
@@ -61,9 +60,9 @@ class VistaMezziImpiegato(QMainWindow):
         search_icon.setPixmap(icon)
         search_icon.setAlignment(Qt.AlignRight)
         self.search_edit = QLineEdit()
-        self.search_edit.setStyleSheet("max-width: 300px; max-height: 30px; border-radius: 15px; ")
+        self.search_edit.setStyleSheet("max-width: 300px; max-height: 40px; border-radius: 15px; ")
         if darkdetect.isDark():
-            self.search_edit.setStyleSheet("max-width: 300px; min-height: 60px; border-radius: 15px; "
+            self.search_edit.setStyleSheet("max-width: 300px; max-height: 40px; border-radius: 15px; "
                                            "background-color: #403F3F")
         self.search_edit.setPlaceholderText("cerca per nome")
         self.search_layout.addWidget(search_icon)
@@ -88,7 +87,11 @@ class VistaMezziImpiegato(QMainWindow):
                                   "}"
                                   "QScrollBar::sub-line:vertical {"
                                   "    background: none;"
-                                  "}")
+                                  "}"
+                                  "QScrollArea {"
+                                  "border: none"
+                                  "}"
+                                  )
 
         scroll_area.setWidgetResizable(True)
         self.scroll_content = QWidget(scroll_area)
@@ -165,7 +168,7 @@ class VistaMezziImpiegato(QMainWindow):
 
     def go_back(self):
         from viste.viste_impiegato.pannelloControllo import VistaPannelloControllo
-        self.vista = VistaPannelloControllo(self.user, self.psw)
+        self.vista = VistaPannelloControllo(self.impiegato)
         self.vista.show()
         self.close()
 
