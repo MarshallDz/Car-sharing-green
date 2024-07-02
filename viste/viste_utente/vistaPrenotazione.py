@@ -10,10 +10,9 @@ import darkdetect
 
 
 class VistaPrenotazione(QMainWindow):
-    def __init__(self, user, psw):
+    def __init__(self, cliente):
         super().__init__()
-        self.user = user
-        self.psw = psw
+        self.cliente = cliente
 
         self.setWindowTitle("CarGreen")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
@@ -55,32 +54,32 @@ class VistaPrenotazione(QMainWindow):
         btn = QPushButton("Auto")
         btn.pressed.connect(self.go_auto)
         button_layout.addWidget(btn)
-        self.widget_auto = PrenotazioneAuto(self.user, self.psw, self)
+        self.widget_auto = PrenotazioneAuto(self.cliente, self)
         self.stacklayout.addWidget(self.widget_auto)
 
         btn = QPushButton("Moto")
         btn.pressed.connect(self.go_moto)
         button_layout.addWidget(btn)
-        self.widget_moto = PrenotazioneMoto(self.user, self.psw, self)
+        self.widget_moto = PrenotazioneMoto(self.cliente, self)
         self.stacklayout.addWidget(self.widget_moto)
 
         btn = QPushButton("Van")
         btn.pressed.connect(self.go_van)
         button_layout.addWidget(btn)
-        self.widget_van = PrenotazioneVan(self.user, self.psw, self)
+        self.widget_van = PrenotazioneVan(self.cliente, self)
         self.stacklayout.addWidget(self.widget_van)
 
         btn = QPushButton("Furgone")
         btn.pressed.connect(self.go_furgone)
         button_layout.addWidget(btn)
-        self.widget_furgone = PrenotazioneFurgone(self.user, self.psw, self)
+        self.widget_furgone = PrenotazioneFurgone(self.cliente, self)
         self.stacklayout.addWidget(self.widget_furgone)
 
         self.central_widget.setLayout(page_layout)
 
     def go_back(self):
         from viste.viste_utente.home import VistaHome
-        self.vista = VistaHome(self.user, self.psw)
+        self.vista = VistaHome(self.cliente)
         self.vista.show()
         self.close()
 

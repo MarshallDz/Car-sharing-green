@@ -1,12 +1,10 @@
-from datetime import datetime
-
 from Servizio.mezzo import Mezzo
-from Attivita.prenotazione import Prenotazione
-import json
 
 
 class Auto(Mezzo):
     def __init__(self):
+        self.file = "dati/auto.json"
+
         super().__init__()
         self.stato = "disponibile"
         self.tariffaOraria = ""
@@ -18,30 +16,26 @@ class Auto(Mezzo):
         try:
             auto = self.get_dati()
             nuovaAuto = self.__dict__.copy()
+            del nuovaAuto['file']
             auto.append(nuovaAuto)
-            with open("dati/auto.json", "w") as f:
-                json.dump(auto, f, indent=4)
+            self.writeData(self.file, auto)
 
-            print("Auto aggiunta correttamente.")
+            print("Auto aggiunta correttamente")
         except Exception as e:
             print(f"Si è verificato un errore: {e}")
 
-    def getInfoAuto(self):
-        info = self.getInfoMezzo()
-        info["tariffa_oraria"] = self.tariffaOraria
-        return info
+    def eliminaAuto(self, auto):
+        try:
+            self.eliminaMezzo(self.file, auto)
+            print("Auto eliminata correttamente")
+        except Exception as e:
+            print(f"Si è verificato un errore: {e}")
+
+    def cercaAuto(self, auto):
+        return self.searchById(self.file, auto)
 
     def get_dati(self):
-        file_path = "dati/auto.json"
-        with open(file_path) as file:
-            data = json.load(file)
-            return data
-
-    def eliminaAuto(self):
-        pass
-
-    def cercaAuto(self):
-        pass
+        return self.readData(self.file)
 
     def controllaPrenotazione(self):
         pass

@@ -109,7 +109,7 @@ class QRCodeGenerator(QMainWindow):
                 if finestra.windowTitle() == "CarGreen":
                     finestra.close()
             from viste.viste_utente.home import VistaHome
-            self.vista = VistaHome(self.email, self.passw)
+            self.vista = VistaHome(self.cliente)
             self.vista.show()
             self.close()
         else:
@@ -121,8 +121,7 @@ class QRCodeGenerator(QMainWindow):
         clienti = Cliente().get_dati()
         for cliente in clienti:
             if self.email_input.text().strip() == cliente["email"]:
-                self.email = cliente["email"]
-                self.passw = cliente["password"]
+                self.cliente = cliente
                 return True
         return False
 

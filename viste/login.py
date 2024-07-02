@@ -5,6 +5,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from Attivita.cliente import Cliente
 from Attivita.impiegato import Impiegato
+from Attivita.utilizzatore import Utilizzatore
 from viste.viste_amministratore.admin import VistaAmministrazione
 from viste.viste_utente.home import VistaHome
 from viste.viste_impiegato.pannelloControllo import VistaPannelloControllo
@@ -91,54 +92,36 @@ class VistaLogin(QMainWindow):
                 return
 
         trovato = False
+
         # controllo amministrazione
-        user = []
-        psw = []
-        file_path = "dati/amministratori.json"
-        with open(file_path, "r") as file:
+        with open("dati/amministratori.json", "r") as file:
             data = json.load(file)
-            for u in data["amministratori"]:
-                user.append(u["username"])
-            for p in data["amministratori"]:
-                psw.append(p["password"])
-
-        for u in user:
-            if u == data_to_match["email"]:
-                i = user.index(u)
-                if psw[i] == data_to_match["password"]:
-                    trovato = True
-                    self.vista_home = VistaAmministrazione()
-                    self.vista_home.show()
-                    self.close()
-                    break
-
-
-        # controllo login per cliente
-        if not trovato:
-            cliente = Cliente()
-            email_utente, password_utente = cliente.get_login()
-            for e in email_utente:
-                if e == data_to_match["email"]:
-                    i = email_utente.index(e)
-                    if password_utente[i] == data_to_match["password"]:
+            for u in data:
+                if u["username"] == data_to_match["email"]:
+                    if u["password"] == data_to_match["password"]:
                         trovato = True
-                        self.vista_home = VistaHome(e, password_utente[i])
+                        self.vista_home = VistaAmministrazione()
                         self.vista_home.show()
                         self.close()
                         break
 
+        # controllo login per cliente
+        if not trovato:
+            cliente = Cliente().verificaCliente(data_to_match["email"], data_to_match["password"])
+            if cliente:
+                trovato = True
+                self.vista_home = VistaHome(cliente)
+                self.vista_home.show()
+                self.close()
+
         # controllo login per impiegato
         if not trovato:
-            impiegato = Impiegato()
-            email_impiegato, password_impiegato = impiegato.get_login()
-            for e in email_impiegato:
-                if e == data_to_match["email"]:
-                    i = email_impiegato.index(e)
-                    if password_impiegato[i] == data_to_match["password"]:
-                        trovato = True
-                        self.vista_home = VistaPannelloControllo(e, password_impiegato[i])
-                        self.vista_home.show()
-                        self.close()
+            impiegato = Impiegato().verificaImpiegato(data_to_match["email"], data_to_match["password"])
+            if impiegato:
+                trovato = True
+                self.vista_home = VistaPannelloControllo(impiegato)
+                self.vista_home.show()
+                self.close()
 
         if not trovato:
             QMessageBox.warning(None, "Errore", "L'utente o la password sono errati! \nRiprova")

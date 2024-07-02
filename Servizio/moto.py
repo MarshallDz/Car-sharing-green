@@ -7,9 +7,11 @@ import json
 
 class Moto(Mezzo):
     def __init__(self):
+        self.file = "dati/moto.json"
+
         super().__init__()
-        self.tariffaOraria = ""
         self.stato = "disponibile"
+        self.tariffaOraria = ""
 
     def aggiungiMoto(self, url, t, prod, mod, anno, cv, cc, np, c, a, to):
         self.aggiungiMezzo(url, t, prod, mod, anno, cv, cc, np, c, a)
@@ -18,29 +20,26 @@ class Moto(Mezzo):
         try:
             moto = self.get_dati()
             nuovaMoto = self.__dict__.copy()
+            del nuovaMoto['file']
             moto.append(nuovaMoto)
-            with open("dati/moto.json", "w") as f:
-                json.dump(moto, f, indent=4)
+            self.writeData(self.file, moto)
 
-            print("Moto aggiunta correttamente.")
+            print("Moto aggiunta correttamente")
         except Exception as e:
             print(f"Si è verificato un errore: {e}")
 
-    def getInfoMoto(self):
-        info = self.getInfoMezzo()
-        info["tariffa_oraria"] = self.tariffaOraria
-        return info
+    def eliminaMoto(self, moto):
+        try:
+            self.eliminaMezzo(self.file, moto)
+            print("Moto eliminata correttamente")
+        except Exception as e:
+            print(f"Si è verificato un errore: {e}")
+
+    def cercaMoto(self, moto):
+        return self.searchById(self.file, moto)
 
     def get_dati(self):
-        file_path = "dati/moto.json"
-        with open(file_path) as file:
-            data = json.load(file)
-            return data
+        return self.readData(self.file)
 
-    def eliminaMoto(self):
-        pass
-
-    def cercaMoto(self):
-        pass
     def controllaPrenotazione(self):
         pass

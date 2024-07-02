@@ -4,28 +4,27 @@ from PyQt5 import QtGui
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import Qt
+
+from Servizio.auto import Auto
 from viste.viste_utente.effettua_prenotazione import VistaEffettuaPrenotazione
 
 
 class PrenotazioneAuto(QWidget):
-    def __init__(self, user, psw, s):
+    def __init__(self, cliente, s):
         super().__init__()
-        self.user = user
-        self.psw = psw
+        self.cliente = cliente
         self.shell = s
         self.layout = QVBoxLayout()
 
         mezzi = []
-        file_path = "dati/auto.json"
-        with open(file_path, "r") as file:
-            data = json.load(file)
-            chiavi = list(data[0].keys())
-            for auto in data:
-                valori = list(auto.values())
+        data = Auto().get_dati()
+        chiavi = list(data[0].keys())
+        for auto in data:
+            valori = list(auto.values())
 
-                for i in range(len(valori)):
-                    auto[chiavi[i]] = valori[i]
-                mezzi.append(auto)
+            for i in range(len(valori)):
+                auto[chiavi[i]] = valori[i]
+            mezzi.append(auto)
 
         scroll_area = QScrollArea()
         scroll_area.setStyleSheet("QScrollBar:vertical {"
@@ -129,6 +128,6 @@ class PrenotazioneAuto(QWidget):
         self.scroll_layout.addLayout(car_layout)
 
     def go_prenota(self, auto):
-        self.vista_prenotazione = VistaEffettuaPrenotazione(self.user, self.psw, auto)
+        self.vista_prenotazione = VistaEffettuaPrenotazione(self.cliente, auto)
         self.vista_prenotazione.show()
         self.shell.close()
