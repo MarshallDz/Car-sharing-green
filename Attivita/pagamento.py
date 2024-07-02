@@ -3,6 +3,8 @@ import json
 import random
 import string
 
+from PyQt5.QtCore import QDate, Qt
+
 
 class Pagamento:
     def __init__(self):
@@ -71,6 +73,14 @@ class Pagamento:
         from viste.viste_impiegato.gestionePagamenti import VistaPagamentiImpiegato
         self.vista = VistaPagamentiImpiegato(cliente)
         self.vista.show()
+
+    def verificaPagamento(self, p):
+        pagamenti = self.readData()
+        for pagamento in pagamenti:
+            if pagamento["codice"] == p["codice"]:
+                pagamento["statoPagamento"] = "pagato"
+                pagamento["dataPagamento"] = QDate.currentDate().toString(Qt.ISODate)
+        self.writeData(pagamenti)
 
     def writeData(self, data):
         with open(self.file, 'w') as file:

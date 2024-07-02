@@ -159,7 +159,10 @@ class VistaEffettuaPrenotazione(QMainWindow):
 
         self.alt = QLabel("La tua scelta: \n\n" + mezzo["produttore"] + " " + mezzo["modello"] + " " + mezzo["cavalli"] + " cv")
         self.alt.setStyleSheet("font-size: 25px")
+        info = QLabel("\n\n(potrai scegliere in seguito se pagare online o in sede al momento del ritiro)")
+        info.setStyleSheet("margin-top: 200px")
         bottom_layout.addWidget(self.alt)
+        bottom_layout.addWidget(info)
 
         self.page_layout.addLayout(bottom_layout)
 

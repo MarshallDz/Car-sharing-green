@@ -48,13 +48,15 @@ class VistaStatistiche(QMainWindow):
         self.central_layout.addLayout(title_layout)
 
         stats_layout = QGridLayout()
+        stats_layout.setSpacing(50)
+        stats_layout.setContentsMargins(10, 0, 10, 50)
         # numero prenotazioni al momento (divise per tipo veicolo)
         stats_layout.addWidget(stat1(), 0, 0)
         # numero prenotazioni per cliente
         stats_layout.addWidget(stat2(), 0, 1)
         # incassi totali
         stats_layout.addWidget(stat3(), 1, 0)
-        # numero veicoli disponibili al momento
+        # impiegati e relativo stipendio
         stats_layout.addWidget(stat4(), 1, 1)
         self.central_layout.addLayout(stats_layout)
 
