@@ -139,9 +139,9 @@ class VistaImpiegato(QMainWindow):
             for c in data:
                 if c["codiceFiscale"] == self.impiegato["codiceFiscale"]:
                     # Aggiorno i dati del cliente
-                    data["email"] = login["e-mail"]
-                    data["password"] = login["password"]
-                    data["cellulare"] = login["cellulare"]
+                    c["email"] = login["e-mail"]
+                    c["password"] = login["password"]
+                    c["cellulare"] = login["cellulare"]
 
             # Scrivi i dati aggiornati nel file JSON
             impiegato.writeData("dati/impiegati.json", data)

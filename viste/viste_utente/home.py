@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from viste.viste_utente.areacliente import VistaCliente
-from viste.viste_utente.prenotazione import VistaPrenotazione
+from viste.viste_utente.vistaPrenotazione import VistaPrenotazione
 from viste.viste_utente.visualizzaPrenotazioni import PrenotazioniView
 from viste.viste_utente.vistaPagamenti import VistaPagamenti
 from Attivita.cliente import Cliente

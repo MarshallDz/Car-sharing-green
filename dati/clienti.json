@@ -7,9 +7,7 @@
         "email": "user",
         "password": "user",
         "cellulare": "1231231230",
-        "prenotazioni": [
-            "l3Wzo7"
-        ],
+        "prenotazioni": [],
         "dataRegistrazione": "11012024"
     },
     {
@@ -20,13 +18,7 @@
         "email": "a",
         "password": "a",
         "cellulare": "333333334",
-        "prenotazioni": [
-            "OlkKWj",
-            "szsEG4",
-            "LYP8Vh",
-            "DMRCDI",
-            "7LIr5C"
-        ],
+        "prenotazioni": [],
         "dataRegistrazione": "22012024"
     }
 ]

@@ -36,8 +36,15 @@ class Mezzo:
             if m["telaio"] == mezzo.telaio:
                 if delete:
                     data.remove(m)
-                    self.writeData(file)
+                    self.writeData(file, data)
                 return 1
+
+    def setStato(self, stato):
+        if stato == "disponibile":
+            stato = "prenotato"
+        else:
+            stato = "disponibile"
+        return stato
 
     def writeData(self, file, data):
         with open(file, 'w') as file:

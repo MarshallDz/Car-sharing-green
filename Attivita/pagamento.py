@@ -21,18 +21,11 @@ class Pagamento:
         self.dataPagamento = data
         self.prenotazione = pren["id"]
         self.cliente = cliente['codiceFiscale']
-        pagamenti = self.get_dati()
+        pagamenti = self.readData()
         nuovoPagamento = self.__dict__.copy()
         nuovoPagamento.popitem()
         pagamenti.append(nuovoPagamento)
         self.writeData(pagamenti)
-        return 1
-
-    def get_dati(self):
-        with open(self.file, "r") as file:
-            data = json.load(file)
-            pagamenti = data.get("pagamenti", [])
-            return pagamenti
 
     def set_id(self):
         # Creazione di una stringa contenente lettere minuscole, lettere maiuscole e numeri
@@ -42,23 +35,30 @@ class Pagamento:
         return stringa_random
 
     def calcolaTotale(self, p):
-        if p["tariffa"] == "giornaliera":
+        if p["tariffa"] == "oraria":
             formato = "%Y-%m-%d %H.%M"
-            data_inizio = datetime.strptime(p["data_inizio"], formato).date()
-            data_fine = datetime.strptime(p["data_fine"], formato).date()
-            differenza = data_fine - data_inizio
-            ore = differenza.total_seconds() / 3600
-            totale = ore * int(p['mezzo']['tariffa_oraria'])
+            data1 = datetime.strptime(p["data_inizio"], formato)
+            data2 = datetime.strptime(p["data_fine"], formato)
+            differenza = data2 - data1
+            totale = int((differenza.total_seconds() / 3600)) * int(p["mezzo"]["tariffaOraria"])
             if p['polizza'] == 'rca':
                 totale += 30
             else:
                 totale += 50
         else:
-            totale = 'da definire'
+            formato = "%Y-%m-%d %H.%M"
+            data_inizio = datetime.strptime(p["data_inizio"], formato)
+            data_fine = datetime.strptime(p["data_fine"], formato)
+            differenza = (data_fine - data_inizio).days
+            totale = differenza * int(int(p['mezzo']['tariffaOraria'])*24*0.7)
+            if p['polizza'] == 'rca':
+                totale += 30
+            else:
+                totale += 50
         return totale
 
     def eliminaPagamento(self, p, cliente):
-        pagamenti = self.get_dati()
+        pagamenti = self.readData()
 
         for i in pagamenti:
             if i['cocice'] == p["codice"]:
@@ -74,4 +74,9 @@ class Pagamento:
 
     def writeData(self, data):
         with open(self.file, 'w') as file:
-            json.dump({"pagamenti": data}, file, indent=4)
+            json.dump(data, file, indent=4)
+
+    def readData(self):
+        with open(self.file, "r") as file:
+            data = json.load(file)
+            return data

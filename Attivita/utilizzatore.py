@@ -43,7 +43,7 @@ class Utilizzatore:
                 if delete:
                     data.remove(c)
                     self.writeData(file, data)
-                return 1
+                return c
 
     def verify_login(self, file, user, password):
         with open(file, "r") as file:

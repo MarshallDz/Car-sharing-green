@@ -8,11 +8,10 @@ from Attivita.utilizzatore import Utilizzatore
 
 class Impiegato(Utilizzatore):
     def __init__(self):
-        self.file = "dati/impiegati.json"
-
         super().__init__()
         self.dataAssunzione = ""
         self.stipendio = ""
+        self.file = "dati/impiegati.json"
 
     def aggiungiImpiegato(self, codiceFiscale, nome, cognome, dataNascita, email, password, cellulare, stipendio, dataAssunzione):
         self.aggiungiUtilizzatore(codiceFiscale, nome, cognome, dataNascita, email, password, cellulare)

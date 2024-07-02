@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QLa
 from PyQt5.QtCore import Qt
 import darkdetect
 
+
 class VistaConfermaPrenotazione(QMainWindow):
     def __init__(self, cliente,  data, mezzo, inizio, fine, tariffa, polizza):
         super().__init__()
@@ -77,10 +78,10 @@ class VistaConfermaPrenotazione(QMainWindow):
         polizza_label.setStyleSheet("font-size: 24px")
         info_layout.addWidget(polizza_label)
 
-        back_button = QPushButton("Indietro")
+        back_button = QPushButton("Torna alla home")
         back_button.clicked.connect(self.go_home)
-        back_button.setStyleSheet("width: 150px; max-width: 150px; background-color: #F85959; border-radius: 15px; color: black; "
-            "padding: 10px; margin-bottom: 20px")
+        back_button.setStyleSheet("width: 150px; max-width: 150px; background-color: #F85959; border-radius: 15px; "
+                                  "color: black; padding: 10px; margin-bottom: 20px")
         self.central_layout.addWidget(back_button, 2, 0, alignment=Qt.AlignHCenter | Qt.AlignBottom)
         # Aggiungi il box al layout centrale
         self.central_layout.addWidget(info_box, 1, 0, alignment=Qt.AlignTop)

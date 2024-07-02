@@ -1,10 +1,11 @@
 import json
-import os
 import random
 import string
 
+from Attivita.pagamento import Pagamento
 
-class Prenotazione():
+
+class Prenotazione:
     def __init__(self):
         self.id = ""
         self.cliente = ""
@@ -29,34 +30,30 @@ class Prenotazione():
         self.tariffa = tariffa
         self.polizza = polizza
 
-        prenotazioni = self.get_dati()
+        prenotazioni = self.readData()
         nuovaPrenotazione = self.__dict__.copy()
         nuovaPrenotazione.popitem()
         prenotazioni.append(nuovaPrenotazione)
-        with open(self.file, "w") as f:
-            json.dump({"prenotazioni": prenotazioni}, f, indent=4)
+        self.writeData(prenotazioni)
         self.aggiorna_stato_mezzo()
 
     def eliminaPrenotazione(self, p):
-        url_prenotazioni = "/dati/prenotazioni.json"
-        url_clienti = "/dati/clienti.json"
-        url_pagamenti = "/dati/pagamenti.json"
+        url_clienti = "dati/clienti.json"
+        url_pagamenti = "dati/pagamenti.json"
 
         # Rimuovi la prenotazione dalla lista delle prenotazioni nel file JSON principale
-        with open(url_prenotazioni, "r") as file:
-            data_prenotazioni = json.load(file)
+        data_prenotazioni = self.readData()
 
-        if p in data_prenotazioni['prenotazioni']:
-            data_prenotazioni['prenotazioni'].remove(p)
+        if p in data_prenotazioni:
+            data_prenotazioni.remove(p)
 
-        with open(url_prenotazioni, "w") as file:
-            json.dump(data_prenotazioni, file, indent=4)
+        self.writeData(data_prenotazioni)
 
         # Rimuovi la prenotazione dalla lista delle prenotazioni nel file JSON del cliente
         with open(url_clienti, "r") as file:
             data_clienti = json.load(file)
 
-        for cliente_data in data_clienti["clienti"]:
+        for cliente_data in data_clienti:
             if cliente_data['email'] == p['cliente']['email'] and cliente_data['password'] == p['cliente']['password']:
                 if 'prenotazioni' in cliente_data:
                     cliente_data['prenotazioni'].remove(p['id'])
@@ -66,24 +63,20 @@ class Prenotazione():
             json.dump(data_clienti, file, indent=4)
 
         # Rimuovi il pagamento associato alla prenotazione dalla lista dei pagamenti nel file JSON
-        with open(url_pagamenti, "r") as file:
-            data_pagamenti = json.load(file)
+        data_pagamenti = Pagamento().readData()
 
-        updated_pagamenti = [pagamento for pagamento in data_pagamenti['pagamenti'] if pagamento['prenotazione'] != p['id']]
+        updated_pagamenti = [pagamento for pagamento in data_pagamenti if pagamento['prenotazione'] != p['id']]
 
-        with open(url_pagamenti, "w") as file:
-            json.dump({"pagamenti": updated_pagamenti}, file, indent=4)
+        Pagamento().writeData(updated_pagamenti)
+
+        # Resetta lo stato del mezzo a disponibile
+        self.mezzo = p["mezzo"]
+        self.aggiorna_stato_mezzo(True)
 
         # Aggiorna l'interfaccia utente per visualizzare le prenotazioni aggiornate
         from viste.viste_utente.visualizzaPrenotazioni import PrenotazioniView
         self.vista = PrenotazioniView(p['cliente'])
         self.vista.show()
-
-    def get_dati(self):
-        with open(self.file, "r") as file:
-            data = json.load(file)
-            prenotazioni = data.get("prenotazioni", [])
-            return prenotazioni
 
     def set_id(self):
         # Creazione di una stringa contenente lettere minuscole, lettere maiuscole e numeri
@@ -93,21 +86,18 @@ class Prenotazione():
         return stringa_random
 
     def aggiornaValori(self, nc, dataP, p, dI, dF, m, t):
-        with open(self.file, "r") as f:
-            data = json.load(f)
-            prenotazioni = data.get("prenotazioni", [])
-            for prenotazione in prenotazioni:
-                if nc[0] == prenotazione["cliente"]["nome"] and nc[1] == prenotazione["cliente"]["cognome"]:
-                    prenotazione["data_prenotazione"] = dataP
-                    prenotazione["polizza"] = p
-                    prenotazione["data_inizio"] = dI
-                    prenotazione["data_fine"] = dF
-                    prenotazione["tariffa"] = t
-            with open(self.file, "w") as f:
-                json.dump({"prenotazioni": prenotazioni}, f, indent=4)
+        data = self.readData()
+        for prenotazione in data:
+            if nc[0] == prenotazione["cliente"]["nome"] and nc[1] == prenotazione["cliente"]["cognome"]:
+                prenotazione["data_prenotazione"] = dataP
+                prenotazione["polizza"] = p
+                prenotazione["data_inizio"] = dI
+                prenotazione["data_fine"] = dF
+                prenotazione["tariffa"] = t
+        self.writeData(data)
 
     def controllo_assegnamento_mezzo(self, mezzo, data_inizio=None, data_fine=None):
-        prenotazioni = self.get_dati()
+        prenotazioni = self.readData()
         validita = True
         inizio = None
         fine = None
@@ -123,32 +113,44 @@ class Prenotazione():
                     fine = prenotazione["data_fine"]
         return validita, inizio, fine
 
-    def aggiorna_stato_mezzo(self):
+    def aggiorna_stato_mezzo(self, el=False):
         from Servizio.auto import Auto
         from Servizio.moto import Moto
         from Servizio.van import Van
         from Servizio.furgone import Furgone
+        url_auto = "dati/auto.json"
+        url_moto = "dati/moto.json"
+        url_van = "dati/van.json"
+        url_fur = "dati/furgoni.json"
         auto = Auto().get_dati()
         moto = Moto().get_dati()
         van = Van().get_dati()
         fur = Furgone().get_dati()
+        # per come è costruita p, l'if serve a verificare se la chiamata della funzione arriva da eliminaPrenotazione
+        if el:
+            self.mezzo["stato"] = "prenotato"
         for a in auto:
             if self.mezzo == a:
-                a["stato"] = "prenotato"
-                with open("dati/auto.json", "w") as f:
-                    json.dump(auto, f, indent=4)
-        for a in moto:
-            if self.mezzo == a:
-                a["stato"] = "prenotato"
-                with open("dati/moto.json", "w") as f:
-                    json.dump(moto, f, indent=4)
-        for a in van:
-            if self.mezzo == a:
-                a["stato"] = "prenotato"
-                with open("dati/van.json", "w") as f:
-                    json.dump(van, f, indent=4)
-        for a in fur:
-            if self.mezzo == a:
-                a["stato"] = "prenotato"
-                with open("dati/fur.json", "w") as f:
-                    json.dump(fur, f, indent=4)
+                a["stato"] = Auto().setStato(self.mezzo["stato"])
+            Auto().writeData(url_auto, auto)
+        for m in moto:
+            if self.mezzo == m:
+                m["stato"] = Moto().setStato(self.mezzo["stato"])
+            Moto().writeData(url_moto, moto)
+        for v in van:
+            if self.mezzo == v:
+                v["stato"] = Van().setStato(self.mezzo["stato"])
+            Van().writeData(url_van, van)
+        for f in fur:
+            if self.mezzo == f:
+                f["stato"] = Furgone().setStato(self.mezzo["stato"])
+            Furgone().writeData(url_fur, fur)
+
+    def writeData(self, data):
+        with open(self.file, 'w') as file:
+            json.dump(data, file, indent=4)
+
+    def readData(self):
+        with open(self.file, "r") as file:
+            data = json.load(file)
+            return data

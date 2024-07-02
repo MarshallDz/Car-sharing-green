@@ -1,10 +1,12 @@
 import darkdetect
 from PyQt5.QtCore import QSize, Qt
-from PyQt5.QtGui import QIcon, QPixmap
-from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, \
-    QLineEdit, QGridLayout
+from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QGridLayout
 
-# numero prenotazioni al momento (divise per veicolo), numero prenotazioni per cliente, incassi totali, numero veicoli disponibili al momento
+from viste.viste_amministratore.stat1 import stat1
+from viste.viste_amministratore.stat2 import stat2
+from viste.viste_amministratore.stat3 import stat3
+from viste.viste_amministratore.stat4 import stat4
 
 
 class VistaStatistiche(QMainWindow):
@@ -46,10 +48,15 @@ class VistaStatistiche(QMainWindow):
         self.central_layout.addLayout(title_layout)
 
         stats_layout = QGridLayout()
-        stats_layout.addWidget()
-        stats_layout.addWidget()
-        stats_layout.addWidget()
-        stats_layout.addWidget()
+        # numero prenotazioni al momento (divise per tipo veicolo)
+        stats_layout.addWidget(stat1(), 0, 0)
+        # numero prenotazioni per cliente
+        stats_layout.addWidget(stat2(), 0, 1)
+        # incassi totali
+        stats_layout.addWidget(stat3(), 1, 0)
+        # numero veicoli disponibili al momento
+        stats_layout.addWidget(stat4(), 1, 1)
+        self.central_layout.addLayout(stats_layout)
 
     def go_back(self):
         from viste.viste_amministratore.admin import VistaAmministrazione

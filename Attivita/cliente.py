@@ -1,6 +1,5 @@
 import datetime
-import json
-from PyQt5.QtWidgets import QWidget, QMessageBox
+from PyQt5.QtWidgets import QMessageBox
 from Attivita.utilizzatore import Utilizzatore
 from Attivita.pagamento import Pagamento
 from Attivita.prenotazione import Prenotazione
@@ -9,11 +8,10 @@ from Attivita.prenotazione import Prenotazione
 class Cliente(Utilizzatore):
 
     def __init__(self):
-        self.file = "dati/clienti.json"
-
         super().__init__()
         self.prenotazioni = []
         self.dataRegistrazione = ""
+        self.file = "dati/clienti.json"
 
     def aggiungiCliente(self, cF, no, cog, datN, em, pas, cel):
         self.aggiungiUtilizzatore(cF, no, cog, datN, em, pas, cel)
@@ -39,7 +37,7 @@ class Cliente(Utilizzatore):
         lista_prenotazioni = []
         file_path = "dati/prenotazioni.json"
         data = self.readData(file_path)
-        for value in data['prenotazioni']:
+        for value in data:
             if value["cliente"]['codiceFiscale'] == cf:
                 lista_prenotazioni.append(value)
 
@@ -50,8 +48,7 @@ class Cliente(Utilizzatore):
 
     def set_prenotazioni_cliente(self, cliente, idp):
         # Carica i dati dei clienti dal file JSON
-        with open(self.file, "r") as file:
-            data = json.load(file)
+        data = self.readData(self.file)
 
         # Cerca il cliente specifico usando il suo codice fiscale
         for c in data:
@@ -63,7 +60,7 @@ class Cliente(Utilizzatore):
         # Scrivi i dati aggiornati nel file JSON
         self.writeData(self.file, data)
 
-    def verificaCliente (self, user, password):
+    def verificaCliente(self, user, password):
         return self.verify_login(self.file, user, password)
 
     def eliminaCliente(self, cliente):
@@ -74,33 +71,27 @@ class Cliente(Utilizzatore):
 
     def aggiornaValori(self, cc, cf, n, c, dN, e, cel):
         # aggiorno i valori del cliente
-        with open(self.file, "r") as f:
-            data = json.load(f)
-            clienti = data.get("clienti", [])
-            for cliente in clienti:
-                if cc["codiceFiscale"] == cliente["codiceFiscale"]:
-                    cliente["codiceFiscale"] = cf
-                    cliente["nome"] = n
-                    cliente["cognome"] = c
-                    cliente["dataNascita"] = dN
-                    cliente["email"] = e
-                    cliente["cellulare"] = cel
-            with open(self.url, "w") as f:
-                json.dump({"clienti": clienti}, f, indent=4)
+        data = self.readData(self.file)
+        for cliente in data:
+            if cc["codiceFiscale"] == cliente["codiceFiscale"]:
+                cliente["codiceFiscale"] = cf
+                cliente["nome"] = n
+                cliente["cognome"] = c
+                cliente["dataNascita"] = dN
+                cliente["email"] = e
+                cliente["cellulare"] = cel
+        self.writeData(self.file, data)
+
         # aggiorno il codice fiscale anche relativo ai pagamenti e prenotazione del cliente
-        pagamento = Pagamento()
-        pagamenti = pagamento.get_dati()
+        pagamenti = Pagamento().readData()
         for x in pagamenti:
             if cc["codiceFiscale"] == x["cliente"]:
                 x["cliente"] = cf
-        with open("dati/pagamenti.json", "w") as f:
-            json.dump({"pagamenti":pagamenti}, f, indent=4)
+        Pagamento().writeData(pagamenti)
 
-            prenotazione = Prenotazione()
-            prenotazioni = prenotazione.get_dati()
-            for x in prenotazioni:
-                if cc["codiceFiscale"] == x["cliente"]["codiceFiscale"]:
-                    x["cliente"]["codiceFiscale"] = cf
-            with open("dati/prenotazioni.json", "w") as f:
-                json.dump({"prenotazioni": prenotazioni}, f, indent=4)
+        prenotazioni = Prenotazione().readData()
+        for x in prenotazioni:
+            if cc["codiceFiscale"] == x["cliente"]["codiceFiscale"]:
+                x["cliente"]["codiceFiscale"] = cf
+        Prenotazione().writeData(prenotazioni)
 

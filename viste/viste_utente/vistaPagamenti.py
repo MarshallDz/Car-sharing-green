@@ -77,9 +77,8 @@ class VistaPagamenti(QMainWindow):
         self.aggiungiPagamento()
 
     def aggiungiPagamento(self):
-        pagamenti = Pagamento().get_dati()
-        prenotazione = Prenotazione()
-        prenotazioni = prenotazione.get_dati()
+        pagamenti = Pagamento().readData()
+        prenotazioni = Prenotazione().readData()
 
         for x in pagamenti:
             if self.cliente['codiceFiscale'] == x['cliente']:
@@ -100,7 +99,7 @@ class VistaPagamenti(QMainWindow):
                             mezzoPrenotato = QLabel(f"Mezzo prenotato: {s['mezzo']['produttore']} {s['mezzo']['modello']}")
                             mezzoPrenotato.setStyleSheet("font-size: 24px; ")
                             info_layout.addWidget(mezzoPrenotato)
-                infoTotale = QLabel(f"Totale da pagare: {x['totale']} ")
+                infoTotale = QLabel(f"Totale da pagare: {x['totale']} €")
                 infoTotale.setStyleSheet("font-size: 24px; ")
                 info_layout.addWidget(infoTotale)
 
