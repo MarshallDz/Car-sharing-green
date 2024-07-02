@@ -1,1 +1,10 @@
-[]
+[
+    {
+        "codice": "dynJRm",
+        "totale": 450,
+        "dataPagamento": "2024-07-02",
+        "prenotazione": "D3ku0L",
+        "cliente": "abcdefghlmnoppop",
+        "statoPagamento": "pagato"
+    }
+]

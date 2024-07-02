@@ -92,25 +92,49 @@ class VistaPagamenti(QMainWindow):
 
                 infoCliente = QLabel(f"Cliente: {self.cliente['nome']} {self.cliente['cognome']} ")
                 infoCliente.setStyleSheet("font-size: 24px; ")
-                info_layout.addWidget(infoCliente)
+                info_layout.addWidget(infoCliente, 2, 0)
+
                 if x['prenotazione'] in self.cliente['prenotazioni']:
                     for s in prenotazioni:
                         if x['prenotazione'] == s['id']:
                             mezzoPrenotato = QLabel(f"Mezzo prenotato: {s['mezzo']['produttore']} {s['mezzo']['modello']}")
                             mezzoPrenotato.setStyleSheet("font-size: 24px; ")
-                            info_layout.addWidget(mezzoPrenotato)
+                            info_layout.addWidget(mezzoPrenotato, 3, 0)
+
                 infoTotale = QLabel(f"Totale da pagare: {x['totale']} €")
                 infoTotale.setStyleSheet("font-size: 24px; ")
-                info_layout.addWidget(infoTotale)
+                info_layout.addWidget(infoTotale, 4, 0)
 
                 statoPagamento = QLabel(f"Stato pagamento: {x['statoPagamento']} ")
                 statoPagamento.setStyleSheet("font-size: 24px; ")
-                info_layout.addWidget(statoPagamento)
+                info_layout.addWidget(statoPagamento, 5, 0)
                 if x['statoPagamento'] == 'pagato':
                     dataPagamento = QLabel(f"data pagamento: {x['dataPagamento']} ")
                     dataPagamento.setStyleSheet("font-size: 24px; ")
                     info_layout.addWidget(dataPagamento)
+                else:
+                    paga_button = QPushButton("Paga online")
+                    paga_button.setStyleSheet("max-width: 200px; max-height: 50px; background-color: #6AFE67; "
+                                              "border-radius: 15px; color: black; padding: 10px")
+                    paga_button.clicked.connect(lambda: self.paga(x))
+                    info_layout.addWidget(paga_button, 4, 2)
                 self.scroll_layout.addWidget(info_box)
+
+    def paga(self, p):
+        Pagamento().verificaPagamento(p)
+        QMessageBox.information(self, 'Pagamento accettato', 'Il pagamento è andato a buon fine!', QMessageBox.Ok)
+        self.aggiorna_vista()
+
+    def aggiorna_vista(self):
+        # Rimuovi tutti i widget dalla scroll_layout
+        while self.scroll_layout.count():
+            item = self.scroll_layout.takeAt(0)
+            widget = item.widget()
+            if widget:
+                widget.deleteLater()
+
+        # Ora puoi chiamare nuovamente il metodo per aggiungere i widget aggiornati
+        self.aggiungiPagamento()
 
     def go_back(self):
         from viste.viste_utente.home import VistaHome
