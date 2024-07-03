@@ -8,10 +8,11 @@ import darkdetect
 
 
 class VistaPagamentiImpiegato(QMainWindow):
-    def __init__(self, user, psw):
+    def __init__(self, impiegato):
         super().__init__()
-        self.user = user
-        self.psw = psw
+
+        self.impiegato = impiegato
+
         self.setWindowTitle("CarGreen")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
         if darkdetect.isDark():
@@ -20,34 +21,53 @@ class VistaPagamentiImpiegato(QMainWindow):
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
 
-        central_layout = QVBoxLayout()
+        self.central_layout = QVBoxLayout()
 
-        title_layout = QVBoxLayout()
-        title_layout.setAlignment(Qt.AlignTop | Qt.AlignCenter)
+        title_layout = QHBoxLayout()
 
-        self.central_widget.setLayout(central_layout)
+        self.central_widget.setLayout(self.central_layout)
+
+        back_button = QPushButton()
+        back_button.setStyleSheet("max-width: 100px; border: none")
+        back_button.setIcon(QIcon("viste/Icone/varie/back.png"))
+        back_button.setIconSize(QSize(50, 50))
+        back_button.clicked.connect(self.go_back)
+        title_layout.addWidget(back_button)
 
         self.title_label = QLabel("Lista dei pagamenti")
-        self.title_font = QFont("Arial", 42, QFont.Bold)
+        self.title_font = self.title_label.font()
+        self.title_font.setPointSize(42)
+        self.title_font.setBold(True)
         self.title_label.setFont(self.title_font)
         self.title_label.adjustSize()
-
+        self.title_label.setAlignment(Qt.AlignCenter)
         title_layout.addWidget(self.title_label)
-        central_layout.addLayout(title_layout)
+
+        ghost_button = QPushButton()
+        ghost_button.setStyleSheet("max-width: 100px; border: none")
+        title_layout.addWidget(ghost_button)
+
+        self.central_layout.addLayout(title_layout)
+
         # Aggiungi la barra di ricerca in alto a destra
         self.search_layout = QHBoxLayout()
         self.search_layout.setAlignment(Qt.AlignRight | Qt.AlignTop)
-
-        self.search_label = QLabel("Cerca per nome cliente:")
-        self.search_layout.addWidget(self.search_label)
-
+        search_icon = QLabel()
+        icon = QPixmap("viste/Icone/varie/search.png")
+        icon.setDevicePixelRatio(10)
+        search_icon.setPixmap(icon)
+        search_icon.setAlignment(Qt.AlignRight)
         self.search_edit = QLineEdit()
-        self.search_edit.setPlaceholderText("Inserisci il nome del cliente")
+        self.search_edit.setStyleSheet("max-width: 300px; max-height: 40px; border-radius: 15px; ")
+        if darkdetect.isDark():
+            self.search_edit.setStyleSheet("max-width: 300px; max-height: 40px; border-radius: 15px; "
+                                           "background-color: #403F3F")
+        self.search_edit.setPlaceholderText("cerca per nome")
+        self.search_layout.addWidget(search_icon)
         self.search_layout.addWidget(self.search_edit)
-
         self.search_edit.textChanged.connect(self.search_pagamenti)
+        self.central_layout.addLayout(self.search_layout)
 
-        central_layout.addLayout(self.search_layout)
         scroll_area = QScrollArea()
         scroll_area.setStyleSheet("QScrollBar:vertical {"
                                   "    border: none;"
@@ -65,29 +85,25 @@ class VistaPagamentiImpiegato(QMainWindow):
                                   "}"
                                   "QScrollBar::sub-line:vertical {"
                                   "    background: none;"
-                                  "}")
+                                  "}"
+                                  "QScrollArea {"
+                                  "border: none"
+                                  "}"
+                                  )
 
         scroll_area.setWidgetResizable(True)
         self.scroll_content = QWidget(scroll_area)
         scroll_area.setWidget(self.scroll_content)
         self.scroll_layout = QVBoxLayout(self.scroll_content)
 
-        central_layout.addWidget(scroll_area)
+        self.central_layout.addWidget(scroll_area)
 
         self.aggiungiPagamento()
 
-        back_button = QPushButton("Indietro")
-        back_button.clicked.connect(self.go_back)
-        back_button.setStyleSheet("width: 150px; max-width: 150px; background-color: #F85959; border-radius: 15px; color: black; "
-                                  "padding: 10px; margin-bottom: 20px")
-        central_layout.addWidget(back_button, alignment=Qt.AlignHCenter | Qt.AlignBottom)
-
     def aggiungiPagamento(self):
-        pagamenti = Pagamento().get_dati()
-        cliente = Cliente()
-        clienti = cliente.get_dati()
-        prenotazione = Prenotazione()
-        prenotazioni = prenotazione.get_dati()
+        pagamenti = Pagamento().readData()
+        clienti = Cliente().get_dati()
+        prenotazioni = Prenotazione().readData()
 
         for x in pagamenti:
             info_box = QGroupBox(f"Informazioni sul pagamento {x['codice']}")
@@ -129,7 +145,7 @@ class VistaPagamentiImpiegato(QMainWindow):
 
     def go_back(self):
         from viste.viste_impiegato.pannelloControllo import VistaPannelloControllo
-        self.vista = VistaPannelloControllo(self.user, self.psw)
+        self.vista = VistaPannelloControllo(self.impiegato)
         self.vista.show()
         self.close()
 
@@ -155,7 +171,6 @@ class VistaPagamentiImpiegato(QMainWindow):
                                     QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
 
         if reply == QMessageBox.Yes:
-            pagamento.eliminaPagamento(p, self.user, self.psw)
-        if reply == QMessageBox.Yes:
+            pagamento.eliminaPagamento(p, self.impiegato)
             QMessageBox.information(self, 'Disdetta Confermata', 'Il pagamento è stato eliminato con successo.', QMessageBox.Ok)
         self.go_back()

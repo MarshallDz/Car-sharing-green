@@ -1,67 +1,26 @@
-{
-    "clienti": [
-        {
-            "codiceFiscale": "abcdefghlmnoppop",
-            "nome": "edo",
-            "cognome": "seve",
-            "dataNascita": "2003-01-26",
-            "email": "user",
-            "password": "admin",
-            "cellulare": "1231231239",
-            "prenotazioni": [],
-            "dataRegistrazione": "11012024"
-        },
-        {
-            "codiceFiscale": "dfsfsfgaesgfsagf",
-            "nome": "adsfdsaf",
-            "cognome": "adsfdasf",
-            "dataNascita": "2024-01-22",
-            "email": "aergag",
-            "password": "gsfdgs",
-            "cellulare": "0123456789",
-            "prenotazioni": [
-                "sCa50Y"
-            ],
-            "dataRegistrazione": "22012024"
-        },
-        {
-            "codiceFiscale": "mrzmhl02h20g157g",
-            "nome": "michelon",
-            "cognome": "micheloni",
-            "dataNascita": "2024-01-22",
-            "email": "a",
-            "password": "a",
-            "cellulare": "333333334",
-            "prenotazioni": [
-                "OlkKWj",
-                "szsEG4",
-                "LYP8Vh",
-                "DMRCDI",
-                "7LIr5C"
-            ],
-            "dataRegistrazione": "22012024"
-        },
-        {
-            "codiceFiscale": "aaaaaaaaaaaaaaaa",
-            "nome": "a",
-            "cognome": "a",
-            "dataNascita": "2024-04-26",
-            "email": "a",
-            "password": "a",
-            "cellulare": "1234567890",
-            "prenotazioni": [],
-            "dataRegistrazione": "26042024"
-        },
-        {
-            "codiceFiscale": "CF123456",
-            "nome": "John",
-            "cognome": "Doe",
-            "dataNascita": "1990-01-01",
-            "email": "john@example.com",
-            "password": "password",
-            "cellulare": "1234567890",
-            "prenotazioni": [],
-            "dataRegistrazione": "30042024"
-        }
-    ]
-}
+[
+    {
+        "codiceFiscale": "abcdefghlmnoppop",
+        "nome": "edo",
+        "cognome": "seve",
+        "dataNascita": "2003-01-26",
+        "email": "user",
+        "password": "user",
+        "cellulare": "1231231230",
+        "prenotazioni": [
+            "D3ku0L"
+        ],
+        "dataRegistrazione": "11012024"
+    },
+    {
+        "codiceFiscale": "mrzmhl02h20g157g",
+        "nome": "michelon",
+        "cognome": "micheloni",
+        "dataNascita": "2024-01-22",
+        "email": "a",
+        "password": "a",
+        "cellulare": "333333334",
+        "prenotazioni": [],
+        "dataRegistrazione": "22012024"
+    }
+]

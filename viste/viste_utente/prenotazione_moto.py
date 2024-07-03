@@ -8,10 +8,9 @@ from viste.viste_utente.effettua_prenotazione import VistaEffettuaPrenotazione
 
 
 class PrenotazioneMoto(QWidget):
-    def __init__(self, user, psw, s):
+    def __init__(self, cliente, s):
         super().__init__()
-        self.user = user
-        self.psw = psw
+        self.cliente = cliente
         self.shell = s
         self.layout = QVBoxLayout()
 
@@ -93,7 +92,7 @@ class PrenotazioneMoto(QWidget):
             car_info_layout.addWidget(label_name, row, col * 2)
             car_info_layout.addWidget(value_label, row, col * 2 + 1)
 
-        tariffaLabel = QLabel(f"A partire da {moto['tariffa_oraria']}€ ad ora \n oppure  {int(int(moto['tariffa_oraria']) * 24 * 0.7)}€ al giorno")
+        tariffaLabel = QLabel(f"A partire da {moto['tariffaOraria']}€ ad ora \n oppure  {int(int(moto['tariffaOraria']) * 24 * 0.7)}€ al giorno")
         tariffaLabel.setStyleSheet("border: 0px")
         myFont = QtGui.QFont()
         myFont.setBold(True)
@@ -113,7 +112,7 @@ class PrenotazioneMoto(QWidget):
         car_layout = QHBoxLayout()
         car_layout.setAlignment(Qt.AlignTop)
 
-        pixmap = QPixmap(moto["URL_immagine"])
+        pixmap = QPixmap(moto["immagine"])
         if not pixmap.isNull():
             label = QLabel()
             label.setStyleSheet("margin-left: 20px;")
@@ -132,6 +131,6 @@ class PrenotazioneMoto(QWidget):
         self.scroll_layout.addLayout(car_layout)
 
     def go_prenota(self, moto):
-        self.vista_prenotazione = VistaEffettuaPrenotazione(self.user, self.psw, moto)
+        self.vista_prenotazione = VistaEffettuaPrenotazione(self.cliente, moto)
         self.vista_prenotazione.show()
         self.shell.close()

@@ -8,10 +8,9 @@ import darkdetect
 
 
 class VistaPagamenti(QMainWindow):
-    def __init__(self, user, psw):
+    def __init__(self, cliente):
         super().__init__()
-        self.user = user
-        self.psw = psw
+        self.cliente = cliente
         self.setWindowTitle("CarGreen")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
         if darkdetect.isDark():
@@ -20,20 +19,34 @@ class VistaPagamenti(QMainWindow):
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
 
-        central_layout = QVBoxLayout()
+        page_layout = QVBoxLayout()
+        button_layout = QVBoxLayout()
 
-        title_layout = QVBoxLayout()
-        title_layout.setAlignment(Qt.AlignTop | Qt.AlignCenter)
+        title_layout = QHBoxLayout()
+        back_button = QPushButton()
+        back_button.setStyleSheet("max-width: 100px; border: none")
+        back_button.setIcon(QIcon("viste/Icone/varie/back.png"))
+        back_button.setIconSize(QSize(50, 50))
+        back_button.clicked.connect(self.go_back)
+        title_layout.addWidget(back_button)
 
-        self.central_widget.setLayout(central_layout)
-
-        self.title_label = QLabel("Lista dei tuoi pagamenti")
-        self.title_font = QFont("Arial", 42, QFont.Bold)
+        self.title_label = QLabel("I tuoi pagamenti")
+        self.title_font = self.title_label.font()
+        self.title_font.setPointSize(42)
+        self.title_font.setBold(True)
         self.title_label.setFont(self.title_font)
         self.title_label.adjustSize()
-
+        self.title_label.setAlignment(Qt.AlignCenter)
         title_layout.addWidget(self.title_label)
-        central_layout.addLayout(title_layout)
+
+        ghost_button = QPushButton()
+        ghost_button.setStyleSheet("max-width: 100px; border: none")
+        title_layout.addWidget(ghost_button)
+
+        page_layout.addLayout(title_layout)
+        page_layout.addLayout(button_layout)
+
+        self.central_widget.setLayout(page_layout)
 
         scroll_area = QScrollArea()
         scroll_area.setStyleSheet("QScrollBar:vertical {"
@@ -59,25 +72,16 @@ class VistaPagamenti(QMainWindow):
         scroll_area.setWidget(self.scroll_content)
         self.scroll_layout = QVBoxLayout(self.scroll_content)
 
-        central_layout.addWidget(scroll_area)
+        page_layout.addWidget(scroll_area)
 
         self.aggiungiPagamento()
 
-        back_button = QPushButton("Indietro")
-        back_button.clicked.connect(self.go_back)
-        back_button.setStyleSheet("width: 150px; max-width: 150px; background-color: #F85959; border-radius: 15px; color: black; "
-                                  "padding: 10px; margin-bottom: 20px")
-        central_layout.addWidget(back_button, alignment=Qt.AlignHCenter | Qt.AlignBottom)
-
     def aggiungiPagamento(self):
-        pagamenti = Pagamento().get_dati()
-        cliente = Cliente()
-        clienteCorrente = cliente.get_dati(self.user, self.psw)
-        prenotazione = Prenotazione()
-        prenotazioni = prenotazione.get_dati()
+        pagamenti = Pagamento().readData()
+        prenotazioni = Prenotazione().readData()
 
         for x in pagamenti:
-            if clienteCorrente['codiceFiscale'] == x['cliente']:
+            if self.cliente['codiceFiscale'] == x['cliente']:
                 info_box = QGroupBox(f"Informazioni sul pagamento {x['codice']}")
                 info_box.setStyleSheet("QGroupBox{max-height: 250px;}")
                 info_layout = QGridLayout(info_box)
@@ -86,30 +90,54 @@ class VistaPagamenti(QMainWindow):
                 prenotazione.setStyleSheet("font-size: 24px; ")
                 info_layout.addWidget(prenotazione, 1, 0)
 
-                infoCliente = QLabel(f"Cliente: {clienteCorrente['nome']} {clienteCorrente['cognome']} ")
+                infoCliente = QLabel(f"Cliente: {self.cliente['nome']} {self.cliente['cognome']} ")
                 infoCliente.setStyleSheet("font-size: 24px; ")
-                info_layout.addWidget(infoCliente)
-                if x['prenotazione'] in clienteCorrente['prenotazioni']:
+                info_layout.addWidget(infoCliente, 2, 0)
+
+                if x['prenotazione'] in self.cliente['prenotazioni']:
                     for s in prenotazioni:
                         if x['prenotazione'] == s['id']:
                             mezzoPrenotato = QLabel(f"Mezzo prenotato: {s['mezzo']['produttore']} {s['mezzo']['modello']}")
                             mezzoPrenotato.setStyleSheet("font-size: 24px; ")
-                            info_layout.addWidget(mezzoPrenotato)
-                infoTotale = QLabel(f"Totale da pagare: {x['totale']} ")
+                            info_layout.addWidget(mezzoPrenotato, 3, 0)
+
+                infoTotale = QLabel(f"Totale da pagare: {x['totale']} €")
                 infoTotale.setStyleSheet("font-size: 24px; ")
-                info_layout.addWidget(infoTotale)
+                info_layout.addWidget(infoTotale, 4, 0)
 
                 statoPagamento = QLabel(f"Stato pagamento: {x['statoPagamento']} ")
                 statoPagamento.setStyleSheet("font-size: 24px; ")
-                info_layout.addWidget(statoPagamento)
+                info_layout.addWidget(statoPagamento, 5, 0)
                 if x['statoPagamento'] == 'pagato':
                     dataPagamento = QLabel(f"data pagamento: {x['dataPagamento']} ")
                     dataPagamento.setStyleSheet("font-size: 24px; ")
                     info_layout.addWidget(dataPagamento)
+                else:
+                    paga_button = QPushButton("Paga online")
+                    paga_button.setStyleSheet("max-width: 200px; max-height: 50px; background-color: #6AFE67; "
+                                              "border-radius: 15px; color: black; padding: 10px")
+                    paga_button.clicked.connect(lambda: self.paga(x))
+                    info_layout.addWidget(paga_button, 4, 2)
                 self.scroll_layout.addWidget(info_box)
+
+    def paga(self, p):
+        Pagamento().verificaPagamento(p)
+        QMessageBox.information(self, 'Pagamento accettato', 'Il pagamento è andato a buon fine!', QMessageBox.Ok)
+        self.aggiorna_vista()
+
+    def aggiorna_vista(self):
+        # Rimuovi tutti i widget dalla scroll_layout
+        while self.scroll_layout.count():
+            item = self.scroll_layout.takeAt(0)
+            widget = item.widget()
+            if widget:
+                widget.deleteLater()
+
+        # Ora puoi chiamare nuovamente il metodo per aggiungere i widget aggiornati
+        self.aggiungiPagamento()
 
     def go_back(self):
         from viste.viste_utente.home import VistaHome
-        self.vista = VistaHome(self.user, self.psw)
+        self.vista = VistaHome(self.cliente)
         self.vista.show()
         self.close()

@@ -4,42 +4,42 @@ from Servizio.mezzo import Mezzo
 from Attivita.prenotazione import Prenotazione
 import json
 
+
 class Moto(Mezzo):
     def __init__(self):
-        super().__init__()
-        self.tariffaOraria = ""
-        self.stato = "disponibile"
+        self.file = "dati/moto.json"
 
-    def aggiungiMoto(self, to, url, t, prod, mod, anno, cv, cc, np, c, a):
+        super().__init__()
+        self.stato = "disponibile"
+        self.tariffaOraria = ""
+
+    def aggiungiMoto(self, url, t, prod, mod, anno, cv, cc, np, c, a, to):
         self.aggiungiMezzo(url, t, prod, mod, anno, cv, cc, np, c, a)
         self.tariffaOraria = to
 
         try:
-            # Apre il file JSON in modalità append
-            with open("dati/moto.json", 'a') as file:
-                # Scrive il dizionario dell'auto nel file JSON
-                json.dump(self, file, indent=4)
-                # Aggiunge un nuovo line feed dopo ogni auto per mantenere ogni auto su una riga separata
-                file.write('\n')
-            print("moto aggiunta correttamente.")
+            moto = self.get_dati()
+            nuovaMoto = self.__dict__.copy()
+            del nuovaMoto['file']
+            moto.append(nuovaMoto)
+            self.writeData(self.file, moto)
+
+            print("Moto aggiunta correttamente")
         except Exception as e:
             print(f"Si è verificato un errore: {e}")
 
-    def getInfoMoto(self):
-        info = self.getInfoMezzo()
-        info["tariffa_oraria"] = self.tariffaOraria
-        return info
+    def eliminaMoto(self, moto):
+        try:
+            self.eliminaMezzo(self.file, moto)
+            print("Moto eliminata correttamente")
+        except Exception as e:
+            print(f"Si è verificato un errore: {e}")
+
+    def cercaMoto(self, moto):
+        return self.searchById(self.file, moto)
 
     def get_dati(self):
-        file_path = "dati/moto.json"
-        with open(file_path) as file:
-            data = json.load(file)
-            return data
+        return self.readData(self.file)
 
-    def eliminaMoto(self):
-        pass
-
-    def cercaMoto(self):
-        pass
     def controllaPrenotazione(self):
         pass

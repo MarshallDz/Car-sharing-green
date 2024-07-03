@@ -1,222 +1,36 @@
-{
-    "prenotazioni": [
-        {
-            "id": "sCa50Y",
-            "cliente": {
-                "codiceFiscale": "dfsfsfgaesgfsagf",
-                "nome": "adsfdsaf",
-                "cognome": "adsfdasf",
-                "dataNascita": "2024-01-22",
-                "email": "aergag",
-                "password": "gsfdgs",
-                "cellulare": "0123456789",
-                "prenotazioni": [],
-                "dataRegistrazione": "22012024"
-            },
-            "data_prenotazione": "Tue May 21 2024",
-            "data_inizio": "2024-05-21 20.00",
-            "data_fine": "2024-05-22 08.00",
-            "filiale": "Milano, via padova",
-            "mezzo": {
-                "URL_immagine": "viste/Icone/scooter/yamaha-r1.png",
-                "telaio": "11",
-                "produttore": "Yamaha",
-                "modello": "R1",
-                "cavalli": "200",
-                "cilindrata": "1000",
-                "anno": "2023",
-                "alimentazione": "benzina",
-                "cambio": "manuale",
-                "nPosti": "2",
-                "stato": "disponibile",
-                "tariffa_oraria": "40"
-            },
-            "tariffa": "giornaliera",
-            "polizza": "kasko"
+[
+    {
+        "id": "D3ku0L",
+        "cliente": {
+            "codiceFiscale": "abcdefghlmnoppop",
+            "nome": "edo",
+            "cognome": "seve",
+            "dataNascita": "2003-01-26",
+            "email": "user",
+            "password": "user",
+            "cellulare": "1231231230",
+            "prenotazioni": [],
+            "dataRegistrazione": "11012024"
         },
-        {
-            "id": "OlkKWj",
-            "cliente": {
-                "codiceFiscale": "mrzmhl02h20g157g",
-                "nome": "michelon",
-                "cognome": "micheloni",
-                "dataNascita": "2024-01-22",
-                "email": "a",
-                "password": "a",
-                "cellulare": "333333334",
-                "prenotazioni": [],
-                "dataRegistrazione": "22012024"
-            },
-            "data_prenotazione": "Wed May 22 2024",
-            "data_inizio": "2024-05-23 14.00",
-            "data_fine": "2024-05-24",
-            "filiale": "Milano, via roma",
-            "mezzo": {
-                "URL_immagine": "viste/Icone/auto/bmw-335i.png",
-                "telaio": "01",
-                "produttore": "Bmw",
-                "modello": "335i",
-                "cavalli": "305",
-                "cilindrata": "3000",
-                "anno": "2019",
-                "alimentazione": "benzina",
-                "cambio": "automatico",
-                "nPosti": "5",
-                "stato": "disponibile",
-                "tariffa_oraria": "60"
-            },
-            "tariffa": "oraria",
-            "polizza": "rca"
+        "data_prenotazione": "Tue Jul 02 2024",
+        "data_inizio": "2024-07-04 08.00",
+        "data_fine": "2024-07-04 15.00",
+        "filiale": "Milano, via padova",
+        "mezzo": {
+            "immagine": "viste/Icone/auto/bmw-335i.png",
+            "telaio": "01",
+            "produttore": "Bmw",
+            "modello": "335i",
+            "cavalli": "305",
+            "cilindrata": "3000",
+            "anno": "2019",
+            "alimentazione": "benzina",
+            "cambio": "automatico",
+            "nPosti": "5",
+            "stato": "disponibile",
+            "tariffaOraria": "60"
         },
-        {
-            "id": "szsEG4",
-            "cliente": {
-                "codiceFiscale": "mrzmhl02h20g157g",
-                "nome": "michelon",
-                "cognome": "micheloni",
-                "dataNascita": "2024-01-22",
-                "email": "a",
-                "password": "a",
-                "cellulare": "333333334",
-                "prenotazioni": [
-                    "OlkKWj"
-                ],
-                "dataRegistrazione": "22012024"
-            },
-            "data_prenotazione": "Wed May 22 2024",
-            "data_inizio": "2024-05-24 08.00",
-            "data_fine": "2024-05-25",
-            "filiale": "Milano, via roma",
-            "mezzo": {
-                "URL_immagine": "viste/Icone/auto/bmw-335i.png",
-                "telaio": "01",
-                "produttore": "Bmw",
-                "modello": "335i",
-                "cavalli": "305",
-                "cilindrata": "3000",
-                "anno": "2019",
-                "alimentazione": "benzina",
-                "cambio": "automatico",
-                "nPosti": "5",
-                "stato": "prenotato",
-                "tariffa_oraria": "60"
-            },
-            "tariffa": "oraria",
-            "polizza": "rca"
-        },
-        {
-            "id": "LYP8Vh",
-            "cliente": {
-                "codiceFiscale": "mrzmhl02h20g157g",
-                "nome": "michelon",
-                "cognome": "micheloni",
-                "dataNascita": "2024-01-22",
-                "email": "a",
-                "password": "a",
-                "cellulare": "333333334",
-                "prenotazioni": [
-                    "OlkKWj",
-                    "szsEG4"
-                ],
-                "dataRegistrazione": "22012024"
-            },
-            "data_prenotazione": "Thu May 23 2024",
-            "data_inizio": "2024-05-23 19.00",
-            "data_fine": "2024-05-24 08.00",
-            "filiale": "Milano, via padova",
-            "mezzo": {
-                "URL_immagine": "viste/Icone/auto/alfa-giulietta.png",
-                "telaio": "04",
-                "produttore": "Alfa Romeo",
-                "modello": "Giulietta",
-                "cavalli": "170",
-                "cilindrata": "1400",
-                "anno": "2016",
-                "alimentazione": "benzina",
-                "cambio": "automatico",
-                "nPosti": "5",
-                "stato": "disponibile",
-                "tariffa_oraria": "20"
-            },
-            "tariffa": "giornaliera",
-            "polizza": "rca"
-        },
-        {
-            "id": "DMRCDI",
-            "cliente": {
-                "codiceFiscale": "mrzmhl02h20g157g",
-                "nome": "michelon",
-                "cognome": "micheloni",
-                "dataNascita": "2024-01-22",
-                "email": "a",
-                "password": "a",
-                "cellulare": "333333334",
-                "prenotazioni": [
-                    "OlkKWj",
-                    "szsEG4",
-                    "LYP8Vh"
-                ],
-                "dataRegistrazione": "22012024"
-            },
-            "data_prenotazione": "Thu May 23 2024",
-            "data_inizio": "2024-05-25 08.00",
-            "data_fine": "2024-05-26 08.00",
-            "filiale": "Milano, via padova",
-            "mezzo": {
-                "URL_immagine": "viste/Icone/auto/alfa-giulietta.png",
-                "telaio": "04",
-                "produttore": "Alfa Romeo",
-                "modello": "Giulietta",
-                "cavalli": "170",
-                "cilindrata": "1400",
-                "anno": "2016",
-                "alimentazione": "benzina",
-                "cambio": "automatico",
-                "nPosti": "5",
-                "stato": "prenotato",
-                "tariffa_oraria": "20"
-            },
-            "tariffa": "oraria",
-            "polizza": "rca"
-        },
-        {
-            "id": "7LIr5C",
-            "cliente": {
-                "codiceFiscale": "mrzmhl02h20g157g",
-                "nome": "michelon",
-                "cognome": "micheloni",
-                "dataNascita": "2024-01-22",
-                "email": "a",
-                "password": "a",
-                "cellulare": "333333334",
-                "prenotazioni": [
-                    "OlkKWj",
-                    "szsEG4",
-                    "LYP8Vh",
-                    "DMRCDI"
-                ],
-                "dataRegistrazione": "22012024"
-            },
-            "data_prenotazione": "Thu May 23 2024",
-            "data_inizio": "2024-05-31 08.00",
-            "data_fine": "2024-06-01 08.00",
-            "filiale": "Milano, via padova",
-            "mezzo": {
-                "URL_immagine": "viste/Icone/auto/bmw-335i.png",
-                "telaio": "01",
-                "produttore": "Bmw",
-                "modello": "335i",
-                "cavalli": "305",
-                "cilindrata": "3000",
-                "anno": "2019",
-                "alimentazione": "benzina",
-                "cambio": "automatico",
-                "nPosti": "5",
-                "stato": "disponibile",
-                "tariffa_oraria": "60"
-            },
-            "tariffa": "oraria",
-            "polizza": "rca"
-        }
-    ]
-}
+        "tariffa": "oraria",
+        "polizza": "rca"
+    }
+]

@@ -1,16 +1,14 @@
+from PyQt5.QtWidgets import *
+from PyQt5.QtGui import *
+from PyQt5.QtCore import *
+from Attivita.cliente import Cliente
 import darkdetect
-from PyQt5.QtCore import Qt, QDate
-from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QVBoxLayout, QLabel, QPushButton, QHBoxLayout, \
-    QLineEdit, QMessageBox, QDateEdit
-
-from Attivita.impiegato import Impiegato
 
 
-class VistaRegistrazioneImpiegato(QMainWindow):
-    def __init__(self):
+class VistaRegistrazioneCliente(QMainWindow):
+    def __init__(self, impiegato):
         super().__init__()
-
+        self.impiegato = impiegato
         # dizionario in cui salvi i campi del form
         self.campi = {}
 
@@ -29,7 +27,7 @@ class VistaRegistrazioneImpiegato(QMainWindow):
 
         self.central_widget.setLayout(central_layout)
 
-        self.title_label = QLabel("Aggiungi impiegato")
+        self.title_label = QLabel("Aggiungi cliente")
         self.title_font = QFont("Arial", 42, QFont.Bold)
         self.title_label.setFont(self.title_font)
         self.title_label.adjustSize()
@@ -48,8 +46,6 @@ class VistaRegistrazioneImpiegato(QMainWindow):
         self.crea_campo("E-mail")
         self.crea_campo("Password")
         self.crea_campo("Cellulare")
-        self.crea_campo("Stipendio")
-        self.crea_campo("Assunzione")
 
         # creo i bottoni invia e indietro
         invia_button = QPushButton("Invia")
@@ -68,12 +64,10 @@ class VistaRegistrazioneImpiegato(QMainWindow):
         central_layout.addLayout(self.form_layout)
 
     def crea_campo(self, nome):
-        if nome == "Data di nascita" or nome == "Assunzione":
+        if nome == "Data di nascita":
             layout = QHBoxLayout()  # Layout orizzontale per posizionare la label accanto al campo
-            label = QLineEdit()
-            label.setPlaceholderText(nome)
+            label = QLabel("Data di nascita")
             label.setStyleSheet("max-width: 100px; min-height: 40px; border-radius: 15px;")
-            label.setReadOnly(True)
             campo = QDateEdit()
             campo.setCalendarPopup(True)
             campo.setStyleSheet("max-width: 200px; color: black; background-color: white;")
@@ -111,12 +105,12 @@ class VistaRegistrazioneImpiegato(QMainWindow):
             QMessageBox.warning(None, "Cellulare non valido", "Il numero di cellulare deve essere composto da 10 "
                                                               "cifre.")
             return
-        impiegato = Impiegato()
-        impiegato.aggiungiImpiegato(data_to_save["Codice Fiscale"], data_to_save["Nome"], data_to_save["Cognome"], data_to_save["Data di nascita"], data_to_save["E-mail"], data_to_save["Password"], data_to_save["Cellulare"])
+        cliente = Cliente()
+        cliente.aggiungiCliente(data_to_save["Codice Fiscale"], data_to_save["Nome"], data_to_save["Cognome"], data_to_save["Data di nascita"], data_to_save["E-mail"], data_to_save["Password"], data_to_save["Cellulare"])
         self.go_back()
 
     def go_back(self):
-        from viste.viste_amministratore.gestioneImpiegati import VistaGestioneImpiegati
-        self.vista = VistaGestioneImpiegati()
+        from viste.viste_impiegato.gestioneClienti import VistaGestioneClienti
+        self.vista = VistaGestioneClienti(self.impiegato)
         self.vista.show()
         self.close()

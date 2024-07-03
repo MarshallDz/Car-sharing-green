@@ -1,3 +1,4 @@
+from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from Attivita.prenotazione import Prenotazione
@@ -6,11 +7,10 @@ import darkdetect
 
 
 class VistaGestioneClienti(QMainWindow):
-    def __init__(self, user, psw):
+    def __init__(self, impiegato):
         super().__init__()
 
-        self.user = user
-        self.psw = psw
+        self.impiegato = impiegato
 
         self.setWindowTitle("CarGreen")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
@@ -22,34 +22,51 @@ class VistaGestioneClienti(QMainWindow):
 
         self.central_layout = QVBoxLayout()
 
-        title_layout = QVBoxLayout()
-        title_layout.setAlignment(Qt.AlignTop | Qt.AlignCenter)
+        title_layout = QHBoxLayout()
 
         self.central_widget.setLayout(self.central_layout)
 
-        self.title_label = QLabel("Gestisci clienti")
+        back_button = QPushButton()
+        back_button.setStyleSheet("max-width: 100px; border: none")
+        back_button.setIcon(QIcon("viste/Icone/varie/back.png"))
+        back_button.setIconSize(QSize(50, 50))
+        back_button.clicked.connect(self.go_back)
+        title_layout.addWidget(back_button)
+
+        self.title_label = QLabel("Gestione clienti")
         self.title_font = self.title_label.font()
         self.title_font.setPointSize(42)
         self.title_font.setBold(True)
         self.title_label.setFont(self.title_font)
         self.title_label.adjustSize()
-
+        self.title_label.setAlignment(Qt.AlignCenter)
         title_layout.addWidget(self.title_label)
+
+        ghost_button = QPushButton()
+        ghost_button.setStyleSheet("max-width: 100px; border: none")
+        title_layout.addWidget(ghost_button)
+
         self.central_layout.addLayout(title_layout)
+
         # Aggiungi la barra di ricerca in alto a destra
         self.search_layout = QHBoxLayout()
         self.search_layout.setAlignment(Qt.AlignRight | Qt.AlignTop)
-
-        self.search_label = QLabel("Cerca per nome cliente:")
-        self.search_layout.addWidget(self.search_label)
-
+        search_icon = QLabel()
+        icon = QPixmap("viste/Icone/varie/search.png")
+        icon.setDevicePixelRatio(10)
+        search_icon.setPixmap(icon)
+        search_icon.setAlignment(Qt.AlignRight)
         self.search_edit = QLineEdit()
-        self.search_edit.setPlaceholderText("Inserisci il nome del cliente")
+        self.search_edit.setStyleSheet("max-width: 300px; max-height: 40px; border-radius: 15px; ")
+        if darkdetect.isDark():
+            self.search_edit.setStyleSheet("max-width: 300px; max-height: 40px; border-radius: 15px; "
+                                           "background-color: #403F3F")
+        self.search_edit.setPlaceholderText("cerca per nome")
+        self.search_layout.addWidget(search_icon)
         self.search_layout.addWidget(self.search_edit)
-
         self.search_edit.textChanged.connect(self.search_cliente)
-
         self.central_layout.addLayout(self.search_layout)
+
         scroll_area = QScrollArea()
         scroll_area.setStyleSheet("QScrollBar:vertical {"
                                   "    border: none;"
@@ -67,7 +84,11 @@ class VistaGestioneClienti(QMainWindow):
                                   "}"
                                   "QScrollBar::sub-line:vertical {"
                                   "    background: none;"
-                                  "}")
+                                  "}"
+                                  "QScrollArea {"
+                                  "border: none"
+                                  "}"
+                                  )
 
         scroll_area.setWidgetResizable(True)
         self.scroll_content = QWidget(scroll_area)
@@ -78,15 +99,10 @@ class VistaGestioneClienti(QMainWindow):
 
         self.aggiungi_box_info()
         aggiungiCliente_button = QPushButton("Aggiungi cliente")
-        aggiungiCliente_button.setStyleSheet("width: 150px; max-width: 150px; background-color: #6AFE67; border-radius: 15px; "
-                                  "color: black; padding: 10px; margin-bottom: 20px")
+        aggiungiCliente_button.setStyleSheet("width: 150px; max-width: 150px; background-color: #6AFE67; "
+                                             "border-radius: 15px; color: black; padding: 10px; margin-bottom: 20px")
         aggiungiCliente_button.clicked.connect(self.go_aggiungiCliente)
         self.central_layout.addWidget(aggiungiCliente_button, alignment=Qt.AlignHCenter | Qt.AlignBottom)
-        back_button = QPushButton("Indietro")
-        back_button.clicked.connect(self.go_back)
-        back_button.setStyleSheet("width: 150px; max-width: 150px; background-color: #F85959; border-radius: 15px; "
-                                  "color: black; padding: 10px; margin-bottom: 20px")
-        self.central_layout.addWidget(back_button, alignment=Qt.AlignHCenter | Qt.AlignBottom)
 
     def aggiungi_box_info(self):
         cliente = Cliente()
@@ -148,17 +164,16 @@ class VistaGestioneClienti(QMainWindow):
             buttons_layout = QHBoxLayout()
             info_layout.addLayout(buttons_layout, 4, 2, alignment=Qt.AlignRight)
             modify_button = QPushButton("Modifica")
-            modify_button.setStyleSheet("width: 150px; max-width: 150px; background-color: #D9D9D9; border-radius: 15px; color: black; "
-                           "padding: 10px;")
+            modify_button.setStyleSheet("width: 150px; max-width: 150px; background-color: #D9D9D9; border-radius: "
+                                        "15px; color: black; padding: 10px;")
             modify_button.clicked.connect(
-                lambda _, cc = client, a=self.cf_edit, b=self.nome_edit, c=self.cognome_edit, d=self.dataNascita_edit,
-                       e=self.email_edit, f=self.cellulare_edit, g=modify_button: self.modifica_valori_lineedit(cc, a, b, c, d, e, f, g))
+                lambda _, cc=client, a=self.cf_edit, b=self.nome_edit, c=self.cognome_edit, d=self.dataNascita_edit, e=self.email_edit, f=self.cellulare_edit, g=modify_button: self.modifica_valori_lineedit(cc, a, b, c, d, e, f, g))
 
             buttons_layout.addWidget(modify_button)
             elimina = QPushButton("Elimina")
             elimina.clicked.connect(lambda _, p=client: self.eliminaCliente(p))
-            elimina.setStyleSheet("width: 150px; max-width: 150px; background-color: #F85959; border-radius: 15px; color: black; "
-                                  "padding: 10px;")
+            elimina.setStyleSheet("width: 150px; max-width: 150px; background-color: #F85959; border-radius: 15px; "
+                                  "color: black; padding: 10px;")
             buttons_layout.addWidget(elimina)
 
             self.scroll_layout.addWidget(info_box)
@@ -166,21 +181,21 @@ class VistaGestioneClienti(QMainWindow):
     def go_back(self):
         self.close()
         from viste.viste_impiegato.pannelloControllo import VistaPannelloControllo
-        self.vista = VistaPannelloControllo(self.user, self.psw)
+        self.vista = VistaPannelloControllo(self.impiegato)
         self.vista.show()
 
     def eliminaCliente(self, c):
         cliente = Cliente()
         reply = QMessageBox.warning(self, 'Conferma eliminazione', 'Sei sicuro di voler eliminare il cliente?',
-                                         QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+                                    QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
 
         if reply == QMessageBox.Yes:
-            cliente.eliminaCliente(c, self.user, self.psw)
-        if reply == QMessageBox.Yes:
+            cliente.eliminaCliente(c)
             QMessageBox.information(self, 'Disdetta Confermata', 'Il cliente è stato eliminato con successo.', QMessageBox.Ok)
         self.go_back()
+
     def modifica_valori_lineedit(self, cc, cF, nome, cognome, dataN, email, cellulare, modify_button):
-        #bisogna aggiungere anche la modifica nel file prenotazioni.json
+        # bisogna aggiungere anche la modifica nel file prenotazioni.json
         if modify_button.text() == "Modifica":
             modify_button.setText("Salva")
             cF.setEnabled(True)
@@ -207,10 +222,9 @@ class VistaGestioneClienti(QMainWindow):
             cellulare.setEnabled(False)
             self.salva_valori()
 
-
     def go_aggiungiCliente(self):
-        from viste.viste_impiegato.vistaRegistraCliente import VistaRegistrazioneCliente
-        self.vista = VistaRegistrazioneCliente(self.user, self.psw)
+        from viste.viste_impiegato.aggiungiCliente import VistaRegistrazioneCliente
+        self.vista = VistaRegistrazioneCliente(self.impiegato)
         self.vista.show()
         self.close()
 

@@ -54,7 +54,7 @@ class VistaRegistrazioneCliente(QMainWindow):
         invia_button.setStyleSheet(
             "max-width: 200px; background-color: #6AFE67; border-radius: 15px; color: black; padding: 10px;"
             "margin-left: 35px; margin-top: 100px;")
-        back_button = QPushButton("Indietro")
+        back_button = QPushButton("Annulla")
         back_button.setStyleSheet(
             "max-width: 150px; background-color: #F85959; border-radius: 15px; color: black; padding: 10px;"
             "margin-left: 60px;")

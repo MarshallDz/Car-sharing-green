@@ -1,45 +1,41 @@
-from datetime import datetime
-
 from Servizio.mezzo import Mezzo
-from Attivita.prenotazione import Prenotazione
-import json
+
 
 class Van(Mezzo):
     def __init__(self):
-        super().__init__()
-        self.tariffaOraria = ""
-        self.stato = "disponibile"
+        self.file = "dati/van.json"
 
-    def aggiungiVan(self, to, url, t, prod, mod, anno, cv, cc, np, c, a):
+        super().__init__()
+        self.stato = "disponibile"
+        self.tariffaOraria = ""
+
+    def aggiungiVan(self, url, t, prod, mod, anno, cv, cc, np, c, a, to):
         self.aggiungiMezzo(url, t, prod, mod, anno, cv, cc, np, c, a)
         self.tariffaOraria = to
 
         try:
-            # Apre il file JSON in modalità append
-            with open("dati/van.json", 'a') as file:
-                # Scrive il dizionario dell'auto nel file JSON
-                json.dump(self, file, indent=4)
-                # Aggiunge un nuovo line feed dopo ogni auto per mantenere ogni auto su una riga separata
-                file.write('\n')
-            print("van aggiunta correttamente.")
+            van = self.get_dati()
+            nuovoVan = self.__dict__.copy()
+            del nuovoVan['file']
+            van.append(nuovoVan)
+            self.writeData(self.file, van)
+
+            print("Van aggiunto correttamente")
         except Exception as e:
             print(f"Si è verificato un errore: {e}")
 
-    def getInfoVan(self):
-        info = self.getInfoMezzo()
-        info["tariffa_oraria"] = self.tariffaOraria
-        return info
-
     def get_dati(self):
-        file_path = "dati/van.json"
-        with open(file_path) as file:
-            data = json.load(file)
-            return data
+        return self.readData(self.file)
 
-    def eliminaVan(self):
-        pass
+    def eliminaVan(self, van):
+        try:
+            self.eliminaMezzo(self.file, van)
+            print("Van eliminato correttamente")
+        except Exception as e:
+            print(f"Si è verificato un errore: {e}")
 
-    def cercaVan(self):
-        pass
+    def cercaAuto(self, van):
+        return self.searchById(self.file, van)
+
     def controllaPrenotazione(self):
         pass

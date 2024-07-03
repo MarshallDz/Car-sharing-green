@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from Servizio.auto import Auto
+from Servizio.mezzo import Mezzo
 from Servizio.moto import Moto
 from Servizio.furgone import Furgone
 from Servizio.van import Van
@@ -33,7 +34,7 @@ class VistaMezziAmministratore(QMainWindow):
         back_button.clicked.connect(self.go_back)
         title_layout.addWidget(back_button)
 
-        self.title_label = QLabel("Lista dei mezzi")
+        self.title_label = QLabel("Gestione mezzi")
         self.title_font = self.title_label.font()
         self.title_font.setPointSize(42)
         self.title_font.setBold(True)
@@ -59,9 +60,9 @@ class VistaMezziAmministratore(QMainWindow):
         search_icon.setPixmap(icon)
         search_icon.setAlignment(Qt.AlignRight)
         self.search_edit = QLineEdit()
-        self.search_edit.setStyleSheet("max-width: 300px; max-height: 30px; border-radius: 15px; ")
+        self.search_edit.setStyleSheet("max-width: 300px; max-height: 40px; border-radius: 15px; ")
         if darkdetect.isDark():
-            self.search_edit.setStyleSheet("max-width: 300px; min-height: 60px; border-radius: 15px; "
+            self.search_edit.setStyleSheet("max-width: 300px; max-height: 40px; border-radius: 15px; "
                                            "background-color: #403F3F")
         self.search_edit.setPlaceholderText("cerca per nome")
         self.search_layout.addWidget(search_icon)
@@ -98,76 +99,84 @@ class VistaMezziAmministratore(QMainWindow):
         self.scroll_layout = QVBoxLayout(self.scroll_content)
         self.central_layout.addWidget(scroll_area)
 
-        aggiungiPrenotazione_button = QPushButton("Aggiungi mezzo")
-        aggiungiPrenotazione_button.setStyleSheet(
+        self.aggiungiPrenotazione_button = QPushButton("Seleziona una categoria")
+        self.aggiungiPrenotazione_button.setStyleSheet(
             "width: 150px; max-width: 150px; background-color: #6AFE67; border-radius: 15px; "
             "color: black; padding: 10px; margin-bottom: 20px")
-        aggiungiPrenotazione_button.clicked.connect(self.go_aggiungiMezzo)
-        self.central_layout.addWidget(aggiungiPrenotazione_button, alignment=Qt.AlignHCenter | Qt.AlignBottom)
+        self.category = None
+        self.central_layout.addWidget(self.aggiungiPrenotazione_button, alignment=Qt.AlignHCenter | Qt.AlignBottom)
 
     def populate_scroll_layout(self, vehicle_list):
-        for x in vehicle_list:
+        for v in vehicle_list:
             info_box = QGroupBox()
             info_box.setStyleSheet("QGroupBox{max-height: 250px;}")
             info_layout = QGridLayout(info_box)
 
-            telaio = QLabel(f"Codice telaio: {x['telaio']} ")
+            telaio = QLabel(f"Codice telaio: {v['telaio']} ")
             telaio.setStyleSheet("font-size: 24px; ")
             info_layout.addWidget(telaio, 0, 0)
 
-            produttore = QLabel(f"Produttore: {x['produttore']} ")
+            produttore = QLabel(f"Produttore: {v['produttore']} ")
             produttore.setStyleSheet("font-size: 24px; ")
             info_layout.addWidget(produttore, 1, 0)
 
-            modello = QLabel(f"Modello: {x['modello']} ")
+            modello = QLabel(f"Modello: {v['modello']} ")
             modello.setStyleSheet("font-size: 24px; ")
             info_layout.addWidget(modello, 2, 0)
 
-            cilindrata = QLabel(f"Cilindrata: {x['cilindrata']} ")
+            cilindrata = QLabel(f"Cilindrata: {v['cilindrata']} ")
             cilindrata.setStyleSheet("font-size: 24px; ")
             info_layout.addWidget(cilindrata, 3, 0)
 
-            anno = QLabel(f"Anno: {x['anno']} ")
+            anno = QLabel(f"Anno: {v['anno']} ")
             anno.setStyleSheet("font-size: 24px; ")
             info_layout.addWidget(anno, 0, 1)
 
-            cavalli = QLabel(f"Cavalli: {x['cavalli']} ")
+            cavalli = QLabel(f"Cavalli: {v['cavalli']} ")
             cavalli.setStyleSheet("font-size: 24px; ")
             info_layout.addWidget(cavalli, 1, 1)
 
-            alimentazione = QLabel(f"Alimentazione: {x['alimentazione']} ")
+            alimentazione = QLabel(f"Alimentazione: {v['alimentazione']} ")
             alimentazione.setStyleSheet("font-size: 24px; ")
             info_layout.addWidget(alimentazione, 2, 1)
 
-            nPosti = QLabel(f"Numero posti: {x['nPosti']} ")
+            nPosti = QLabel(f"Numero posti: {v['nPosti']} ")
             nPosti.setStyleSheet("font-size: 24px; ")
             info_layout.addWidget(nPosti, 3, 1)
 
-            cambio = QLabel(f"Cambio: {x['cambio']} ")
+            cambio = QLabel(f"Cambio: {v['cambio']} ")
             cambio.setStyleSheet("font-size: 24px; ")
             info_layout.addWidget(cambio, 4, 0)
 
-            tariffa_oraria = QLabel(f"Tariffa oraria: {x['tariffa_oraria']} ")
+            tariffa_oraria = QLabel(f"Tariffa oraria: {v['tariffaOraria']} ")
             tariffa_oraria.setStyleSheet("font-size: 24px; ")
             info_layout.addWidget(tariffa_oraria, 5, 0)
 
-            stato = QLabel(f"Stato: {x['stato']} ")
+            stato = QLabel(f"Stato: {v['stato']} ")
             stato.setStyleSheet("font-size: 24px; ")
             info_layout.addWidget(stato, 4, 1)
 
-            pixmap = QPixmap(x["URL_immagine"])
+            button_layout = QHBoxLayout()
+            elimina = QPushButton("Elimina")
+            elimina.clicked.connect(lambda _, m=v: self.eliminaMezzo(m))
+            elimina.setStyleSheet("width: 150px; max-width: 150px; background-color: #F85959; border-radius: 15px; "
+                                  "color: black; padding: 10px;")
+            button_layout.addWidget(elimina)
+            info_layout.addLayout(button_layout, 4, 2, 2, 2, alignment=Qt.AlignRight)
+
+            pixmap = QPixmap(v["immagine"])
             if not pixmap.isNull():
                 label = QLabel()
                 label.setStyleSheet("margin-left: 20px;")
                 label.setMaximumWidth(300)
                 label.setPixmap(pixmap.scaled(300, 400, Qt.KeepAspectRatio))
                 label.setAlignment(Qt.AlignCenter)
-                info_layout.addWidget(label, 0, 3, 0, 3, alignment= Qt.AlignRight)
+                info_layout.addWidget(label, 0, 3, 0, 3, alignment=Qt.AlignRight)
             else:
                 error_label = QLabel("Immagine non disponibile")
                 error_label.setMaximumWidth(200)
                 error_label.setAlignment(Qt.AlignCenter)
-                info_layout.addWidget(error_label, alignment= Qt.AlignRight)
+                info_layout.addWidget(error_label, 0, 3, 0, 3, alignment=Qt.AlignRight)
 
             self.scroll_layout.addWidget(info_box)
 
@@ -178,10 +187,13 @@ class VistaMezziAmministratore(QMainWindow):
         self.close()
 
     def go_aggiungiMezzo(self):
-        pass
+        from viste.viste_amministratore.aggiungiMezzo import VistaAggiungiMezzo
+        self.vista = VistaAggiungiMezzo(self.category)
+        self.vista.show()
+        self.close()
 
     def search_mezzi(self, text):
-        # Funzione per filtrare le prenotazioni in base al nome del cliente
+        # Funzione per filtrare le prenotazioni in base al nome del mezzo
         for i in range(self.scroll_layout.count()):
             item = self.scroll_layout.itemAt(i)
             if isinstance(item, QLayoutItem):
@@ -204,6 +216,7 @@ class VistaMezziAmministratore(QMainWindow):
         # Create buttons for each category
         self.auto_button = QPushButton("Auto")
         self.auto_button.clicked.connect(lambda: self.filter_vehicles("Auto"))
+
         self.category_layout.addWidget(self.auto_button)
 
         self.moto_button = QPushButton("Moto")
@@ -230,23 +243,26 @@ class VistaMezziAmministratore(QMainWindow):
     def filter_vehicles(self, category):
         # Clear existing vehicles from scroll layout
         self.clear_scroll_layout()
+        self.category = category
 
         # Set background color for the pressed button and reset others
         buttons = [self.auto_button, self.moto_button, self.van_button, self.furgone_button]
         for button in buttons:
-            if button.text() == category:
+            if button.text() == self.category:
                 button.setStyleSheet("QPushButton { background-color: #6AFE67; color: black}")
+                self.aggiungiPrenotazione_button.setText("Aggiungi " + self.category.lower())
+                self.aggiungiPrenotazione_button.clicked.connect(self.go_aggiungiMezzo)
             else:
                 button.setStyleSheet("QPushButton { background-color: none; }")
 
         # Populate the scroll layout with vehicles of the selected category
-        if category == "Auto":
+        if self.category == "Auto":
             self.populate_scroll_layout(Auto().get_dati())
-        elif category == "Moto":
+        elif self.category == "Moto":
             self.populate_scroll_layout(Moto().get_dati())
-        elif category == "Van":
+        elif self.category == "Van":
             self.populate_scroll_layout(Van().get_dati())
-        elif category == "Furgone":
+        elif self.category == "Furgone":
             self.populate_scroll_layout(Furgone().get_dati())
 
     def clear_scroll_layout(self):
@@ -255,3 +271,20 @@ class VistaMezziAmministratore(QMainWindow):
             widget = self.scroll_layout.itemAt(i).widget()
             if widget:
                 widget.deleteLater()
+
+    def eliminaMezzo(self, m):
+        reply = QMessageBox.warning(self, 'Conferma eliminazione', 'Sei sicuro di voler eliminare questo mezzo?',
+                                    QMessageBox.Yes, QMessageBox.No)
+
+        if reply == QMessageBox.Yes:
+            if self.category == "Auto":
+                Auto().eliminaAuto(m)
+            elif self.category == "Moto":
+                Moto().eliminaMoto(m)
+            elif self.category == "Van":
+                Van().eliminaVan(m)
+            elif self.category == "Furgone":
+                Furgone().eliminaFurgone(m)
+            QMessageBox.information(self, 'Mezzo eliminato', 'Il mezzo è stato eliminato correttamente.',
+                                    QMessageBox.Ok)
+            self.filter_vehicles(None)
