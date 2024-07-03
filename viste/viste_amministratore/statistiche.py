@@ -1,7 +1,8 @@
 import darkdetect
 from PyQt5.QtCore import QSize, Qt
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QGridLayout
+from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QGridLayout, QScrollArea, \
+    QDesktopWidget
 
 from viste.viste_amministratore.stat1 import stat1
 from viste.viste_amministratore.stat2 import stat2
@@ -14,9 +15,11 @@ class VistaStatistiche(QMainWindow):
         super().__init__()
 
         self.setWindowTitle("CarGreen")
-        self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
+        self.resizeToDesktop()
+
         if darkdetect.isDark():
             self.setStyleSheet("background-color: #121212;")
+
         self.showMaximized()
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
@@ -48,17 +51,32 @@ class VistaStatistiche(QMainWindow):
         self.central_layout.addLayout(title_layout)
 
         stats_layout = QGridLayout()
-        stats_layout.setSpacing(50)
-        stats_layout.setContentsMargins(10, 0, 10, 50)
+        #stats_layout.setSpacing(50)
+        #stats_layout.setContentsMargins(10, 0, 10, 50)
         # numero prenotazioni al momento (divise per tipo veicolo)
         stats_layout.addWidget(stat1(), 0, 0)
         # numero prenotazioni per cliente
-        stats_layout.addWidget(stat2(), 0, 1)
+        stats_layout.addWidget(stat2(), 1, 0)
         # incassi totali
-        stats_layout.addWidget(stat3(), 1, 0)
+        stats_layout.addWidget(stat3(), 2, 0)
         # impiegati e relativo stipendio
-        stats_layout.addWidget(stat4(), 1, 1)
-        self.central_layout.addLayout(stats_layout)
+        stats_layout.addWidget(stat4(), 3, 0)
+
+        # Scroll Area for Statistics Layout
+        scroll_area = QScrollArea()
+        scroll_area.setWidgetResizable(True)
+        scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+
+        scroll_widget = QWidget()
+        scroll_widget.setLayout(stats_layout)
+        scroll_area.setWidget(scroll_widget)
+
+        self.central_layout.addWidget(scroll_area)
+
+    def resizeToDesktop(self):
+        desktop = QDesktopWidget().availableGeometry()
+        self.setGeometry(desktop)
 
     def go_back(self):
         from viste.viste_amministratore.admin import VistaAmministrazione

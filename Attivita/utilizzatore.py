@@ -54,18 +54,6 @@ class Utilizzatore:
                         return u
 
 
-    @abstractmethod
-    def ricercaUtilizzatoreNomeCognome(self, nome, cognome):
-        pass
-
-    @abstractmethod
-    def ricercaUtilizzatoreCF(self, codiceFiscale):
-        pass
-
-    @abstractmethod
-    def ricercaUtilizzatoreNominativo(self, nome, cogome):
-        pass
-
     def writeData(self, file, data):
         with open(file, 'w') as file:
             json.dump(data, file, indent=4)

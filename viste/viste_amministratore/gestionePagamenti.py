@@ -98,11 +98,11 @@ class VistaPagamentiAmministratore(QMainWindow):
         self.aggiungiPagamento()
 
     def aggiungiPagamento(self):
-        pagamenti = Pagamento().get_dati()
+        pagamenti = Pagamento().readData()
         cliente = Cliente()
         clienti = cliente.get_dati()
         prenotazione = Prenotazione()
-        prenotazioni = prenotazione.get_dati()
+        prenotazioni = prenotazione.readData()
 
         for x in pagamenti:
             info_box = QGroupBox(f"Informazioni sul pagamento {x['codice']}")
