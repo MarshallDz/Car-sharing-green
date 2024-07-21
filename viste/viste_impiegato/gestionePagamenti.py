@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
@@ -136,10 +138,16 @@ class VistaPagamentiImpiegato(QMainWindow):
                 dataPagamento = QLabel(f"data pagamento: {x['dataPagamento']} ")
                 dataPagamento.setStyleSheet("font-size: 24px; ")
                 info_layout.addWidget(dataPagamento)
+            else:
+                effettua_pagamento = QPushButton("Conferma pagamento")
+                effettua_pagamento.setStyleSheet("width: 110px; max-width: 150px; background-color: #6AFE67; border-radius: 5px; "
+                                  "color: black; padding: 5px;")
+                effettua_pagamento.clicked.connect(lambda _, p=x: self.confermaPagamento(p))
+                info_layout.addWidget(effettua_pagamento, 5, 2)
             elimina = QPushButton("Elimina")
-            elimina.clicked.connect(lambda _, p=x["codice"]: self.eliminaPagamento(p))
-            elimina.setStyleSheet("width: 150px; max-width: 150px; background-color: #F85959; border-radius: 15px; color: black; "
-                                  "padding: 10px;")
+            elimina.clicked.connect(lambda _, p=x: self.eliminaPagamento(p))
+            elimina.setStyleSheet("width: 110px; max-width: 150px; background-color: #F85959; border-radius: 5px; "
+                                  "color: black; padding: 5px;")
             info_layout.addWidget(elimina, 6, 2)
             self.scroll_layout.addWidget(info_box,)
 
@@ -174,3 +182,22 @@ class VistaPagamentiImpiegato(QMainWindow):
             pagamento.eliminaPagamento(p, self.impiegato)
             QMessageBox.information(self, 'Disdetta Confermata', 'Il pagamento è stato eliminato con successo.', QMessageBox.Ok)
         self.go_back()
+
+    def confermaPagamento(self, p):
+        pagamento = Pagamento()
+        reply = QMessageBox.question(self, 'Conferma pagamento', 'Sei sicuro di voler confermare il pagamento?',
+                                     QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+
+        if reply == QMessageBox.Yes:
+            pagamento.verificaPagamento(p)
+            QMessageBox.information(self, 'Pagamento Confermato', 'Il pagamento è stato confermato con successo.', QMessageBox.Ok)
+            self.aggiornaVista()
+
+    def aggiornaVista(self):
+        # Clear the current layout
+        for i in reversed(range(self.scroll_layout.count())):
+            self.scroll_layout.itemAt(i).widget().setParent(None)
+
+        # Reload the payments
+        self.aggiungiPagamento()
+

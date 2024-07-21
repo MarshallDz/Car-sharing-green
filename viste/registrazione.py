@@ -102,8 +102,8 @@ class VistaRegistrazione(QMainWindow):
         clienti = cliente.get_dati()
 
         # controllo univocita email
-        for cliente in clienti:
-            if cliente["email"] == data_to_save["E-mail"]:
+        for user in clienti:
+            if user["email"] == data_to_save["E-mail"]:
                 QMessageBox.information(None, "attenzione", "Email già registrata")
                 return
         if data_to_save["Codice Fiscale"].__len__() != 16:
@@ -113,8 +113,14 @@ class VistaRegistrazione(QMainWindow):
             QMessageBox.warning(None, "Cellulare non valido", "Il numero di cellulare deve essere composto da 10 "
                                                               "cifre.")
             return
-
+            # Controllo che l'utente sia almeno diciottenne
+        data_nascita = QDate.fromString(data_to_save["Data di nascita"], Qt.ISODate)
+        eta = QDate.currentDate().year() - data_nascita.year()
+        if eta < 18 or (eta == 18 and QDate.currentDate() < data_nascita.addYears(18)):
+            QMessageBox.warning(None, "Età non valida", "Devi avere almeno 18 anni per registrarti.")
+            return
         cliente.aggiungiCliente(data_to_save["Codice Fiscale"], data_to_save["Nome"], data_to_save["Cognome"], data_to_save["Data di nascita"], data_to_save["E-mail"], data_to_save["Password"], data_to_save["Cellulare"])
+
         self.go_back()
 
     def go_back(self):

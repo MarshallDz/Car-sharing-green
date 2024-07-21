@@ -1,20 +1,20 @@
 [
     {
-        "id": "D3ku0L",
+        "id": "AXj24Z",
         "cliente": {
-            "codiceFiscale": "abcdefghlmnoppop",
-            "nome": "edo",
-            "cognome": "seve",
-            "dataNascita": "2003-01-26",
-            "email": "user",
-            "password": "user",
-            "cellulare": "1231231230",
+            "codiceFiscale": "mrzmhl02h20g157g",
+            "nome": "michelon",
+            "cognome": "micheloni",
+            "dataNascita": "2024-01-22",
+            "email": "a",
+            "password": "a",
+            "cellulare": "333333334",
             "prenotazioni": [],
-            "dataRegistrazione": "11012024"
+            "dataRegistrazione": "22012024"
         },
-        "data_prenotazione": "Tue Jul 02 2024",
-        "data_inizio": "2024-07-04 08.00",
-        "data_fine": "2024-07-04 15.00",
+        "data_prenotazione": "Sun Jul 21 2024",
+        "data_inizio": "2024-07-21 17.00",
+        "data_fine": "2024-07-22 08.00",
         "filiale": "Milano, via padova",
         "mezzo": {
             "immagine": "viste/Icone/auto/bmw-335i.png",
@@ -27,10 +27,44 @@
             "alimentazione": "benzina",
             "cambio": "automatico",
             "nPosti": "5",
-            "stato": "disponibile",
+            "stato": "prenotato",
             "tariffaOraria": "60"
         },
-        "tariffa": "oraria",
+        "tariffa": "giornaliera",
+        "polizza": "rca"
+    },
+    {
+        "id": "47D8yI",
+        "cliente": {
+            "codiceFiscale": "mrzmhl02h20g157g",
+            "nome": "michelon",
+            "cognome": "micheloni",
+            "dataNascita": "2024-01-22",
+            "email": "a",
+            "password": "a",
+            "cellulare": "333333334",
+            "prenotazioni": [],
+            "dataRegistrazione": "22012024"
+        },
+        "data_prenotazione": "Sun Jul 21 2024",
+        "data_inizio": "2024-07-21 17.00",
+        "data_fine": "2024-07-22 08.00",
+        "filiale": "Milano, via roma",
+        "mezzo": {
+            "immagine": "viste/Icone/auto/audi-a4.png",
+            "telaio": "03",
+            "produttore": "Audi",
+            "modello": "A4",
+            "cavalli": "190",
+            "cilindrata": "2000",
+            "anno": "2017",
+            "alimentazione": "diesel",
+            "cambio": "automatico",
+            "nPosti": "5",
+            "stato": "disponibile",
+            "tariffaOraria": "30"
+        },
+        "tariffa": "giornaliera",
         "polizza": "rca"
     }
 ]

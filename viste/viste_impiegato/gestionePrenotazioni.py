@@ -2,6 +2,7 @@ from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from Attivita.prenotazione import Prenotazione
+from Attivita.pagamento import Pagamento
 from Attivita.cliente import Cliente
 import darkdetect
 from datetime import datetime
@@ -179,6 +180,14 @@ class VistaGestionePrenotazione(QMainWindow):
 
                     buttons_layout = QHBoxLayout()
                     info_layout.addLayout(buttons_layout, 4, 3, alignment= Qt.AlignRight)
+
+                    if self.tariffa_edit.currentText() == "oraria" and self.dataFine_edit.text() == "da definire":
+                        fine_prenotazione_button = QPushButton("Termina prenotazione")
+                        fine_prenotazione_button.setStyleSheet("width: 150px; max-width: 150px; background-color: #6AFE67; "
+                                                    "border-radius: 15px; color: black; padding: 10px;")
+                        fine_prenotazione_button.clicked.connect(lambda _, p=x: self.finePrenotazioneOraria(p))
+                        buttons_layout.addWidget(fine_prenotazione_button)
+
                     modify_button = QPushButton("Modifica")
                     modify_button.setStyleSheet("width: 150px; max-width: 150px; background-color: #D9D9D9; "
                                                 "border-radius: 15px; color: black; padding: 10px;")
@@ -274,6 +283,16 @@ class VistaGestionePrenotazione(QMainWindow):
         prenotazione = Prenotazione()
         prenotazione.aggiornaValori(self.nome_cliente, formatted_date, self.valore_polizza, self.valore_data_inizio,
                                     self.valore_data_fine, self.valore_mezzo, self.valore_tariffa)
+        self.aggiorna_vista()
+
+    def finePrenotazioneOraria(self, p):
+        riconsegna = datetime.now().strftime("%Y-%m-%d %H.00")
+        prenotazioni = Prenotazione().readData()
+        for x in prenotazioni:
+            if x["id"] == p["id"]:
+                x["data_fine"] = riconsegna
+                Prenotazione().writeData(prenotazioni)
+                Pagamento().aggiungiPagamento("", x, x["cliente"])
         self.aggiorna_vista()
 
     def aggiorna_vista(self):

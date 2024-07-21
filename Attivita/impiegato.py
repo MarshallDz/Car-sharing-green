@@ -56,19 +56,3 @@ class Impiegato(Utilizzatore):
                 impiegato["cellulare"] = cel
             self.writeData(self.file, data)
 
-        # aggiorno il codice fiscale anche relativo ai pagamenti e prenotazione del cliente
-        pagamento = Pagamento()
-        pagamenti = pagamento.get_dati()
-        for x in pagamenti:
-            if cc["codiceFiscale"] == x["cliente"]:
-                x["cliente"] = cf
-        with open("dati/pagamenti.json", "w") as f:
-            json.dump({"pagamenti":pagamenti}, f, indent=4)
-
-            prenotazione = Prenotazione()
-            prenotazioni = prenotazione.get_dati()
-            for x in prenotazioni:
-                if cc["codiceFiscale"] == x["cliente"]["codiceFiscale"]:
-                    x["cliente"]["codiceFiscale"] = cf
-            with open("dati/prenotazioni.json", "w") as f:
-                json.dump({"prenotazioni": prenotazioni}, f, indent=4)

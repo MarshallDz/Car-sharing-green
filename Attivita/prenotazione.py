@@ -1,9 +1,9 @@
 import json
 import random
 import string
+from datetime import datetime
 
 from Attivita.pagamento import Pagamento
-
 
 class Prenotazione:
     def __init__(self):
@@ -145,6 +145,17 @@ class Prenotazione:
             if self.mezzo == f:
                 f["stato"] = Furgone().setStato(self.mezzo["stato"])
             Furgone().writeData(url_fur, fur)
+
+    def verificaScadenzaPrenotazione(self, p):
+        ritardo = False
+        prenotazioni = self.readData()
+        for x in prenotazioni:
+            if p["prenotazione"] == x["id"]:
+                prenotazione = x
+        oggi = datetime.now().strftime("%Y-%m-%d %H:%M")
+        if prenotazione["data_fine"] <= oggi and p["statoPagamento"] == "da pagare":
+            ritardo = True
+        return ritardo
 
     def writeData(self, data):
         with open(self.file, 'w') as file:

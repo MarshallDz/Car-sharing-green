@@ -229,14 +229,14 @@ class VistaEffettuaPrenotazioneImpiegato(QMainWindow):
 
         elif sender == self.tariffa:
             self.valori["tariffa"] = sender.currentText()
-            if sender.currentText() == "oraria":
+            if sender.currentText() == "giornaliera":
                 self.oracampo2.setVisible(True)
                 self.valori["data_fine"] = self.datacampo2.date().toString(
                     Qt.ISODate) + " " + self.oracampo2.currentText()
-            elif sender.currentText() == "giornaliera":
+            elif sender.currentText() == "oraria":
                 self.oracampo2.setVisible(False)
-                info = self.valori["data_fine"].split()
-                self.valori["data_fine"] = info[0]
+                self.datacampo2.setVisible(False)
+                self.valori["data_fine"] = "da definire"
 
     def go_back(self):
         from viste. viste_impiegato.gestionePrenotazioni import VistaGestionePrenotazione
@@ -261,7 +261,8 @@ class VistaEffettuaPrenotazioneImpiegato(QMainWindow):
                                               self.valori["data_fine"], mezzo, self.valori["filiale"],
                                               self.valori["tariffa"], self.valori["polizza"])
 
-            pagamento.aggiungiPagamento("", prenotazione.__dict__, c)
+            if self.tariffa.currentText() == "giornaliera:":
+                pagamento.aggiungiPagamento("", prenotazione.__dict__, c)
             cliente.set_prenotazioni_cliente(c, prenotazione.id)
             QMessageBox.information(None, "Prenotazione fatta", "Prenotazione salvata")
             self.go_back()

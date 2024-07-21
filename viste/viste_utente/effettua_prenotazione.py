@@ -159,10 +159,7 @@ class VistaEffettuaPrenotazione(QMainWindow):
 
         self.alt = QLabel("La tua scelta: \n\n" + mezzo["produttore"] + " " + mezzo["modello"] + " " + mezzo["cavalli"] + " cv")
         self.alt.setStyleSheet("font-size: 25px")
-        info = QLabel("\n\n(potrai scegliere in seguito se pagare online o in sede al momento del ritiro)")
-        info.setStyleSheet("margin-top: 200px")
         bottom_layout.addWidget(self.alt)
-        bottom_layout.addWidget(info)
 
         self.page_layout.addLayout(bottom_layout)
 
@@ -215,13 +212,14 @@ class VistaEffettuaPrenotazione(QMainWindow):
 
         elif sender == self.tariffa:
             self.valori["tariffa"] = sender.currentText()
-            if sender.currentText() == "oraria":
+            if sender.currentText() == "giornaliera":
                 self.oracampo2.setVisible(True)
                 self.valori["data_fine"] = self.datacampo2.date().toString(Qt.ISODate) + " " + self.oracampo2.currentText()
-            elif sender.currentText() == "giornaliera":
+            elif sender.currentText() == "oraria":
                 self.oracampo2.setVisible(False)
-                info = self.valori["data_fine"].split()
-                self.valori["data_fine"] = info[0]
+                self.datacampo2.setVisible(False)
+                self.valori["data_fine"] = "da definire"
+
 
     def go_back(self):
         from viste.viste_utente.vistaPrenotazione import VistaPrenotazione
@@ -243,8 +241,9 @@ class VistaEffettuaPrenotazione(QMainWindow):
             prenotazione.aggiungiPrenotazione(self.cliente, datetime.now().strftime("%a %b %d %Y"), self.valori["data_inizio"],
                                               self.valori["data_fine"], self.mezzo, self.valori["filiale"],
                                               self.valori["tariffa"], self.valori["polizza"])
-    
-            pagamento.aggiungiPagamento("", prenotazione.__dict__, self.cliente)
+
+            if self.valori["tariffa"] == "giornaliera":
+                pagamento.aggiungiPagamento("", prenotazione.__dict__, self.cliente)
             c.set_prenotazioni_cliente(self.cliente, prenotazione.id)
             self.vistaPrenotazione = VistaConfermaPrenotazione(self.cliente, QDate.currentDate().toString(), self.mezzo,
                                                                self.valori["data_inizio"], self.valori["data_fine"], self.valori["tariffa"],

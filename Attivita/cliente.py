@@ -85,6 +85,7 @@ class Cliente(Utilizzatore):
         # aggiorno il codice fiscale anche relativo ai pagamenti e prenotazione del cliente
         pagamenti = Pagamento().readData()
         for x in pagamenti:
+            print(x)
             if cc["codiceFiscale"] == x["cliente"]:
                 x["cliente"] = cf
         Pagamento().writeData(pagamenti)

@@ -102,7 +102,6 @@ class VistaEffettuaPrenotazioneAmministratore(QMainWindow):
         self.datacampo1.setCalendarPopup(True)
         self.datacampo1.lineEdit().setReadOnly(True)
         self.datacampo1.setMinimumDate(QDate.currentDate())
-        self.datacampo1.setStyleSheet("max-width: 300px; max-height: 50px;")
         dlayout1.addWidget(self.datacampo1)
         self.datacampo1.dateChanged.connect(self.update_valori)
 
@@ -123,7 +122,6 @@ class VistaEffettuaPrenotazioneAmministratore(QMainWindow):
         self.datacampo2.setCalendarPopup(True)
         self.datacampo2.lineEdit().setReadOnly(True)
         self.datacampo2.setMinimumDate(QDate.currentDate().addDays(1))
-        self.datacampo2.setStyleSheet("max-width: 300px; max-height: 50px")
         dlayout2.addWidget(self.datacampo2)
         self.datacampo2.dateChanged.connect(self.update_valori)
 
@@ -227,6 +225,8 @@ class VistaEffettuaPrenotazioneAmministratore(QMainWindow):
                 self.valori["data_fine"] = self.datacampo2.date().toString(Qt.ISODate) + " " + self.oracampo2.currentText()
             elif sender.currentText() == "oraria":
                 self.oracampo2.setVisible(False)
+                self.datacampo2.setVisible(False)
+                self.valori["data_fine"] = "da definire"
 
     def go_back(self):
         from viste. viste_amministratore.gestionePrenotazioni import VistaGestionePrenotazione
@@ -250,7 +250,7 @@ class VistaEffettuaPrenotazioneAmministratore(QMainWindow):
                                           self.valori["tariffa"], self.valori["polizza"])
 
         pagamento.aggiungiPagamento("", prenotazione.__dict__, c)
-        cliente.set_prenotazioni_cliente(c["email"], c["password"], prenotazione.id)
+        cliente.set_prenotazioni_cliente(c, prenotazione.id)
         QMessageBox.information(None, "Prenotazione fatta", "Prenotazione salvata")
 
     def ora_corrente(self):
@@ -295,8 +295,7 @@ class VistaEffettuaPrenotazioneAmministratore(QMainWindow):
     def cercaClienteByCF(self):
         with open("dati/clienti.json") as f:
             data = json.load(f)
-            clienti = data.get("clienti", [])
-            for i in clienti:
+            for i in data:
                 if self.sceltaCliente.currentText() == i["codiceFiscale"] :
                     return i
 
