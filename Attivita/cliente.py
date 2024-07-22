@@ -15,7 +15,7 @@ class Cliente(Utilizzatore):
 
     def aggiungiCliente(self, cF, no, cog, datN, em, pas, cel):
         self.aggiungiUtilizzatore(cF, no, cog, datN, em, pas, cel)
-        self.dataRegistrazione = datetime.datetime.now().strftime("%d%m%Y")
+        self.dataRegistrazione = datetime.datetime.now().strftime("%d-%m-%Y")
 
         # controllo se il cliente esiste gia
         clienti = self.get_dati()  # Ottieni la lista dei clienti

@@ -152,8 +152,8 @@ class Prenotazione:
         for x in prenotazioni:
             if p["prenotazione"] == x["id"]:
                 prenotazione = x
-        oggi = datetime.now().strftime("%Y-%m-%d %H:%M")
-        if prenotazione["data_fine"] <= oggi and p["statoPagamento"] == "da pagare":
+        oggi = datetime.now().strftime("%Y-%m-%d %H.%M")
+        if prenotazione["data_fine"] < oggi:
             ritardo = True
         return ritardo
 
