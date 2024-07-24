@@ -37,5 +37,3 @@ class Van(Mezzo):
     def cercaAuto(self, van):
         return self.searchById(self.file, van)
 
-    def controllaPrenotazione(self):
-        pass
