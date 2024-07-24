@@ -37,5 +37,3 @@ class Furgone(Mezzo):
     def cercaAuto(self, furgone):
         return self.searchById(self.file, furgone)
 
-    def controllaPrenotazione(self):
-        pass
