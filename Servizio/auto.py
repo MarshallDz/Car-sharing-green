@@ -37,5 +37,3 @@ class Auto(Mezzo):
     def get_dati(self):
         return self.readData(self.file)
 
-    def controllaPrenotazione(self):
-        pass
