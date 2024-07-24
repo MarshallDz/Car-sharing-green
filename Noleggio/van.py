@@ -1,4 +1,4 @@
-from Servizio.mezzo import Mezzo
+from Noleggio.mezzo import Mezzo
 
 
 class Van(Mezzo):

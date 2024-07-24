@@ -1,10 +1,10 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QFrame
 
-from Servizio.auto import Auto
-from Servizio.furgone import Furgone
-from Servizio.moto import Moto
-from Servizio.van import Van
+from Noleggio.auto import Auto
+from Noleggio.furgone import Furgone
+from Noleggio.moto import Moto
+from Noleggio.van import Van
 
 
 class stat1(QWidget):

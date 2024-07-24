@@ -114,10 +114,10 @@ class Prenotazione:
         return validita, inizio, fine
 
     def aggiorna_stato_mezzo(self, el=False):
-        from Servizio.auto import Auto
-        from Servizio.moto import Moto
-        from Servizio.van import Van
-        from Servizio.furgone import Furgone
+        from Noleggio.auto import Auto
+        from Noleggio.moto import Moto
+        from Noleggio.van import Van
+        from Noleggio.furgone import Furgone
         url_auto = "dati/auto.json"
         url_moto = "dati/moto.json"
         url_van = "dati/van.json"

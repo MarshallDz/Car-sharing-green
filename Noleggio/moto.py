@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from Servizio.mezzo import Mezzo
+from Noleggio.mezzo import Mezzo
 from Attivita.prenotazione import Prenotazione
 import json
 

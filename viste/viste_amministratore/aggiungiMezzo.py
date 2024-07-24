@@ -4,11 +4,11 @@ from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QVBoxLayout, QLabel, QPushButton, QHBoxLayout, \
     QLineEdit, QMessageBox
 
-from Servizio.auto import Auto
-from Servizio.furgone import Furgone
-from Servizio.mezzo import Mezzo
-from Servizio.moto import Moto
-from Servizio.van import Van
+from Noleggio.auto import Auto
+from Noleggio.furgone import Furgone
+from Noleggio.mezzo import Mezzo
+from Noleggio.moto import Moto
+from Noleggio.van import Van
 
 
 class VistaAggiungiMezzo(QMainWindow):

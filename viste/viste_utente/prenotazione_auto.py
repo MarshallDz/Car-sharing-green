@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import Qt
 
-from Servizio.auto import Auto
+from Noleggio.auto import Auto
 from viste.viste_utente.effettua_prenotazione import VistaEffettuaPrenotazione
 
 

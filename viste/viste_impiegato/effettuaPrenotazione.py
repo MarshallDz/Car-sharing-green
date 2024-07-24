@@ -6,10 +6,10 @@ from Attivita.pagamento import *
 from Attivita.cliente import Cliente
 import darkdetect
 
-from Servizio.auto import Auto
-from Servizio.furgone import Furgone
-from Servizio.moto import Moto
-from Servizio.van import Van
+from Noleggio.auto import Auto
+from Noleggio.furgone import Furgone
+from Noleggio.moto import Moto
+from Noleggio.van import Van
 
 
 class VistaEffettuaPrenotazioneImpiegato(QMainWindow):
@@ -286,22 +286,22 @@ class VistaEffettuaPrenotazioneImpiegato(QMainWindow):
         self.scelta_mezzo_combobox.clear()  # Pulisci la combobox
         # Popola la seconda combobox in base alla categoria selezionata
         if self.categoriaBox.currentText() == "auto":
-            from Servizio.auto import Auto
+            from Noleggio.auto import Auto
             lista_auto = Auto().get_dati()
             for auto in lista_auto:
                 self.scelta_mezzo_combobox.addItem(auto["produttore"] + " " + auto["modello"])
         elif self.categoriaBox.currentText() == "moto":
-            from Servizio.moto import Moto
+            from Noleggio.moto import Moto
             lista_moto = Moto().get_dati()
             for moto in lista_moto:
                 self.scelta_mezzo_combobox.addItem(moto["produttore"] + " " + moto["modello"])
         elif self.categoriaBox.currentText() == "van":
-            from Servizio.van import Van
+            from Noleggio.van import Van
             lista_van = Van().get_dati()
             for van in lista_van:
                 self.scelta_mezzo_combobox.addItem(van["produttore"] + " " + van["modello"])
         else:
-            from Servizio.furgone import Furgone
+            from Noleggio.furgone import Furgone
             lista_f = Furgone().get_dati()
             for f in lista_f:
                 self.scelta_mezzo_combobox.addItem(f["produttore"] + " " + f["modello"])
