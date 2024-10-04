@@ -98,7 +98,7 @@ class PrenotazioneVan(QWidget):
         myFont.setBold(True)
         tariffaLabel.setFont(myFont)
         car_info_layout.addWidget(tariffaLabel, 6, 0)
-        if van["stato"] == "disponibile":
+        if van["stato"] != "non disponibile":
             prenota_button = QPushButton("Prenota")
             prenota_button.setStyleSheet("max-height: 25px; color: black; border-radius: 10px; background-color: "
                                          "#0bd400")
