@@ -12,9 +12,9 @@
             "prenotazioni": [],
             "dataRegistrazione": "22012024"
         },
-        "data_prenotazione": "Sun Jul 21 2024",
-        "data_inizio": "2024-07-21 17.00",
-        "data_fine": "2024-07-22 08.00",
+        "data_prenotazione": "Fri Oct 04 2024",
+        "data_inizio": "2024-10-10 08.00",
+        "data_fine": "2024-10-10 08.00",
         "filiale": "Milano, via padova",
         "mezzo": {
             "immagine": "viste/Icone/auto/bmw-335i.png",
@@ -30,7 +30,7 @@
             "stato": "prenotato",
             "tariffaOraria": "60"
         },
-        "tariffa": "giornaliera",
+        "tariffa": "oraria",
         "polizza": "rca"
     },
     {
@@ -46,9 +46,9 @@
             "prenotazioni": [],
             "dataRegistrazione": "22012024"
         },
-        "data_prenotazione": "Sun Jul 21 2024",
-        "data_inizio": "2024-07-21 17.00",
-        "data_fine": "2024-07-22 08.00",
+        "data_prenotazione": "Fri Oct 04 2024",
+        "data_inizio": "2024-10-10 08.00",
+        "data_fine": "2024-10-10 08.00",
         "filiale": "Milano, via roma",
         "mezzo": {
             "immagine": "viste/Icone/auto/audi-a4.png",
@@ -64,7 +64,43 @@
             "stato": "disponibile",
             "tariffaOraria": "30"
         },
-        "tariffa": "giornaliera",
+        "tariffa": "oraria",
+        "polizza": "rca"
+    },
+    {
+        "id": "Uvvo8m",
+        "cliente": {
+            "codiceFiscale": "mrzmhl02h20g157g",
+            "nome": "michelon",
+            "cognome": "micheloni",
+            "dataNascita": "2024-01-22",
+            "email": "a",
+            "password": "a",
+            "cellulare": "3333333333",
+            "prenotazioni": [
+                "47D8yI"
+            ],
+            "dataRegistrazione": "22012024"
+        },
+        "data_prenotazione": "Fri Oct 04 2024",
+        "data_inizio": "2024-10-10 08.00",
+        "data_fine": "2024-10-10 08.00",
+        "filiale": "Milano, via padova",
+        "mezzo": {
+            "immagine": "viste/Icone/auto/bmw-335i.png",
+            "telaio": "01",
+            "produttore": "Bmw",
+            "modello": "335i",
+            "cavalli": "305",
+            "cilindrata": "3000",
+            "anno": "2019",
+            "alimentazione": "benzina",
+            "cambio": "automatico",
+            "nPosti": "5",
+            "stato": "disponibile",
+            "tariffaOraria": "60"
+        },
+        "tariffa": "oraria",
         "polizza": "rca"
     }
 ]
