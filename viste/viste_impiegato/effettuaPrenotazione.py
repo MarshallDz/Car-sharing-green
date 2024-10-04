@@ -230,6 +230,7 @@ class VistaEffettuaPrenotazioneImpiegato(QMainWindow):
         elif sender == self.tariffa:
             self.valori["tariffa"] = sender.currentText()
             if sender.currentText() == "giornaliera":
+                self.datacampo2.setVisible(True)
                 self.oracampo2.setVisible(True)
                 self.valori["data_fine"] = self.datacampo2.date().toString(
                     Qt.ISODate) + " " + self.oracampo2.currentText()
