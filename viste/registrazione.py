@@ -101,7 +101,7 @@ class VistaRegistrazione(QMainWindow):
                 data_to_save[campo_nome] = campo_widget.date().toString(Qt.ISODate)
         clienti = cliente.get_dati()
 
-        # controllo univocita email
+        # controllo univocita
         for user in clienti:
             if user["email"] == data_to_save["E-mail"]:
                 QMessageBox.information(None, "attenzione", "Email già registrata")

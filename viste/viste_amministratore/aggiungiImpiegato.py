@@ -94,8 +94,8 @@ class VistaRegistrazioneImpiegato(QMainWindow):
 
     def invio_dati(self):
         data_to_save = {}
+        impiegato = Impiegato()
 
-        # Extracting data from fields and formatting for JSON
         for campo_nome, campo_widget in self.campi.items():
             if isinstance(campo_widget, QLineEdit):
                 data_to_save[campo_nome] = campo_widget.text()
@@ -111,7 +111,14 @@ class VistaRegistrazioneImpiegato(QMainWindow):
             QMessageBox.warning(None, "Cellulare non valido", "Il numero di cellulare deve essere composto da 10 "
                                                               "cifre.")
             return
-        impiegato = Impiegato()
+
+        # controllo univocita
+        impiegati = impiegato.get_dati()
+        for user in impiegati:
+            if user["email"] == data_to_save["E-mail"]:
+                QMessageBox.information(None, "attenzione", "Email già registrata")
+                return
+
         impiegato.aggiungiImpiegato(data_to_save["Codice Fiscale"], data_to_save["Nome"], data_to_save["Cognome"], data_to_save["Data di nascita"], data_to_save["E-mail"], data_to_save["Password"], data_to_save["Cellulare"])
         self.go_back()
 
