@@ -60,7 +60,7 @@ class Pagamento:
                     totale += 50
         return totale
 
-    def eliminaPagamento(self, p, cliente):
+    def eliminaPagamento(self, p, cliente=None):
         pagamenti = self.readData()
         for i in pagamenti:
             if i['codice'] == p["codice"]:
