@@ -173,7 +173,7 @@ class VistaEffettuaPrenotazione(QMainWindow):
 
             # Impostiamo la data minima e massima della data di fine
             new_start_date = sender.date()
-            self.datacampo2.setMinimumDate(new_start_date)
+            self.datacampo2.setMinimumDate(new_start_date.addDays(1))
 
             # Imposta la data massima (3 giorni dopo la data di inizio)
             max_end_date = new_start_date.addDays(3)
@@ -226,6 +226,7 @@ class VistaEffettuaPrenotazione(QMainWindow):
         elif sender == self.tariffa:
             self.valori["tariffa"] = sender.currentText()
             if sender.currentText() == "giornaliera":
+                self.datacampo2.setVisible(True)
                 self.oracampo2.setVisible(True)
                 self.valori["data_fine"] = self.datacampo2.date().toString(Qt.ISODate) + " " + self.oracampo2.currentText()
             elif sender.currentText() == "oraria":
