@@ -1,4 +1,4 @@
-from Servizio.mezzo import Mezzo
+from Noleggio.mezzo import Mezzo
 
 
 class Auto(Mezzo):
@@ -37,5 +37,3 @@ class Auto(Mezzo):
     def get_dati(self):
         return self.readData(self.file)
 
-    def controllaPrenotazione(self):
-        pass

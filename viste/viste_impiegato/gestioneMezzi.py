@@ -1,10 +1,10 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-from Servizio.auto import Auto
-from Servizio.moto import Moto
-from Servizio.furgone import Furgone
-from Servizio.van import Van
+from Noleggio.auto import Auto
+from Noleggio.moto import Moto
+from Noleggio.furgone import Furgone
+from Noleggio.van import Van
 import darkdetect
 
 

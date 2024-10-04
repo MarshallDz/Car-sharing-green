@@ -1,4 +1,4 @@
-from Servizio.mezzo import Mezzo
+from Noleggio.mezzo import Mezzo
 
 
 class Van(Mezzo):
@@ -37,5 +37,3 @@ class Van(Mezzo):
     def cercaAuto(self, van):
         return self.searchById(self.file, van)
 
-    def controllaPrenotazione(self):
-        pass
