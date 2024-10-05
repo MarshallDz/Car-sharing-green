@@ -1,9 +1,13 @@
+# importazioni commentate per funzioni di backup
+import sqlite3
+import os
+# import schedule
+# import time
 import darkdetect
 from PyQt5.QtCore import QSize, Qt
 from PyQt5.QtGui import QIcon, QFont
 from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QHBoxLayout, QVBoxLayout, QPushButton, QLabel, \
     QGridLayout, QMessageBox
-
 from viste.viste_amministratore.gestioneClienti import VistaGestioneClienti
 from viste.viste_amministratore.gestioneImpiegati import VistaGestioneImpiegati
 from viste.viste_amministratore.gestioneMezzi import VistaMezziAmministratore
@@ -102,6 +106,14 @@ class VistaAmministrazione(QMainWindow):
 
         form_layout.addLayout(options_layout)
 
+        # Programmazione del backup ogni giorno alle 03:00 disattivata per assenza database
+
+        # schedule.every().day.at("03:00").do(self.backup_files)
+
+        # while True:
+            # schedule.run_pending()
+            # time.sleep(1)
+
     def go_GestioneImpiegati(self):
         self.vista = VistaGestioneImpiegati()
         self.vista.show()
@@ -145,3 +157,35 @@ class VistaAmministrazione(QMainWindow):
 
         if reply == QMessageBox.Yes:
             self.close()
+
+    # backup sistema
+    def read_file(self, file_path):
+        with open(file_path, 'r') as file:
+            return file.read()
+
+    def backup_files(self):
+        conn = sqlite3.connect('backup.db')
+        cursor = conn.cursor()
+
+        cursor.execute('''
+        CREATE TABLE IF NOT EXISTS files_backup (
+            id INTEGER PRIMARY KEY,
+            file_name TEXT,
+            content TEXT
+        )
+        ''')
+
+        # Percorso della directory da cui fare il backup
+        directory_path = 'dati'
+
+        # Iterazione sui file nella directory
+        for file_name in os.listdir(directory_path):
+            file_path = os.path.join(directory_path, file_name)
+            if os.path.isfile(file_path):
+                content = self.read_file(file_path)
+                cursor.execute('INSERT INTO files_backup (file_name, content) VALUES (?, ?)', (file_name, content))
+
+        # Commit delle modifiche e chiusura della connessione
+        conn.commit()
+        conn.close()
+        print("Backup completato")

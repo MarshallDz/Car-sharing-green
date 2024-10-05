@@ -1,7 +1,6 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-
 from viste.viste_utente.prenotazione_auto import PrenotazioneAuto
 from viste.viste_utente.prenotazione_moto import PrenotazioneMoto
 from viste.viste_utente.prenotazione_van import PrenotazioneVan

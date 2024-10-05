@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
@@ -51,7 +49,7 @@ class VistaPagamentiImpiegato(QMainWindow):
 
         self.central_layout.addLayout(title_layout)
 
-        # Aggiungi la barra di ricerca in alto a destra
+        # aggiungo la barra di ricerca in alto a destra
         self.search_layout = QHBoxLayout()
         self.search_layout.setAlignment(Qt.AlignRight | Qt.AlignTop)
         search_icon = QLabel()
@@ -75,12 +73,12 @@ class VistaPagamentiImpiegato(QMainWindow):
                                   "    border: none;"
                                   "    border-radius: 5px;"
                                   "    background: #272626;"
-                                  "    width: 10px;"  # Imposta la larghezza della barra di scorrimento
+                                  "    width: 10px;"  # imposta la larghezza della barra di scorrimento
                                   "}"
                                   "QScrollBar::handle:vertical {"
-                                  "    background: white;"  # Imposta il colore del cursore
+                                  "    background: white;"  # imposta il colore del cursore
                                   "    border-radius: 5px;"
-                                  "    min-height: 20px;"  # Imposta l'altezza minima del cursore
+                                  "    min-height: 20px;"  # imposta l'altezza minima del cursore
                                   "}"
                                   "QScrollBar::add-line:vertical {"
                                   "    background: none;"
@@ -151,13 +149,8 @@ class VistaPagamentiImpiegato(QMainWindow):
             info_layout.addWidget(elimina, 6, 2)
             self.scroll_layout.addWidget(info_box,)
 
-    def go_back(self):
-        from viste.viste_impiegato.pannelloControllo import VistaPannelloControllo
-        self.vista = VistaPannelloControllo(self.impiegato)
-        self.vista.show()
-        self.close()
-
     def search_pagamenti(self, text):
+
         # Funzione per filtrare le prenotazioni in base al nome del cliente
         for i in range(self.scroll_layout.count()):
             item = self.scroll_layout.itemAt(i)
@@ -194,10 +187,15 @@ class VistaPagamentiImpiegato(QMainWindow):
             self.aggiornaVista()
 
     def aggiornaVista(self):
-        # Clear the current layout
+        # pulisco il layout
         for i in reversed(range(self.scroll_layout.count())):
             self.scroll_layout.itemAt(i).widget().setParent(None)
 
-        # Reload the payments
+        # ricarico i pagamenti
         self.aggiungiPagamento()
 
+    def go_back(self):
+        from viste.viste_impiegato.pannelloControllo import VistaPannelloControllo
+        self.vista = VistaPannelloControllo(self.impiegato)
+        self.vista.show()
+        self.close()

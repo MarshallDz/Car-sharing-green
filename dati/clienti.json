@@ -1,27 +1,24 @@
 [
     {
-        "codiceFiscale": "abcdefghlmnoppop",
-        "nome": "edo",
-        "cognome": "seve",
-        "dataNascita": "2003-01-26",
-        "email": "user",
-        "password": "user",
+        "codiceFiscale": "RSSMRA85M01H501Z",
+        "nome": "mario",
+        "cognome": "rossi",
+        "dataNascita": "2002-09-21",
+        "email": "user1",
+        "password": "user1",
         "cellulare": "1231231230",
         "prenotazioni": [],
         "dataRegistrazione": "11012024"
     },
     {
-        "codiceFiscale": "mrzmhl02h20g157g",
-        "nome": "michelon",
-        "cognome": "micheloni",
-        "dataNascita": "2024-01-22",
-        "email": "a",
-        "password": "a",
-        "cellulare": "3333333333",
-        "prenotazioni": [
-            "47D8yI",
-            "Uvvo8m"
-        ],
-        "dataRegistrazione": "22012024"
+        "codiceFiscale": "VRDLGI75T22F205X",
+        "nome": "michele",
+        "cognome": "bianchi",
+        "dataNascita": "2001-03-10",
+        "email": "user2",
+        "password": "user2",
+        "cellulare": "1231231230",
+        "prenotazioni": [],
+        "dataRegistrazione": "11012024"
     }
 ]

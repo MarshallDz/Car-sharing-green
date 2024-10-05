@@ -1,6 +1,5 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QFrame
-
 from Noleggio.auto import Auto
 from Noleggio.furgone import Furgone
 from Noleggio.moto import Moto
@@ -19,7 +18,7 @@ class stat1(QWidget):
 
         data = self.getData()
 
-        # Create each card with a title and value
+        # creo delle card
         cardLayout.addWidget(self.createCard("Totale veicoli disponibili", str(data[4])))
         cardLayout.addWidget(self.createCard("Auto prenotate", str(data[0])))
         cardLayout.addWidget(self.createCard("Moto prenotate", str(data[1])))

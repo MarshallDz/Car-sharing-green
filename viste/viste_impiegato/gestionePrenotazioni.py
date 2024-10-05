@@ -50,7 +50,7 @@ class VistaGestionePrenotazione(QMainWindow):
 
         self.central_layout.addLayout(title_layout)
 
-        # Aggiungi la barra di ricerca in alto a destra
+        # aggiungo la barra di ricerca in alto a destra
         self.search_layout = QHBoxLayout()
         self.search_layout.setAlignment(Qt.AlignRight | Qt.AlignTop)
         search_icon = QLabel()
@@ -74,12 +74,12 @@ class VistaGestionePrenotazione(QMainWindow):
                                   "    border: none;"
                                   "    border-radius: 5px;"
                                   "    background: #272626;"
-                                  "    width: 10px;"  # Imposta la larghezza della barra di scorrimento
+                                  "    width: 10px;"  # imposta la larghezza della barra di scorrimento
                                   "}"
                                   "QScrollBar::handle:vertical {"
-                                  "    background: white;"  # Imposta il colore del cursore
+                                  "    background: white;"  # imposta il colore del cursore
                                   "    border-radius: 5px;"
-                                  "    min-height: 20px;"  # Imposta l'altezza minima del cursore
+                                  "    min-height: 20px;"  # imposta l'altezza minima del cursore
                                   "}"
                                   "QScrollBar::add-line:vertical {"
                                   "    background: none;"
@@ -204,12 +204,6 @@ class VistaGestionePrenotazione(QMainWindow):
 
                     self.scroll_layout.addWidget(info_box)
 
-    def go_back(self):
-        self.close()
-        from viste.viste_impiegato.pannelloControllo import VistaPannelloControllo
-        self.vista = VistaPannelloControllo(self.impiegato)
-        self.vista.show()
-
     def disdici(self, p):
         reply = QMessageBox.warning(self, 'Conferma Disdetta', 'Sei sicuro di voler disdire questa prenotazione?',
                                     QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
@@ -220,6 +214,7 @@ class VistaGestionePrenotazione(QMainWindow):
         self.go_back()
 
     def modifica_valori_lineedit(self, data_edit, mezzo_edit, tariffa_edit, dataInizio_edit, dataFine_edit, polizza_edit, modify_button, nc):
+
         # bisogna aggiungere anche la modifica nel file prenotazioni.json
         if modify_button.text() == "Modifica":
             modify_button.setText("Salva")
@@ -229,7 +224,8 @@ class VistaGestionePrenotazione(QMainWindow):
             dataInizio_edit.setEnabled(True)
             dataFine_edit.setEnabled(True)
             polizza_edit.setEnabled(True)
-            # Salva i riferimenti ai campi QLineEdit
+
+            # salvo i riferimenti ai campi QLineEdit
             self.modifica_data = data_edit
             self.modifica_mezzo = mezzo_edit
             self.modifica_tariffa = tariffa_edit
@@ -254,7 +250,7 @@ class VistaGestionePrenotazione(QMainWindow):
         self.close()
 
     def search_prenotazioni(self, text):
-        # Funzione per filtrare le prenotazioni in base al nome del cliente
+        # funzione per filtrare le prenotazioni in base al nome del cliente
         for i in range(self.scroll_layout.count()):
             item = self.scroll_layout.itemAt(i)
             if isinstance(item, QLayoutItem):
@@ -270,16 +266,19 @@ class VistaGestionePrenotazione(QMainWindow):
                         widget.hide()
 
     def salva_valori(self):
-        # Estrai i valori dai campi QLineEdit e memorizzali nelle variabili di istanza
+
+        # estraggo i valori dai campi QLineEdit e li memorizzo nelle variabili di istanza
         self.valore_data = self.modifica_data.date().toString(Qt.ISODate)
-        # Parse the date string
+
         date_obj = datetime.strptime(self.valore_data, "%Y-%m-%d")
         formatted_date = date_obj.strftime("%a %b %d %Y")
+
         self.valore_mezzo = self.modifica_mezzo.text()
         self.valore_tariffa = self.modifica_tariffa.currentText()
         self.valore_data_inizio = self.modifica_data_inizio.text()
         self.valore_data_fine = self.modifica_data_fine.text()
         self.valore_polizza = self.modifica_polizza.currentText()
+
         prenotazione = Prenotazione()
         prenotazione.aggiornaValori(self.nome_cliente, formatted_date, self.valore_polizza, self.valore_data_inizio,
                                     self.valore_data_fine, self.valore_mezzo, self.valore_tariffa)
@@ -296,12 +295,18 @@ class VistaGestionePrenotazione(QMainWindow):
         self.aggiorna_vista()
 
     def aggiorna_vista(self):
-        # Rimuovi tutti i widget dalla scroll_layout
+        # rimuovo tutti i widget dalla scroll_layout
         while self.scroll_layout.count():
             item = self.scroll_layout.takeAt(0)
             widget = item.widget()
             if widget:
                 widget.deleteLater()
 
-        # Ora puoi chiamare nuovamente il metodo per aggiungere i widget aggiornati
+        # ora richiamo il metodo per aggiungere i widget aggiornati
         self.aggiungi_box_info()
+
+    def go_back(self):
+        self.close()
+        from viste.viste_impiegato.pannelloControllo import VistaPannelloControllo
+        self.vista = VistaPannelloControllo(self.impiegato)
+        self.vista.show()

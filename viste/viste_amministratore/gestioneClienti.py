@@ -3,7 +3,6 @@ from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QVBoxLayout, QLabel, QHBoxLayout, QLineEdit, \
     QScrollArea, QPushButton, QGroupBox, QGridLayout, QMessageBox, QLayoutItem
-
 from Attivita.cliente import Cliente
 
 
@@ -47,7 +46,7 @@ class VistaGestioneClienti(QMainWindow):
 
         self.central_layout.addLayout(title_layout)
 
-        # Aggiungi la barra di ricerca in alto a destra
+        # aggiungo la barra di ricerca in alto a destra
         self.search_layout = QHBoxLayout()
         self.search_layout.setAlignment(Qt.AlignRight | Qt.AlignTop)
         search_icon = QLabel()
@@ -71,12 +70,12 @@ class VistaGestioneClienti(QMainWindow):
                                   "    border: none;"
                                   "    border-radius: 5px;"
                                   "    background: #272626;"
-                                  "    width: 10px;"  # Imposta la larghezza della barra di scorrimento
+                                  "    width: 10px;"  # imposta la larghezza della barra di scorrimento
                                   "}"
                                   "QScrollBar::handle:vertical {"
-                                  "    background: white;"  # Imposta il colore del cursore
+                                  "    background: white;"  # imposta il colore del cursore
                                   "    border-radius: 5px;"
-                                  "    min-height: 20px;"  # Imposta l'altezza minima del cursore
+                                  "    min-height: 20px;"  # imposta l'altezza minima del cursore
                                   "}"
                                   "QScrollBar::add-line:vertical {"
                                   "    background: none;"
@@ -187,10 +186,11 @@ class VistaGestioneClienti(QMainWindow):
                                     QMessageBox.Yes, QMessageBox.No)
 
         if reply == QMessageBox.Yes:
-            cliente.eliminaCliente(c, self.user, self.psw)
+            cliente.eliminaCliente(c)
             QMessageBox.information(self, 'Disdetta Confermata', 'Il cliente è stato eliminato con successo.',QMessageBox.Ok)
 
     def modifica_valori_lineedit(self, cc, cF, nome, cognome, dataN, email, cellulare, modify_button):
+
         # bisogna aggiungere anche la modifica nel file prenotazioni.json
         if modify_button.text() == "Modifica":
             modify_button.setText("Salva")
@@ -201,7 +201,7 @@ class VistaGestioneClienti(QMainWindow):
             email.setEnabled(True)
             cellulare.setEnabled(True)
 
-            # Salva i riferimenti ai campi QLineEdit
+            # salvo i riferimenti ai campi QLineEdit
             self.cf = cF
             self.nome = nome
             self.cognome = cognome
@@ -241,7 +241,8 @@ class VistaGestioneClienti(QMainWindow):
                         widget.hide()
 
     def salva_valori(self):
-        # Estrai i valori dai campi QLineEdit e memorizzali nelle variabili di istanza
+
+        # estraggo i valori dai campi QLineEdit e memorizzali nelle variabili di istanza
         self.cod = self.cf.text()
         self.n = self.nome.text()
         self.c = self.cognome.text()
@@ -253,14 +254,14 @@ class VistaGestioneClienti(QMainWindow):
         self.aggiorna_vista()
 
     def aggiorna_vista(self):
-        # Rimuovi tutti i widget dalla scroll_layout
+        # rimuovo tutti i widget dalla scroll_layout
         while self.scroll_layout.count():
             item = self.scroll_layout.takeAt(0)
             widget = item.widget()
             if widget:
                 widget.deleteLater()
 
-        # Ora puoi chiamare nuovamente il metodo per aggiungere i widget aggiornati
+        # ora richiamo il metodo per aggiungere i widget aggiornati
         self.aggiungi_box_info()
 
 

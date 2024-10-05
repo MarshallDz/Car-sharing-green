@@ -5,7 +5,6 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from Attivita.cliente import Cliente
 from Attivita.impiegato import Impiegato
-from Attivita.utilizzatore import Utilizzatore
 from viste.viste_amministratore.admin import VistaAmministrazione
 from viste.viste_utente.home import VistaHome
 from viste.viste_impiegato.pannelloControllo import VistaPannelloControllo

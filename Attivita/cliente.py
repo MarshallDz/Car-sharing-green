@@ -18,7 +18,7 @@ class Cliente(Utilizzatore):
         self.dataRegistrazione = datetime.datetime.now().strftime("%d-%m-%Y")
 
         # controllo se il cliente esiste gia
-        clienti = self.get_dati()  # Ottieni la lista dei clienti
+        clienti = self.get_dati()
 
         for cliente_esistente in clienti:
             if cliente_esistente["codiceFiscale"] == self.codiceFiscale:
@@ -43,21 +43,17 @@ class Cliente(Utilizzatore):
 
         return lista_prenotazioni
 
-    def get_dati(self):
-        return self.readData(self.file)
-
     def set_prenotazioni_cliente(self, cliente, idp):
-        # Carica i dati dei clienti dal file JSON
         data = self.readData(self.file)
 
-        # Cerca il cliente specifico usando il suo codice fiscale
+        # cerco il cliente specifico usando il suo codice fiscale
         for c in data:
             if c["email"] == cliente["email"] and c["password"] == cliente["password"]:
-                # Aggiungi il codice della nuova prenotazione alla lista delle prenotazioni del cliente
+                # aggiungo il codice della nuova prenotazione alla lista delle prenotazioni del cliente
                 c["prenotazioni"].append(idp)
                 break
 
-        # Scrivi i dati aggiornati nel file JSON
+        # scrivo i dati aggiornati nel file JSON
         self.writeData(self.file, data)
 
     def verificaCliente(self, user, password):
@@ -96,3 +92,5 @@ class Cliente(Utilizzatore):
                 x["cliente"]["codiceFiscale"] = cf
         Prenotazione().writeData(prenotazioni)
 
+    def get_dati(self):
+        return self.readData(self.file)

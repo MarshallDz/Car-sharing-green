@@ -1,4 +1,3 @@
-import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
@@ -18,7 +17,7 @@ class WelcomeWindow(QMainWindow):
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
 
-        # Aggiungi un layout verticale al widget centrale
+        # aggiungi un layout verticale al widget centrale
         central_layout = QVBoxLayout()
         central_layout.setAlignment(Qt.AlignJustify)
         central_widget.setLayout(central_layout)
@@ -40,7 +39,7 @@ class WelcomeWindow(QMainWindow):
         title_layout.addWidget(self.subtitle_label)
         central_layout.addLayout(title_layout)
 
-        # Aggiungi un layout orizzontale per allineare i pulsanti
+        # aggiungi un layout orizzontale per allineare i pulsanti
         buttons_layout = QVBoxLayout()
         buttons_layout.setAlignment(Qt.AlignCenter | Qt.AlignTop)
 
