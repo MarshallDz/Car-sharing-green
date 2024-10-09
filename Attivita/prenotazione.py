@@ -4,6 +4,7 @@ import string
 from datetime import datetime
 from Attivita.pagamento import Pagamento
 
+
 class Prenotazione:
     def __init__(self):
         self.id = ""
