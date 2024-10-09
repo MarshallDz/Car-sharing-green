@@ -1,6 +1,5 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QScrollArea, QFrame
-
 from Attivita.cliente import Cliente
 
 
@@ -16,8 +15,6 @@ class stat2(QWidget):
         scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
         scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         scroll_area.setMinimumHeight(300)
-
-
 
         scroll_widget = QWidget()
         scroll_layout = QHBoxLayout(scroll_widget)

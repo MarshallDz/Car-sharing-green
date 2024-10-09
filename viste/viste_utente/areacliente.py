@@ -139,21 +139,22 @@ class VistaCliente(QMainWindow):
 
         if reply == QMessageBox.Yes:
             cliente = Cliente()
-            # Cerca il cliente specifico usando il suo codice fiscale
+
+            # cerca il cliente specifico usando il suo codice fiscale
             data = cliente.readData("dati/clienti.json")
             for c in data:
                 if c["codiceFiscale"] == self.cliente["codiceFiscale"]:
-                    # Aggiorno i dati del cliente
+                    # aggiorno i dati del cliente
                     c["email"] = login["e-mail"]
                     c["password"] = login["password"]
                     c["cellulare"] = login["cellulare"]
 
-            # Scrivi i dati aggiornati nel file JSON
+            # scrivo i dati aggiornati nel file JSON
             cliente.writeData("dati/clienti.json", data)
             QMessageBox.information(self, 'Modifica confermata', 'I dati sono stai aggiornati con successo.',
                                     QMessageBox.Ok)
 
-            # Aggiorno i dati della variabile cliente
+            # aggiorno i dati della variabile cliente
             self.cliente["email"] = login["e-mail"]
             self.cliente["password"] = login["password"]
             self.cliente["cellulare"] = login["cellulare"]

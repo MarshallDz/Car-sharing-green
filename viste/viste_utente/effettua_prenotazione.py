@@ -1,6 +1,5 @@
 from PyQt5.QtGui import QPixmap, QTextCharFormat
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import Qt, QDate
 from Attivita.cliente import *
 from Attivita.prenotazione import *
 from viste.viste_utente.confermaPrenotazione import VistaConfermaPrenotazione
@@ -164,32 +163,34 @@ class VistaEffettuaPrenotazione(QMainWindow):
         self.page_layout.addLayout(bottom_layout)
 
     def update_valori(self):
-        sender = self.sender()  # Identifica quale widget ha generato il segnale
+
+        # identifico quale widget ha generato il segnale
+        sender = self.sender()
 
         if sender == self.datacampo1:
             info = self.valori["data_inizio"].split(" ")
             info[0] = sender.date().toString(Qt.ISODate)
             self.valori["data_inizio"] = f"{info[0]} {info[1]}"
 
-            # Impostiamo la data minima e massima della data di fine
+            # imposta la data minima e massima della data di fine
             new_start_date = sender.date()
             self.datacampo2.setMinimumDate(new_start_date.addDays(1))
 
-            # Imposta la data massima (3 giorni dopo la data di inizio)
+            # imposta la data massima (3 giorni dopo la data di inizio)
             max_end_date = new_start_date.addDays(3)
             self.datacampo2.setMaximumDate(max_end_date)
 
-            # Personalizza il calendario per disabilitare i giorni fuori dal range
+            # personalizza il calendario per disabilitare i giorni fuori dal range
             self.oscura_giorni_non_selezionabili(new_start_date, max_end_date)
 
-            # Verifica che la data di fine non sia oltre il massimo
+            # verifica che la data di fine non sia oltre il massimo
             current_end_date = self.datacampo2.date()
             if current_end_date > max_end_date:
                 self.datacampo2.setDate(max_end_date)
             elif current_end_date < new_start_date:
                 self.datacampo2.setDate(new_start_date)
 
-            # Ripopola oracampo1
+            # ripopola oracampo1
             if not self.verifica_data_corrente():
                 self.oracampo1.clear()
                 for i in range(8, 21):
@@ -233,7 +234,6 @@ class VistaEffettuaPrenotazione(QMainWindow):
                 self.oracampo2.setVisible(False)
                 self.datacampo2.setVisible(False)
                 self.valori["data_fine"] = "da definire"
-
 
     def go_back(self):
         from viste.viste_utente.vistaPrenotazione import VistaPrenotazione
@@ -280,18 +280,19 @@ class VistaEffettuaPrenotazione(QMainWindow):
         return data_inserita == data_corrente
 
     def oscura_giorni_non_selezionabili(self, data_inizio, data_massima):
-        # Otteniamo il calendario dal QDateEdit
+
+        # otteniamo il calendario dal QDateEdit
         calendar = self.datacampo2.calendarWidget()
 
-        # Formato per "oscurare" i giorni
+        # formato per "oscurare" i giorni
         disabled_format = QTextCharFormat()
-        disabled_format.setForeground(Qt.gray)  # Imposta il colore del testo a grigio per i giorni non selezionabili
+        disabled_format.setForeground(Qt.gray)  # imposta il colore del testo a grigio per i giorni non selezionabili
 
-        # Loop su tutti i giorni del calendario
-        for giorno_offset in range(-365, 366):  # Controlla i giorni dell'anno
+        # loop su tutti i giorni del calendario
+        for giorno_offset in range(-365, 366):  # controlla i giorni dell'anno
             giorno_corrente = QDate.currentDate().addDays(giorno_offset)
 
             if giorno_corrente < data_inizio or giorno_corrente > data_massima:
-                calendar.setDateTextFormat(giorno_corrente, disabled_format)  # Applica il formato disabilitato
+                calendar.setDateTextFormat(giorno_corrente, disabled_format)  # applica il formato disabilitato
             else:
-                calendar.setDateTextFormat(giorno_corrente, QTextCharFormat())  # Reimposta il formato normale per i giorni selezionabili
+                calendar.setDateTextFormat(giorno_corrente, QTextCharFormat())  # reimposta il formato normale per i giorni selezionabili

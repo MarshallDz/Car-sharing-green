@@ -5,7 +5,6 @@ from viste.viste_utente.areacliente import VistaCliente
 from viste.viste_utente.vistaPrenotazione import VistaPrenotazione
 from viste.viste_utente.visualizzaPrenotazioni import PrenotazioniView
 from viste.viste_utente.vistaPagamenti import VistaPagamenti
-from Attivita.cliente import Cliente
 import darkdetect
 
 

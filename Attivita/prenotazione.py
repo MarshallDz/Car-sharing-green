@@ -2,8 +2,8 @@ import json
 import random
 import string
 from datetime import datetime
-
 from Attivita.pagamento import Pagamento
+
 
 class Prenotazione:
     def __init__(self):
@@ -39,9 +39,8 @@ class Prenotazione:
 
     def eliminaPrenotazione(self, p):
         url_clienti = "dati/clienti.json"
-        url_pagamenti = "dati/pagamenti.json"
 
-        # Rimuovi la prenotazione dalla lista delle prenotazioni nel file JSON principale
+        # rimuovo la prenotazione dalla lista delle prenotazioni nel file JSON principale
         data_prenotazioni = self.readData()
 
         if p in data_prenotazioni:
@@ -62,26 +61,27 @@ class Prenotazione:
         with open(url_clienti, "w") as file:
             json.dump(data_clienti, file, indent=4)
 
-        # Rimuovi il pagamento associato alla prenotazione dalla lista dei pagamenti nel file JSON
+        # rimuovi il pagamento associato alla prenotazione dalla lista dei pagamenti nel file JSON
         data_pagamenti = Pagamento().readData()
 
         updated_pagamenti = [pagamento for pagamento in data_pagamenti if pagamento['prenotazione'] != p['id']]
 
         Pagamento().writeData(updated_pagamenti)
 
-        # Resetta lo stato del mezzo a disponibile
+        # resetto lo stato del mezzo a disponibile
         self.mezzo = p["mezzo"]
         self.aggiorna_stato_mezzo(True)
 
-        # Aggiorna l'interfaccia utente per visualizzare le prenotazioni aggiornate
+        # aggiorna l'interfaccia utente per visualizzare le prenotazioni aggiornate
         from viste.viste_utente.visualizzaPrenotazioni import PrenotazioniView
         self.vista = PrenotazioniView(p['cliente'])
         self.vista.show()
 
     def set_id(self):
-        # Creazione di una stringa contenente lettere minuscole, lettere maiuscole e numeri
+        # creo una stringa contenente lettere minuscole, lettere maiuscole e numeri
         caratteri = string.ascii_letters + string.digits
-        # Generazione della stringa casuale di 6 caratteri
+
+        # genero la stringa casuale di 6 caratteri
         stringa_random = ''.join(random.choice(caratteri) for _ in range(6))
         return stringa_random
 
@@ -126,6 +126,7 @@ class Prenotazione:
         moto = Moto().get_dati()
         van = Van().get_dati()
         fur = Furgone().get_dati()
+
         # per come è costruita p, l'if serve a verificare se la chiamata della funzione arriva da eliminaPrenotazione
         if el:
             self.mezzo["stato"] = "prenotato"

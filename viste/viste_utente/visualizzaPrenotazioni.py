@@ -67,6 +67,9 @@ class PrenotazioniView(QMainWindow):
                                   "}"
                                   "QScrollBar::sub-line:vertical {"
                                   "    background: none;"
+                                  "}"
+                                  "QScrollArea {"
+                                  "border: none"
                                   "}")
 
         scroll_area.setWidgetResizable(True)
@@ -135,6 +138,7 @@ class PrenotazioniView(QMainWindow):
     def disdici(self, p):
         oggi = datetime.date.today()
         data_inizio = datetime.datetime.strptime(p["data_inizio"].split(" ")[0], "%Y-%m-%d").date()
+
         # posso disdire la prenotazione fino ad un giorno prima dell'inizio della prenotazione
         if data_inizio > oggi:
             reply = QMessageBox.warning(self, 'Conferma Disdetta', 'Sei sicuro di voler disdire questa prenotazione?',

@@ -51,7 +51,7 @@ class VistaMezziImpiegato(QMainWindow):
 
         self.add_category_buttons()
 
-        # Aggiungi la barra di ricerca in alto a destra
+        # aggiungo la barra di ricerca in alto a destra
         self.search_layout = QHBoxLayout()
         self.search_layout.setAlignment(Qt.AlignRight | Qt.AlignTop)
         search_icon = QLabel()
@@ -75,12 +75,12 @@ class VistaMezziImpiegato(QMainWindow):
                                   "    border: none;"
                                   "    border-radius: 5px;"
                                   "    background: #272626;"
-                                  "    width: 10px;"  # Imposta la larghezza della barra di scorrimento
+                                  "    width: 10px;"  # imposta la larghezza della barra di scorrimento
                                   "}"
                                   "QScrollBar::handle:vertical {"
-                                  "    background: white;"  # Imposta il colore del cursore
+                                  "    background: white;"  # imposta il colore del cursore
                                   "    border-radius: 5px;"
-                                  "    min-height: 20px;"  # Imposta l'altezza minima del cursore
+                                  "    min-height: 20px;"  # imposta l'altezza minima del cursore
                                   "}"
                                   "QScrollBar::add-line:vertical {"
                                   "    background: none;"
@@ -166,14 +166,9 @@ class VistaMezziImpiegato(QMainWindow):
 
             self.scroll_layout.addWidget(info_box)
 
-    def go_back(self):
-        from viste.viste_impiegato.pannelloControllo import VistaPannelloControllo
-        self.vista = VistaPannelloControllo(self.impiegato)
-        self.vista.show()
-        self.close()
-
     def search_mezzi(self, text):
-        # Funzione per filtrare le prenotazioni in base al nome del cliente
+
+        # funzione per filtrare le prenotazioni in base al nome del cliente
         for i in range(self.scroll_layout.count()):
             item = self.scroll_layout.itemAt(i)
             if isinstance(item, QLayoutItem):
@@ -189,11 +184,9 @@ class VistaMezziImpiegato(QMainWindow):
                         widget.hide()
 
     def add_category_buttons(self):
-        # Create a horizontal layout for category buttons
         self.category_layout = QHBoxLayout()
         self.category_layout.setAlignment(Qt.AlignLeft | Qt.AlignTop)
 
-        # Create buttons for each category
         self.auto_button = QPushButton("Auto")
         self.auto_button.clicked.connect(lambda: self.filter_vehicles("Auto"))
         self.category_layout.addWidget(self.auto_button)
@@ -210,20 +203,18 @@ class VistaMezziImpiegato(QMainWindow):
         self.furgone_button.clicked.connect(lambda: self.filter_vehicles("Furgone"))
         self.category_layout.addWidget(self.furgone_button)
 
-        # Set stretch factor for buttons to occupy all available horizontal space
+        # imposto i bottoni per occupare tutto lo spazio orizzontale disponibile
         self.auto_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         self.moto_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         self.van_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         self.furgone_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
 
-        # Add category layout to the main layout
         self.central_layout.addLayout(self.category_layout)
 
     def filter_vehicles(self, category):
-        # Clear existing vehicles from scroll layout
+        # pulisco lo scroll
         self.clear_scroll_layout()
 
-        # Set background color for the pressed button and reset others
         buttons = [self.auto_button, self.moto_button, self.van_button, self.furgone_button]
         for button in buttons:
             if button.text() == category:
@@ -231,7 +222,7 @@ class VistaMezziImpiegato(QMainWindow):
             else:
                 button.setStyleSheet("QPushButton { background-color: none; }")
 
-        # Populate the scroll layout with vehicles of the selected category
+        # popolo lo scroll
         if category == "Auto":
             self.populate_scroll_layout(Auto().get_dati())
         elif category == "Moto":
@@ -242,8 +233,13 @@ class VistaMezziImpiegato(QMainWindow):
             self.populate_scroll_layout(Furgone().get_dati())
 
     def clear_scroll_layout(self):
-        # Clear existing vehicles from scroll layout
         for i in reversed(range(self.scroll_layout.count())):
             widget = self.scroll_layout.itemAt(i).widget()
             if widget:
                 widget.deleteLater()
+
+    def go_back(self):
+        from viste.viste_impiegato.pannelloControllo import VistaPannelloControllo
+        self.vista = VistaPannelloControllo(self.impiegato)
+        self.vista.show()
+        self.close()

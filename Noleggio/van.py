@@ -24,9 +24,6 @@ class Van(Mezzo):
         except Exception as e:
             print(f"Si è verificato un errore: {e}")
 
-    def get_dati(self):
-        return self.readData(self.file)
-
     def eliminaVan(self, van):
         try:
             self.eliminaMezzo(self.file, van)
@@ -34,6 +31,8 @@ class Van(Mezzo):
         except Exception as e:
             print(f"Si è verificato un errore: {e}")
 
-    def cercaAuto(self, van):
+    def cercaVan(self, van):
         return self.searchById(self.file, van)
 
+    def get_dati(self):
+        return self.readData(self.file)

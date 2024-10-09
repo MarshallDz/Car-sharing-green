@@ -9,6 +9,7 @@ class VistaRegistrazioneCliente(QMainWindow):
     def __init__(self, impiegato):
         super().__init__()
         self.impiegato = impiegato
+
         # dizionario in cui salvi i campi del form
         self.campi = {}
 
@@ -65,7 +66,7 @@ class VistaRegistrazioneCliente(QMainWindow):
 
     def crea_campo(self, nome):
         if nome == "Data di nascita":
-            layout = QHBoxLayout()  # Layout orizzontale per posizionare la label accanto al campo
+            layout = QHBoxLayout()  # layout orizzontale per posizionare la label accanto al campo
             label = QLabel("Data di nascita")
             label.setStyleSheet("max-width: 100px; min-height: 40px; border-radius: 15px;")
             campo = QDateEdit()
@@ -89,7 +90,7 @@ class VistaRegistrazioneCliente(QMainWindow):
     def invio_dati(self):
         data_to_save = {}
 
-        # Extracting data from fields and formatting for JSON
+        # estrazione dati e formattazione per JSON
         for campo_nome, campo_widget in self.campi.items():
             if isinstance(campo_widget, QLineEdit):
                 data_to_save[campo_nome] = campo_widget.text()

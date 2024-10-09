@@ -3,7 +3,6 @@ import json
 import random
 import string
 
-from PyQt5.QtCore import QDate, Qt
 
 class Pagamento:
     def __init__(self):
@@ -29,9 +28,9 @@ class Pagamento:
         self.writeData(pagamenti)
 
     def set_id(self):
-        # Creazione di una stringa contenente lettere minuscole, lettere maiuscole e numeri
+        # creo una stringa contenente lettere minuscole, lettere maiuscole e numeri
         caratteri = string.ascii_letters + string.digits
-        # Generazione della stringa casuale di 6 caratteri
+        # genero la stringa casuale di 6 caratteri
         stringa_random = ''.join(random.choice(caratteri) for _ in range(6))
         return stringa_random
 
@@ -52,7 +51,7 @@ class Pagamento:
            totale = 'da definire'
         return totale
 
-    def eliminaPagamento(self, p, cliente):
+    def eliminaPagamento(self, p, cliente=None):
         pagamenti = self.readData()
         for i in pagamenti:
             if i['codice'] == p["codice"]:
@@ -61,13 +60,13 @@ class Pagamento:
 
         self.writeData(pagamenti)
 
-        # Aggiorna l'interfaccia utente per visualizzare le prenotazioni aggiornate
+        # aggiorno l'interfaccia utente per visualizzare le prenotazioni aggiornate
         from viste.viste_impiegato.gestionePagamenti import VistaPagamentiImpiegato
         self.vista = VistaPagamentiImpiegato(cliente)
         self.vista.show()
 
     def verificaPagamento(self, p):
-        #controllo se devo applicare la mora
+        # controllo se devo applicare la mora
         from Attivita.prenotazione import Prenotazione
         pagamenti = self.readData()
         if Prenotazione().verificaScadenzaPrenotazione(p):
@@ -75,7 +74,8 @@ class Pagamento:
             for x in pagamenti:
                 if x["codice"] == p["codice"]:
                     x["totale"] = p["totale"]
-        #cambio lo stato del pagamento in "pagato"
+
+        # cambio lo stato del pagamento in "pagato"
         for pagamento in pagamenti:
             if pagamento["codice"] == p["codice"]:
                 pagamento["statoPagamento"] = "pagato"
@@ -85,7 +85,6 @@ class Pagamento:
     def writeData(self, data):
         with open(self.file, 'w') as file:
             json.dump(data, file, indent=4)
-
 
     def readData(self):
         with open(self.file, "r") as file:

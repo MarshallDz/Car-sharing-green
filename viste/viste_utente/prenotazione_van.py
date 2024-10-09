@@ -1,5 +1,4 @@
 import json
-
 from PyQt5 import QtGui
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
@@ -24,7 +23,6 @@ class PrenotazioneVan(QWidget):
 
                 for i in range(len(valori)):
                     van[chiavi[i]] = valori[i]
-                # print(auto)
                 mezzi.append(van)
 
         scroll_area = QScrollArea()
@@ -32,12 +30,12 @@ class PrenotazioneVan(QWidget):
                                   "    border: none;"
                                   "    border-radius: 5px;"
                                   "    background: #272626;"
-                                  "    width: 10px;"  # Imposta la larghezza della barra di scorrimento
+                                  "    width: 10px;"  # imposta la larghezza della barra di scorrimento
                                   "}"
                                   "QScrollBar::handle:vertical {"
-                                  "    background: white;"  # Imposta il colore del cursore
+                                  "    background: white;"  # imposta il colore del cursore
                                   "    border-radius: 5px;"
-                                  "    min-height: 20px;"  # Imposta l'altezza minima del cursore
+                                  "    min-height: 20px;"  # imposta l'altezza minima del cursore
                                   "}"
                                   "QScrollBar::add-line:vertical {"
                                   "    background: none;"
@@ -69,7 +67,7 @@ class PrenotazioneVan(QWidget):
         car_info_layout = QGridLayout(car_info_frame)
         car_info_layout.setAlignment(Qt.AlignTop)
 
-        # Aggiungi le informazioni alla griglia
+        # aggiungo le informazioni alla griglia
         labels_values = [("Produttore:", van["produttore"]),
                               ("Modello:", van["modello"]),
                               ("Anno:", van["anno"]),
@@ -103,7 +101,7 @@ class PrenotazioneVan(QWidget):
             prenota_button.setStyleSheet("max-height: 25px; color: black; border-radius: 10px; background-color: "
                                          "#0bd400")
             prenota_button.clicked.connect(
-                lambda _, car=van: self.go_prenota(car))  # Connessione con la funzione go_prenota
+                lambda _, car=van: self.go_prenota(car))  # connessione con la funzione go_prenota
         else:
             prenota_button = QPushButton("Non disponibile")
             prenota_button.setStyleSheet("max-height: 25px; color: black; border-radius: 10px; background-color: "
