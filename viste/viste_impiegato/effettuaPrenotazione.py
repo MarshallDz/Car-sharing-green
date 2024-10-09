@@ -262,8 +262,8 @@ class VistaEffettuaPrenotazioneImpiegato(QMainWindow):
                                               self.valori["data_fine"], mezzo, self.valori["filiale"],
                                               self.valori["tariffa"], self.valori["polizza"])
 
-            if self.tariffa.currentText() == "giornaliera:":
-                pagamento.aggiungiPagamento("", prenotazione.__dict__, c)
+
+            pagamento.aggiungiPagamento("", prenotazione.__dict__, c)
             cliente.set_prenotazioni_cliente(c, prenotazione.id)
             QMessageBox.information(None, "Prenotazione fatta", "Prenotazione salvata")
             self.go_back()

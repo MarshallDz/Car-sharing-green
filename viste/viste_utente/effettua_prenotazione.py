@@ -256,8 +256,8 @@ class VistaEffettuaPrenotazione(QMainWindow):
                                               self.valori["data_fine"], self.mezzo, self.valori["filiale"],
                                               self.valori["tariffa"], self.valori["polizza"])
 
-            if self.valori["tariffa"] == "giornaliera":
-                pagamento.aggiungiPagamento("", prenotazione.__dict__, self.cliente)
+
+            pagamento.aggiungiPagamento("", prenotazione.__dict__, self.cliente)
             c.set_prenotazioni_cliente(self.cliente, prenotazione.id)
             self.vistaPrenotazione = VistaConfermaPrenotazione(self.cliente, QDate.currentDate().toString(), self.mezzo,
                                                                self.valori["data_inizio"], self.valori["data_fine"], self.valori["tariffa"],

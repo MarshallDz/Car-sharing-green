@@ -47,17 +47,9 @@ class Pagamento:
                 totale += 30
             else:
                 totale += 50
+            totale = f'{totale}€'
         else:
-            if p["data_fine"] != "da definire":
-                formato = "%Y-%m-%d %H.%M"
-                data1 = datetime.strptime(p["data_inizio"], formato)
-                data2 = datetime.strptime(p["data_fine"], formato)
-                differenza = data2 - data1
-                totale = int((differenza.total_seconds() / 3600)) * int(p["mezzo"]["tariffaOraria"])
-                if p['polizza'] == 'rca':
-                    totale += 30
-                else:
-                    totale += 50
+           totale = 'da definire'
         return totale
 
     def eliminaPagamento(self, p, cliente):

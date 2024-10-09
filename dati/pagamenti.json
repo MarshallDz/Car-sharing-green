@@ -1,9 +1,25 @@
 [
     {
-        "codice": "4KUKLr",
-        "totale": 50,
-        "dataPagamento": "2024-07-21 16:24:02",
-        "prenotazione": "AXj24Z",
+        "codice": "kz2na6",
+        "totale": 0,
+        "dataPagamento": "",
+        "prenotazione": "20SOjq",
+        "cliente": "mrzmhl02h20g157g",
+        "statoPagamento": "da pagare"
+    },
+    {
+        "codice": "SotTvO",
+        "totale": 0,
+        "dataPagamento": "",
+        "prenotazione": "F9rXc8",
+        "cliente": "mrzmhl02h20g157g",
+        "statoPagamento": "da pagare"
+    },
+    {
+        "codice": "CrI4eb",
+        "totale": "da definire",
+        "dataPagamento": "2024-10-09 11:04:15",
+        "prenotazione": "ng9C1J",
         "cliente": "mrzmhl02h20g157g",
         "statoPagamento": "pagato"
     }

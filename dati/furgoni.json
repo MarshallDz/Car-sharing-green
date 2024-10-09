@@ -24,7 +24,7 @@
         "alimentazione": "diesel",
         "cambio": "manuale",
         "nPosti": "3",
-        "stato": "disponibile",
+        "stato": "prenotato",
         "tariffaOraria": "55"
     },
     {

@@ -101,7 +101,7 @@ class VistaPagamenti(QMainWindow):
                             mezzoPrenotato.setStyleSheet("font-size: 24px; ")
                             info_layout.addWidget(mezzoPrenotato, 3, 0)
 
-                infoTotale = QLabel(f"Totale da pagare: {x['totale']} €")
+                infoTotale = QLabel(f"Totale da pagare: {x['totale']}")
                 infoTotale.setStyleSheet("font-size: 24px; ")
                 info_layout.addWidget(infoTotale, 4, 0)
 
@@ -124,6 +124,7 @@ class VistaPagamenti(QMainWindow):
         Pagamento().verificaPagamento(p)
         QMessageBox.information(self, 'Pagamento accettato', 'Il pagamento è andato a buon fine!', QMessageBox.Ok)
         self.aggiorna_vista()
+        #aggiungere il calcolo del totale tariffa oraria
 
     def aggiorna_vista(self):
         # Rimuovi tutti i widget dalla scroll_layout
