@@ -24,7 +24,7 @@
         "alimentazione": "diesel",
         "cambio": "automatico",
         "nPosti": "5",
-        "stato": "prenotato",
+        "stato": "disponibile",
         "tariffaOraria": "40"
     },
     {
@@ -52,7 +52,7 @@
         "alimentazione": "benzina",
         "cambio": "automatico",
         "nPosti": "5",
-        "stato": "prenotato",
+        "stato": "disponibile",
         "tariffaOraria": "20"
     },
     {
