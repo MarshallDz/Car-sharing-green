@@ -175,6 +175,9 @@ class VistaPagamentiAmministratore(QMainWindow):
 
     def confermaPagamento(self, p):
         pagamento = Pagamento()
+        if p["totale"] == "da definire":
+            QMessageBox.warning(None, 'Attenzione', 'Terminare la prenotazione relativa ad una tariffa oraria prima di procedere')
+            return
         reply = QMessageBox.question(self, 'Conferma pagamento', 'Sei sicuro di voler confermare il pagamento?',
                                      QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
 

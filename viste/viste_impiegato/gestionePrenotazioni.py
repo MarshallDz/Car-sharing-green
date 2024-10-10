@@ -285,13 +285,23 @@ class VistaGestionePrenotazione(QMainWindow):
         self.aggiorna_vista()
 
     def finePrenotazioneOraria(self, p):
-        riconsegna = datetime.now().strftime("%Y-%m-%d %H.00")
+        if p["data_inizio"] > datetime.now().strftime("%Y-%m-%d %H.%M"):
+            QMessageBox.warning(None, "Attenzione", "La prenotazione oraria non è ancora iniziata")
+            return
+        riconsegna = datetime.now().strftime("%Y-%m-%d %H.%M")
+        p["data_fine"] = riconsegna
         prenotazioni = Prenotazione().readData()
+        pagamento = Pagamento()
+        pagamenti = pagamento.readData()
         for x in prenotazioni:
             if x["id"] == p["id"]:
-                x["data_fine"] = riconsegna
+                x["data_fine"] = p["data_fine"]
                 Prenotazione().writeData(prenotazioni)
-                Pagamento().aggiungiPagamento("", x, x["cliente"])
+                #pagamento.aggiungiPagamento("", x, x["cliente"])
+        for x in pagamenti:
+            if x["prenotazione"] == p["id"]:
+                x["totale"] = pagamento.calcolaTotale(p)
+                pagamento.writeData(pagamenti)
         self.aggiorna_vista()
 
     def aggiorna_vista(self):

@@ -1,1 +1,36 @@
-[]
+[
+    {
+        "id": "Bb3j1L",
+        "cliente": {
+            "codiceFiscale": "abcdefghlmnoppop",
+            "nome": "edo",
+            "cognome": "seve",
+            "dataNascita": "2003-01-26",
+            "email": "user",
+            "password": "user",
+            "cellulare": "1231231230",
+            "prenotazioni": [],
+            "dataRegistrazione": "11012024"
+        },
+        "data_prenotazione": "Thu Oct 10 2024",
+        "data_inizio": "2024-10-10 16.00",
+        "data_fine": "2024-10-11 08.00",
+        "filiale": "Milano, via padova",
+        "mezzo": {
+            "immagine": "viste/Icone/auto/bmw-335i.png",
+            "telaio": "01",
+            "produttore": "Bmw",
+            "modello": "335i",
+            "cavalli": "305",
+            "cilindrata": "3000",
+            "anno": "2019",
+            "alimentazione": "benzina",
+            "cambio": "automatico",
+            "nPosti": "5",
+            "stato": "disponibile",
+            "tariffaOraria": "60"
+        },
+        "tariffa": "giornaliera",
+        "polizza": "rca"
+    }
+]

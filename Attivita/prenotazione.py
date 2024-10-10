@@ -1,9 +1,9 @@
 import json
 import random
 import string
-from datetime import datetime
-from Attivita.pagamento import Pagamento
+from datetime import datetime, timedelta
 
+from Attivita.pagamento import Pagamento
 
 class Prenotazione:
     def __init__(self):
@@ -39,8 +39,9 @@ class Prenotazione:
 
     def eliminaPrenotazione(self, p):
         url_clienti = "dati/clienti.json"
+        url_pagamenti = "dati/pagamenti.json"
 
-        # rimuovo la prenotazione dalla lista delle prenotazioni nel file JSON principale
+        # Rimuovi la prenotazione dalla lista delle prenotazioni nel file JSON principale
         data_prenotazioni = self.readData()
 
         if p in data_prenotazioni:
@@ -61,27 +62,26 @@ class Prenotazione:
         with open(url_clienti, "w") as file:
             json.dump(data_clienti, file, indent=4)
 
-        # rimuovi il pagamento associato alla prenotazione dalla lista dei pagamenti nel file JSON
+        # Rimuovi il pagamento associato alla prenotazione dalla lista dei pagamenti nel file JSON
         data_pagamenti = Pagamento().readData()
 
         updated_pagamenti = [pagamento for pagamento in data_pagamenti if pagamento['prenotazione'] != p['id']]
 
         Pagamento().writeData(updated_pagamenti)
 
-        # resetto lo stato del mezzo a disponibile
+        # Resetta lo stato del mezzo a disponibile
         self.mezzo = p["mezzo"]
         self.aggiorna_stato_mezzo(True)
 
-        # aggiorna l'interfaccia utente per visualizzare le prenotazioni aggiornate
+        # Aggiorna l'interfaccia utente per visualizzare le prenotazioni aggiornate
         from viste.viste_utente.visualizzaPrenotazioni import PrenotazioniView
         self.vista = PrenotazioniView(p['cliente'])
         self.vista.show()
 
     def set_id(self):
-        # creo una stringa contenente lettere minuscole, lettere maiuscole e numeri
+        # Creazione di una stringa contenente lettere minuscole, lettere maiuscole e numeri
         caratteri = string.ascii_letters + string.digits
-
-        # genero la stringa casuale di 6 caratteri
+        # Generazione della stringa casuale di 6 caratteri
         stringa_random = ''.join(random.choice(caratteri) for _ in range(6))
         return stringa_random
 
@@ -101,16 +101,48 @@ class Prenotazione:
         validita = True
         inizio = None
         fine = None
+
+        # Se non ci sono prenotazioni, non ci sono conflitti
         if not prenotazioni:
             return validita, inizio, fine
+
+        # Convertiamo le date in oggetti datetime per poter fare confronti
+        data_inizio = datetime.strptime(data_inizio, '%Y-%m-%d %H.%M')
+        if data_fine != 'da definire':
+            data_fine = datetime.strptime(data_fine, '%Y-%m-%d %H.%M')
+        else: None
+
         for prenotazione in prenotazioni:
             if prenotazione["mezzo"] == mezzo:
-                if (data_inizio >= prenotazione["data_inizio"] and data_inizio <= prenotazione["data_fine"]
-                        or data_fine >= prenotazione["data_inizio"] and data_fine <= prenotazione["data_fine"]
-                        or data_inizio <= prenotazione["data_inizio"] and data_fine >= prenotazione["data_fine"]):
-                    validita = False
-                    inizio = prenotazione["data_inizio"]
-                    fine = prenotazione["data_fine"]
+                prenotazione_inizio = datetime.strptime(prenotazione["data_inizio"], '%Y-%m-%d %H.%M')
+
+                # Controllo se la prenotazione ha una data di fine 'da definire'
+                if prenotazione["data_fine"] == 'da definire':
+                    # Verifica che l'inizio della nuova prenotazione sia almeno 3 giorni dopo la prenotazione attuale
+                    if data_inizio <= prenotazione_inizio + timedelta(days=3):
+                        validita = False
+                        inizio = prenotazione["data_inizio"]
+                        fine = prenotazione["data_fine"]
+                        break
+                else:
+                    # Se c'è una data di fine, controlliamo la sovrapposizione
+                    prenotazione_fine = datetime.strptime(prenotazione["data_fine"], '%Y-%m-%d %H.%M')
+                    if data_fine != 'da definire':
+                        # Controllo per sovrapposizioni di date
+                        if (prenotazione_inizio <= data_inizio <= prenotazione_fine
+                                or prenotazione_inizio <= data_fine <= prenotazione_fine
+                                or data_inizio <= prenotazione_inizio and data_fine >= prenotazione_fine):
+                            validita = False
+                            inizio = prenotazione["data_inizio"]
+                            fine = prenotazione["data_fine"]
+                            break
+                    else:
+                        if (data_inizio <= prenotazione_inizio + timedelta(days=3)):
+                            validita = False
+                            inizio = prenotazione["data_inizio"]
+                            fine = prenotazione["data_fine"]
+                            break
+
         return validita, inizio, fine
 
     def aggiorna_stato_mezzo(self, el=False):
@@ -126,7 +158,6 @@ class Prenotazione:
         moto = Moto().get_dati()
         van = Van().get_dati()
         fur = Furgone().get_dati()
-
         # per come è costruita p, l'if serve a verificare se la chiamata della funzione arriva da eliminaPrenotazione
         if el:
             self.mezzo["stato"] = "prenotato"

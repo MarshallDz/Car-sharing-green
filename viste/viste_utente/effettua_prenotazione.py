@@ -1,5 +1,6 @@
 from PyQt5.QtGui import QPixmap, QTextCharFormat
 from PyQt5.QtWidgets import *
+from PyQt5.QtCore import Qt, QDate
 from Attivita.cliente import *
 from Attivita.prenotazione import *
 from viste.viste_utente.confermaPrenotazione import VistaConfermaPrenotazione
@@ -60,9 +61,9 @@ class VistaEffettuaPrenotazione(QMainWindow):
         inoleggio_label.setStyleSheet("font-size: 18px; max-width: 200px; max-height: 50px")
         form_layout.addWidget(inoleggio_label, 3, 0)
 
-        fnoleggio_label = QLabel("Data fine noleggio:")
-        fnoleggio_label.setStyleSheet("font-size: 18px; max-width: 200px; max-height: 50px")
-        form_layout.addWidget(fnoleggio_label, 4, 0)
+        self.fnoleggio_label = QLabel("Data fine noleggio:")
+        self.fnoleggio_label.setStyleSheet("font-size: 18px; max-width: 200px; max-height: 50px")
+        form_layout.addWidget(self.fnoleggio_label, 4, 0)
 
         self.filiale = QComboBox(self)
         self.filiale.setStyleSheet("max-width: 300px; max-height: 50px")
@@ -163,34 +164,32 @@ class VistaEffettuaPrenotazione(QMainWindow):
         self.page_layout.addLayout(bottom_layout)
 
     def update_valori(self):
-
-        # identifico quale widget ha generato il segnale
-        sender = self.sender()
+        sender = self.sender()  # Identifica quale widget ha generato il segnale
 
         if sender == self.datacampo1:
             info = self.valori["data_inizio"].split(" ")
             info[0] = sender.date().toString(Qt.ISODate)
             self.valori["data_inizio"] = f"{info[0]} {info[1]}"
 
-            # imposta la data minima e massima della data di fine
+            # Impostiamo la data minima e massima della data di fine
             new_start_date = sender.date()
             self.datacampo2.setMinimumDate(new_start_date.addDays(1))
 
-            # imposta la data massima (3 giorni dopo la data di inizio)
+            # Imposta la data massima (3 giorni dopo la data di inizio)
             max_end_date = new_start_date.addDays(3)
             self.datacampo2.setMaximumDate(max_end_date)
 
-            # personalizza il calendario per disabilitare i giorni fuori dal range
+            # Personalizza il calendario per disabilitare i giorni fuori dal range
             self.oscura_giorni_non_selezionabili(new_start_date, max_end_date)
 
-            # verifica che la data di fine non sia oltre il massimo
+            # Verifica che la data di fine non sia oltre il massimo
             current_end_date = self.datacampo2.date()
             if current_end_date > max_end_date:
                 self.datacampo2.setDate(max_end_date)
             elif current_end_date < new_start_date:
                 self.datacampo2.setDate(new_start_date)
 
-            # ripopola oracampo1
+            # Ripopola oracampo1
             if not self.verifica_data_corrente():
                 self.oracampo1.clear()
                 for i in range(8, 21):
@@ -233,7 +232,9 @@ class VistaEffettuaPrenotazione(QMainWindow):
             elif sender.currentText() == "oraria":
                 self.oracampo2.setVisible(False)
                 self.datacampo2.setVisible(False)
+                self.fnoleggio_label.setVisible(False)
                 self.valori["data_fine"] = "da definire"
+
 
     def go_back(self):
         from viste.viste_utente.vistaPrenotazione import VistaPrenotazione
@@ -255,7 +256,6 @@ class VistaEffettuaPrenotazione(QMainWindow):
             prenotazione.aggiungiPrenotazione(self.cliente, datetime.now().strftime("%a %b %d %Y"), self.valori["data_inizio"],
                                               self.valori["data_fine"], self.mezzo, self.valori["filiale"],
                                               self.valori["tariffa"], self.valori["polizza"])
-
 
             pagamento.aggiungiPagamento("", prenotazione.__dict__, self.cliente)
             c.set_prenotazioni_cliente(self.cliente, prenotazione.id)
@@ -280,19 +280,18 @@ class VistaEffettuaPrenotazione(QMainWindow):
         return data_inserita == data_corrente
 
     def oscura_giorni_non_selezionabili(self, data_inizio, data_massima):
-
-        # otteniamo il calendario dal QDateEdit
+        # Otteniamo il calendario dal QDateEdit
         calendar = self.datacampo2.calendarWidget()
 
-        # formato per "oscurare" i giorni
+        # Formato per "oscurare" i giorni
         disabled_format = QTextCharFormat()
-        disabled_format.setForeground(Qt.gray)  # imposta il colore del testo a grigio per i giorni non selezionabili
+        disabled_format.setForeground(Qt.gray)  # Imposta il colore del testo a grigio per i giorni non selezionabili
 
-        # loop su tutti i giorni del calendario
-        for giorno_offset in range(-365, 366):  # controlla i giorni dell'anno
+        # Loop su tutti i giorni del calendario
+        for giorno_offset in range(-365, 366):  # Controlla i giorni dell'anno
             giorno_corrente = QDate.currentDate().addDays(giorno_offset)
 
             if giorno_corrente < data_inizio or giorno_corrente > data_massima:
-                calendar.setDateTextFormat(giorno_corrente, disabled_format)  # applica il formato disabilitato
+                calendar.setDateTextFormat(giorno_corrente, disabled_format)  # Applica il formato disabilitato
             else:
-                calendar.setDateTextFormat(giorno_corrente, QTextCharFormat())  # reimposta il formato normale per i giorni selezionabili
+                calendar.setDateTextFormat(giorno_corrente, QTextCharFormat())  # Reimposta il formato normale per i giorni selezionabili

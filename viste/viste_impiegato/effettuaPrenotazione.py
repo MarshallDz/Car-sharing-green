@@ -1,9 +1,11 @@
 from PyQt5.QtWidgets import *
+from PyQt5.QtCore import Qt, QDate
 from Attivita.cliente import *
 from Attivita.prenotazione import *
 from Attivita.pagamento import *
 from Attivita.cliente import Cliente
 import darkdetect
+
 from Noleggio.auto import Auto
 from Noleggio.furgone import Furgone
 from Noleggio.moto import Moto
@@ -17,7 +19,6 @@ class VistaEffettuaPrenotazioneImpiegato(QMainWindow):
 
         self.setWindowTitle("CarGreen")
         self.setGeometry(0, 0, QApplication.desktop().width(), QApplication.desktop().height())
-        self.showMaximized()
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
         if darkdetect.isDark():
@@ -66,13 +67,13 @@ class VistaEffettuaPrenotazioneImpiegato(QMainWindow):
         self.categoriaBox.addItems(["auto", "moto", "van", "furgone"])
         form_layout.addWidget(self.categoriaBox, 1, 1)
 
-        # aggiungo la seconda combobox inizialmente nascosta
+        # Aggiungi la seconda combobox inizialmente nascosta
         self.scelta_mezzo_combobox = QComboBox()
         self.scelta_mezzo_combobox.setPlaceholderText("")
         self.scelta_mezzo_combobox.hide()  # Nascondi la combobox inizialmente
         form_layout.addWidget(self.scelta_mezzo_combobox, 1, 2)
 
-        # connetto il segnale currentIndexChanged della combobox della categoria
+        # Connetti il segnale currentIndexChanged della combobox della categoria
         self.categoriaBox.currentIndexChanged.connect(self.mostra_scelta_mezzo)
 
         filiale_label = QLabel("Filiale ritiro mezzo:")
@@ -91,9 +92,9 @@ class VistaEffettuaPrenotazioneImpiegato(QMainWindow):
         inoleggio_label.setStyleSheet("font-size: 18px; max-width: 200px; max-height: 50px")
         form_layout.addWidget(inoleggio_label, 5, 0)
 
-        fnoleggio_label = QLabel("Data fine noleggio:")
-        fnoleggio_label.setStyleSheet("font-size: 18px; max-width: 200px; max-height: 50px")
-        form_layout.addWidget(fnoleggio_label, 6, 0)
+        self.fnoleggio_label = QLabel("Data fine noleggio:")
+        self.fnoleggio_label.setStyleSheet("font-size: 18px; max-width: 200px; max-height: 50px")
+        form_layout.addWidget(self.fnoleggio_label, 6, 0)
 
         dlayout1 = QHBoxLayout()
         self.datacampo1 = QDateEdit()
@@ -179,8 +180,7 @@ class VistaEffettuaPrenotazioneImpiegato(QMainWindow):
         self.page_layout.addLayout(self.central_layout)
 
     def update_valori(self):
-        # identifica quale widget ha generato il segnale
-        sender = self.sender()
+        sender = self.sender()  # Identifica quale widget ha generato il segnale
 
         if sender == self.datacampo1:
             info = self.valori["data_inizio"].split(" ")
@@ -192,7 +192,7 @@ class VistaEffettuaPrenotazioneImpiegato(QMainWindow):
             if current_end_date <= new_start_date:
                 self.datacampo2.setDate(new_start_date)
 
-            # ripopola oracampo1
+            # Ripopola oracampo1
             if not self.verifica_data_corrente():
                 self.oracampo1.clear()
                 for i in range(8, 21):
@@ -236,6 +236,7 @@ class VistaEffettuaPrenotazioneImpiegato(QMainWindow):
             elif sender.currentText() == "oraria":
                 self.oracampo2.setVisible(False)
                 self.datacampo2.setVisible(False)
+                self.fnoleggio_label.setVisible(False)
                 self.valori["data_fine"] = "da definire"
 
     def go_back(self):
@@ -261,7 +262,6 @@ class VistaEffettuaPrenotazioneImpiegato(QMainWindow):
                                               self.valori["data_fine"], mezzo, self.valori["filiale"],
                                               self.valori["tariffa"], self.valori["polizza"])
 
-
             pagamento.aggiungiPagamento("", prenotazione.__dict__, c)
             cliente.set_prenotazioni_cliente(c, prenotazione.id)
             QMessageBox.information(None, "Prenotazione fatta", "Prenotazione salvata")
@@ -282,11 +282,9 @@ class VistaEffettuaPrenotazioneImpiegato(QMainWindow):
         return data_inserita == data_corrente
 
     def mostra_scelta_mezzo(self):
-
-        # mostra la seconda combobox solo se è stata selezionata una categoria valida
+        # Mostra la seconda combobox solo se è stata selezionata una categoria valida
         self.scelta_mezzo_combobox.clear()  # Pulisci la combobox
-
-        # popola la seconda combobox in base alla categoria selezionata
+        # Popola la seconda combobox in base alla categoria selezionata
         if self.categoriaBox.currentText() == "auto":
             from Noleggio.auto import Auto
             lista_auto = Auto().get_dati()

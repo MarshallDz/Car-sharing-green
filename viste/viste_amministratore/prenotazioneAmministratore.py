@@ -79,9 +79,9 @@ class VistaEffettuaPrenotazioneAmministratore(QMainWindow):
         inoleggio_label.setStyleSheet("font-size: 18px; max-width: 200px; max-height: 50px")
         form_layout.addWidget(inoleggio_label, 2, 0)
 
-        fnoleggio_label = QLabel("Data fine noleggio:")
-        fnoleggio_label.setStyleSheet("font-size: 18px; max-width: 200px; max-height: 50px")
-        form_layout.addWidget(fnoleggio_label, 3, 0)
+        self.fnoleggio_label = QLabel("Data fine noleggio:")
+        self.fnoleggio_label.setStyleSheet("font-size: 18px; max-width: 200px; max-height: 50px")
+        form_layout.addWidget(self.fnoleggio_label, 3, 0)
 
         filiale_label = QLabel("Filiale ritiro mezzo:")
         filiale_label.setStyleSheet("font-size: 18px; max-width: 200px; max-height: 50px")
@@ -226,6 +226,7 @@ class VistaEffettuaPrenotazioneAmministratore(QMainWindow):
             elif sender.currentText() == "oraria":
                 self.oracampo2.setVisible(False)
                 self.datacampo2.setVisible(False)
+                self.fnoleggio_label.setVisible(False)
                 self.valori["data_fine"] = "da definire"
 
     def conferma_prenotazione(self):

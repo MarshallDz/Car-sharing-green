@@ -24,7 +24,7 @@
         "alimentazione": "benzina",
         "cambio": "manuale",
         "nPosti": "2",
-        "stato": "disponibile",
+        "stato": "prenotato",
         "tariffaOraria": "50"
     },
     {
