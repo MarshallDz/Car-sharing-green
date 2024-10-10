@@ -97,6 +97,12 @@ class VistaPannelloControllo(QMainWindow):
         self.vista.show()
         self.close()
 
+    def go_back(self):
+        from viste.login import VistaLogin
+        self.vista = VistaLogin()
+        self.vista.show()
+        self.close()
+
     def go_pagamenti(self):
         self.vista = VistaPagamentiImpiegato(self.impiegato)
         self.vista.show()
@@ -104,11 +110,5 @@ class VistaPannelloControllo(QMainWindow):
 
     def go_mezzi(self):
         self.vista = VistaMezziImpiegato(self.impiegato)
-        self.vista.show()
-        self.close()
-
-    def go_back(self):
-        from viste.login import VistaLogin
-        self.vista = VistaLogin()
         self.vista.show()
         self.close()

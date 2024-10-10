@@ -1,3 +1,5 @@
+import json
+
 from PyQt5.QtCore import *
 from PyQt5.QtGui import QPixmap, QFont, QIcon
 from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QVBoxLayout, QLineEdit, QPushButton, QLabel, \
@@ -132,8 +134,7 @@ class VistaImpiegato(QMainWindow):
 
         if reply == QMessageBox.Yes:
             impiegato = Impiegato()
-
-            # cerco l'impiegato specifico usando il suo codice fiscale
+            # Cerca l'impiegato specifico usando il suo codice fiscale
             data = impiegato.readData("dati/impiegati.json")
             for c in data:
                 if c["codiceFiscale"] == self.impiegato["codiceFiscale"]:
@@ -142,12 +143,12 @@ class VistaImpiegato(QMainWindow):
                     c["password"] = login["password"]
                     c["cellulare"] = login["cellulare"]
 
-            # scrivo i dati aggiornati nel file JSON
+            # Scrivi i dati aggiornati nel file JSON
             impiegato.writeData("dati/impiegati.json", data)
             QMessageBox.information(self, 'Modifica confermata', 'I dati sono stai aggiornati con successo.',
                                     QMessageBox.Ok)
 
-            # aggiorno i dati della variabile cliente
+            # Aggiorno i dati della variabile cliente
             self.impiegato["email"] = login["e-mail"]
             self.impiegato["password"] = login["password"]
             self.impiegato["cellulare"] = login["cellulare"]

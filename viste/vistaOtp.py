@@ -18,33 +18,33 @@ class QRCodeGenerator(QMainWindow):
         self.layout = QVBoxLayout()
         self.central_widget.setLayout(self.layout)
 
-        # campo di inserimento email
+        # Campo di inserimento email
         self.email_input = QLineEdit(self)
         self.email_input.setPlaceholderText("Inserisci la tua email")
         self.layout.addWidget(self.email_input)
 
-        # bottone di invio
+        # Bottone di invio
         self.submit_button = QPushButton("Verifica email", self)
         self.submit_button.clicked.connect(self.generate_qr)
         self.layout.addWidget(self.submit_button)
 
-        # label per visualizzare il QR code
+        # Label per visualizzare il QR code
         self.qr_label = QLabel(self)
         self.layout.addWidget(self.qr_label)
 
-        # campo di inserimento OTP (inizialmente nascosto)
+        # Campo di inserimento OTP (inizialmente nascosto)
         self.otp_input = QLineEdit(self)
         self.otp_input.setPlaceholderText("Inserisci il codice OTP")
         self.layout.addWidget(self.otp_input)
         self.otp_input.setVisible(False)
 
-        # bottone per verificare OTP (inizialmente nascosto)
+        # Bottone per verificare OTP (inizialmente nascosto)
         self.verify_button = QPushButton("Verifica OTP", self)
         self.verify_button.clicked.connect(self.verify_otp)
         self.layout.addWidget(self.verify_button)
         self.verify_button.setVisible(False)
 
-        # label per visualizzare il QR code
+        # Label per visualizzare il QR code
         self.qr_label = QLabel(self)
         self.layout.addWidget(self.qr_label)
 
@@ -66,8 +66,7 @@ class QRCodeGenerator(QMainWindow):
 
             with open("dati/otpCode.json", "w") as f:
                 json.dump({"codici": associazioni}, f, indent=4)
-
-            # genera il codice QR
+            # Genera il codice QR
             auth_url = pyotp.totp.TOTP(self.key).provisioning_uri(name=email, issuer_name='CarGreen')
 
             qr = qrcode.QRCode(
@@ -88,7 +87,7 @@ class QRCodeGenerator(QMainWindow):
             pixmap = QPixmap.fromImage(qimage)
             self.qr_label.setPixmap(pixmap)
 
-        # mostra i campi per l'inserimento e la verifica dell'OTP
+        # Mostra i campi per l'inserimento e la verifica dell'OTP
         self.otp_input.setVisible(True)
         self.verify_button.setVisible(True)
 
@@ -104,8 +103,7 @@ class QRCodeGenerator(QMainWindow):
             totp = pyotp.TOTP(self.key)
         if totp.verify(otp):
             QMessageBox.information(self, "Successo", "OTP verificato con successo!")
-
-            # procedi con il login o altre azioni necessarie
+            # Procedi con il login o altre azioni necessarie
             finestre = self.get_open_windows()
             for finestra in finestre:
                 if finestra.windowTitle() == "CarGreen":

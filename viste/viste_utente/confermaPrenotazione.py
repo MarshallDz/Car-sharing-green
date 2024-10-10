@@ -25,13 +25,13 @@ class VistaConfermaPrenotazione(QMainWindow):
         self.central_layout = QGridLayout()
         self.central_widget.setLayout(self.central_layout)
 
-        # creazione del frame verde
+        # Creazione del frame verde
         green_frame = QFrame(self)
         green_frame.setFrameShape(QFrame.StyledPanel)
         green_frame.setStyleSheet(f"background-color: #85F52D; min-height: {self.height()*0.3}px")
         green_frame_layout = QVBoxLayout()
 
-        # creazione della label all'interno del frame verde
+        # Creazione della label all'interno del frame verde
         label = QLabel(f"Prenotazione \n confermata", green_frame)
         label.setStyleSheet("color: black;")
         title_font = label.font()
@@ -40,19 +40,20 @@ class VistaConfermaPrenotazione(QMainWindow):
         label.setFont(title_font)
         label.setAlignment(Qt.AlignCenter)
 
-        # aggiungo la label al layout del frame
+        # Aggiungere la label al layout del frame
         green_frame_layout.addWidget(label)
         green_frame.setLayout(green_frame_layout)
 
-        # aggiungo il frame al layout centrale con allineamento al centro
+        # Aggiungere il frame al layout centrale con allineamento al centro
         self.central_layout.addWidget(green_frame, 0, 0, alignment=Qt.AlignTop)
 
-        # creazione del box per le informazioni sulla prenotazione
+        # Creazione del box per le informazioni sulla prenotazione
         info_box = QGroupBox("Informazioni sulla prenotazione")
         info_layout = QVBoxLayout()
         info_box.setLayout(info_layout)
 
-        # aggiungo le informazioni sulla prenotazione al box
+        # Aggiungi le informazioni sulla prenotazione al box
+
         data_label = QLabel(f"data prenotazione: {self.data}")
         data_label.setStyleSheet("font-size: 24px")
         info_layout.addWidget(data_label)
@@ -82,8 +83,7 @@ class VistaConfermaPrenotazione(QMainWindow):
         back_button.setStyleSheet("width: 150px; max-width: 150px; background-color: #F85959; border-radius: 15px; "
                                   "color: black; padding: 10px; margin-bottom: 20px")
         self.central_layout.addWidget(back_button, 2, 0, alignment=Qt.AlignHCenter | Qt.AlignBottom)
-
-        # aggiungi il box al layout centrale
+        # Aggiungi il box al layout centrale
         self.central_layout.addWidget(info_box, 1, 0, alignment=Qt.AlignTop)
 
     def go_home(self):

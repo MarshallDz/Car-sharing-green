@@ -1,12 +1,15 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QScrollArea, QFrame
-from Attivita.impiegato import Impiegato
 
+from Attivita.impiegato import Impiegato
 
 class stat4(QWidget):
     def __init__(self):
         super().__init__()
 
+        self.initUI()
+
+    def initUI(self):
         layout = QVBoxLayout(self)
         layout.setAlignment(Qt.AlignCenter)
 

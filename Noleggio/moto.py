@@ -1,4 +1,8 @@
+from datetime import datetime
+
 from Noleggio.mezzo import Mezzo
+from Attivita.prenotazione import Prenotazione
+import json
 
 
 class Moto(Mezzo):

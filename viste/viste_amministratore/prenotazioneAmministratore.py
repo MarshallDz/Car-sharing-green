@@ -1,8 +1,10 @@
 import json
+
 import darkdetect
 from PyQt5.QtCore import Qt, QDate
 from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QVBoxLayout, QLabel, QHBoxLayout, QGridLayout, \
     QComboBox, QDateEdit, QPushButton, QMessageBox
+
 from datetime import datetime
 from Attivita.cliente import Cliente
 from Attivita.pagamento import Pagamento
@@ -65,14 +67,14 @@ class VistaEffettuaPrenotazioneAmministratore(QMainWindow):
         self.categoriaBox.addItems(["auto", "moto", "van", "furgone"])
         form_layout.addWidget(self.categoriaBox, 1, 1)
 
-        # aggiungo la seconda combobox inizialmente nascosta
+        # Aggiungi la seconda combobox inizialmente nascosta
         self.scelta_mezzo_combobox = QComboBox()
         self.scelta_mezzo_combobox.setPlaceholderText("")
         self.scelta_mezzo_combobox.setStyleSheet("font-size: 18px; max-width: 200px; max-height: 50px")
         self.scelta_mezzo_combobox.hide()  # Nascondi la combobox inizialmente
         form_layout.addWidget(self.scelta_mezzo_combobox, 1, 2)
 
-        # connetto il segnale currentIndexChanged della combobox della categoria
+        # Connetti il segnale currentIndexChanged della combobox della categoria
         self.categoriaBox.currentIndexChanged.connect(self.mostra_scelta_mezzo)
 
         inoleggio_label = QLabel("Data inizio noleggio:")
@@ -179,20 +181,18 @@ class VistaEffettuaPrenotazioneAmministratore(QMainWindow):
         self.page_layout.addLayout(self.central_layout)
 
     def update_valori(self):
-        # identifico quale combobox ha generato il segnale
-        sender = self.sender()
+        sender = self.sender()  # Identifica quale combobox ha generato il segnale
 
-        # aggiorno i valori
+        # Aggiorna self.valori
         if sender == self.datacampo1:
             info = self.valori["data_inizio"].split(" ")
             info[0] = sender.date().toString(Qt.ISODate)
             self.valori["data_inizio"] = f"{info[0]} {info[1]}"
             new_start_date = sender.date()
-            # imposta la data minima di campo2 al giorno successivo
-            self.datacampo2.setMinimumDate(new_start_date.addDays(1))
+            self.datacampo2.setMinimumDate(new_start_date.addDays(1))  # Imposta la data minima di campo2 al giorno successivo
             current_end_date = self.datacampo2.date()
             if current_end_date <= new_start_date:
-                # se la data di fine noleggio è minore o uguale alla data di inizio noleggio più un giorno,
+                # Se la data di fine noleggio è minore o uguale alla data di inizio noleggio più un giorno,
                 # imposta la data di fine noleggio un giorno dopo della data di inizio
                 self.datacampo2.setDate(new_start_date.addDays(1))
             if not self.verifica_data_corrente():
@@ -229,6 +229,12 @@ class VistaEffettuaPrenotazioneAmministratore(QMainWindow):
                 self.fnoleggio_label.setVisible(False)
                 self.valori["data_fine"] = "da definire"
 
+    def go_back(self):
+        from viste. viste_amministratore.gestionePrenotazioni import VistaGestionePrenotazione
+        self.vista = VistaGestionePrenotazione()
+        self.vista.show()
+        self.close()
+
     def conferma_prenotazione(self):
         for value in self.valori.values():
             if not value or not self.sceltaCliente.currentText():
@@ -261,10 +267,9 @@ class VistaEffettuaPrenotazioneAmministratore(QMainWindow):
         return data_inserita == data_corrente
 
     def mostra_scelta_mezzo(self):
-
-        # mostro la seconda combobox solo se è stata selezionata una categoria valida
-        self.scelta_mezzo_combobox.clear()  # pulisco la combobox
-        # popolo la seconda combobox in base alla categoria selezionata
+        # Mostra la seconda combobox solo se è stata selezionata una categoria valida
+        self.scelta_mezzo_combobox.clear()  # Pulisci la combobox
+        # Popola la seconda combobox in base alla categoria selezionata
         if self.categoriaBox.currentText() == "auto":
             from Noleggio.auto import Auto
             lista_auto = Auto().get_dati()
@@ -320,9 +325,3 @@ class VistaEffettuaPrenotazioneAmministratore(QMainWindow):
                 for i in data:
                     if self.scelta_mezzo_combobox.currentText() == i["produttore"] + " " + i["modello"]:
                         return i
-
-    def go_back(self):
-        from viste. viste_amministratore.gestionePrenotazioni import VistaGestionePrenotazione
-        self.vista = VistaGestionePrenotazione()
-        self.vista.show()
-        self.close()

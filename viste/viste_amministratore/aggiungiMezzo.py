@@ -3,8 +3,10 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QVBoxLayout, QLabel, QPushButton, QHBoxLayout, \
     QLineEdit, QMessageBox
+
 from Noleggio.auto import Auto
 from Noleggio.furgone import Furgone
+from Noleggio.mezzo import Mezzo
 from Noleggio.moto import Moto
 from Noleggio.van import Van
 
@@ -88,7 +90,7 @@ class VistaAggiungiMezzo(QMainWindow):
     def invio_dati(self):
         data_to_save = {}
 
-        # estraggo i dati dai campi
+        # Estraggo i dati dai campi
         for campo_nome, campo_widget in self.campi.items():
             data_to_save[campo_nome] = campo_widget.text()
             if data_to_save[campo_nome] == "":

@@ -1,12 +1,15 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QFrame, QHBoxLayout
-from Attivita.pagamento import Pagamento
 
+from Attivita.pagamento import Pagamento
 
 class stat3(QWidget):
     def __init__(self):
         super().__init__()
 
+        self.initUI()
+
+    def initUI(self):
         layout = QHBoxLayout(self)
         layout.setAlignment(Qt.AlignLeft)
 

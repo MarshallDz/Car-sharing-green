@@ -8,7 +8,6 @@ import darkdetect
 class VistaRegistrazione(QMainWindow):
     def __init__(self):
         super().__init__()
-
         # dizionario in cui salvi i campi del form
         self.campi = {}
 
@@ -65,7 +64,7 @@ class VistaRegistrazione(QMainWindow):
 
     def crea_campo(self, nome):
         if nome == "Data di nascita":
-            layout = QHBoxLayout()  # layout orizzontale per posizionare la label accanto al campo
+            layout = QHBoxLayout()  # Layout orizzontale per posizionare la label accanto al campo
             label = QLineEdit()
             label.setPlaceholderText(nome)
             label.setStyleSheet("max-width: 100px; min-height: 40px; border-radius: 15px;")
@@ -91,8 +90,7 @@ class VistaRegistrazione(QMainWindow):
     def invio_dati(self):
         data_to_save = {}
         cliente = Cliente()
-
-        # estrazione dati e formattati in JSON
+        # Extracting data from fields and formatting for JSON
         for campo_nome, campo_widget in self.campi.items():
             if isinstance(campo_widget, QLineEdit):
                 data_to_save[campo_nome] = campo_widget.text()
@@ -115,8 +113,7 @@ class VistaRegistrazione(QMainWindow):
             QMessageBox.warning(None, "Cellulare non valido", "Il numero di cellulare deve essere composto da 10 "
                                                               "cifre.")
             return
-
-            # controllo che l'utente sia almeno diciottenne
+            # Controllo che l'utente sia almeno diciottenne
         data_nascita = QDate.fromString(data_to_save["Data di nascita"], Qt.ISODate)
         eta = QDate.currentDate().year() - data_nascita.year()
         if eta < 18 or (eta == 18 and QDate.currentDate() < data_nascita.addYears(18)):

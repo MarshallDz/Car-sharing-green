@@ -1,23 +1,12 @@
 [
     {
         "codiceFiscale": "RSSMRA85M03H501R",
-        "nome": "alessandro",
-        "cognome": "neri",
+        "nome": "Mario",
+        "cognome": "Rossi",
         "dataNascita": "1985-03-03",
-        "email": "worker1",
-        "password": "worker1",
-        "cellulare": "1231231230",
-        "stipendio": 40000,
-        "dataAssunzione": "2010-01-15"
-    },
-    {
-        "codiceFiscale": "PLLMRC90A01L219Y",
-        "nome": "luca",
-        "cognome": "verdi",
-        "dataNascita": "1990-06-24",
-        "email": "worker2",
-        "password": "worker2",
-        "cellulare": "1231231230",
+        "email": "worker",
+        "password": "worker",
+        "cellulare": "3912345670",
         "stipendio": 30000,
         "dataAssunzione": "2020-01-15"
     }

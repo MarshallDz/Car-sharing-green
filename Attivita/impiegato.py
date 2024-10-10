@@ -1,4 +1,8 @@
+import json
 from PyQt5.QtWidgets import QMessageBox
+
+from Attivita.pagamento import Pagamento
+from Attivita.prenotazione import Prenotazione
 from Attivita.utilizzatore import Utilizzatore
 
 
@@ -14,8 +18,8 @@ class Impiegato(Utilizzatore):
         self.stipendio = stipendio
         self.dataAssunzione = dataAssunzione
 
-        # controllo se l'impiegato esiste gia
-        impiegati = self.get_dati()
+        # controllo se il cliente esiste gia
+        impiegati = self.get_dati()  # Ottieni la lista dei clienti
 
         for impiegato_esistente in impiegati:
             if impiegato_esistente["codiceFiscale"] == self.codiceFiscale:
@@ -33,6 +37,9 @@ class Impiegato(Utilizzatore):
     def verificaImpiegato(self, user, password):
         return self.verify_login(self.file, user, password)
 
+    def get_dati(self):
+        return self.readData(self.file)
+
     def eliminaImpiegato(self, impiegato):
         self.eliminaUtilizzatore(self.file, impiegato)
 
@@ -49,5 +56,3 @@ class Impiegato(Utilizzatore):
                 impiegato["cellulare"] = cel
             self.writeData(self.file, data)
 
-    def get_dati(self):
-        return self.readData(self.file)

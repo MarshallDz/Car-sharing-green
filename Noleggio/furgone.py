@@ -24,6 +24,9 @@ class Furgone(Mezzo):
         except Exception as e:
             print(f"Si è verificato un errore: {e}")
 
+    def get_dati(self):
+        return self.readData(self.file)
+
     def eliminaFurgone(self, furgone):
         try:
             self.eliminaMezzo(self.file, furgone)
@@ -31,8 +34,6 @@ class Furgone(Mezzo):
         except Exception as e:
             print(f"Si è verificato un errore: {e}")
 
-    def cercaFurgone(self, furgone):
+    def cercaAuto(self, furgone):
         return self.searchById(self.file, furgone)
 
-    def get_dati(self):
-        return self.readData(self.file)
