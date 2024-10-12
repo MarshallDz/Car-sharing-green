@@ -170,24 +170,24 @@ class VistaEffettuaPrenotazione(QMainWindow):
             info = self.valori["data_inizio"].split(" ")
             info[0] = sender.date().toString(Qt.ISODate)
             self.valori["data_inizio"] = f"{info[0]} {info[1]}"
+            if self.valori["tariffa"] == 'giornaliera':
+                # Impostiamo la data minima e massima della data di fine
+                new_start_date = sender.date()
+                self.datacampo2.setMinimumDate(new_start_date.addDays(1))
 
-            # Impostiamo la data minima e massima della data di fine
-            new_start_date = sender.date()
-            self.datacampo2.setMinimumDate(new_start_date.addDays(1))
+                # Imposta la data massima (3 giorni dopo la data di inizio)
+                max_end_date = new_start_date.addDays(3)
+                self.datacampo2.setMaximumDate(max_end_date)
 
-            # Imposta la data massima (3 giorni dopo la data di inizio)
-            max_end_date = new_start_date.addDays(3)
-            self.datacampo2.setMaximumDate(max_end_date)
+                # Personalizza il calendario per disabilitare i giorni fuori dal range
+                self.oscura_giorni_non_selezionabili(new_start_date, max_end_date)
 
-            # Personalizza il calendario per disabilitare i giorni fuori dal range
-            self.oscura_giorni_non_selezionabili(new_start_date, max_end_date)
-
-            # Verifica che la data di fine non sia oltre il massimo
-            current_end_date = self.datacampo2.date()
-            if current_end_date > max_end_date:
-                self.datacampo2.setDate(max_end_date)
-            elif current_end_date < new_start_date:
-                self.datacampo2.setDate(new_start_date)
+                # Verifica che la data di fine non sia oltre il massimo
+                current_end_date = self.datacampo2.date()
+                if current_end_date > max_end_date:
+                    self.datacampo2.setDate(max_end_date)
+                elif current_end_date < new_start_date:
+                    self.datacampo2.setDate(new_start_date)
 
             # Ripopola oracampo1
             if not self.verifica_data_corrente():
