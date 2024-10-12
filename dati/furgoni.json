@@ -4,14 +4,14 @@
         "telaio": "ABC123",
         "produttore": "Fiat",
         "modello": "Ducato",
-        "cavalli": 130,
-        "cilindrata": 2200,
-        "anno": 2021,
+        "cavalli": "130",
+        "cilindrata": "2200",
+        "anno": "2021",
         "alimentazione": "diesel",
         "cambio": "manuale",
-        "nPosti": 3,
+        "nPosti": "3",
         "stato": "disponibile",
-        "tariffaOraria": 60
+        "tariffaOraria": "60"
     },
     {
         "immagine": "viste/Icone/furgoni/mercedes-vito.png",
@@ -24,7 +24,7 @@
         "alimentazione": "diesel",
         "cambio": "manuale",
         "nPosti": "3",
-        "stato": "disponibile",
+        "stato": "non disponibile",
         "tariffaOraria": "55"
     },
     {

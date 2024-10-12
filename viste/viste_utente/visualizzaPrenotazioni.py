@@ -67,6 +67,9 @@ class PrenotazioniView(QMainWindow):
                                   "}"
                                   "QScrollBar::sub-line:vertical {"
                                   "    background: none;"
+                                  "}"
+                                  "QScrollArea {"
+                                  "border: none"
                                   "}")
 
         scroll_area.setWidgetResizable(True)

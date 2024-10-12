@@ -24,7 +24,7 @@
         "alimentazione": "benzina",
         "cambio": "manuale",
         "nPosti": "2",
-        "stato": "disponbile",
+        "stato": "disponibile",
         "tariffaOraria": "50"
     },
     {
@@ -38,7 +38,7 @@
         "alimentazione": "benzina",
         "cambio": "manuale",
         "nPosti": "2",
-        "stato": "disponibile",
+        "stato": "non disponibile",
         "tariffaOraria": "20"
     },
     {

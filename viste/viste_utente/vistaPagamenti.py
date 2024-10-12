@@ -65,6 +65,9 @@ class VistaPagamenti(QMainWindow):
                                   "}"
                                   "QScrollBar::sub-line:vertical {"
                                   "    background: none;"
+                                  "}"
+                                  "QScrollArea {"
+                                  "border: none"
                                   "}")
 
         scroll_area.setWidgetResizable(True)
@@ -80,44 +83,48 @@ class VistaPagamenti(QMainWindow):
         pagamenti = Pagamento().readData()
         prenotazioni = Prenotazione().readData()
 
-        for x in pagamenti:
-            if self.cliente['codiceFiscale'] == x['cliente']:
-                info_box = QGroupBox(f"Informazioni sul pagamento {x['codice']}")
-                info_box.setStyleSheet("QGroupBox{max-height: 250px;}")
-                info_layout = QGridLayout(info_box)
+        if len(pagamenti) == 0:
+            label = QLabel("Non ci sono pagamenti registrati")
+            label.setStyleSheet("color: #F85959; padding: 0px; max-height: 44px")
+            label_font = label.font()
+            label_font.setPointSize(22)
+            label_font.setBold(True)
+            label.setFont(label_font)
+            self.scroll_layout.addWidget(label, alignment=Qt.AlignHCenter)
+        else:
+            for x in pagamenti:
+                if self.cliente['codiceFiscale'] == x['cliente']:
+                    info_box = QGroupBox(f"Informazioni sul pagamento {x['codice']}")
+                    info_box.setStyleSheet("QGroupBox{max-height: 250px;}")
+                    info_layout = QGridLayout(info_box)
 
-                prenotazione = QLabel(f"Prenotazione: {x['prenotazione']} ")
-                prenotazione.setStyleSheet("font-size: 24px; ")
-                info_layout.addWidget(prenotazione, 1, 0)
+                    prenotazione = QLabel(f"Prenotazione: {x['prenotazione']} ")
+                    prenotazione.setStyleSheet("font-size: 24px; ")
+                    info_layout.addWidget(prenotazione, 1, 0)
 
-                infoCliente = QLabel(f"Cliente: {self.cliente['nome']} {self.cliente['cognome']} ")
-                infoCliente.setStyleSheet("font-size: 24px; ")
-                info_layout.addWidget(infoCliente, 2, 0)
+                    infoCliente = QLabel(f"Cliente: {self.cliente['nome']} {self.cliente['cognome']} ")
+                    infoCliente.setStyleSheet("font-size: 24px; ")
+                    info_layout.addWidget(infoCliente, 2, 0)
 
-                if x['prenotazione'] in self.cliente['prenotazioni']:
-                    for s in prenotazioni:
-                        if x['prenotazione'] == s['id']:
-                            mezzoPrenotato = QLabel(f"Mezzo prenotato: {s['mezzo']['produttore']} {s['mezzo']['modello']}")
-                            mezzoPrenotato.setStyleSheet("font-size: 24px; ")
-                            info_layout.addWidget(mezzoPrenotato, 3, 0)
+                    if x['prenotazione'] in self.cliente['prenotazioni']:
+                        for s in prenotazioni:
+                            if x['prenotazione'] == s['id']:
+                                mezzoPrenotato = QLabel(f"Mezzo prenotato: {s['mezzo']['produttore']} {s['mezzo']['modello']}")
+                                mezzoPrenotato.setStyleSheet("font-size: 24px; ")
+                                info_layout.addWidget(mezzoPrenotato, 3, 0)
 
-                infoTotale = QLabel(f"Totale da pagare: {x['totale']}")
-                infoTotale.setStyleSheet("font-size: 24px; ")
-                info_layout.addWidget(infoTotale, 4, 0)
+                    infoTotale = QLabel(f"Totale da pagare: {x['totale']}")
+                    infoTotale.setStyleSheet("font-size: 24px; ")
+                    info_layout.addWidget(infoTotale, 4, 0)
 
-                statoPagamento = QLabel(f"Stato pagamento: {x['statoPagamento']} ")
-                statoPagamento.setStyleSheet("font-size: 24px; ")
-                info_layout.addWidget(statoPagamento, 5, 0)
-                if x['statoPagamento'] == 'pagato':
-                    dataPagamento = QLabel(f"data pagamento: {x['dataPagamento']} ")
-                    dataPagamento.setStyleSheet("font-size: 24px; ")
-                    info_layout.addWidget(dataPagamento)
-                self.scroll_layout.addWidget(info_box)
-
-    # def paga(self, p):
-    #     Pagamento().verificaPagamento(p)
-    #     QMessageBox.information(self, 'Pagamento accettato', 'Il pagamento è andato a buon fine!', QMessageBox.Ok)
-    #     self.aggiorna_vista()
+                    statoPagamento = QLabel(f"Stato pagamento: {x['statoPagamento']} ")
+                    statoPagamento.setStyleSheet("font-size: 24px; ")
+                    info_layout.addWidget(statoPagamento, 5, 0)
+                    if x['statoPagamento'] == 'pagato':
+                        dataPagamento = QLabel(f"data pagamento: {x['dataPagamento']} ")
+                        dataPagamento.setStyleSheet("font-size: 24px; ")
+                        info_layout.addWidget(dataPagamento)
+                    self.scroll_layout.addWidget(info_box)
 
     def aggiorna_vista(self):
         # Rimuovi tutti i widget dalla scroll_layout

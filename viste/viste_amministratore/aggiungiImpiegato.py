@@ -119,7 +119,7 @@ class VistaRegistrazioneImpiegato(QMainWindow):
                 QMessageBox.information(None, "attenzione", "Email già registrata")
                 return
 
-        impiegato.aggiungiImpiegato(data_to_save["Codice Fiscale"], data_to_save["Nome"], data_to_save["Cognome"], data_to_save["Data di nascita"], data_to_save["E-mail"], data_to_save["Password"], data_to_save["Cellulare"])
+        impiegato.aggiungiImpiegato(data_to_save["Codice Fiscale"], data_to_save["Nome"], data_to_save["Cognome"], data_to_save["Data di nascita"], data_to_save["E-mail"], data_to_save["Password"], data_to_save["Cellulare"], data_to_save["Stipendio"], data_to_save["Assunzione"])
         self.go_back()
 
     def go_back(self):

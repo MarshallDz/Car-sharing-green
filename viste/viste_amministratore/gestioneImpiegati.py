@@ -194,7 +194,7 @@ class VistaGestioneImpiegati(QMainWindow):
                                     QMessageBox.Yes, QMessageBox.No)
 
         if reply == QMessageBox.Yes:
-            impiegato.eliminaImpiegato(i, self.user, self.psw)
+            impiegato.eliminaImpiegato(i)
             QMessageBox.information(self, "Disdetta Confermata", "L'impiegato è stato eliminato con successo.",
                                     QMessageBox.Ok)
 
