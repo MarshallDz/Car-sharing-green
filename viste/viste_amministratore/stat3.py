@@ -15,11 +15,11 @@ class stat3(QWidget):
 
         data = self.getData()
 
-        card1 = self.createCard("Totale incassato", str(data[0]))
-        card2 = self.createCard("Totale non contabilizzato", str(data[1]))
+        card1 = self.createCard("Totale incassato", str(data))
+        #card2 = self.createCard("Totale non contabilizzato", str(data[1]))
 
         layout.addWidget(card1)
-        layout.addWidget(card2)
+        #layout.addWidget(card2)
 
     def createCard(self, title, value):
         frame = QFrame()
@@ -46,8 +46,6 @@ class stat3(QWidget):
         countn = 0
         for pagamento in data:
             if pagamento["statoPagamento"] == "pagato":
-                countp += int(pagamento["totale"])
-            else:
-                countn += int(pagamento["totale"])
+                countp += int(pagamento["totale"][:-1])
 
-        return countp, countn
+        return countp
