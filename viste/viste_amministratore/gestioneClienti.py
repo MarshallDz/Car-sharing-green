@@ -187,7 +187,7 @@ class VistaGestioneClienti(QMainWindow):
                                     QMessageBox.Yes, QMessageBox.No)
 
         if reply == QMessageBox.Yes:
-            cliente.eliminaCliente(c, self.user, self.psw)
+            cliente.eliminaCliente(c)
             QMessageBox.information(self, 'Disdetta Confermata', 'Il cliente è stato eliminato con successo.',QMessageBox.Ok)
 
     def modifica_valori_lineedit(self, cc, cF, nome, cognome, dataN, email, cellulare, modify_button):
