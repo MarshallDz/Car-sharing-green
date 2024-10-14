@@ -197,6 +197,7 @@ class VistaGestioneImpiegati(QMainWindow):
             impiegato.eliminaImpiegato(i)
             QMessageBox.information(self, "Disdetta Confermata", "L'impiegato è stato eliminato con successo.",
                                     QMessageBox.Ok)
+        self.aggiorna_vista()
 
     def modifica_valori_lineedit(self, cc, cF, nome, cognome, dataN, email, cellulare, modify_button):
         # bisogna aggiungere anche la modifica nel file prenotazioni.json
