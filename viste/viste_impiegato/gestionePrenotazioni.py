@@ -272,7 +272,7 @@ class VistaGestionePrenotazione(QMainWindow):
     def salva_valori(self):
         # Estrai i valori dai campi QLineEdit e memorizzali nelle variabili di istanza
         self.valore_data = self.modifica_data.date().toString(Qt.ISODate)
-        # Parse the date string
+
         date_obj = datetime.strptime(self.valore_data, "%Y-%m-%d")
         formatted_date = date_obj.strftime("%a %b %d %Y")
         self.valore_mezzo = self.modifica_mezzo.text()
@@ -298,7 +298,7 @@ class VistaGestionePrenotazione(QMainWindow):
             if x["id"] == p["id"]:
                 x["data_fine"] = p["data_fine"]
                 Prenotazione().writeData(prenotazioni)
-                #pagamento.aggiungiPagamento("", x, x["cliente"])
+                # pagamento.aggiungiPagamento("", x, x["cliente"])
         for x in pagamenti:
             if x["prenotazione"] == p["id"]:
                 x["totale"] = pagamento.calcolaTotale(p)
