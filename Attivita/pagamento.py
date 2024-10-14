@@ -39,8 +39,8 @@ class Pagamento:
             formato = "%Y-%m-%d %H.%M"
             data_inizio = datetime.strptime(p["data_inizio"], formato)
             data_fine = datetime.strptime(p["data_fine"], formato)
-            differenza = str(data_fine - data_inizio)
-            totale = int(differenza.split(':')[0]) * int(int(p['mezzo']['tariffaOraria']) * 0.7)
+            differenza = (data_fine - data_inizio)
+            totale = int(differenza.total_seconds()/3600) * int(int(p['mezzo']['tariffaOraria']) * 0.7)
             if p['polizza'] == 'rca':
                 totale += 30
             else:
