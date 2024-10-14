@@ -90,7 +90,6 @@ class VistaRegistrazione(QMainWindow):
     def invio_dati(self):
         data_to_save = {}
         cliente = Cliente()
-        # Extracting data from fields and formatting for JSON
         for campo_nome, campo_widget in self.campi.items():
             if isinstance(campo_widget, QLineEdit):
                 data_to_save[campo_nome] = campo_widget.text()
