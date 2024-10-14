@@ -119,6 +119,9 @@ class VistaRegistrazione(QMainWindow):
         if eta < 18 or (eta == 18 and QDate.currentDate() < data_nascita.addYears(18)):
             QMessageBox.warning(None, "Età non valida", "Devi avere almeno 18 anni per registrarti.")
             return
+        if len(data_to_save["Password"])<8:
+            QMessageBox.warning(None, "Password non valida", "La password deve contenere almeno 8 caratteri!")
+            return
         cliente.aggiungiCliente(data_to_save["Codice Fiscale"], data_to_save["Nome"], data_to_save["Cognome"], data_to_save["Data di nascita"], data_to_save["E-mail"], data_to_save["Password"], data_to_save["Cellulare"])
 
         self.go_back()

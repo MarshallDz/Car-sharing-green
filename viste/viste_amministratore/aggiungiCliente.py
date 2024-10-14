@@ -4,7 +4,7 @@ from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QVBoxLayout, QLabel, QPushButton, QHBoxLayout, \
     QLineEdit, QMessageBox, QDateEdit
 
-from Attivita.impiegato import Impiegato
+from Attivita.cliente import Cliente
 
 
 class VistaRegistrazioneCliente(QMainWindow):
@@ -93,7 +93,6 @@ class VistaRegistrazioneCliente(QMainWindow):
     def invio_dati(self):
         data_to_save = {}
 
-        # Extracting data from fields and formatting for JSON
         for campo_nome, campo_widget in self.campi.items():
             if isinstance(campo_widget, QLineEdit):
                 data_to_save[campo_nome] = campo_widget.text()
@@ -109,8 +108,17 @@ class VistaRegistrazioneCliente(QMainWindow):
             QMessageBox.warning(None, "Cellulare non valido", "Il numero di cellulare deve essere composto da 10 "
                                                               "cifre.")
             return
-        impiegato = Impiegato()
-        impiegato.aggiungiImpiegato(data_to_save["Codice Fiscale"], data_to_save["Nome"], data_to_save["Cognome"], data_to_save["Data di nascita"], data_to_save["E-mail"], data_to_save["Password"], data_to_save["Cellulare"])
+        if len(data_to_save["Password"]) < 8:
+            QMessageBox.warning(None, "Password non valida", "La password deve contenere almeno 8 caratteri!")
+            return
+
+        data_nascita = QDate.fromString(data_to_save["Data di nascita"], Qt.ISODate)
+        eta = QDate.currentDate().year() - data_nascita.year()
+        if eta < 18 or (eta == 18 and QDate.currentDate() < data_nascita.addYears(18)):
+            QMessageBox.warning(None, "Età non valida", "Devi avere almeno 18 anni per registrarti.")
+            return
+        cliente = Cliente()
+        cliente.aggiungiImpiegato(data_to_save["Codice Fiscale"], data_to_save["Nome"], data_to_save["Cognome"], data_to_save["Data di nascita"], data_to_save["E-mail"], data_to_save["Password"], data_to_save["Cellulare"])
         self.go_back()
 
     def go_back(self):
