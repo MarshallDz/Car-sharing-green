@@ -1,6 +1,5 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QScrollArea, QFrame
-
 from Attivita.cliente import Cliente
 
 

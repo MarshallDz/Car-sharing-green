@@ -2,8 +2,8 @@ import json
 import random
 import string
 from datetime import datetime, timedelta
-
 from Attivita.pagamento import Pagamento
+
 
 class Prenotazione:
     def __init__(self):
@@ -110,7 +110,6 @@ class Prenotazione:
         data_inizio = datetime.strptime(data_inizio, '%Y-%m-%d %H.%M')
         if data_fine != 'da definire':
             data_fine = datetime.strptime(data_fine, '%Y-%m-%d %H.%M')
-        else: None
 
         for prenotazione in prenotazioni:
             if prenotazione["mezzo"] == mezzo:
@@ -161,22 +160,34 @@ class Prenotazione:
         # per come è costruita p, l'if serve a verificare se la chiamata della funzione arriva da eliminaPrenotazione
         if el:
             self.mezzo["stato"] = "prenotato"
+        self.check = False
         for a in auto:
             if self.mezzo == a:
-                a["stato"] = Auto().setStato(self.mezzo["stato"])
-            Auto().writeData(url_auto, auto)
-        for m in moto:
-            if self.mezzo == m:
-                m["stato"] = Moto().setStato(self.mezzo["stato"])
-            Moto().writeData(url_moto, moto)
-        for v in van:
-            if self.mezzo == v:
-                v["stato"] = Van().setStato(self.mezzo["stato"])
-            Van().writeData(url_van, van)
-        for f in fur:
-            if self.mezzo == f:
-                f["stato"] = Furgone().setStato(self.mezzo["stato"])
-            Furgone().writeData(url_fur, fur)
+                self.check = True
+                a["stato"] = Auto().setStato(self.mezzo["stato"], 1)
+                Auto().writeData(url_auto, auto)
+                break
+        if not self.check:
+            for m in moto:
+                if self.mezzo == m:
+                    self.check = True
+                    m["stato"] = Moto().setStato(self.mezzo["stato"], 1)
+                    Moto().writeData(url_moto, moto)
+                    break
+        if not self.check:
+            for v in van:
+                if self.mezzo == v:
+                    self.check = True
+                    v["stato"] = Van().setStato(self.mezzo["stato"], 1)
+                    Van().writeData(url_van, van)
+                    break
+        if not self.check:
+            for f in fur:
+                if self.mezzo == f:
+                    self.check = True
+                    f["stato"] = Furgone().setStato(self.mezzo["stato"], 1)
+                    Furgone().writeData(url_fur, fur)
+                    break
 
     def verificaScadenzaPrenotazione(self, p):
         ritardo = False

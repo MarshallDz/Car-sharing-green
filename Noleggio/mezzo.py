@@ -37,13 +37,20 @@ class Mezzo:
                 if delete:
                     data.remove(m)
                     self.writeData(file, data)
-                return 1
+                return data
 
-    def setStato(self, stato):
-        if stato == "disponibile":
-            stato = "prenotato"
+    def setStato(self, stato, tipo):
+        if tipo:
+            if stato == "disponibile":
+                stato = "prenotato"
+            else:
+                stato = "disponibile"
         else:
-            stato = "disponibile"
+            if stato == "disponibile":
+                stato = "non disponibile"
+            else:
+                stato = "disponibile"
+
         return stato
 
     def writeData(self, file, data):

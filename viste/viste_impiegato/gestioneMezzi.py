@@ -150,6 +150,14 @@ class VistaMezziImpiegato(QMainWindow):
             stato.setStyleSheet("font-size: 24px; ")
             info_layout.addWidget(stato, 4, 1)
 
+            button_layout = QHBoxLayout()
+            chstato = QPushButton("Cambia stato")
+            chstato.clicked.connect(lambda _, m=x: self.cambia_stato(m))
+            chstato.setStyleSheet("width: 150px; max-width: 150px; background-color: #D9D9D9; border-radius: 15px; "
+                                  "color: black; padding: 10px;")
+            button_layout.addWidget(chstato)
+            info_layout.addLayout(button_layout, 4, 2, 2, 2, alignment=Qt.AlignRight)
+
             pixmap = QPixmap(x["immagine"])
             if not pixmap.isNull():
                 label = QLabel()
@@ -157,20 +165,14 @@ class VistaMezziImpiegato(QMainWindow):
                 label.setMaximumWidth(300)
                 label.setPixmap(pixmap.scaled(300, 400, Qt.KeepAspectRatio))
                 label.setAlignment(Qt.AlignCenter)
-                info_layout.addWidget(label, 0, 3, 0, 3, alignment= Qt.AlignRight)
+                info_layout.addWidget(label, 0, 3, 0, 3, alignment=Qt.AlignRight)
             else:
                 error_label = QLabel("Immagine non disponibile")
                 error_label.setMaximumWidth(200)
                 error_label.setAlignment(Qt.AlignCenter)
-                info_layout.addWidget(error_label, 0, 3, 0, 3, alignment= Qt.AlignRight)
+                info_layout.addWidget(error_label, 0, 3, 0, 3, alignment=Qt.AlignRight)
 
             self.scroll_layout.addWidget(info_box)
-
-    def go_back(self):
-        from viste.viste_impiegato.pannelloControllo import VistaPannelloControllo
-        self.vista = VistaPannelloControllo(self.impiegato)
-        self.vista.show()
-        self.close()
 
     def search_mezzi(self, text):
         # Funzione per filtrare le prenotazioni in base al nome del cliente
@@ -240,3 +242,42 @@ class VistaMezziImpiegato(QMainWindow):
             widget = self.scroll_layout.itemAt(i).widget()
             if widget:
                 widget.deleteLater()
+
+    def cambia_stato(self, mezzo):
+        from Noleggio.auto import Auto
+        from Noleggio.moto import Moto
+        from Noleggio.van import Van
+        from Noleggio.furgone import Furgone
+        url_auto = "dati/auto.json"
+        url_moto = "dati/moto.json"
+        url_van = "dati/van.json"
+        url_fur = "dati/furgoni.json"
+        auto = Auto().get_dati()
+        moto = Moto().get_dati()
+        van = Van().get_dati()
+        fur = Furgone().get_dati()
+
+        for a in auto:
+            if mezzo == a:
+                a["stato"] = Auto().setStato(mezzo["stato"], 0)
+            Auto().writeData(url_auto, auto)
+        for m in moto:
+            if mezzo == m:
+                m["stato"] = Moto().setStato(mezzo["stato"], 0)
+            Moto().writeData(url_moto, moto)
+        for v in van:
+            if mezzo == v:
+                v["stato"] = Van().setStato(mezzo["stato"], 0)
+            Van().writeData(url_van, van)
+        for f in fur:
+            if mezzo == f:
+                f["stato"] = Furgone().setStato(mezzo["stato"], 0)
+            Furgone().writeData(url_fur, fur)
+
+        self.clear_scroll_layout()
+
+    def go_back(self):
+        from viste.viste_impiegato.pannelloControllo import VistaPannelloControllo
+        self.vista = VistaPannelloControllo(self.impiegato)
+        self.vista.show()
+        self.close()

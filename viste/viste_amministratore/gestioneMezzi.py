@@ -148,21 +148,28 @@ class VistaMezziAmministratore(QMainWindow):
             cambio.setStyleSheet("font-size: 24px; ")
             info_layout.addWidget(cambio, 4, 0)
 
-            tariffa_oraria = QLabel(f"Tariffa oraria: {v['tariffaOraria']} ")
-            tariffa_oraria.setStyleSheet("font-size: 24px; ")
-            info_layout.addWidget(tariffa_oraria, 5, 0)
+            tariffa_label = QLabel("Tariffa oraria (€): ")
+            tariffa_label.setStyleSheet("font-size: 24px; ")
+            info_layout.addWidget(tariffa_label, 5, 0)
+
+            tariffa_valore = QLineEdit(f"{v['tariffaOraria']}")
+            tariffa_valore.setStyleSheet("font-size: 18px; max-width: 50px")
+            info_layout.addWidget(tariffa_valore, 5, 1)
 
             stato = QLabel(f"Stato: {v['stato']} ")
             stato.setStyleSheet("font-size: 24px; ")
-            info_layout.addWidget(stato, 4, 1)
+            info_layout.addWidget(stato, 4, 1, alignment=Qt.AlignRight)
 
-            button_layout = QHBoxLayout()
+            button_layout = QVBoxLayout()
+            update_button = self.add_update_button(v, tariffa_valore)
+            button_layout.addWidget(update_button)
+
             elimina = QPushButton("Elimina")
             elimina.clicked.connect(lambda _, m=v: self.eliminaMezzo(m))
             elimina.setStyleSheet("width: 150px; max-width: 150px; background-color: #F85959; border-radius: 15px; "
                                   "color: black; padding: 10px;")
             button_layout.addWidget(elimina)
-            info_layout.addLayout(button_layout, 4, 2, 2, 2, alignment=Qt.AlignRight)
+            info_layout.addLayout(button_layout, 2, 2, 4, 2, alignment=Qt.AlignRight)
 
             pixmap = QPixmap(v["immagine"])
             if not pixmap.isNull():
@@ -281,3 +288,52 @@ class VistaMezziAmministratore(QMainWindow):
             QMessageBox.information(self, 'Mezzo eliminato', 'Il mezzo è stato eliminato correttamente.',
                                     QMessageBox.Ok)
             self.filter_vehicles(None)
+
+    def add_update_button(self, m, line_edit):
+        button = QPushButton("Aggiorna tariffa")
+        button.clicked.connect(lambda: self.aggiorna_tariffa(m, line_edit.text()))
+        button.setStyleSheet("width: 150px; max-width: 150px; background-color: #D9D9D9; border-radius: 15px; color: black; padding: 10px;")
+        return button
+
+    def aggiorna_tariffa(self, mezzo, nuova):
+        from Noleggio.auto import Auto
+        from Noleggio.moto import Moto
+        from Noleggio.van import Van
+        from Noleggio.furgone import Furgone
+        url_auto = "dati/auto.json"
+        auto = Auto().get_dati()
+
+        self.check = False
+        for a in auto:
+            if mezzo["telaio"] == a["telaio"]:
+                self.check = True
+                a["tariffaOraria"] = nuova
+                Auto().writeData(url_auto, auto)
+                break
+        if not self.check:
+            moto = Moto().get_dati()
+            url_moto = "dati/moto.json"
+            for m in moto:
+                if mezzo == m:
+                    self.check = True
+                    m["tariffaOraria"] = nuova
+                    Moto().writeData(url_moto, moto)
+                    break
+        if not self.check:
+            van = Van().get_dati()
+            url_van = "dati/van.json"
+            for v in van:
+                if mezzo == v:
+                    self.check = True
+                    v["tariffaOraria"] = nuova
+                    Van().writeData(url_van, van)
+                    break
+        if not self.check:
+            fur = Furgone().get_dati()
+            url_fur = "dati/furgoni.json"
+            for f in fur:
+                if mezzo == f:
+                    self.check = True
+                    f["tariffaOraria"] = nuova
+                    Furgone().writeData(url_fur, fur)
+                    break

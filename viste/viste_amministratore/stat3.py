@@ -1,25 +1,20 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QFrame, QHBoxLayout
-
 from Attivita.pagamento import Pagamento
+
 
 class stat3(QWidget):
     def __init__(self):
         super().__init__()
 
-        self.initUI()
-
-    def initUI(self):
         layout = QHBoxLayout(self)
         layout.setAlignment(Qt.AlignLeft)
 
         data = self.getData()
 
         card1 = self.createCard("Totale incassato", str(data))
-        #card2 = self.createCard("Totale non contabilizzato", str(data[1]))
 
         layout.addWidget(card1)
-        #layout.addWidget(card2)
 
     def createCard(self, title, value):
         frame = QFrame()
@@ -43,7 +38,6 @@ class stat3(QWidget):
         data = Pagamento().readData()
 
         countp = 0
-        countn = 0
         for pagamento in data:
             if pagamento["statoPagamento"] == "pagato":
                 countp += int(pagamento["totale"][:-1])
