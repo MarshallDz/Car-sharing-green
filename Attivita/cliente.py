@@ -1,5 +1,4 @@
 import datetime
-from PyQt5.QtWidgets import QMessageBox
 from Attivita.utilizzatore import Utilizzatore
 from Attivita.pagamento import Pagamento
 from Attivita.prenotazione import Prenotazione
@@ -22,7 +21,7 @@ class Cliente(Utilizzatore):
 
         for cliente_esistente in clienti:
             if cliente_esistente["codiceFiscale"] == self.codiceFiscale:
-                QMessageBox.warning(None, "Cliente esistente", "Il cliente esiste già.")
+
                 return
         nuovoCliente = self.__dict__.copy()
         nuovoCliente.popitem()
@@ -30,7 +29,7 @@ class Cliente(Utilizzatore):
 
         # salvo nel file
         self.writeData(self.file, clienti)
-        QMessageBox.information(None, "Success", "Account registrato correttamente!")
+
         return 1
 
     def get_prenotazione(self, cf):

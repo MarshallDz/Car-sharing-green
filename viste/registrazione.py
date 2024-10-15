@@ -121,8 +121,9 @@ class VistaRegistrazione(QMainWindow):
         if len(data_to_save["Password"])<8:
             QMessageBox.warning(None, "Password non valida", "La password deve contenere almeno 8 caratteri!")
             return
-        cliente.aggiungiCliente(data_to_save["Codice Fiscale"], data_to_save["Nome"], data_to_save["Cognome"], data_to_save["Data di nascita"], data_to_save["E-mail"], data_to_save["Password"], data_to_save["Cellulare"])
-
+        if cliente.aggiungiCliente(data_to_save["Codice Fiscale"], data_to_save["Nome"], data_to_save["Cognome"], data_to_save["Data di nascita"], data_to_save["E-mail"], data_to_save["Password"], data_to_save["Cellulare"]):
+            QMessageBox.information(None, "Success", "Account registrato correttamente!")
+        else: QMessageBox.warning(None, "Cliente esistente", "Il cliente esiste già.")
         self.go_back()
 
     def go_back(self):
