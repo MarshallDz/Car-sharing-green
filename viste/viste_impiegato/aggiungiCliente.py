@@ -113,7 +113,11 @@ class VistaRegistrazioneCliente(QMainWindow):
             QMessageBox.warning(None, "Età non valida", "Devi avere almeno 18 anni per registrarti.")
             return
         cliente = Cliente()
-        cliente.aggiungiCliente(data_to_save["Codice Fiscale"], data_to_save["Nome"], data_to_save["Cognome"], data_to_save["Data di nascita"], data_to_save["E-mail"], data_to_save["Password"], data_to_save["Cellulare"])
+        if cliente.aggiungiCliente(data_to_save["Codice Fiscale"], data_to_save["Nome"], data_to_save["Cognome"], data_to_save["Data di nascita"],
+                                   data_to_save["E-mail"], data_to_save["Password"], data_to_save["Cellulare"]):
+            QMessageBox.information(None, "Success", "Account registrato correttamente!")
+        else:
+            QMessageBox.warning(None, "Cliente esistente", "Il cliente esiste già.")
         self.go_back()
 
     def go_back(self):
