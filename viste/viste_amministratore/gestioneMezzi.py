@@ -209,11 +209,9 @@ class VistaMezziAmministratore(QMainWindow):
                         widget.hide()
 
     def add_category_buttons(self):
-        # Create a horizontal layout for category buttons
         self.category_layout = QHBoxLayout()
         self.category_layout.setAlignment(Qt.AlignLeft | Qt.AlignTop)
 
-        # Create buttons for each category
         self.auto_button = QPushButton("Auto")
         self.auto_button.clicked.connect(lambda: self.filter_vehicles("Auto"))
 
@@ -231,21 +229,17 @@ class VistaMezziAmministratore(QMainWindow):
         self.furgone_button.clicked.connect(lambda: self.filter_vehicles("Furgone"))
         self.category_layout.addWidget(self.furgone_button)
 
-        # Set stretch factor for buttons to occupy all available horizontal space
         self.auto_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         self.moto_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         self.van_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         self.furgone_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
 
-        # Add category layout to the main layout
         self.central_layout.addLayout(self.category_layout)
 
     def filter_vehicles(self, category):
-        # Clear existing vehicles from scroll layout
         self.clear_scroll_layout()
         self.category = category
 
-        # Set background color for the pressed button and reset others
         buttons = [self.auto_button, self.moto_button, self.van_button, self.furgone_button]
         for button in buttons:
             if button.text() == self.category:
@@ -255,7 +249,7 @@ class VistaMezziAmministratore(QMainWindow):
             else:
                 button.setStyleSheet("QPushButton { background-color: none; }")
 
-        # Populate the scroll layout with vehicles of the selected category
+        # Popolo lo scroll
         if self.category == "Auto":
             self.populate_scroll_layout(Auto().get_dati())
         elif self.category == "Moto":
@@ -266,7 +260,6 @@ class VistaMezziAmministratore(QMainWindow):
             self.populate_scroll_layout(Furgone().get_dati())
 
     def clear_scroll_layout(self):
-        # Clear existing vehicles from scroll layout
         for i in reversed(range(self.scroll_layout.count())):
             widget = self.scroll_layout.itemAt(i).widget()
             if widget:

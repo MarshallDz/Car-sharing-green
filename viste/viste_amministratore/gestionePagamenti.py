@@ -195,9 +195,8 @@ class VistaPagamentiAmministratore(QMainWindow):
             self.aggiornaVista()
 
     def aggiornaVista(self):
-        # Clear the current layout
         for i in reversed(range(self.scroll_layout.count())):
             self.scroll_layout.itemAt(i).widget().setParent(None)
 
-        # Reload the payments
+        # Ricarico i pagamenti
         self.aggiungiPagamento()

@@ -109,47 +109,47 @@ class VistaPagamentiImpiegato(QMainWindow):
 
         for x in pagamenti:
             info_box = QGroupBox(f"Informazioni sul pagamento {x['codice']}")
-            info_box.setStyleSheet("QGroupBox{max-height: 250px;}")
+            info_box.setStyleSheet("QGroupBox{max-height: 250px}")
             info_layout = QGridLayout(info_box)
 
             prenotazione = QLabel(f"Prenotazione: {x['prenotazione']} ")
-            prenotazione.setStyleSheet("font-size: 24px; ")
+            prenotazione.setStyleSheet("font-size: 24px")
             info_layout.addWidget(prenotazione, 1, 0)
 
             for i in clienti:
                 if i["codiceFiscale"] == x["cliente"]:
                     infoCliente = QLabel(f"Cliente: {i['nome']} {i['cognome']} ")
-                    infoCliente.setStyleSheet("font-size: 24px; ")
-                    info_layout.addWidget(infoCliente)
+                    infoCliente.setStyleSheet("font-size: 24px")
+                    info_layout.addWidget(infoCliente, 2, 0)
                 if x['prenotazione'] in i['prenotazioni']:
                     for s in prenotazioni:
                         if x['prenotazione'] == s['id']:
                             mezzoPrenotato = QLabel(f"Mezzo prenotato: {s['mezzo']['produttore']} {s['mezzo']['modello']}")
-                            mezzoPrenotato.setStyleSheet("font-size: 24px; ")
-                            info_layout.addWidget(mezzoPrenotato)
+                            mezzoPrenotato.setStyleSheet("font-size: 24px")
+                            info_layout.addWidget(mezzoPrenotato, 3, 0)
             infoTotale = QLabel(f"Totale da pagare: {x['totale']} ")
-            infoTotale.setStyleSheet("font-size: 24px; ")
-            info_layout.addWidget(infoTotale)
+            infoTotale.setStyleSheet("font-size: 24px")
+            info_layout.addWidget(infoTotale, 4, 0)
 
             statoPagamento = QLabel(f"Stato pagamento: {x['statoPagamento']} ")
-            statoPagamento.setStyleSheet("font-size: 24px; ")
-            info_layout.addWidget(statoPagamento)
+            statoPagamento.setStyleSheet("font-size: 24px")
+            info_layout.addWidget(statoPagamento, 5, 0)
             if x['statoPagamento'] == 'pagato':
                 dataPagamento = QLabel(f"data pagamento: {x['dataPagamento']} ")
-                dataPagamento.setStyleSheet("font-size: 24px; ")
-                info_layout.addWidget(dataPagamento)
+                dataPagamento.setStyleSheet("font-size: 24px")
+                info_layout.addWidget(dataPagamento, 6, 0)
             else:
                 effettua_pagamento = QPushButton("Conferma pagamento")
-                effettua_pagamento.setStyleSheet("width: 110px; max-width: 150px; background-color: #6AFE67; border-radius: 5px; "
-                                  "color: black; padding: 5px;")
+                effettua_pagamento.setStyleSheet("height: 30px; max-width: 150px; background-color: #6AFE67; "
+                                                 "border-radius: 15px; color: black; padding: 5px")
                 effettua_pagamento.clicked.connect(lambda _, p=x: self.confermaPagamento(p))
-                info_layout.addWidget(effettua_pagamento, 5, 2)
+                info_layout.addWidget(effettua_pagamento, 3, 1, 2, 1)
             elimina = QPushButton("Elimina")
             elimina.clicked.connect(lambda _, p=x: self.eliminaPagamento(p))
-            elimina.setStyleSheet("width: 110px; max-width: 150px; background-color: #F85959; border-radius: 5px; "
-                                  "color: black; padding: 5px;")
-            info_layout.addWidget(elimina, 6, 2)
-            self.scroll_layout.addWidget(info_box,)
+            elimina.setStyleSheet("height: 30px; max-width: 150px; background-color: #F85959; border-radius: 15px; "
+                                  "color: black; padding: 5px")
+            info_layout.addWidget(elimina, 5, 1, 2, 1)
+            self.scroll_layout.addWidget(info_box)
 
     def go_back(self):
         from viste.viste_impiegato.pannelloControllo import VistaPannelloControllo
@@ -197,10 +197,9 @@ class VistaPagamentiImpiegato(QMainWindow):
             self.aggiornaVista()
 
     def aggiornaVista(self):
-        # Clear the current layout
         for i in reversed(range(self.scroll_layout.count())):
             self.scroll_layout.itemAt(i).widget().setParent(None)
 
-        # Reload the payments
+        # Ricarica i pagamenti
         self.aggiungiPagamento()
 

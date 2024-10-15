@@ -297,7 +297,7 @@ class VistaEffettuaPrenotazioneAmministratore(QMainWindow):
         with open("dati/clienti.json") as f:
             data = json.load(f)
             for i in data:
-                if self.sceltaCliente.currentText() == i["codiceFiscale"] :
+                if self.sceltaCliente.currentText() == i["codiceFiscale"]:
                     return i
 
     def cercaMezzo(self):

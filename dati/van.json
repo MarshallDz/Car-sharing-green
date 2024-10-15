@@ -1,7 +1,7 @@
 [
     {
         "immagine": "viste/Icone/van/dacia-jogger.png",
-        "telaio": "abc123",
+        "telaio": "17",
         "produttore": "Dacia",
         "modello": "Jogger",
         "cavalli": "100",
@@ -15,7 +15,7 @@
     },
     {
         "immagine": "viste/Icone/van/mercedes-v250.png",
-        "telaio": "def456",
+        "telaio": "18",
         "produttore": "Mercedes-Benz",
         "modello": "V250",
         "cavalli": "190",
@@ -29,7 +29,7 @@
     },
     {
         "immagine": "viste/Icone/van/vw-california.png",
-        "telaio": "ghi789",
+        "telaio": "19",
         "produttore": "Volkswagen",
         "modello": "California",
         "cavalli": "150",
