@@ -298,7 +298,6 @@ class VistaGestionePrenotazione(QMainWindow):
             if x["id"] == p["id"]:
                 x["data_fine"] = p["data_fine"]
                 Prenotazione().writeData(prenotazioni)
-                # pagamento.aggiungiPagamento("", x, x["cliente"])
         for x in pagamenti:
             if x["prenotazione"] == p["id"]:
                 x["totale"] = pagamento.calcolaTotale(p)
