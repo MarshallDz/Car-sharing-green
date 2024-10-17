@@ -1,10 +1,8 @@
 import json
-
 import darkdetect
 from PyQt5.QtCore import Qt, QDate
 from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QVBoxLayout, QLabel, QHBoxLayout, QGridLayout, \
     QComboBox, QDateEdit, QPushButton, QMessageBox
-
 from datetime import datetime
 from Attivita.cliente import Cliente
 from Attivita.pagamento import Pagamento

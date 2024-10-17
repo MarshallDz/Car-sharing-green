@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
@@ -119,35 +117,36 @@ class VistaPagamentiAmministratore(QMainWindow):
                 if i["codiceFiscale"] == x["cliente"]:
                     infoCliente = QLabel(f"Cliente: {i['nome']} {i['cognome']} ")
                     infoCliente.setStyleSheet("font-size: 24px; ")
-                    info_layout.addWidget(infoCliente)
+                    info_layout.addWidget(infoCliente, 2, 0)
                 if x['prenotazione'] in i['prenotazioni']:
                     for s in prenotazioni:
                         if x['prenotazione'] == s['id']:
                             mezzoPrenotato = QLabel(f"Mezzo prenotato: {s['mezzo']['produttore']} {s['mezzo']['modello']}")
                             mezzoPrenotato.setStyleSheet("font-size: 24px; ")
-                            info_layout.addWidget(mezzoPrenotato)
+                            info_layout.addWidget(mezzoPrenotato, 3, 0)
             infoTotale = QLabel(f"Totale da pagare: {x['totale']} ")
             infoTotale.setStyleSheet("font-size: 24px; ")
-            info_layout.addWidget(infoTotale)
+            info_layout.addWidget(infoTotale, 4 ,0)
 
             statoPagamento = QLabel(f"Stato pagamento: {x['statoPagamento']} ")
             statoPagamento.setStyleSheet("font-size: 24px; ")
-            info_layout.addWidget(statoPagamento)
+            info_layout.addWidget(statoPagamento, 5, 0)
             if x['statoPagamento'] == 'pagato':
                 dataPagamento = QLabel(f"data pagamento: {x['dataPagamento']} ")
                 dataPagamento.setStyleSheet("font-size: 24px; ")
-                info_layout.addWidget(dataPagamento)
+                info_layout.addWidget(dataPagamento, 6, 0)
             else:
                 effettua_pagamento = QPushButton("Conferma pagamento")
-                effettua_pagamento.setStyleSheet("width: 150px; max-width: 150px; background-color: #6AFE67; border-radius: 15px; color: black; ")
+                effettua_pagamento.setStyleSheet("max-width: 150px; background-color: #6AFE67; "
+                                                 "border-radius: 15px; color: black; padding: 10px; ")
                 effettua_pagamento.clicked.connect(lambda _, p=x: self.confermaPagamento(p))
-                info_layout.addWidget(effettua_pagamento, 5, 2)
+                info_layout.addWidget(effettua_pagamento, 4, 2)
 
             elimina = QPushButton("Elimina")
             elimina.clicked.connect(lambda _, p=x: self.eliminaPagamento(p))
-            elimina.setStyleSheet("width: 150px; max-width: 150px; background-color: #F85959; border-radius: 15px; "
+            elimina.setStyleSheet("max-width: 150px; background-color: #F85959; border-radius: 15px; "
                                   "color: black; padding: 10px;")
-            info_layout.addWidget(elimina, 6, 2)
+            info_layout.addWidget(elimina, 5, 2)
             self.scroll_layout.addWidget(info_box)
 
     def go_back(self):
