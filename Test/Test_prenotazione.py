@@ -1,15 +1,16 @@
 import unittest
 import json
 from datetime import datetime
-
 from PyQt5.QtWidgets import QApplication
 from Attivita import prenotazione_path
 from Attivita.prenotazione import Prenotazione
+
 
 class TestPrenotazione(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.app = QApplication([])
+
     def setUp(self):
         self.prenotazione = Prenotazione()
 
@@ -33,7 +34,6 @@ class TestPrenotazione(unittest.TestCase):
 
         self.prenotazione.aggiungiPrenotazione(cliente, data_prenotazione, data_inizio, data_fine, mezzo, filiale, tariffa, polizza)
 
-
         prenotazioni = self.prenotazione.readData()
         prenotazione_data = prenotazioni[-1]
         self.assertEqual(prenotazione_data["cliente"], cliente)
@@ -45,7 +45,7 @@ class TestPrenotazione(unittest.TestCase):
         self.assertEqual(prenotazione_data["tariffa"], tariffa)
         self.assertEqual(prenotazione_data["polizza"], polizza)
 
-    #per testare elimnaPrenotazione bisogna apportare delle modifiche alla funzione in modo da non aggiornale la UI nella funzione stessa
+    # per testare elimnaPrenotazione bisogna apportare delle modifiche alla funzione in modo da non aggiornale la UI nella funzione stessa
     """def test_eliminaPrenotazione(self):
         # Create a test reservation
         cliente = {"codiceFiscale": "","email": "test@example.com", "password": "testpassword"}
