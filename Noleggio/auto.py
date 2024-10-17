@@ -1,10 +1,8 @@
 from Noleggio.mezzo import Mezzo
-
+from Noleggio import auto_path
 
 class Auto(Mezzo):
     def __init__(self):
-        self.file = "dati/auto.json"
-
         super().__init__()
         self.stato = "disponibile"
         self.tariffaOraria = ""
@@ -26,14 +24,14 @@ class Auto(Mezzo):
 
     def eliminaAuto(self, auto):
         try:
-            self.eliminaMezzo(self.file, auto)
+            self.eliminaMezzo(auto_path, auto)
             print("Auto eliminata correttamente")
         except Exception as e:
             print(f"Si è verificato un errore: {e}")
 
     def cercaAuto(self, auto):
-        return self.searchById(self.file, auto)
+        return self.searchById(auto_path, auto)
 
     def get_dati(self):
-        return self.readData(self.file)
+        return self.readData(auto_path)
 

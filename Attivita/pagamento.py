@@ -2,7 +2,7 @@ from datetime import datetime
 import json
 import random
 import string
-
+from Attivita import pagamento_path
 class Pagamento:
     def __init__(self):
         self.codice = ""
@@ -12,7 +12,7 @@ class Pagamento:
         self.cliente = ""
         self.statoPagamento = "da pagare"
 
-        self.file = "dati/pagamenti.json"
+        self.file = pagamento_path
 
     def aggiungiPagamento(self, data, pren, cliente):
         self.codice = self.set_id()

@@ -2,6 +2,8 @@ import datetime
 from Attivita.utilizzatore import Utilizzatore
 from Attivita.pagamento import Pagamento
 from Attivita.prenotazione import Prenotazione
+from Attivita import cliente_path, prenotazione_path
+import os
 
 
 class Cliente(Utilizzatore):
@@ -10,7 +12,7 @@ class Cliente(Utilizzatore):
         super().__init__()
         self.prenotazioni = []
         self.dataRegistrazione = ""
-        self.file = "dati/clienti.json"
+        self.file = cliente_path
 
     def aggiungiCliente(self, cF, no, cog, datN, em, pas, cel):
         self.aggiungiUtilizzatore(cF, no, cog, datN, em, pas, cel)
@@ -21,7 +23,6 @@ class Cliente(Utilizzatore):
 
         for cliente_esistente in clienti:
             if cliente_esistente["codiceFiscale"] == self.codiceFiscale:
-
                 return
         nuovoCliente = self.__dict__.copy()
         nuovoCliente.popitem()
@@ -34,8 +35,9 @@ class Cliente(Utilizzatore):
 
     def get_prenotazione(self, cf):
         lista_prenotazioni = []
-        file_path = "dati/prenotazioni.json"
+        file_path = prenotazione_path
         data = self.readData(file_path)
+        print(file_path)
         for value in data:
             if value["cliente"]['codiceFiscale'] == cf:
                 lista_prenotazioni.append(value)

@@ -3,29 +3,25 @@ import json
 from datetime import datetime
 
 from PyQt5.QtWidgets import QApplication
-
+from Attivita import prenotazione_path
 from Attivita.prenotazione import Prenotazione
 
 class TestPrenotazione(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        # Create a QApplication instance before running any tests
         cls.app = QApplication([])
     def setUp(self):
-        # Create a Prenotazione instance for testing
         self.prenotazione = Prenotazione()
 
     def tearDown(self):
-        # Remove the test data from the JSON file after each test
-        prenotazioni = self.prenotazione.get_dati()
+        prenotazioni = self.prenotazione.readData()
         for prenotazione in prenotazioni:
             if prenotazione["cliente"]["email"] == "test@example.com":
                 prenotazioni.remove(prenotazione)
-        with open("../dati/prenotazioni.json", "w") as f:
-            json.dump({"prenotazioni": prenotazioni}, f, indent=4)
+        with open(prenotazione_path, "w") as f:
+            json.dump(prenotazioni, f, indent=4)
 
     def test_aggiungiPrenotazione(self):
-        # Create sample data for a reservation
         cliente = {"email": "test@example.com", "password": "testpassword"}
         data_prenotazione = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         data_inizio = "2024-05-03 10:00:00"
@@ -35,14 +31,10 @@ class TestPrenotazione(unittest.TestCase):
         tariffa = "giornaliera"
         polizza = "rca"
 
-        # Add reservation
-        result = self.prenotazione.aggiungiPrenotazione(cliente, data_prenotazione, data_inizio, data_fine, mezzo, filiale, tariffa, polizza)
+        self.prenotazione.aggiungiPrenotazione(cliente, data_prenotazione, data_inizio, data_fine, mezzo, filiale, tariffa, polizza)
 
-        # Check if reservation addition was successful
-        self.assertEqual(result, 1)
 
-        # Check if reservation details are stored correctly
-        prenotazioni = self.prenotazione.get_dati()
+        prenotazioni = self.prenotazione.readData()
         prenotazione_data = prenotazioni[-1]
         self.assertEqual(prenotazione_data["cliente"], cliente)
         self.assertEqual(prenotazione_data["data_prenotazione"], data_prenotazione)

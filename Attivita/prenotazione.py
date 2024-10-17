@@ -3,6 +3,7 @@ import random
 import string
 from datetime import datetime, timedelta
 from Attivita.pagamento import Pagamento
+from Attivita import *
 
 
 class Prenotazione:
@@ -17,7 +18,7 @@ class Prenotazione:
         self.tariffa = ""
         self.polizza = ""
 
-        self.file = "dati/prenotazioni.json"
+        self.file =prenotazione_path
 
     def aggiungiPrenotazione(self, cliente, data_prenotazione, data_inizio, data_fine, mezzo,  filiale, tariffa, polizza):
         self.id = self.set_id()
@@ -38,7 +39,7 @@ class Prenotazione:
         self.aggiorna_stato_mezzo()
 
     def eliminaPrenotazione(self, p):
-        url_clienti = "dati/clienti.json"
+        url_clienti = cliente_path
         url_pagamenti = "dati/pagamenti.json"
 
         # Rimuovi la prenotazione dalla lista delle prenotazioni nel file JSON principale

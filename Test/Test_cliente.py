@@ -1,53 +1,45 @@
 import unittest
 import json
-from PyQt5.QtWidgets import QApplication, QMessageBox  # Aggiungi QApplication qui
+import os
 from Attivita.cliente import Cliente
-
-class TestClienteMethods(unittest.TestCase):
-
-    @classmethod
-    def setUpClass(cls):
-        # Create a QApplication instance before running any tests
-        cls.app = QApplication([])
+from Test import cliente_path, prenotazione_path
+class TestCliente(unittest.TestCase):
 
     def setUp(self):
-        # Initialize a test instance of the Cliente class
         self.cliente = Cliente()
+        self.file = cliente_path
 
-    @classmethod
-    def tearDownClass(cls):
-        # Clean up any QApplication instance after all tests have run
-        del cls.app
 
-    def test_aggiungiCliente(self):
-        self.cliente.aggiungiCliente("CF123456", "John", "Doe", "1990-01-01", "john@example.com", "password", "1234567890")
-        # Check if the client data is correctly added to the JSON file
-        with open('../dati/clienti.json') as f:
+    def test_aggiungi_cliente(self):
+        self.cliente.aggiungiCliente("ABCDEF12G34H567I", "John", "Doe", "1990-01-01", "john@example.com", "password", "1234567890")
+
+        with open(self.file) as f:
             data = json.load(f)
-            self.assertTrue(any(cliente["codiceFiscale"] == "CF123456" for cliente in data["clienti"]))
+            self.assertTrue(any(cliente["codiceFiscale"] == "ABCDEF12G34H567I" for cliente in data))
 
-        # Test adding an existing client
-        result = self.cliente.aggiungiCliente("CF123456", "Jane", "Doe", "1990-01-01", "jane@example.com", "password", "0987654321")
-        # Check if a warning message is shown
-        self.assertFalse(result)  # Ensure that the method returns False for existing client
+
+        result = self.cliente.aggiungiCliente("ABCDEF12G34H567I", "Jane", "Doe", "1990-01-01", "jane@example.com", "password", "0987654321")
+
+        self.assertFalse(result)
         print("Existing client warning: Il cliente esiste già.")
-        # Print statement to indicate that a warning message is shown
+
 
     def test_get_prenotazione(self):
-        # Add some test bookings
-        url = "../dati/prenotazioni.json"
+
+        url = prenotazione_path
         with open(url, "r") as file:
             data = json.load(file)
-            prenotazioni = data.get("prenotazioni", [])
-            if prenotazioni[-1]["cliente"]["codiceFiscale"] == "CF123456":
-                prenotazioni.pop()
-        prenotazione = {"cliente": {"codiceFiscale": "CF123456"}, "id": 1}
+            print(len(data))
+            prenotazioni = data
+            if len(data) != 0:
+                if prenotazioni[-1]["cliente"]["codiceFiscale"] == "ABCDEF12G34H567I":
+                    prenotazioni.pop()
+        prenotazione = {"cliente": {"codiceFiscale": "ABCDEF12G34H567I"}, "id": 1}
         prenotazioni.append(prenotazione)
-        with open("../dati/prenotazioni.json", "w") as f:
-            json.dump({"prenotazioni": prenotazioni}, f, indent=4)
+        with open(prenotazione_path, "w") as f:
+            json.dump(prenotazioni, f, indent=4)
 
-        # Test retrieving bookings for a specific client
-        prenotazioni = self.cliente.get_prenotazione("CF123456")
+        prenotazioni = self.cliente.get_prenotazione("ABCDEF12G34H567I")
         self.assertEqual(len(prenotazioni), 1)
         self.assertEqual(prenotazioni[0]["id"], 1)
 

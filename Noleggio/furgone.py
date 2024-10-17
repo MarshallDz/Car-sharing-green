@@ -1,9 +1,9 @@
 from Noleggio.mezzo import Mezzo
-
+from Noleggio import furgone_path
 
 class Furgone(Mezzo):
     def __init__(self):
-        self.file = "dati/furgoni.json"
+        self.file = furgone_path
 
         super().__init__()
         self.stato = "disponibile"

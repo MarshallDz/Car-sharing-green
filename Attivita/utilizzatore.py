@@ -1,7 +1,4 @@
-import datetime
 import json
-from abc import abstractmethod
-
 
 class Utilizzatore:
 
@@ -13,6 +10,7 @@ class Utilizzatore:
         self.email = ""
         self.password = ""
         self.cellulare = ""
+
 
     def aggiungiUtilizzatore(self, cF, no, cog, datN, em, pas, cel):
         self.codiceFiscale = cF
